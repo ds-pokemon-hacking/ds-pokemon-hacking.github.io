@@ -2,6 +2,8 @@
 
 This guide was originally written by [Brom](https://github.com/BromBromBromley).
 
+*It is recommended to check out the [universal code injection guide](../../../../universal/guides/code_injection/code_injection.md) before attempting this. 
+
 ## Preparing a project for C injected code ##
 
 1) Extract a ROM in the `Games` tab of CTRMap with the `Add ROM` button.
