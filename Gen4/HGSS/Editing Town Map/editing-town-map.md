@@ -11,7 +11,7 @@ In this tutorial, I look to turn Johto & a little of Kanto into Hoenn.  While th
 First thing's first, the graphics are the easy part.  ``a144`` contains all of the graphics for the Town Map.  These are all easily editable using Tinke--a tutorial for which will not be covered here.  Refer to Jay's tutorials on YouTube for a basics of graphics editing tutorial.
 
 ### Protagonist Portraits
-Clicking on the NCLR file 0 and then the NCGR file 1 will give you the town map portraits and the selectors.  Here you can replace the protagonist mugshots with whatever you can fit in the 16x16 space that uses very few colors to keep the rest of the indicators the same.  The roamers are also here, all of the Beasts and the Lati twins--feel free to change those as your hack requires!
+Clicking on the NCLR file 0 and then the NCGR file 1 will give you the town map portraits and the selectors--set the width to 16 and the height to 232.  Here you can replace the protagonist mugshots with whatever you can fit in the 16x16 space that uses very few colors to keep the rest of the indicators the same.  The roamers are also here, all of the Beasts and the Lati twins--feel free to change those as your hack requires!
 
 ![](original_portraits.png)
 
