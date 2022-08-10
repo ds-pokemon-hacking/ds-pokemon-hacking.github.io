@@ -47,21 +47,24 @@ Make no map replacement from right part of image before Kanto is unlocked - Over
 
 Cianwood we just replace the areas as needed.  Not all that bad, no need to find the code for it.
 ```
-Next we have to add in the Town Map blurbs that appear when you select the town in the PokéGear.  This is all done in a027 file 273, so you can either replace existing entries or add new ones entirely--it's all up to you.  Just keep track of which is which.
+Next we have to add in the Town Map blurbs that appear when you hover over the town in the PokéGear.  This is all done in a027 file 273, so you can either replace existing entries or add new ones entirely--it's all up to you.  Just keep track of which is which.
 
 Furthermore, change the first two entries (``Kanto`` and ``Johto``) to both be the name of your region.  Here, I replace both of mine with ``Hoenn``.
 
 Here is the part where things get a little bit complicated.
 
+Each selectable tile in the PokéGear corresponds to one map chunk in the overworld.  Each 32x32 overworld space is one selectable tile in the PokéGear--and you can verify this by forcing the ability to open the start menu in the Mystery Zone, even as you run around out there it still updates your position in the PokéGear.
+This somewhat constrains what you can and can't do mapping-wise.  I know I have made a number of concessions when it comes to mapping my overworld (especially given that Hoenn seems to be broken into 20x20 chunks and the town map there doesn't care).
+
 Clicking on NCLR file 23, NCGR file 10, and NSCR 11 will net this massive image.
 
 ![](old_town_map.png)
 
-This is a lot to take in at first.  We have the actual town map on top of the many little highlight sections at the bottom.  Here, we whip out a new town map for our new region:
+This is a lot to take in at first.  We have the actual town map on top of the many little highlight sections at the bottom.  Here, we whip out a new town map for our new region in the top section:
 
 ![](town_map_red_area_done.png)
 
-*Make sure that the top leftmost tile is just the transparent (first) color in the palette!*  Issues come up if you do not abide by this, and you'll think that everything is buggy until you realize that you just didn't do this.  This is just because of how Tinke does the tiling in the NSCR file.  From here, we can insert this into the ROM and observe that the Town Map is _kinda_ there, but all garbled in the areas of the original towns:
+*Make sure that the top leftmost tile is just the transparent (first) color in the palette!*  Issues come up if you do not abide by this, and you'll think that everything is buggy until you realize that you just didn't do this.  This is just because of how Tinke does the tiling in the NSCR file.
 
 As we can see as well, we need to take into account that the Safari Zone areas are blocked out first, so I make sure to replace those down in the bottom right as well.  Saving this image and reopening it in the ROM:
 
@@ -81,8 +84,8 @@ Then we just need to add the highlighted orange areas to the image, or rather th
 
 Now we move to making this look alright in the game and into overlay 101.
 
-## Part 2 - Overlay 101 - Red/Gray City Blocks, Flight Spots
-Overlay 101 has a table governing replacing the red town spots with the gray town spots when the town hasn't been visited, and another governing the orange selected overlay that appears when you select a town or route.  The first table is at 0x10274 (0x021F79B4) of overlay 101, the amount of entries is the byte at 0x3124 (0x021EA864 - originally 0x1B), and has the format for each entry:
+## Part 2 - Overlay 101 - Red/Gray City Map Chunk, Flight Spots
+Overlay 101 has a table governing replacing the red town chunks with the gray town chunks when the town hasn't been visited, and another governing the orange selected overlay that appears when you select a town chunk or route chunk.  The first table is at 0x10274 (0x021F79B4) of overlay 101, the amount of entries is the byte at 0x3124 (0x021EA864 - originally 0x1B), and has the format for each entry:
 ```c
 struct GearMapTownOverlay
 {
@@ -166,7 +169,7 @@ Further breaking it down and labeling the names based on the map headers:
 [0x19]  60 00      18 01       23      FF      0A    06    00     00     22       00       00         00       // national park / gate is pokeathlon dome
 [0x1A]  7C 00      1E 00       21      FF      1C    07    00     00     21       00       00         00       // victory road / gate is route 26
 ```
-Every city gets an ``entry2`` field filled out.  Every in this at some point gets an ``entry1`` field.  I do not know much about these--I just use the existing ones in an effort not to renovate anything that doesn't need renovated.  
+Every city gets an ``entry2`` field filled out.  All the entries get an ``entry1`` field.  I do not know much about these--I just use the existing ones in an effort not to renovate anything that doesn't need renovated.  
 
 How do we interpret the ``redX``, ``redY``, ``grayX``, and ``grayY`` fields? 
 
@@ -247,7 +250,7 @@ Next part:  The orange selection blocks.  Walking around the map will show that 
 
 ![](town_map_first_pass_in_rom_1.png)
 
-As previously mentioned, overlay 101 has another table.  This table is at 0xFC32 (0x021F7372) of overlay 101 and amount at 0x and 0x6156 (0x and 0x021ED896) and has the format for each entry:
+As previously mentioned, overlay 101 has another table.  This table is at 0xFC32 (0x021F7372) of overlay 101 and amount at 0x44 and 0x6156 (0x021E7784 and 0x021ED896) and has the format for each entry:
 ```c
 struct GearMapTownSelectionOverlay
 {
