@@ -271,7 +271,7 @@ struct GearMapTownSelectionOverlay
     /* 0xF */ u8 orangeDimY; // in image
 }; // size = 0x10
 ```
-Note that I have yet to document what the flags do.  The ``GearMapTownSelectionOverlay`` is better documented as well [at the end of the file](#gearmaptownselectionoverlay-struct-description).
+Note that I have yet to document what the flags do.  The ``GearMapTownSelectionOverlay`` is better documented as well [at the end of this page](#gearmaptownselectionoverlay-struct-description).
 
 The table split up by entry:
 ```
