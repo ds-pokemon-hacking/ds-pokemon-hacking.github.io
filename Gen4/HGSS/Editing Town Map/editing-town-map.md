@@ -1,7 +1,7 @@
 # Town Map Editing - HGSS
 The Town Map in Heart Gold is located solely within the Poké Gear, a departure from some previous games where the Town Map is a key item that gets a very large area to mess around on.  Because of this, the region is actually relatively cramped to start out with--Kanto makes a few sacrifices to nicely fit into the 32x32 blocks that the game uses--every square that the town map has corresponds to a 32x32 grid block, hence the reason that glitches like tweaking work in Platinum to go out of bounds and access the islands for Shaymin, Darkrai, and Cresselia.
 
-In this tutorial, I look to turn Johto & a little of Kanto into Hoenn.  While the images are included here strictly as examples of what you can do, I ask that you refrain from copying my images (at least while I am still an active hacker, actively developing for my own hack).  Otherwise, just let me know if you want to use resources and we can talk.
+In this tutorial, I look to turn Johto & a little of Kanto into Hoenn.  While the images are included here as examples of what you can do, I ask that you refrain from copying my images (at least while I am still an active hacker, actively developing for my own hack).  Otherwise, just let me know if you want to use resources and we can talk.
 
 ## Prerequisites
 - Comfortability with hex editing (and I mean comfortability, this gets pretty intense) and interpreting data
@@ -47,6 +47,10 @@ Make no map replacement from right part of image before Kanto is unlocked - Over
 
 Cianwood we just replace the areas as needed.  Not all that bad, no need to find the code for it.
 ```
+Next we have to add in the Town Map blurbs that appear when you select the town in the PokéGear.  This is all done in a027 file 273, so you can either replace existing entries or add new ones entirely--it's all up to you.  Just keep track of which is which.
+
+Furthermore, change the first two entries (``Kanto`` and ``Johto``) to both be the name of your region.  Here, I replace both of mine with ``Hoenn``.
+
 Here is the part where things get a little bit complicated.
 
 Clicking on NCLR file 23, NCGR file 10, and NSCR 11 will net this massive image.
@@ -170,19 +174,21 @@ Tiles form tilesets (NCGR) and are 8x8 pixels, with the idea being that the tile
 
 ![](old_town_map_but_8x8_annotated.png)
 
-We can start to circle gray positions really nicely, but circling red positions seems to be weird:
+We can start to circle gray positions really nicely, but circling red positions seems to be weird (bear with me, the circles are red and gray respectively and are a little hard to see):
 
 ![](old_town_map_with_wrong_circles.png)
 
+Entries 0x00 (Pallet), 0x01 (Viridian), and 0x05 (Vermilion) are circled on the map using the raw coordinates.
+
 For whatever reason, the red position fields are offset by 1 each.  So on the image, the ``redX`` field actually references a position of ``redX - 1``.  The ``redY`` field then references a position of ``redY + 1``--``redX`` is one less than what it should be, and ``redY`` is one more than it should be.
 
-The gray fields are not affected by this issue.  Circling the adjusted red ones:
+The gray fields are not affected by this issue.  Circling the adjusted red ones, offset 1 left and 1 down:
 
 ![](old_town_map_with_right_circles.png)
 
 That shows the top left of each city and the place that its replaced with.
 
-The ``townDim`` field is just a byte where the significant nybble is the y dimension and the other the x dimension.  For example, the ``townDim`` for Azalea is ``12``, showing a y dimension of 1 and an x dimension of 2.  The ``replDim`` byte is the dimension of the replacement (encoded similarly)--before you visit the place, it replaces the red on the town map with the gray below.  This byte is the dimensions of that area.  For example, the ``replDim`` byte for Goldenrod City is ``45``, meaning that the gray replacement area of Goldenrod is on a 5 horizontal by 4 vertical area.  Finally, the ``offsetPos`` byte describes the x- and y-offset away from the base coordinate the town itself actually starts, once again similarly encoded in the nybbles.
+We can tell how much to circle by the ``townDim`` field.  The ``townDim`` field is just a byte where the significant nybble is the y dimension and the other the x dimension.  For example, the ``townDim`` for Azalea is ``12``, showing a y dimension of 1 and an x dimension of 2.  The ``replDim`` byte is the dimension of the replacement (encoded similarly)--before you visit the place, it replaces the red on the town map with the gray below.  This byte is the dimensions of that area.  For example, the ``replDim`` byte for Goldenrod City is ``45``, meaning that the gray replacement area of Goldenrod is on a 5 horizontal by 4 vertical area.  Finally, the ``offsetPos`` byte describes the x- and y-offset away from the base coordinate the town itself actually starts, once again similarly encoded in the nybbles.
 
 Dissecting a full entry:
 
@@ -201,47 +207,45 @@ This can then just copy-paste the table into HxD or similar for easy updating an
 My table looks like:
 ```
         mapHeader  gateHeader  entry1  entry2  redX  redY  grayX  grayY  townDim  replDim  offsetPos  padding
-[0x00]  
-[0x01]  
-[0x02]  
-[0x03]  
-[0x04]  
-[0x05]  
-[0x06]  
-[0x07]  
-[0x08]  
-[0x09]  
-[0x0A]  
-[0x0B]  
-[0x0C]  
-[0x0D]  
-[0x0E]  
-[0x0F]  
-[0x10]  
-[0x11]  
-[0x12]  
-[0x13]  
-[0x14]  
-[0x15]  
-[0x16]  
-[0x17]  
-[0x18]  
-[0x19]  
-[0x1A]  
+[0x00]  31 00      31 00       00      00      06    0C    00     14     11       33       11         00       // littleroot
+[0x01]  32 00      32 00       01      01      06    0A    00     17     11       23       11         00       // oldale
+[0x02]  33 00      33 00       02      02      02    05    03     14     22       44       11         00       // rustboro
+[0x03]  34 00      34 00       03      03      11    0A    0A     17     11       33       11         00       // pacifidlog
+[0x04]  35 00      35 00       04      04      04    0F    00     1C     11       33       11         00       // dewford
+[0x05]  36 00      36 00       05      05      09    0A    03     18     22       44       11         00       // slateport
+[0x06]  37 00      37 00       06      06      09    06    03     1C     12       34       11         00       // mauville
+[0x07]  38 00      38 00       07      07      06    06    07     14     11       33       11         00       // verdanturf
+[0x08]  39 00      39 00       08      08      07    03    07     17     11       33       11         00       // lavaridge
+[0x09]  3A 00      3A 00       09      09      04    01    07     1A     11       33       11         00       // fallarbor
+[0x0A]  3B 00      3B 00       0A      0A      0D    01    07     1D     11       33       11         00       // fortree
+[0x0B]  3C 00      3C 00       0B      0B      11    03    0D     17     23       45       11         00       // lilycove
+[0x0C]  43 00      43 00       0C      0C      17    04    0D     14     12       34       11         00       // mossdeep
+[0x0D]  49 00      49 00       0D      0D      15    07    0A     14     11       33       11         00       // sootopolis
+[0x0E]  4A 00      4A 00       0E      0E      1A    07    0A     1A     21       43       11         00       // ever grande
+[0x0F]  4B 00      4B 00       0F      0F      03    0A    00     19     11       23       11         00       // petalburg (replaced cianwood)
+[0x10]  4C 00      4C 00       10      10      0E    0E    0D     1B     11       33       11         00       // battle frontier
+[0x11]  4D 00      4D 00       11      11      08    07    00     00     11       00       00         00       // battle frontier 2
+[0x12]  4E 00      4E 00       12      12      0B    04    00     00     22       00       00         00       // empty
+[0x13]  57 00      57 00       13      13      10    05    00     00     11       00       00         00       // empty
+[0x14]  59 00      59 00       15      13      14    04    00     00     22       00       00         00       // empty
+[0x15]  58 00      58 00       14      FF      0F    01    00     00     23       00       00         00       // empty
+[0x16]  5A 00      5A 00       16      FF      19    08    00     00     11       00       00         00       // empty
+[0x17]  AE 00      AE 00       1E      FF      02    08    00     00     22       00       00         00       // safari zone gate
+[0x18]  10 01      9B 01       1B      FF      06    06    00     00     22       00       00         00       // battle frontier/access
+[0x19]  60 00      18 01       23      FF      0A    06    00     00     22       00       00         00       // national park/athlon dome
+[0x1A]  7C 00      1E 00       21      FF      1C    07    00     00     21       00       00         00       // victory road/route 26
 ```
 Inserting into the ROM:
 
 ![](town_map_first_pass_in_rom.png)
 
-We can even run around and register various destinations in the PokéGear at this point:
-
-![](town_map_first_pass_in_rom_1.png) ![](town_map_first_pass_in_rom_2.png)
+We can see that unregistered areas (Pacifidlog, Dewford, Lavaridge) are copied properly from their gray entries below.  All the red areas are also properly partitioned and are just fine when registered.
 
 ## Part 3 - Overlay 101 - Orange Selection Blocks
 
 Next part:  The orange selection blocks.  Walking around the map will show that the old selection blocks are still there:
 
-![](town_map_first_pass_in_rom_3.png)
+![](town_map_first_pass_in_rom_1.png)
 
 As previously mentioned, overlay 101 has another table.  This table is at 0xFC32 (0x021F7372) of overlay 101 and amount at 0x and 0x6156 (0x and 0x021ED896) and has the format for each entry:
 ```c
@@ -262,6 +266,8 @@ struct GearMapTownSelectionOverlay
     /* 0xF */ u8 orangeDimY; // in image
 }; // size = 0x10
 ```
+Note that I have yet to document what the flags do.
+
 The table split up by entry:
 ```
 09 02 13 02 33 C0 41 00 00 00 00 00 00 00 00 00
@@ -392,15 +398,36 @@ This table is (somewhat) sporadically labeled, instead of being super in-depth.
 
 These are all as simple as the table makes it seem.  When anywhere within the coordinates ``(baseX+dimX, baseY+dimY)``, the PokéGear will select the entire orange area as specified on the image by the area ``(orangeBaseX+orangeDimX, orangeBaseY+orangeDimY)``.
 
-This can also similarly be broken down into a nice spreadsheet for easy editing and pasting into the ROM.  I actually include mine as a template for you to download.  My entries look something like this (each commented):
+This can also similarly be broken down into a nice spreadsheet for easy editing and pasting into the ROM.  I actually include mine as a [template for you to download](town_map_blocks.xlsx).  My entries look something like this (each commented):
 ```
         mapHeader  baseX  baseY  dim  flags  textEntry  flySpot  padding      orangeBaseX  orangeBaseY  orangeDimX  orangeDimY
-[0x00]  09 02      13     02     33   C0     41         00       00 00 00 00  00           00           00          00          // sinjoh ruins
-[0x01]  33 01      18     10     33   C0     45         00       00 00 00 00  00           00           00          00          // s.s. aqua
+[0x00]  31 00      06     0E     11   00     0A         01       00 00 00 00  00           20           03          03          // littleroot
+[0x01]  32 00      06     0C     11   00     0B         02       00 00 00 00  00           20           03          03          // oldale
+[0x02]  33 00      02     07     22   00     0C         03       00 00 00 00  23           20           04          04          // rustboro
+[0x03]  34 00      11     0C     11   00     0D         04       00 00 00 00  00           20           03          03          // pacifidlog
+[0x04]  35 00      04     11     11   00     0E         05       00 00 00 00  00           20           03          03          // dewford
+[0x05]  36 00      09     0C     22   00     0F         06       00 00 00 00  23           20           04          04          // slateport
+[0x06]  37 00      09     08     12   00     10         07       00 00 00 00  1A           20           04          03          // mauville
+[0x07]  38 00      06     08     11   00     11         08       00 00 00 00  00           20           03          03          // verdanturf
+[0x08]  39 00      07     05     11   00     12         09       00 00 00 00  00           20           03          03          // lavaridge
+[0x09]  3B 00      0D     03     11   00     14         0A       00 00 00 00  00           20           03          03          // fortree
+[0x0A]  3C 00      11     05     23   00     15         0B       00 00 00 00  1E           20           05          04          // lilycove
+[0x0B]  43 00      17     06     12   00     16         0C       00 00 00 00  1A           20           04          03          // mossdeep
+[0x0C]  49 00      15     09     11   00     17         0D       00 00 00 00  00           20           03          03          // sootopolis
+[0x0D]  4A 00      1A     09     21   00     18         0E       00 00 00 00  0C           24           03          04          // ever grande
+[0x0E]  4B 00      03     0C     11   00     19         0F       00 00 00 00  00           20           03          03          // petalburg
+[0x0F]  3A 00      04     03     11   00     13         10       00 00 00 00  00           20           03          03          // fallarbor
+[0x10]  4C 00      0E     10     11   00     1A         11       00 00 00 00  00           20           03          03          // battle frontier
 ```
-Note that I haven't done the routes yet, but the cities are there to demonstrate functionality.  As an example, my 
+Note that I haven't done the routes yet, but the cities are there to demonstrate functionality.  As an example, my Rustboro city is at ``(2, 7)`` on the map, has a selectable dimension of 2x2, uses text entry as a blurb ``0x0C`` from a027/273 on the top screen when selected, and uses fly spot 2.
+Furthermore, the orange block that shows it is highlighted is located at ``(0x23, 0x20)`` on the massive town map image from earlier and is 4x4 in size.
+
+Putting everything together, we can run through the map rather nicely:
+
+![](final_town_map.png) ![](final_town_map_1.png) ![](final_town_map_2.png)
 
 ## TODO
+- ``flags`` field in ``GearMapTownSelectionOverlay``
 - PokéDex Map Editing
 - Roamer Maps Possible
 - Make sure flight spots work
