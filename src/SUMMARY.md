@@ -1,13 +1,3 @@
-# Guides
-### Generation IV
+# Summary
 
-### Generation V
-
-### Universal
-
-# Resources
-### Generation IV
-
-### Generation V
-
-### Universal
+- [Chapter 1](./chapter_1.md)
