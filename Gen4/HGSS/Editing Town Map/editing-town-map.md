@@ -30,9 +30,7 @@ Clicking on the NCLR file 14, the NCGR file 12, and the NSCR file 13 (in that or
 
 I've also been pretty careful about replacing old city maps with cities in my hack to ensure that every facet of this tutorial goes over well.  It requires a bit of planning, but will keep things nice and easy for you if you choose to edit the town map.  Editing that image and replacing the NSCR file with tiling encoding enabled will conclude the Town Previews.
 
-![](new_previews.png)
-
-Here, I replace Pallet with Littleroot, Viridian with Oldale, etc.  This allows the game to use the same headers (and specifically no more code modifications to attempt to redecide which header should get a small map preview).
+I haven't personally done this for my hack yet, as I have yet to place the buildings in most cities, so I have yet to replace these graphics.  I may come back eventually and update this.
 
 ### Town Map Graphics
 First we have to disable a few things from the town map code that copy over blank map parts before Kanto is unlocked.  We also make the entire region into Johto so that there are no issues dealing with the town map name changing:
@@ -61,9 +59,11 @@ This is a lot to take in at first.  We have the actual town map on top of the ma
 
 *Make sure that the top leftmost tile is just the transparent (first) color in the palette!*  Issues come up if you do not abide by this, and you'll think that everything is buggy until you realize that you just didn't do this.  This is just because of how Tinke does the tiling in the NSCR file.  From here, we can insert this into the ROM and observe that the Town Map is _kinda_ there, but all garbled in the areas of the original towns:
 
-As we can see as well, we need to take into account that the Safari Zone areas are blocked out first.
+As we can see as well, we need to take into account that the Safari Zone areas are blocked out first, so I make sure to replace those down in the bottom right as well.  Saving this image and reopening it in the ROM:
 
 ![](poke_gear_screen_red_area.png)
+
+*This being a garbled mess is 100% expected!*  We still have to deal with tables.
 
 Trust the process here, it will look better, but it isn't then worth it to stress about how it appears in game until we get through the final hex editing step.  The game does lots of tile swapping at run time.
 
