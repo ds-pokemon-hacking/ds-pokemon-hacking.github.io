@@ -8,7 +8,7 @@
     - [Black and White]()
     - [Black 2 and White 2]()          
     - [Universal]()
-        - [Code Injection](gen_v/universal/guides/code_injection/code_injection.md)  
+        - [Code Injection](gen5/universal/guides/code_injection/code_injection.md)  
 - [Universal]()
 
 # Resources
@@ -18,6 +18,6 @@
     - [Black 2 and White 2]()
     - [Universal]()
         - [Structures]()           
-            - [Zone Entities](gen_v/universal/structures/field/zone_entities.md)
+            - [Zone Entities](gen5/universal/structures/field/zone_entities.md)
 - [Universal]()
 
