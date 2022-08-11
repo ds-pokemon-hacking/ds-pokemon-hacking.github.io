@@ -1,14 +1,35 @@
 # Town Map Editing - HGSS
 The Town Map in Heart Gold is located solely within the Poké Gear, a departure from some previous games where the Town Map is a key item that gets a very large area to mess around on.  Because of this, the region is actually relatively cramped to start out with--Kanto makes a few sacrifices to nicely fit into the 32x32 blocks that the game uses--every square that the town map has corresponds to a 32x32 grid block, hence the reason that glitches like tweaking work in Platinum to go out of bounds and access the islands for Shaymin, Darkrai, and Cresselia.
 
-In this tutorial, I look to turn Johto & a little of Kanto into Hoenn.  While the images are included here as examples of what you can do, I ask that you refrain from copying my images (at least while I am still an active hacker, actively developing for my own hack).  Otherwise, just let me know if you want to use resources and we can talk.
+In this guide, I look to turn Johto & a little of Kanto into Hoenn.  While the images are included here as examples of what you can do, I ask that you refrain from copying my images (at least while I am still an active hacker, actively developing for my own hack).  Otherwise, just let me know if you want to use resources and we can talk.
+
+All research for this guide & the writing was done by BluRose.
+
+---
+
+## Table of Contents
+* [Prerequisites](#prerequisites)
+* [Part 1 - Graphics](#part-1---graphics)
+  * [Protagonist Portraits](#protagonist-portraits)
+  * [Town Previews](#town-previews)
+  * [Town Map Graphics](#town-map-graphics)
+* [Part 2 - Overlay 101 Hex Editing](#part-2---overlay-101-hex-editing)
+  * [Red/Gray Map Chunks, Flight Spots](#redgray-map-chunks-flight-spots)
+  * [Orange Selection Blocks](#orange-selection-blocks)
+* [Appendix](#appendix)
+* [TODO](#todo)
+---
 
 ## Prerequisites
 - Comfortability with hex editing (and I mean comfortability, this gets pretty intense) and interpreting data
 - Comfortability with Tinke
 
+---
+
 ## Part 1 - Graphics
 First thing's first, the graphics are the easy part.  ``a144`` contains all of the graphics for the Town Map.  These are all easily editable using Tinke--a tutorial for which will not be covered here.  Refer to Jay's tutorials on YouTube for a basics of graphics editing tutorial.
+
+---
 
 ### Protagonist Portraits
 Clicking on the NCLR file 0 and then the NCGR file 1 will give you the town map portraits and the selectors--set the width to 16 and the height to 232.  Here you can replace the protagonist mugshots with whatever you can fit in the 16x16 space that uses very few colors to keep the rest of the indicators the same.  The roamers are also here, all of the Beasts and the Lati twins--feel free to change those as your hack requires!
@@ -23,6 +44,8 @@ You can even check out the portraits in the game if you repack the narc and resa
 
 ![](new_portrait_in_game.png)
 
+---
+
 ### Town Previews
 Clicking on the NCLR file 14, the NCGR file 12, and the NSCR file 13 (in that order to load resources properly for editing) will give the Town Previews.  These are the things shown along the top of the Poké Gear when the town is hovered over.  There are 20 of these slots available--as this serves the purposes for my hack, I haven't looked into expanding it, but may eventually.  Kanto and Johto combined give a lot of leeway in this sense.
 
@@ -31,6 +54,8 @@ Clicking on the NCLR file 14, the NCGR file 12, and the NSCR file 13 (in that or
 I've also been pretty careful about replacing old city maps with cities in my hack to ensure that every facet of this tutorial goes over well.  It requires a bit of planning, but will keep things nice and easy for you if you choose to edit the town map.  Editing that image and replacing the NSCR file with tiling encoding enabled will conclude the Town Previews.
 
 I haven't personally done this for my hack yet, as I have yet to place the buildings in most cities, so I have yet to replace these graphics.  I may come back eventually and update this.
+
+---
 
 ### Town Map Graphics
 First we have to disable a few things from the town map code that copy over blank map parts before Kanto is unlocked.  We also make the entire region into Johto so that there are no issues dealing with the town map name changing:
@@ -90,7 +115,11 @@ Then we just need to add the highlighted orange areas to the image, or rather th
 
 Now we move to making this look alright in the game and into overlay 101.
 
-## Part 2 - Overlay 101 - Red/Gray City Map Chunk, Flight Spots
+---
+
+## Part 2 - Overlay 101 Hex Editing
+
+### Red/Gray Map Chunks, Flight Spots
 Overlay 101 has a table governing replacing the red town chunks with the gray town chunks when the town hasn't been visited, and another governing the orange selected overlay that appears when you select a town chunk or route chunk.  The first table is at 0x10274 (0x021F79B4) of overlay 101, and has the format for each entry:
 ```c
 struct GearMapTownOverlay
@@ -252,7 +281,9 @@ Inserting into the ROM:
 
 We can see that unregistered areas (Pacifidlog, Dewford, Lavaridge) are copied properly from their gray entries below.  All the red areas are also properly partitioned and are just fine when registered.
 
-## Part 3 - Overlay 101 - Orange Selection Blocks
+---
+
+### Orange Selection Blocks
 
 Next part:  The orange selection blocks.  Walking around the map will show that the old selection blocks are still there:
 
@@ -439,7 +470,13 @@ Putting everything together, we can run through the map rather nicely:
 
 ![](final_town_map.png) ![](final_town_map_1.png) ![](final_town_map_2.png)
 
-## GearMapTownOverlay Struct Description
+![](final_fly_map.png) ![](final_fly_map_1.png) ![](final_fly_map_2.png)
+
+---
+
+## Appendix
+
+### GearMapTownOverlay Struct Description
 ```c
 struct GearMapTownOverlay
 {
@@ -476,7 +513,9 @@ struct GearMapTownOverlay
 | offsetX           | x offset within the replacement block of the actual town    | u8:4 (4 bits)  |
 | padding           | unused (ensures next entry is 2-byte aligned)               | u8             |
 
-## GearMapTownSelectionOverlay Struct Description
+---
+
+### GearMapTownSelectionOverlay Struct Description
 ```c
 struct GearMapTownSelectionOverlay
 {
@@ -511,8 +550,9 @@ struct GearMapTownSelectionOverlay
 | orangeDimX        | x dimension in image of the orange overlay block            | u8             |
 | orangeDimY        | y dimension in image of the orange overlay block            | u8             |
 
+---
+
 ## TODO
 - ``flags`` field in ``GearMapTownSelectionOverlay``
 - PokéDex Map Editing
 - Roamer Maps Possible
-- Make sure flight spots work
