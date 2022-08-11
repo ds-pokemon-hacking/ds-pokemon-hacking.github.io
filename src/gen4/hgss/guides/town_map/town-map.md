@@ -38,12 +38,18 @@ First we have to disable a few things from the town map code that copy over blan
 Limit the PokéGear selectable area - Overlay 101
 0x307C - [max x coord selectable]
 0xFC18 - [max x coord selectable] 00 [max x coord selectable] 00 [max x coord selectable] 00
-For example, my FC18 looks like 1D 00 1D 00 1D 00
+For example, my FC18 looks like 1C 00 1C 00 1C 00
+This is the normal PokéGear map area limiter.
+
+The same byte sequence exists at 0x107FC, and is used for the Fly map--replace that one too.
 
 Make no map replacement from right part of image before Kanto is unlocked - Overlay 101
 0x3846 - 00 00 00 00 00 00
 0x38D6 - 00 00
 0x38E2 - 00 00
+
+Allow the user to fly to any region (make ov101_021EA804 always return 1) - Overlay 101
+0x30C4 - 01 20 70 47
 
 Cianwood we just replace the areas as needed.  Not all that bad, no need to find the code for it.
 ```
@@ -85,7 +91,7 @@ Then we just need to add the highlighted orange areas to the image, or rather th
 Now we move to making this look alright in the game and into overlay 101.
 
 ## Part 2 - Overlay 101 - Red/Gray City Map Chunk, Flight Spots
-Overlay 101 has a table governing replacing the red town chunks with the gray town chunks when the town hasn't been visited, and another governing the orange selected overlay that appears when you select a town chunk or route chunk.  The first table is at 0x10274 (0x021F79B4) of overlay 101, the amount of entries is the byte at 0x3124 (0x021EA864 - originally 0x1B), and has the format for each entry:
+Overlay 101 has a table governing replacing the red town chunks with the gray town chunks when the town hasn't been visited, and another governing the orange selected overlay that appears when you select a town chunk or route chunk.  The first table is at 0x10274 (0x021F79B4) of overlay 101, and has the format for each entry:
 ```c
 struct GearMapTownOverlay
 {
@@ -229,16 +235,16 @@ My table looks like:
 [0x0E]  4A 00      4A 00       0E      0E      1A    07    0A     1A     21       43       11         00       // ever grande
 [0x0F]  4B 00      4B 00       0F      0F      03    0A    00     19     11       23       11         00       // petalburg (replaced cianwood)
 [0x10]  4C 00      4C 00       10      10      0E    0E    0D     1B     11       33       11         00       // battle frontier
-[0x11]  4D 00      4D 00       11      11      08    07    00     00     11       00       00         00       // battle frontier 2
-[0x12]  4E 00      4E 00       12      12      0B    04    00     00     22       00       00         00       // empty
-[0x13]  57 00      57 00       13      13      10    05    00     00     11       00       00         00       // empty
-[0x14]  59 00      59 00       15      13      14    04    00     00     22       00       00         00       // empty
-[0x15]  58 00      58 00       14      FF      0F    01    00     00     23       00       00         00       // empty
-[0x16]  5A 00      5A 00       16      FF      19    08    00     00     11       00       00         00       // empty
-[0x17]  AE 00      AE 00       1E      FF      02    08    00     00     22       00       00         00       // safari zone gate
-[0x18]  10 01      9B 01       1B      FF      06    06    00     00     22       00       00         00       // battle frontier/access
-[0x19]  60 00      18 01       23      FF      0A    06    00     00     22       00       00         00       // national park/athlon dome
-[0x1A]  7C 00      1E 00       21      FF      1C    07    00     00     21       00       00         00       // victory road/route 26
+[0x11]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x12]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x13]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x14]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x15]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x16]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x17]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x18]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x19]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
+[0x1A]  00 00      00 00       00      00      00    00    00     00     00       00       00         00       // empty
 ```
 Inserting into the ROM:
 
@@ -252,7 +258,7 @@ Next part:  The orange selection blocks.  Walking around the map will show that 
 
 ![](town_map_first_pass_in_rom_1.png)
 
-As previously mentioned, overlay 101 has another table.  This table is at 0xFC32 (0x021F7372) of overlay 101 and amount at 0x44 and 0x6156 (0x021E7784 and 0x021ED896) and has the format for each entry:
+As previously mentioned, overlay 101 has another table.  This table is at 0xFC32 (0x021F7372) of overlay 101, and has the format for each entry:
 ```c
 struct GearMapTownSelectionOverlay
 {
@@ -424,6 +430,8 @@ This can also similarly be broken down into a nice spreadsheet for easy editing 
 [0x0F]  3A 00      04     03     11   00     13         10       00 00 00 00  00           20           03          03          // fallarbor
 [0x10]  4C 00      0E     10     11   00     1A         11       00 00 00 00  00           20           03          03          // battle frontier
 ```
+The rest of them are 00'd out to ensure that nothing is displayed in the PokéGear.
+
 Note that I haven't done the routes yet, but the cities are there to demonstrate functionality.  As an example, my Rustboro city is at ``(2, 7)`` on the map, has a selectable dimension of 2x2, uses text entry as a blurb ``0x0C`` from a027/273 on the top screen when selected, and uses fly spot 2.
 Furthermore, the orange block that shows it is highlighted is located at ``(0x23, 0x20)`` on the massive town map image from earlier and is 4x4 in size.
 
