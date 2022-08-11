@@ -4,6 +4,10 @@
 
 # Guides
 - [Generation IV]()
+    - [Diamond and Pearl]()
+    - [Platinum]()
+    - [Heartgold and SoulSilver]()
+        - [Editing the Town Map](gen4/hgss/guides/town_map/town_map.md)
 - [Generation V]()
     - [Black and White]()
     - [Black 2 and White 2]()          
