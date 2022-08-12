@@ -29,10 +29,10 @@ struct ContainerMap
     uint32_t length;
     
     // data
-    NSBMD dataModel;
-    SectionPermission dataPermissions[numberSections - 2];
-    SectionBuildingTable dataBuildingTable;
-} 
+    struct NSBMD dataModel;
+    struct SectionPermission dataPermissions[numberSections - 2];
+    struct SectionBuildingTable dataBuildingTable;
+};
 ```
 | Field Name          | Description                                                                             | Data Type |
 |---------------------|-----------------------------------------------------------------------------------------|-----------|
@@ -42,9 +42,9 @@ struct ContainerMap
 | offsetPermissions   | Points to the movement permission data.                                                 | uint32_t[numberSections - 2] |
 | offsetBuildingTable | Points to the building table.                                                           | uint32_t  |
 | length              | Length of this file.                                                                    | uint32_t  |
-| dataModel           | 3D model of the map. NSBMD format without a texture section.                            | NSBMD     |
-| dataPermissions     | 0, 1 or 2 permission sections. A 2nd one can be used for things like bridges where one can walk on two different heights.                                                                                                                                       | SectionPermission[numberSections - 2] |
-| dataBuildingTable   | Define appearance settings for all buildings.                                           | SectionBuildingTable |
+| dataModel           | 3D model of the map. NSBMD format without a texture section.                            | [NSBMD](#model)     |
+| dataPermissions     | 0, 1 or 2 permission sections. A 2nd one can be used for things like bridges where one can walk on two different heights. | [SectionPermission](#permissions)[numberSections - 2] |
+| dataBuildingTable   | Define appearance settings for all buildings.                                           | [SectionBuildingTable](#building-table) |
 
 ---
 
@@ -64,38 +64,38 @@ struct SectionPermission
     uint16_t height;
     
     // data
-    Tile tile[width * height];
-    CornerTerrain corner[numberOfCorners];
-} 
+    struct Tile tile[width * height];
+    struct CornerTerrain corner[numberCorners];
+};
 ```
-| Field Name | Description                                                                             | Data Type |
-|------------|-----------------------------------------------------------------------------------------|-----------|
-| width      | Number of tiles in horizontal direction. | uint16_t |
-| height     | Number of tiles in vertical direction. | uint16_t |
-| tile       | Individual soil properties for all fields. | Tile |
-| corner     | Special terrain properties for corners. ... | CornerTerrain |
+| Field Name | Description                                 | Data Type                      |
+|------------|---------------------------------------------|--------------------------------|
+| width      | Number of tiles in horizontal direction.    | uint16_t                       |
+| height     | Number of tiles in vertical direction.      | uint16_t                       |
+| tile       | Individual soil properties for all fields.  | [Tile](#tile)[width * height]  |
+| corner     | Special terrain properties for corners. ... | [CornerTerrain](#terrain-extension-for-corners)[numberCorners] |
 
 #### Tile
 ```c
 // "WB" and "GC" type maps:
 struct Tile
 {
-    TileTerrain terrain;
-    TileEnvironment environment;
-}
+    struct TileTerrain terrain;
+    struct TileEnvironment environment;
+}; // entry size = 0x8
 
 // "RD" type maps:
 struct Tile
 {
     int8_t unknown[20]; // TODO: document structure
-    TileEnvironment environment;
-}
+    struct TileEnvironment environment;
+}; // entry size = 0x18
 ```
-| Field Name  | Description                                                                                   | Data Type       |
-|-------------|-----------------------------------------------------------------------------------------------|-----------------|
-| terrain     | Defines height and slope on which overworlds are placed.                                      | TileTerrain     |
-| unknown     | Data for `"RD"`-type maps. Those maps have flag based object placement. (TODO: document this) | int8_t[20]      |
-| environment | Interaction between tile and overworld.                                                       | TileEnvironment |
+| Field Name  | Description                                                                                   | Data Type                       |
+|-------------|-----------------------------------------------------------------------------------------------|---------------------------------|
+| terrain     | Defines height and slope on which overworlds are placed.                                      | [TileTerrain](#terrain)         |
+| unknown     | Data for `"RD"`-type maps. Those maps have flag based object placement. (TODO: document this) | int8_t[20]                      |
+| environment | Interaction between tile and overworld.                                                       | [TileEnvironment](#environment) |
 
 #### Terrain
 ```c
@@ -103,12 +103,12 @@ struct TileTerrain
 {
     uint16_t inclination;
     uint16_t distance;
-}
+}; // entry size = 0x4
 ```
-| Field Name  | Description                                                                                                                        | Data Type |
-|-------------|------------------------------------------------------------------------------------------------------------------------------------|-----------|
-| inclination | Indexes a specific terrain slope. Probably flag based with a format like `0bTTTT'TTTT'TTTT'TTCR` with `T = terrain settings`, `C = is corner` and `R = reset`                                                                                                                                             | uint16_t  |
-| distance    | Indexes values that represent the distance perpendicular to the center of the map when the plane is extended to allow that vector. | uint16_t  |
+| Field Name  | Description | Data Type |
+|-------------|-------------|-----------|
+| inclination | Indexes a specific terrain slope. Probably flag based with a format like `0bTTTT'TTTT'TTTT'TTCR` with `T = terrain settings`, `C = is corner` and `R = reset` | uint16_t  |
+| distance    | Indexes values that represent the distance perpendicular to the center of the map when the plane is extended to allow that vector. If the inclination for this tile indicates a corner, the field represents the index of the corner instead. Counting starts by zero. | uint16_t  |
 
 TODO: add database
 
@@ -118,7 +118,7 @@ struct TileEnvironment
 {
     uint16_t behavior;
     uint16_t flags;
-}
+}; // entry size = 0x4
 ```
 | Field Name | Description                                                                                                            | Data Type |
 |------------|------------------------------------------------------------------------------------------------------------------------|-----------|
@@ -127,8 +127,8 @@ struct TileEnvironment
 
 Environment flags:
 
-| Bitmask                            | Description |
-|------------------------------------|-------------|
+| Bitmask  | Description                                                                                                     |
+|----------|-----------------------------------------------------------------------------------------------------------------|
 | `0x0001` | Interactable field. Usually used for collisions but depending on the behavior-value it can also result in jumping over, talk to behind, interact with furniture, ... |
 | `0x0002` | Surfable tile, does not include fishing!                                                                        |
 | `0x0004` | Enable wild pokemon encounter for this tile                                                                     |
@@ -148,7 +148,7 @@ struct CornerTerrain
     uint16_t inclinationBottom;
     uint16_t distanceTop;
     uint16_t distanceBottom;
-}
+}; // entry size = 0x8
 ```
 | Field Name        | Description                                                                                  | Data Type |
 |-------------------|----------------------------------------------------------------------------------------------|-----------|
@@ -165,16 +165,16 @@ struct CornerTerrain
 struct SectionBuildingTable
 {
     // header
-    uint32_t numberOfBuildings;
+    uint32_t numberBuildings;
     
     // data
-    BuildingProperties building[numberOfBuildings];
-}
+    struct BuildingProperties building[numberBuildings];
+};
 ```
-| Field Name        | Description                                                                                    | Data Type           |
-|-------------------|------------------------------------------------------------------------------------------------|---------------------|
-| numberOfBuildings | Header of the building table, tells how many building are assigned to the map.                 | uint32_t            |
-| building          | Display settings for a building. Includes local position, yaw rotation and the building index. | BuildingProperties  |
+| Field Name        | Description                                                                                    | Data Type |
+|-------------------|------------------------------------------------------------------------------------------------|-----------|
+| numberBuildings | Header of the building table, tells how many building are assigned to the map.                   | uint32_t  |
+| building          | Display settings for a building. Includes local position, yaw rotation and the building index. | [BuildingProperties](#building-display-settings)  |
 
 #### Building display settings
 ```c
@@ -185,7 +185,7 @@ struct BuildingProperties
     int32_t localPositionZ;
     uint16_t rotationAngleYaw;
     uint16_t buildingID; // big endian
-}
+}; // entry size = 0x10
 ```
 | Field Name       | Description                                                                | Data Type |
 |------------------|----------------------------------------------------------------------------|-----------|
