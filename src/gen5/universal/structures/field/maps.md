@@ -8,6 +8,7 @@
   * [Model](#model)
   * [Permissions](#permissions)
   * [Building Table](#building-table)
+* [TODO](#todo)
 ---
 
 ## Data Location
@@ -34,16 +35,16 @@ struct ContainerMap
     struct SectionBuildingTable dataBuildingTable;
 };
 ```
-| Field Name          | Description                                                                             | Data Type |
-|---------------------|-----------------------------------------------------------------------------------------|-----------|
-| signature           | `"NG"`: No permission section.  <br /> `"WB"`: One permission section. <br /> `"GC"`: Two permission sections. <br /> `"RD"`: One permission section, but with a different file format. | int8_t[2] |
-| numberSections      | Number of data sections within this file.                                               | uint16_t  |
-| offsetModel         | Points to the 3D model of the map.                                                      | uint32_t  |
-| offsetPermissions   | Points to the movement permission data.                                                 | uint32_t[numberSections - 2] |
-| offsetBuildingTable | Points to the building table.                                                           | uint32_t  |
-| length              | Length of this file.                                                                    | uint32_t  |
-| dataModel           | 3D model of the map. NSBMD format without a texture section.                            | [NSBMD](#model)     |
-| dataPermissions     | 0, 1 or 2 permission sections. A 2nd one can be used for things like bridges where one can walk on two different heights. | [SectionPermission](#permissions)[numberSections - 2] |
+| Field Name          | Description                                                                             | Data Type       |
+|---------------------|-----------------------------------------------------------------------------------------|-----------------|
+| signature           | `"NG"`: No permission section.  <br /> `"WB"`: One permission section. <br /> `"GC"`: Two permission sections. <br /> `"RD"`: One permission section, but with a different file format. | int8_t[] |
+| numberSections      | Number of data sections within this file.                                               | uint16_t        |
+| offsetModel         | Points to the 3D model of the map.                                                      | uint32_t        |
+| offsetPermissions   | Points to the movement permission data.                                                 | uint32_t[]      |
+| offsetBuildingTable | Points to the building table.                                                           | uint32_t        |
+| length              | Length of this file.                                                                    | uint32_t        |
+| dataModel           | 3D model of the map. NSBMD format without a texture section.                            | [NSBMD](#model) |
+| dataPermissions     | 0, 1 or 2 permission sections. A 2nd one can be used for things like bridges where one can walk on two different heights. | [SectionPermission](#permissions)[] |
 | dataBuildingTable   | Define appearance settings for all buildings.                                           | [SectionBuildingTable](#building-table) |
 
 ---
@@ -68,12 +69,12 @@ struct SectionPermission
     struct CornerTerrain corner[numberCorners];
 };
 ```
-| Field Name | Description                                 | Data Type                      |
-|------------|---------------------------------------------|--------------------------------|
-| width      | Number of tiles in horizontal direction.    | uint16_t                       |
-| height     | Number of tiles in vertical direction.      | uint16_t                       |
-| tile       | Individual soil properties for all fields.  | [Tile](#tile)[width * height]  |
-| corner     | Special terrain properties for corners. ... | [CornerTerrain](#terrain-extension-for-corners)[numberCorners] |
+| Field Name | Description                                                   | Data Type                                         |
+|------------|---------------------------------------------------------------|---------------------------------------------------|
+| width      | Number of tiles in horizontal direction.                      | uint16_t                                          |
+| height     | Number of tiles in vertical direction.                        | uint16_t                                          |
+| tile       | Individual soil properties for all fields.                    | [Tile](#tile)[]                                   |
+| corner     | Special terrain properties for corners. Corners are optional. | [CornerTerrain](#terrain-extension-for-corners)[] |
 
 #### Tile
 ```c
@@ -91,11 +92,11 @@ struct Tile
     struct TileEnvironment environment;
 }; // entry size = 0x18
 ```
-| Field Name  | Description                                                                                   | Data Type                       |
-|-------------|-----------------------------------------------------------------------------------------------|---------------------------------|
-| terrain     | Defines height and slope on which overworlds are placed.                                      | [TileTerrain](#terrain)         |
-| unknown     | Data for `"RD"`-type maps. Those maps have flag based object placement. (TODO: document this) | int8_t[20]                      |
-| environment | Interaction between tile and overworld.                                                       | [TileEnvironment](#environment) |
+| Field Name  | Description                                                             | Data Type                       |
+|-------------|-------------------------------------------------------------------------|---------------------------------|
+| terrain     | Defines height and slope on which overworlds are placed.                | [TileTerrain](#terrain)         |
+| unknown     | Data for `"RD"`-type maps. Those maps have flag based object placement. | int8_t[]                        |
+| environment | Interaction between tile and overworld.                                 | [TileEnvironment](#environment) |
 
 #### Terrain
 ```c
@@ -411,3 +412,11 @@ struct BuildingProperties
 | localPositionZ   | Z position relative to the center of the map.                              | uint32_t  |
 | rotationAngleYaw | Counterclockwise yaw rotation angle.                                       | uint16_t  |
 | buildingID       | ID of the building model. Unlike most variables, this on is in big endian. | uint16_t  |
+
+---
+
+## TODO
+- Link the NSBMD section to external resources.
+- Research and document "RD" type maps.
+- Add terrain tables or insight into its internal working. Do NOT add the one with float values!
+- Research and document the `behavior` values properly.
