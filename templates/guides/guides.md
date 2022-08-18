@@ -1,8 +1,14 @@
 # Tutorial Name
 > This guide was written by [MartyMcFly]().
 
---- 
 This is a tutorial on how to make tutorials. I think.
+
+--- 
+## Table of Contents
+* [Section](#section)
+  * [Subsection](#subsection)
+* [Section 2](#section-2)
+* [Section 3](#section-3)
 
 ## Section
 You can use steps, if you want.
