@@ -6,5 +6,5 @@ src = "src"
 title = "Kingdom of DS Hacking"
 
 [output.html.fold]
-enable = false    # whether or not to enable section folding
+enable = true     # whether or not to enable section folding
 level = 0         # the depth to start folding
