@@ -48,7 +48,7 @@ All you *need* to do is follow the instructions there, abridged here (currently 
 - Double click on the `applyfairytype.bat` batch file
   - A script will run that applies all the Fairy type code changes to copied overlay files and recompresses them in the base folder for ROM insertion
 - Open `base.nds` in Tinke
-- "Change file" all of overlays 167, 168, 207, 255, 265, and the arm9
+- "Change file" all of overlays 167, 168, 207, 255, 265, the overlay table (y9.bin), and the arm9
 - Save your ROM as some other named file
 
 <details>
