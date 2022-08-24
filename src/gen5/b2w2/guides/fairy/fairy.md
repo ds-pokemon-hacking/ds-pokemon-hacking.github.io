@@ -1,15 +1,15 @@
 # Fairy Type in B2W2
 > This guide was written by [BluRose](https://github.com/BluRosie) based significantly on research from [MeroMero](https://www.pokecommunity.com/showthread.php?t=349000).
 
-This is a tutorial that details how to insert the Fairy type in Black 2 and White 2 using MeroMero's [initial research from years ago](https://www.pokecommunity.com/showthread.php?t=349000) and building upon it with a new and improved better understanding of just what happens in the assembly.  While yet imperfect, the improvements allow for a much better Fairy representation overall, eliminating the appearance of glitched graphics and crashes overall.
+This is a tutorial that details how to insert the Fairy type in Black 2 and White 2 using MeroMero's [initial research from years ago](https://www.pokecommunity.com/showthread.php?t=349000) and building upon it with a new and improved better understanding of just what happens in the assembly.  While yet imperfect, the improvements allow for a much better Fairy representation overall, eliminating the appearance of glitched graphics and crashes entirely.
 
 ---
 ## Table of Contents
 * [Graphics](#graphics)
-  * [Type Icons - ``a082``, ``a125``](#type-icons-----a082------a125--)
-  * [Move Selection Palette - ``a011``](#move-selection-palette-----a011--)
-  * [Hall of Fame Palette - ``a213``](#hall-of-fame-palette-----a213--)
-* [Code - ASM File](##code--asm-file)
+  * [Type Icons - ``a082``, ``a125``](#type-icons---a082-a125)
+  * [Move Selection Palette - ``a011``](#move-selection-palette---a011)
+  * [Hall of Fame Palette - ``a213``](#hall-of-fame-palette---a213)
+* [Code - ASM File](#code---asm-file)
 * [Cleanup](#cleanup)
 * [TODO](#todo)
 

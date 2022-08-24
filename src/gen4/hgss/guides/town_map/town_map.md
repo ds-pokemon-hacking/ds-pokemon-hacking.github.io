@@ -18,18 +18,15 @@ In this guide, I look to turn Johto & a little of Kanto into Hoenn.  While the i
   * [Orange Selection Blocks](#orange-selection-blocks)
 * [Appendix](#appendix)
 * [TODO](#todo)
----
 
 ## Prerequisites
 - Comfortability with hex editing (and I mean comfortability, this gets pretty intense) and interpreting data
 - Comfortability with Tinke
 
----
 
 ## Part 1 - Graphics
 First thing's first, the graphics are the easy part.  ``a144`` contains all of the graphics for the Town Map.  These are all easily editable using Tinke--a tutorial for which will not be covered here.  Refer to Jay's tutorials on YouTube for a basics of graphics editing tutorial.
 
----
 
 ### Protagonist Portraits
 Clicking on the NCLR file 0 and then the NCGR file 1 will give you the town map portraits and the selectors--set the width to 16 and the height to 232.  Here you can replace the protagonist mugshots with whatever you can fit in the 16x16 space that uses very few colors to keep the rest of the indicators the same.  The roamers are also here, all of the Beasts and the Lati twins--feel free to change those as your hack requires!
@@ -44,7 +41,6 @@ You can even check out the portraits in the game if you repack the narc and resa
 
 ![](new_portrait_in_game.png)
 
----
 
 ### Town Previews
 Clicking on the NCLR file 14, the NCGR file 12, and the NSCR file 13 (in that order to load resources properly for editing) will give the Town Previews.  These are the things shown along the top of the Poké Gear when the town is hovered over.  There are 20 of these slots available--as this serves the purposes for my hack, I haven't looked into expanding it, but may eventually.  Kanto and Johto combined give a lot of leeway in this sense.
@@ -55,7 +51,6 @@ I've also been pretty careful about replacing old city maps with cities in my ha
 
 I haven't personally done this for my hack yet, as I have yet to place the buildings in most cities, so I have yet to replace these graphics.  I may come back eventually and update this.
 
----
 
 ### Town Map Graphics
 First we have to disable a few things from the town map code that copy over blank map parts before Kanto is unlocked.  We also make the entire region into Johto so that there are no issues dealing with the town map name changing:
@@ -115,7 +110,6 @@ Then we just need to add the highlighted orange areas to the image, or rather th
 
 Now we move to making this look alright in the game and into overlay 101.
 
----
 
 ## Part 2 - Overlay 101 Hex Editing
 
@@ -281,7 +275,6 @@ Inserting into the ROM:
 
 We can see that unregistered areas (Pacifidlog, Dewford, Lavaridge) are copied properly from their gray entries below.  All the red areas are also properly partitioned and are just fine when registered.
 
----
 
 ### Orange Selection Blocks
 
