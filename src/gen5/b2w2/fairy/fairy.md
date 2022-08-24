@@ -1,29 +1,43 @@
 # Fairy Type in B2W2
-> This guide was written by [BluRose]() based significantly on research from [MeroMero]().
+> This guide was written by [BluRose](https://github.com/BluRosie) based significantly on research from [MeroMero](https://www.pokecommunity.com/showthread.php?t=349000).
 
-This is a tutorial that details how to insert the Fairy type in Black 2 and White 2 using MeroMero's initial research from years ago and building upon it with a new and improved better understanding of just what happens in the assembly.  While yet imperfect, the improvements allow for a much better Fairy representation overall, eliminating the appearance of glitched graphics and crashes overall.
+This is a tutorial that details how to insert the Fairy type in Black 2 and White 2 using MeroMero's [initial research from years ago](https://www.pokecommunity.com/showthread.php?t=349000) and building upon it with a new and improved better understanding of just what happens in the assembly.  While yet imperfect, the improvements allow for a much better Fairy representation overall, eliminating the appearance of glitched graphics and crashes overall.
 
 ---
 ## Table of Contents
-* Graphics
-  * Type Icons - ``a082``, ``a125``
-  * Move Selection Palette - ``a011``
-  * Hall of Fame Palette - ``a213``
-* Code - ASM File
-* Cleaning up - Make Struggle typeless again
-* TODO
+* [Graphics](#graphics)
+  * [Type Icons - ``a082``, ``a125``](#type-icons-----a082------a125--)
+  * [Move Selection Palette - ``a011``](#move-selection-palette-----a011--)
+  * [Hall of Fame Palette - ``a213``](#hall-of-fame-palette-----a213--)
+* [Code - ASM File](##code--asm-file)
+* [Cleanup](#cleanup)
+* [TODO](#todo)
 
 ## Graphics
-
+Various other type graphics are leftover from possible features.  We look to replace those here.
 
 ### Type Icons - ``a082``, ``a125``
-Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.
+Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.  Tinke allows us to do this by replacing the relevant files, first in ``a082``: 
+
+[a082_33.RLCN](a082_33.RLCN) and [a082_51.RGCN](a082_33.RGCN) should replace the ones in the ROM from an extracted ``a082``.
+
+This replaces ![](cool_type.png) with ![](fairy_type_1.png)
+
+Similarly in ``a125``, we just replace the ??? type icon at the bottom of an image to now be the Fairy type, replacing the files in ``a125`` with [a125_22.RLCN](a125_22.RLCN) and [a125_23.RGCN](a125_23.RGCN)
+
+This replaces ![](question_type.png) with ![](fairy_type_2.png).
 
 ### Move Selection Palette - ``a011``
 Here we add a new palette to ``a011`` to make Fairy moves appear as pink in the move selection screen.
 
+This file is [a011_572.RLCN](a011_572.RLCN).
+
+``a011`` originally just has 571 files.  We add a 572nd file for our purposes.  You can either unpack/repack using narchive (included in the b2w2-fairy repository) or Extract directory using Tinke, add the file, and Change by directory using Tinke again.  
+
 ### Hall of Fame Palette - ``a213``
 Here we add a new palette to ``a213`` to make Fairy Pokémon show up in the Hall of Fame with a pink nameplate.  This is currently bugged and unfinished, but once the code is written it will be fixed in the Git repo.
+
+The file to replace with once extracted:  [a213_9.RLCN](a213_9.RLCN)
 
 ## Code - ASM File
 I have made a [repository](https://github.com/BluRosie/b2w2-fairy) which should be downloaded as-is that has the fairy type code and is maintained as such.  Any additions or changes (future bugfixes!) will be included there.
@@ -90,10 +104,10 @@ Here, the table `u32 type_to_loaded_gfx_hof[NUM_OF_TYPES]` exists to map the typ
 
 </details>
 
-## Cleaning up - Make Struggle typeless again
+## Cleanup
+From there, just make Struggle type 18 to make it typeless.  Assign all the Pokémon that need it to be Fairy type.  Make moves that have the Fairy typing as well.  It's now a functional type entirely!
 
 ## TODO
 - Type icon in the Dex does not show up--pure fairy types don't have anything show up!  Does not crash, though.
 - Hall of Fame palette loading--memory overflow or something?  Having it load nothing works fine, but appears as a black void.
 - PC Screen tag overlap--fairy is loaded in the same sprite slot as one of the box icons and is both scrolled as such and the box icon doesn't show up in the menu.
-
