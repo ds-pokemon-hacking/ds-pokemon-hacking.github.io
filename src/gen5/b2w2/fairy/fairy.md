@@ -104,6 +104,8 @@ Here, the table `u32 type_to_loaded_gfx_hof[NUM_OF_TYPES]` exists to map the typ
 
 </details>
 
+![](summary_1.png) ![](summary_2.png) ![](select.png) ![](pc_screen.png)
+
 ## Cleanup
 From there, just make Struggle type 18 to make it typeless.  Assign all the Pokémon that need it to be Fairy type.  Make moves that have the Fairy typing as well.  It's now a functional type entirely!
 
