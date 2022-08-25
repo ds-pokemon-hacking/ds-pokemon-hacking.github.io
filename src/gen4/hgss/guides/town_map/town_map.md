@@ -1,14 +1,32 @@
 # Town Map Editing - HGSS
+> All research for this guide & the writing was done by [BluRose](https://github.com/BluRosie).
+
 The Town Map in Heart Gold is located solely within the Poké Gear, a departure from some previous games where the Town Map is a key item that gets a very large area to mess around on.  Because of this, the region is actually relatively cramped to start out with--Kanto makes a few sacrifices to nicely fit into the 32x32 blocks that the game uses--every square that the town map has corresponds to a 32x32 grid block, hence the reason that glitches like tweaking work in Platinum to go out of bounds and access the islands for Shaymin, Darkrai, and Cresselia.
 
-In this tutorial, I look to turn Johto & a little of Kanto into Hoenn.  While the images are included here as examples of what you can do, I ask that you refrain from copying my images (at least while I am still an active hacker, actively developing for my own hack).  Otherwise, just let me know if you want to use resources and we can talk.
+In this guide, I look to turn Johto & a little of Kanto into Hoenn.  While the images are included here as examples of what you can do, I ask that you refrain from copying my images (at least while I am still an active hacker, actively developing for my own hack).  Otherwise, just let me know if you want to use resources and we can talk.
+
+---
+
+## Table of Contents
+* [Prerequisites](#prerequisites)
+* [Part 1 - Graphics](#part-1---graphics)
+  * [Protagonist Portraits](#protagonist-portraits)
+  * [Town Previews](#town-previews)
+  * [Town Map Graphics](#town-map-graphics)
+* [Part 2 - Overlay 101 Hex Editing](#part-2---overlay-101-hex-editing)
+  * [Red/Gray Map Chunks, Flight Spots](#redgray-map-chunks-flight-spots)
+  * [Orange Selection Blocks](#orange-selection-blocks)
+* [Appendix](#appendix)
+* [TODO](#todo)
 
 ## Prerequisites
 - Comfortability with hex editing (and I mean comfortability, this gets pretty intense) and interpreting data
 - Comfortability with Tinke
 
+
 ## Part 1 - Graphics
-First thing's first, the graphics are the easy part.  ``a144`` contains all of the graphics for the Town Map.  These are all easily editable using Tinke--a tutorial for which will not be covered here.  Refer to Jay's tutorials on YouTube for a basics of graphics editing tutorial.
+First thing's first, the graphics are the easy part.  ``a/1/4/4`` contains all of the graphics for the Town Map.  These are all easily editable using Tinke--a tutorial for which will not be covered here.  Refer to Jay's tutorials on YouTube for a basics of graphics editing tutorial.
+
 
 ### Protagonist Portraits
 Clicking on the NCLR file 0 and then the NCGR file 1 will give you the town map portraits and the selectors--set the width to 16 and the height to 232.  Here you can replace the protagonist mugshots with whatever you can fit in the 16x16 space that uses very few colors to keep the rest of the indicators the same.  The roamers are also here, all of the Beasts and the Lati twins--feel free to change those as your hack requires!
@@ -23,6 +41,7 @@ You can even check out the portraits in the game if you repack the narc and resa
 
 ![](new_portrait_in_game.png)
 
+
 ### Town Previews
 Clicking on the NCLR file 14, the NCGR file 12, and the NSCR file 13 (in that order to load resources properly for editing) will give the Town Previews.  These are the things shown along the top of the Poké Gear when the town is hovered over.  There are 20 of these slots available--as this serves the purposes for my hack, I haven't looked into expanding it, but may eventually.  Kanto and Johto combined give a lot of leeway in this sense.
 
@@ -31,6 +50,7 @@ Clicking on the NCLR file 14, the NCGR file 12, and the NSCR file 13 (in that or
 I've also been pretty careful about replacing old city maps with cities in my hack to ensure that every facet of this tutorial goes over well.  It requires a bit of planning, but will keep things nice and easy for you if you choose to edit the town map.  Editing that image and replacing the NSCR file with tiling encoding enabled will conclude the Town Previews.
 
 I haven't personally done this for my hack yet, as I have yet to place the buildings in most cities, so I have yet to replace these graphics.  I may come back eventually and update this.
+
 
 ### Town Map Graphics
 First we have to disable a few things from the town map code that copy over blank map parts before Kanto is unlocked.  We also make the entire region into Johto so that there are no issues dealing with the town map name changing:
@@ -90,7 +110,10 @@ Then we just need to add the highlighted orange areas to the image, or rather th
 
 Now we move to making this look alright in the game and into overlay 101.
 
-## Part 2 - Overlay 101 - Red/Gray City Map Chunk, Flight Spots
+
+## Part 2 - Overlay 101 Hex Editing
+
+### Red/Gray Map Chunks, Flight Spots
 Overlay 101 has a table governing replacing the red town chunks with the gray town chunks when the town hasn't been visited, and another governing the orange selected overlay that appears when you select a town chunk or route chunk.  The first table is at 0x10274 (0x021F79B4) of overlay 101, and has the format for each entry:
 ```c
 struct GearMapTownOverlay
@@ -112,7 +135,7 @@ struct GearMapTownOverlay
     /* 0xD */ u8 padding;
 }; // entry size = 0xE
 ```
-More in-depth structure description and the fields appear at the [bottom of this page](#gearmaptownoverlay-struct-description).
+More in-depth structure description and the fields appear on [this other page](../../structures/town_map/town_map_spots.md).
 
 So let's look at this table, split up by entry (0xE in size):
 ```
@@ -252,7 +275,8 @@ Inserting into the ROM:
 
 We can see that unregistered areas (Pacifidlog, Dewford, Lavaridge) are copied properly from their gray entries below.  All the red areas are also properly partitioned and are just fine when registered.
 
-## Part 3 - Overlay 101 - Orange Selection Blocks
+
+### Orange Selection Blocks
 
 Next part:  The orange selection blocks.  Walking around the map will show that the old selection blocks are still there:
 
@@ -277,7 +301,7 @@ struct GearMapTownSelectionOverlay
     /* 0xF */ u8 orangeDimY; // in image
 }; // size = 0x10
 ```
-Note that I have yet to document what the flags do.  The ``GearMapTownSelectionOverlay`` is better documented as well [at the end of this page](#gearmaptownselectionoverlay-struct-description).
+Note that I have yet to document what the flags do.  The ``GearMapTownSelectionOverlay`` is better documented as well [on this page](../../structures/town_map/town_map_spots.md).
 
 The table split up by entry:
 ```
@@ -439,80 +463,9 @@ Putting everything together, we can run through the map rather nicely:
 
 ![](final_town_map.png) ![](final_town_map_1.png) ![](final_town_map_2.png)
 
-## GearMapTownOverlay Struct Description
-```c
-struct GearMapTownOverlay
-{
-    /* 0x0 */ u16 mapHeader;
-    /* 0x2 */ u16 gateAppearance; // not sure
-    /* 0x4 */ u8 entry; // maybe
-    /* 0x5 */ u8 entry2; // maybe
-    /* 0x6 */ u8 redX;
-    /* 0x7 */ u8 redY;
-    /* 0x8 */ u8 grayX;
-    /* 0x9 */ u8 grayY;
-    /* 0xA */ u8 townDimY:4; // msn
-              u8 townDimX:4; // lsn
-    /* 0xB */ u8 replacementDimY:4; // msn
-              u8 replacementDimX:4; // lsn
-    /* 0xC */ u8 offsetY:4; // msn
-              u8 offsetX:4; // lsn
-    /* 0xD */ u8 padding;
-}; // entry size = 0xE
-```
-| Field Name        | Description                                                 | Data Type      |
-|-------------------|-------------------------------------------------------------|----------------|
-| mapHeader         | the map header that the entry describes                     | u16            |
-| gateAppearance    | the map header that describes gates for the entry           | u16            |
-| entry             | the entry in this table (maybe?)                            | u8             |
-| entry2            | the entry in recorded visit (has player visited entry?)     | u8             |
-| redX              | the base x coordinate for the red blocks (shifted right one)| u8             |
-| redY              | the base y coordinate for the red blocks (shifted up one)   | u8             |
-| grayX             | the base x coordinate for the gray block on the image       | u8             |
-| grayY             | the base y coordinate for the gray block on the image       | u8             |
-| townDimY          | the amount of matrix chunks the town spans up and down      | u8:4 (4 bits)  |
-| townDimX          | the amount of matrix chunks the town spans left and right   | u8:4 (4 bits)  |
-| offsetY           | y offset within the replacement block of the actual town    | u8:4 (4 bits)  |
-| offsetX           | x offset within the replacement block of the actual town    | u8:4 (4 bits)  |
-| padding           | unused (ensures next entry is 2-byte aligned)               | u8             |
-
-## GearMapTownSelectionOverlay Struct Description
-```c
-struct GearMapTownSelectionOverlay
-{
-    /* 0x0 */ u16 mapHeader;
-    /* 0x2 */ u8 baseX; // in poke gear position
-    /* 0x3 */ u8 baseY; // in poke gear position
-    /* 0x4 */ u8 dimY:4; // msn
-              u8 dimX:4; // lsn
-    /* 0x5 */ u8 flags;
-    /* 0x6 */ u8 textEntry; // in a027 file 273
-    /* 0x7 */ u8 flySpot;
-    /* 0x8 */ u32 padding;
-    /* 0xC */ u8 orangeBaseX; // in image
-    /* 0xD */ u8 orangeBaseY; // in image
-    /* 0xE */ u8 orangeDimX; // in image
-    /* 0xF */ u8 orangeDimY; // in image
-}; // size = 0x10
-```
-| Field Name        | Description                                                 | Data Type      |
-|-------------------|-------------------------------------------------------------|----------------|
-| mapHeader         | the map header that the entry describes                     | u16            |
-| baseX             | base x position in PokéGear                                 | u8             |
-| baseY             | base y position in PokéGear                                 | u8             |
-| dimY              | y dimension of selection overlay in tiles                   | u8:4 (4 bits)  |
-| dimX              | x dimension of selection overlay in tiles                   | u8:4 (4 bits)  |
-| flags             | flags that seemingly control when/how things are shown      | u8             |
-| textEntry         | text entry to use from a027 file 273 for the blurb          | u8             |
-| flySpot           | towns with a fly spot have this nonzero                     | u8             |
-| padding           | unused field                                                | u32            |
-| orangeBaseX       | base x position in image of the orange overlay block        | u8             |
-| orangeBaseY       | base y position in image of the orange overlay block        | u8             |
-| orangeDimX        | x dimension in image of the orange overlay block            | u8             |
-| orangeDimY        | y dimension in image of the orange overlay block            | u8             |
+![](final_fly_map.png) ![](final_fly_map_1.png) ![](final_fly_map_2.png)
 
 ## TODO
 - ``flags`` field in ``GearMapTownSelectionOverlay``
 - PokéDex Map Editing
 - Roamer Maps Possible
-- Make sure flight spots work
