@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Fairy Type Insertion - Kingdom of DS Hacking</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../../favicon.png">
+        <link rel="stylesheet" href="../../../../css/variables.css">
+        <link rel="stylesheet" href="../../../../css/general.css">
+        <link rel="stylesheet" href="../../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../../highlight.css">
+        <link rel="stylesheet" href="../../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../../../index.html">Home</a></li><li class="chapter-item affix "><li class="part-title">Guides</li><li class="chapter-item "><div><strong aria-hidden="true">1.</strong> Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">1.1.</strong> Diamond and Pearl</div></li><li class="chapter-item "><div><strong aria-hidden="true">1.2.</strong> Platinum</div></li><li class="chapter-item "><div><strong aria-hidden="true">1.3.</strong> Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen4/hgss/guides/town_map/town_map.html"><strong aria-hidden="true">1.3.1.</strong> Editing the Town Map</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> Black and White</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.2.</strong> Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../../gen5/b2w2/guides/fairy/fairy.html" class="active"><strong aria-hidden="true">2.2.1.</strong> Fairy Type Insertion</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> Universal</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen5/universal/guides/code_injection/code_injection.html"><strong aria-hidden="true">2.3.1.</strong> Code Injection</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">3.</strong> Universal</div></li><li class="chapter-item affix "><li class="part-title">Resources</li><li class="chapter-item "><div><strong aria-hidden="true">4.</strong> Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> Diamond and Pearl</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> Platinum</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen4/hgss/resources/town_map/town_map_spots.html"><strong aria-hidden="true">4.3.1.</strong> Town Map Structures</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">5.</strong> Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">5.1.</strong> Black and White</div></li><li class="chapter-item "><div><strong aria-hidden="true">5.2.</strong> Black 2 and White 2</div></li><li class="chapter-item "><div><strong aria-hidden="true">5.3.</strong> Universal</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">5.3.1.</strong> Structures</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen5/universal/structures/field/zone_entities.html"><strong aria-hidden="true">5.3.1.1.</strong> Zone Entities</a></li></ol></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">6.</strong> Universal</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Kingdom of DS Hacking</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="fairy-type-in-b2w2"><a class="header" href="#fairy-type-in-b2w2">Fairy Type in B2W2</a></h1>
+<blockquote>
+<p>This guide was written by <a href="https://github.com/BluRosie">BluRose</a> based significantly on research from <a href="https://www.pokecommunity.com/showthread.php?t=349000">MeroMero</a>.</p>
+</blockquote>
+<p>This is a tutorial that details how to insert the Fairy type in Black 2 and White 2 using MeroMero's <a href="https://www.pokecommunity.com/showthread.php?t=349000">initial research from years ago</a> and building upon it with a new and improved better understanding of just what happens in the assembly.  While yet imperfect, the improvements allow for a much better Fairy representation overall, eliminating the appearance of glitched graphics and crashes entirely.</p>
+<hr />
+<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
+<ul>
+<li><a href="#graphics">Graphics</a>
+<ul>
+<li><a href="#type-icons---a082-a125">Type Icons - <code>a/0/8/2</code>, <code>a/1/2/5</code></a></li>
+<li><a href="#move-selection-palette---a011">Move Selection Palette - <code>a/0/1/1</code></a></li>
+<li><a href="#hall-of-fame-palette---a213">Hall of Fame Palette - <code>a/2/1/3</code></a></li>
+</ul>
+</li>
+<li><a href="#code---asm-file">Code - ASM File</a></li>
+<li><a href="#cleanup">Cleanup</a></li>
+<li><a href="#todo">TODO</a></li>
+</ul>
+<h2 id="graphics"><a class="header" href="#graphics">Graphics</a></h2>
+<p>Various other type graphics are leftover from possible features.  We look to replace those here.</p>
+<h3 id="type-icons---a082-a125"><a class="header" href="#type-icons---a082-a125">Type Icons - <code>a/0/8/2</code>, <code>a/1/2/5</code></a></h3>
+<p>Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.  Tinke allows us to do this by replacing the relevant files, first in <code>a/0/8/2</code>: </p>
+<p><a href="a082_33.RLCN">a082_33.RLCN</a> and <a href="a082_33.RGCN">a082_51.RGCN</a> should replace the ones in the ROM from an extracted <code>a/0/8/2</code>.</p>
+<p>This replaces <img src="cool_type.png" alt="" /> with <img src="fairy_type_1.png" alt="" /></p>
+<p>Similarly in <code>a/1/2/5</code>, we just replace the ??? type icon at the bottom of an image to now be the Fairy type, replacing the files in <code>a/1/2/5</code> with <a href="a125_22.RLCN">a125_22.RLCN</a> and <a href="a125_23.RGCN">a125_23.RGCN</a></p>
+<p>This replaces <img src="question_type.png" alt="" /> with <img src="fairy_type_2.png" alt="" />.</p>
+<h3 id="move-selection-palette---a011"><a class="header" href="#move-selection-palette---a011">Move Selection Palette - <code>a/0/1/1</code></a></h3>
+<p>Here we add a new palette to <code>a/0/1/1</code> to make Fairy moves appear as pink in the move selection screen.</p>
+<p>This file is <a href="a011_572.RLCN">a011_572.RLCN</a>.</p>
+<p><code>a011</code> originally just has 571 files.  We add a 572nd file for our purposes.  You can either unpack/repack using narchive (included in the b2w2-fairy repository) or Extract directory using Tinke, add the file, and Change by directory using Tinke again.</p>
+<h3 id="hall-of-fame-palette---a213"><a class="header" href="#hall-of-fame-palette---a213">Hall of Fame Palette - <code>a/2/1/3</code></a></h3>
+<p>Here we add a new palette to <code>a/2/1/3</code> to make Fairy Pokémon show up in the Hall of Fame with a pink nameplate.  This is currently bugged and unfinished, but once the code is written it will be fixed in the Git repo.</p>
+<p>The file to replace with once extracted:  <a href="a213_9.RLCN">a213_9.RLCN</a></p>
+<h2 id="code---asm-file"><a class="header" href="#code---asm-file">Code - ASM File</a></h2>
+<p>I have made a <a href="https://github.com/BluRosie/b2w2-fairy">repository</a> which should be downloaded as-is that has the fairy type code and is maintained as such.  Any additions or changes (future bugfixes!) will be included there.</p>
+<p>All you <em>need</em> to do is follow the instructions there, abridged here (currently for Windows only):</p>
+<ul>
+<li>Place your White 2/Black 2 ROM in the base folder (<code>b2w2-fairy-main</code>) as <code>base.nds</code></li>
+<li>Read and modify the configs at the beginning of <code>asm\fairy.s</code>.  The only one that should really be changed is <code>BLACK2</code> being <code>1</code> if you are applying to Black 2, and <code>0</code> if applying to White 2.</li>
+<li>Double click on the <code>applyfairytype.bat</code> batch file
+<ul>
+<li>A script will run that applies all the Fairy type code changes to copied overlay files and recompresses them in the base folder for ROM insertion</li>
+</ul>
+</li>
+<li>Open <code>base.nds</code> in Tinke</li>
+<li>&quot;Change file&quot; all of overlays 167, 168, 207, 255, 265, the overlay table (y9.bin), and the arm9</li>
+<li>Save your ROM as some other named file</li>
+</ul>
+<details>
+<summary>Documentation - Code Changes</summary>
+<br>
+<p><b>Overlay 167</b></p>
+<p>This overlay hosts the type chart.  All the edits made to this overlay are for adjusting the type chart.  The type chart declaration is</p>
+<pre><code class="language-c">const u8 gTypeEffectiveness[NUM_OF_TYPES][NUM_OF_TYPES];
+
+gTypeEffectiveness[atkType][defType] grabs the effectiveness of atkType when attacking defType
+- 08 is super effective
+- 04 is normal effective
+- 02 is not very effective
+- 00 is ineffective
+</code></pre>
+<p>So all of the code for accessing subsequent entries needs to take into account an extra element in each row and an extra column.</p>
+<br>
+<p><b>Overlay 168</b></p>
+<p>This overlay hosts the move type -&gt; move selection palette table.  We just write a 572 near the end of the file and leave it be to correspond to the newly created nclr in a011.</p>
+<br>
+<p><b>Overlay 207</b></p>
+<p>This overlay handles a lot of the code for the summary screen.  We edit it to support the new type icon.</p>
+<p>The old structure allocated for this was <code>0x264</code> in size, and at <code>0x130</code> it kept track of the type icon OAM id's or something like that.  I'm honestly not 100% certain what it is, but it maps something to the graphics.  This is a common theme with all of the type icon edits made.</p>
+<p>First, we double the memory heap allocation size for the summary screen to give us freedom in messing with the structure.  We need to add an entry to the <code>0x130</code> structure.  This is an issue--it's baked into the overall structure.  We need to move it to the end of the old structure--we can do this by replacing the <code>0x130</code> entries that represent this with <code>0x264</code> and to increase the size of the allocated structure to begin with to allow for this moving.  How this is done is documented in the <code>asm\fairy.s</code> file.</p>
+<br>
+<p><b>Overlay 255</b></p>
+<p>Similarly, the PC Screen has a structure <code>0xA5BC</code> in size.  At <code>0xA268</code> of this structure, the type icon OAM id's are stored once again.  This would be as simple as moving it to the end, but <code>0xA268</code> is actually just a part of a substructure that is baked into the overall structure that starts at <code>0x18C</code>.  At <code>0xA0DC</code> of this substructure, there is a massive array of OAM id's for every sprite that is possibly on screen.  This includes and captures the <code>0xA268</code> from the overall structure--so I end up writing a hook into that area that checks for the overall structure offset and will redirect it to the end if it's part of the type icons.</p>
+<p>Whenever switching off of a Pokémon, the type icons are all deleted and and replaced--this is done by deleting all of the type OAM id's in a for loop.  There are two separate code areas that are run for these, one for switching onto a new Pokémon and another for switching into blank space.  These for loops are both expanded to run one more time for the Fairy type.</p>
+<p>This new type then takes the tag of one of the boxes when &quot;move Pokémon&quot; is selected, so the box is then deleted instead of loaded in properly.  Need to look into moving the boxes to be one tag later.</p>
+<br>
+<p><b>Overlay 265</b></p>
+<p>Here, the table <code>u32 type_to_loaded_gfx_hof[NUM_OF_TYPES]</code> exists to map the types to their loaded SPA file when the hall of fame cutscene happens.  This SPA is all of the particles that appear when the Pokémon slides on screen.  Similarly, the palette table is at the very end of the overlay, but currently assigning a valid palette causes a crash in the hall of fame.  As such, we currently just load an invalid palette to prevent the crash.</p>
+</details>
+<p><img src="summary_1.png" alt="" /> <img src="summary_2.png" alt="" /> <img src="select.png" alt="" /> <img src="pc_screen.png" alt="" /></p>
+<h2 id="cleanup"><a class="header" href="#cleanup">Cleanup</a></h2>
+<p>From there, just make Struggle type 18 to make it typeless.  Assign all the Pokémon that need it to be Fairy type.  Make moves that have the Fairy typing as well.  It's now a functional type entirely!</p>
+<h2 id="todo"><a class="header" href="#todo">TODO</a></h2>
+<ul>
+<li>Type icon in the Dex does not show up--pure fairy types don't have anything show up!  Does not crash, though.</li>
+<li>Hall of Fame palette loading--memory overflow or something?  Having it load nothing works fine, but appears as a black void.</li>
+<li>PC Screen tag overlap--fairy is loaded in the same sprite slot as one of the box icons and is both scrolled as such and the box icon doesn't show up in the menu.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../../gen4/hgss/guides/town_map/town_map.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../../../gen5/universal/guides/code_injection/code_injection.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../../gen4/hgss/guides/town_map/town_map.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../../../gen5/universal/guides/code_injection/code_injection.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
