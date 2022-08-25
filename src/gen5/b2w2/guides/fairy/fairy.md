@@ -6,9 +6,9 @@ This is a tutorial that details how to insert the Fairy type in Black 2 and Whit
 ---
 ## Table of Contents
 * [Graphics](#graphics)
-  * [Type Icons - ``a082``, ``a125``](#type-icons---a082-a125)
-  * [Move Selection Palette - ``a011``](#move-selection-palette---a011)
-  * [Hall of Fame Palette - ``a213``](#hall-of-fame-palette---a213)
+  * [Type Icons - ``a/0/8/2``, ``a/1/2/5``](#type-icons---a082-a125)
+  * [Move Selection Palette - ``a/0/1/1``](#move-selection-palette---a011)
+  * [Hall of Fame Palette - ``a/2/1/3``](#hall-of-fame-palette---a213)
 * [Code - ASM File](#code---asm-file)
 * [Cleanup](#cleanup)
 * [TODO](#todo)
@@ -16,26 +16,26 @@ This is a tutorial that details how to insert the Fairy type in Black 2 and Whit
 ## Graphics
 Various other type graphics are leftover from possible features.  We look to replace those here.
 
-### Type Icons - ``a082``, ``a125``
-Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.  Tinke allows us to do this by replacing the relevant files, first in ``a082``: 
+### Type Icons - ``a/0/8/2``, ``a/1/2/5``
+Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.  Tinke allows us to do this by replacing the relevant files, first in ``a/0/8/2``: 
 
-[a082_33.RLCN](a082_33.RLCN) and [a082_51.RGCN](a082_33.RGCN) should replace the ones in the ROM from an extracted ``a082``.
+[a082_33.RLCN](a082_33.RLCN) and [a082_51.RGCN](a082_33.RGCN) should replace the ones in the ROM from an extracted ``a/0/8/2``.
 
 This replaces ![](cool_type.png) with ![](fairy_type_1.png)
 
-Similarly in ``a125``, we just replace the ??? type icon at the bottom of an image to now be the Fairy type, replacing the files in ``a125`` with [a125_22.RLCN](a125_22.RLCN) and [a125_23.RGCN](a125_23.RGCN)
+Similarly in ``a/1/2/5``, we just replace the ??? type icon at the bottom of an image to now be the Fairy type, replacing the files in ``a/1/2/5`` with [a125_22.RLCN](a125_22.RLCN) and [a125_23.RGCN](a125_23.RGCN)
 
 This replaces ![](question_type.png) with ![](fairy_type_2.png).
 
-### Move Selection Palette - ``a011``
-Here we add a new palette to ``a011`` to make Fairy moves appear as pink in the move selection screen.
+### Move Selection Palette - ``a/0/1/1``
+Here we add a new palette to ``a/0/1/1`` to make Fairy moves appear as pink in the move selection screen.
 
 This file is [a011_572.RLCN](a011_572.RLCN).
 
 ``a011`` originally just has 571 files.  We add a 572nd file for our purposes.  You can either unpack/repack using narchive (included in the b2w2-fairy repository) or Extract directory using Tinke, add the file, and Change by directory using Tinke again.  
 
-### Hall of Fame Palette - ``a213``
-Here we add a new palette to ``a213`` to make Fairy Pokémon show up in the Hall of Fame with a pink nameplate.  This is currently bugged and unfinished, but once the code is written it will be fixed in the Git repo.
+### Hall of Fame Palette - ``a/2/1/3``
+Here we add a new palette to ``a/2/1/3`` to make Fairy Pokémon show up in the Hall of Fame with a pink nameplate.  This is currently bugged and unfinished, but once the code is written it will be fixed in the Git repo.
 
 The file to replace with once extracted:  [a213_9.RLCN](a213_9.RLCN)
 
