@@ -1,5 +1,5 @@
 # Resource Name
-> Author(s): [Gonhex](https://github.com/Gonhex) <- use your username <br />
+> Author(s): [MyUsername]() <br />
 > Research: [Someone](), [AnotherOne]()
 
 ```mermaid
@@ -11,6 +11,7 @@ flowchart BT;
 This Text provides a brief introduction to the resource. What are we looking at? What should be said about this? Refer to the flowchart above if needed. A short summary can also be helpful.
 
 ## Table of Contents
+* [Data Location](#data-location)
 * [Data Structure](#data-structure)
   * [Resource Format Container](#resource-format-container)
   * [SubFormat](#subformat)
@@ -19,6 +20,13 @@ This Text provides a brief introduction to the resource. What are we looking at?
   * [Section 2](#section-2)
 * [TODO](#todo)
 ---
+
+## Data Location
+(Add `Data Location` only if the resource can be clearly assigned. Note that locations for Asian versions may vary.) <br />
+The NARC containing these files can be found in the following game paths:
+* Game 1: /a/X/Y/Z
+* Game 2: /a/X/Y/Z
+--- 
 
 ## Data Structure
 Optional: Some words about the following data structures, if needed. For nested types, it makes sense to begin with a container structure and go deeper in the following topics.
@@ -45,7 +53,7 @@ struct ContainerResourceFormat
 
 ### SubFormat
 ```c
-struct ContainerResourceFormat
+struct SubFormat
 {
     /* 0x0 */ uint16_t aboutFileNames;
     /* 0x2 */ uint8_t aboutStructNames;
@@ -68,6 +76,7 @@ struct ContainerResourceFormat
 
 ---
 ## Specification
+(The `Specification`-section optional.) <br />
 Here you can add more detailed information and/or provide data.
 
 ### Section
@@ -104,6 +113,7 @@ Use the tools of your choise to document the resource. Text, lists, code-blocks,
 
 ---
 ## TODO
+(The `TODO`-sectino is optional.)
 * Write a todo list
 * If the documentation is incomplete
 * Or if there are other tasks in queue
