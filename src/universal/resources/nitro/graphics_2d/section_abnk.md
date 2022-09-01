@@ -109,13 +109,13 @@ struct Frame
 
 ### Transformation
 ```c
-// if transformType == 0
+// if animationType == 0
 struct Transformation
 {
     /* 0x0 */ uint16_t cellIndex;
 }; // entry size = 0x2
 
-// if transformType == 1
+// if animationType == 1
 struct Transformation
 {
     /* 0x0 */ uint16_t cellIndex;
@@ -126,7 +126,7 @@ struct Transformation
     /* 0xE */ int16_t translateY;
 }; // entry size = 0x10
 
-// if transformType == 2
+// if animationType == 2
 struct Transformation
 {
     /* 0x0 */ uint16_t cellIndex;
