@@ -60,8 +60,8 @@ struct ContainerCHAR
 | heightInTiles   | Height of the sprite or `-1`, see [Dimensions](#dimensions).                            | int16_t   |
 | widthInTiles    | Width of the sprite or `-1`, see [Dimensions](#dimensions).                             | int16_t   |
 | pixelFormat     | `== 3`: 4 bits per pixel. `== 4`: 8 bits per pixel.                                     | uint32_t  |
-| mappingType0    | [Mostly unknown](#mapping-type).                                                        | uint16_t  |
-| mappingType1    | [Mostly unknown](#mapping-type).                                                        | uint16_t  |
+| mappingType0    | `== 0`: 2D mapping, else: 1D mapping(?).                                                | uint16_t  |
+| mappingType1    | Sometimes used in combination with `mappingType0`(?).                                   | uint16_t  |
 | flags           | Binary flags for different purposes. See [Flags](#flags).                               | uint32_t  |
 | lengthDataImage | Length of the image data section in bytes.                                              | uint32_t  |
 | offsetDataImage | Offset to the image data section relative to `ContainerCHAR`.                           | uint32_t  |
@@ -104,7 +104,7 @@ $$
 Sometimes the width and height values are both set to `-1`. In this case the image itself has no size and the [CPOS section](section_cpos.md) is not part of the file. To display the sprite anyway, a width of four tiles often makes the image recognizable. The real image is constructed by the [cell resource](file_ncer.md), which picks the needed tiles and positions them.
 
 ### Mapping Type
-These values are `0`, if the image has a size (`> -1`). Their influence can be observed for example in the trainer-throws-ball sprite in pokemon heard gold but the exact behaviour is not clear yet.
+These values are `0`, if the image uses 2D mapping (positive values in `heightInTiles` an `widhtInTiles`). Both dimension values `== -1` indicate 1D mapping. In this case `mappingType0` usually has a value like `0x10`. In the most cases, the [cell resource](file_ncer.md) indexes 1D mapped tiles.
 
 ### Flags
 Apply properties to the sprite.
@@ -127,4 +127,4 @@ The tiles are not places line by line. Instead, it looks like the the largest sq
 
 ---
 ## TODO
-* Research and document "mappingType" or whatever it is
+* Research and document "mappingType"

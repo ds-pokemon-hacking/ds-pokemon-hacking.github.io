@@ -67,20 +67,14 @@ struct MultiCellTable
 {
     /* 0x0 */ uint16_t numberDisplayedCells;
     /* 0x2 */ uint16_t numberLoadedCells;
-    /* 0x4 */ uint8_t offsetInData;
-    /* 0x5 */ uint8_t unknown0;
-    /* 0x6 */ uint8_t unknown1;
-    /* 0x7 */ uint8_t unknown2;
+    /* 0x4 */ uint32_t offsetData;
 }; // entry size = 0x8
 ```
 | Field Name           | Description                                                                             | Data Type |
 |----------------------|-----------------------------------------------------------------------------------------|-----------|
 | numberDisplayedCells | Number of visible multi cells.                                                          | uint16_t  |
 | numberLoadedCells    | Number of multi cells within the buffer.                                                | uint16_t  |
-| offsetInData         | Offset of the multi cell relative to [MultiCell](#multi-cell).                          | uint8_t   |
-| unknown0             | Select cell?                                                                            | uint8_t   |
-| unknown1             | Select cell?                                                                            | uint8_t   |
-| unknown2             | Select cell?                                                                            | uint8_t   |
+| offsetData           | Offset of the multi cell relative to [MultiCell](#multi-cell).                          | uint32_t  |
 
 ### Multi Cell
 ```c
@@ -99,8 +93,8 @@ struct MultiCell
 | positionX         | X position. `0` is at the center.                                                       | int16_t   |
 | positionY         | Y position. `0` is at the center.                                                       | int16_t   |
 | unknown0          | Usually `32 (0x20)`, but `33` also possible. Others, too?                               | uint8_t   |
-| indexData         | Wrong index causes wrong & static cell?                                                 | uint8_t   |
+| indexData         | Local multi cell index starting by `0`.                                                 | uint8_t   |
 
 ---
 ## TODO
-* Research and document unknown values
+* Research and document `unknown0` in [MultiCell](#multi-cell)

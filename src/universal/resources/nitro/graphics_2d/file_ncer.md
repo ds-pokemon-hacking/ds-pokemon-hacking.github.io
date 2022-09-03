@@ -9,7 +9,7 @@ flowchart BT;
     LABL(Label)-->NCER;
     UEXT(Use Extension?)-->NCER;
 ```
-The cell resource creates groups of tiles which will be displayed as small images. The cells can be animated later.
+The cell resource creates groups of tiles which will be displayed as small images. The cells can serve as base for frame animations.
 
 ## Table of Contents
 * [Data Structure](#data-structure)

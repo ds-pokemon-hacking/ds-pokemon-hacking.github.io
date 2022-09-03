@@ -7,14 +7,14 @@ flowchart BT;
     NCER(N. Cell R.)-->G2D(Graphics 2D);
     CEBK(Cell Bank)-->NCER;
 ```
-The cell bank creates a number of cells by combining tiles and selecting a palette for each cell. It operates on dimensionless character graphics and is used in combination with the animation resource to display dynamic objects.
+The cell bank creates a number of cells by combining tiles and selecting a palette for each cell. It usually operates on dimensionless (1D mapped) character graphics and is used in combination with the animation resource to display dynamic objects.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
   * [Section Container](#section-container)
   * [CEBK Container](#cebk-container)
-  * [Cell Table](#cell-table)
   * [Cell](#cell)
+  * [Object Attributes](#object-attributes)
 * [Specification](#specification)
   * [Dimension Keys](#dimension-keys)
 * [TODO](#todo)
@@ -35,7 +35,7 @@ struct ContainerSectionCEBK
 |----------------|-----------------------------------------------------------------------------------------|--------------|
 | sectionHeader  | Header of this section. `sectionHeader.signature = "KBEC"`.   | [NitroSectionHeader](../nitro_overview.md#nitro-section-header) |
 | sectionData    | Content of this section.                                                                | [ContainerCEBK](#cebk-container) |
-| paddingDWORD   | Padding for DWORD alignment, if [LABL-sections](section_labl.md) follows.               | uint8_t[]    |
+| paddingDWORD   | Padding for DWORD alignment, if [LABL-section](section_labl.md) follows.                | uint8_t[]    |
 
 ### CEBK Container
 ```c
@@ -43,60 +43,62 @@ struct ContainerCEBK
 {
     // header
     /* 0x00 */ uint16_t numberCells;
-    /* 0x02 */ uint16_t tableAttribute;
-    /* 0x04 */ uint32_t offsetDataCellBank;
+    /* 0x02 */ uint16_t useBounds;      // rename?
+    /* 0x04 */ uint32_t offsetDataCell;
     /* 0x08 */ uint32_t sizeBoundary;
     /* 0x0C */ uint32_t unknown0;
     /* 0x10 */ uint32_t unknown1;
     /* 0x14 */ uint32_t unknown2;
     
     // data
-    /* offsetDataCellBank */ struct CellTable dataTable[numberCells];
-    /* offsetDataCellBank + numberCells * (8 << tableAttribute) */ struct Cell dataCell[?];
+    /* offsetDataCell */ struct Cell dataCell[numberCells];
+    /* offsetDataCell + numberCells * (8 << tableAttribute) */ struct ObjectAttribute dataAttributes[?];
 }; // entry size = sectionHeader.lengthSection - 0x8
 ```
-| Field Name         | Description                                                                             | Data Type |
-|--------------------|-----------------------------------------------------------------------------------------|-----------|
-| numberCells        | Number of cells.                                                                        | uint16_t  |
-| tableAttribute     | Extended [cell table](#cell-table), if `== 1`.                                          | uint16_t  |
-| offsetDataCellBank | Offset to the cell table data section relative to `ContainerCEBK`.                      | uint32_t  |
-| sizeBoundary       | Size boundary, `result = sizeBoundary << 6`.                                            | uint32_t  |
-| unknown0           | Unused offset?                                                                          | uint32_t  |
-| unknown1           | Unused offset?                                                                          | uint32_t  |
-| unknown2           | Unused offset?                                                                          | uint32_t  |
-| dataTable          | Cell configuration table.                                                               | [CellTable[]](#cell-table) |
-| dataCell           | OAM cell data.                                                                          | [Cell[]](#cell) |
-
-### Cell Table
-```c
-struct CellTable
-{
-    // header
-    /* 0x0 */ uint16_t numberCellsOAM;
-    /* 0x2 */ uint16_t unknown0;
-    /* 0x4 */ uint32_t offsetCell;
-// }; // entry size = 0x8, if tableAttribute == 0
-    
-    // optional, rename all
-    /* 0x8 */ int16_t right;
-    /* 0xA */ int16_t bottom;
-    /* 0xC */ int16_t left;
-    /* 0xE */ int16_t top;
-}; // entry size = 0x10, if tableAttribute == 1
-```
-| Field Name         | Description                                                                             | Data Type |
-|--------------------|-----------------------------------------------------------------------------------------|-----------|
-| numberCellsOAM     | Number of OAM cells building this cell.                                                 | uint16_t  |
-| unknown0           | What is this?                                                                           | uint16_t  |
-| offsetCell         | Offset within OAM cell data.                                                            | uint32_t  |
-| right              | TODO: rename and add description.                                                       | int16_t   |
-| bottom             | TODO: rename and add description.                                                       | int16_t   |
-| left               | TODO: rename and add description.                                                       | int16_t   |
-| top                | TODO: rename and add description.                                                       | int16_t   |
+| Field Name     | Description                                                                             | Data Type |
+|----------------|-----------------------------------------------------------------------------------------|-----------|
+| numberCells    | Number of cells.                                                                        | uint16_t  |
+| useBounds      | Extended [cell struct](#cell), if `== 1`.                                               | uint16_t  |
+| offsetDataCell | Offset to the cell table data section relative to `ContainerCEBK`.                      | uint32_t  |
+| sizeBoundary   | Size boundary, `result = sizeBoundary << 6`.                                            | uint32_t  |
+| unknown0       | Unused offset?                                                                          | uint32_t  |
+| unknown1       | Unused offset?                                                                          | uint32_t  |
+| unknown2       | Unused offset?                                                                          | uint32_t  |
+| dataCell       | Cell configuration table.                                                               | [Cell[]](#cell) |
+| dataAttributes | Object attributes.                                                                      | [ObjectAttribute[]](#object-attributes) |
 
 ### Cell
 ```c
 struct Cell
+{
+    // header
+    /* 0x0 */ uint16_t numberObjects;
+    /* 0x2 */ uint8_t unknown0;
+    /* 0x3 */ uint8_t unknown1;
+    /* 0x4 */ uint32_t offsetCell;
+// }; // entry size = 0x8, if tableAttribute == 0
+    
+    // optional. Are they redundant even if used?
+    /* 0x8 */ int16_t boundRight;
+    /* 0xA */ int16_t boundBottom;
+    /* 0xC */ int16_t boundLeft;
+    /* 0xE */ int16_t boundTop;
+}; // entry size = 0x10, if tableAttribute == 1
+```
+| Field Name         | Description                                                                             | Data Type |
+|--------------------|-----------------------------------------------------------------------------------------|-----------|
+| numberObjects      | Number of objects building this cell.                                                   | uint16_t  |
+| unknown0           | What is this?                                                                           | uint8_t   |
+| unknown1           | What is this?                                                                           | uint8_t   |
+| offsetObject       | Offset within object attribute data.                                                    | uint32_t  |
+| boundRight         | Right border of the cell.                                                               | int16_t   |
+| boundBottom        | Bottom border of the cell.                                                              | int16_t   |
+| boundLeft          | Left border of the cell.                                                                | int16_t   |
+| boundTop           | Top border of the cell.                                                                 | int16_t   |
+
+### Object Attributes
+```c
+struct ObjectAttribute
 {
     /* 0x0 */ uint16_t positionY : 8;          // 0b00000000'11111111
               uint16_t transformable : 1;      // 0b00000001'00000000
@@ -139,7 +141,7 @@ struct Cell
 ## Specification
 
 ### Dimension Keys
-The width and height of a cell is isn't defined directly. Instead it uses key values, which allow to reconstruct the size. For example if `keyShape == 0`, the cell will be a square which size depends on `keySize`. The dimenions can be converted using lookup tables.
+The width and height of an object isn't defined directly. Instead it uses key values, which allow to reconstruct the size. For example if `keyShape == 0`, the cell will be a square which size depends on `keySize`. The dimenions can be converted using lookup tables.
 
 #### Read dimensions
 ```c
@@ -192,6 +194,5 @@ void setSizeInTiles(uint16_t widthInTiles, uint16_t heightInTiles)
 
 ---
 ## TODO
-* Rename and document the entries of the extended cell table
 * Document the transform parameters
-* Research `unknown0` in cell table
+* Research `unknown0` and `unknown1` in [cell](#cell)

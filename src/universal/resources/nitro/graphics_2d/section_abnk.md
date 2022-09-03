@@ -40,7 +40,7 @@ struct ContainerSectionABNK
 |----------------|-----------------------------------------------------------------------------------------|--------------|
 | sectionHeader  | Header of this section. `sectionHeader.signature = "KNBA"`.   | [NitroSectionHeader](../nitro_overview.md#nitro-section-header) |
 | sectionData    | Content of this section.                                                                | [ContainerABNK](#abnk-container) |
-| paddingDWORD   | Padding for DWORD alignment, if [LABL-sections](section_labl.md) follows.               | uint8_t[]    |
+| paddingDWORD   | Padding for DWORD alignment, if [LABL-section](section_labl.md) follows.               | uint8_t[]    |
 
 ### ABNK Container
 ```c
@@ -131,7 +131,7 @@ struct Transformation
 struct Transformation
 {
     /* 0x0 */ uint16_t cellIndex;
-    /* 0x2 */ int16_t padding0;
+    /* 0x2 */ int16_t unknown0;
     /* 0x4 */ int16_t translateX;
     /* 0x6 */ int16_t translateY;
 }; // entry size = 0x8
@@ -140,7 +140,7 @@ struct Transformation
 |------------|-----------------------------------------------------------------------------------------|-----------|
 | cellIndex  | Index of the displayed cell or multi cell block.                                        | uint16_t  |
 | angle      | Rotation angle, using the full range of int16_t for one turn.                           | int16_t   |
-| padding0   | Unused.                                                                                 | int16_t   |
+| unknown0   | Unused, `0x0` or `0xBEEF`.                                                              | int16_t   |
 | scaleW     | Width scaling factor.                                                                   | [fx<1.19.12>]() |
 | scaleH     | Height scaling factor.                                                                  | [fx<1.19.12>]() |
 | translateX | X position adjustment.                                                                  | int16_t   |

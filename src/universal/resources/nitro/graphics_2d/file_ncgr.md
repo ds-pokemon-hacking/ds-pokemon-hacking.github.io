@@ -8,7 +8,7 @@ flowchart BT;
     CHAR(Character)-->NCGR;
     CPOS(Caracter Position?)-.->NCGR;
 ```
-The character graphic resource holds the image data, usually in form of tiles.
+The character graphic resource holds the image data, usually in form of tiles. The image can be displayed directly or used as tile buffer for further processing as [screen map](file_nscr.md) or [cells](file_ncer.md).
 
 ## Table of Contents
 * [Data Structure](#data-structure)
