@@ -1,4 +1,4 @@
-# Script Weather (Pt/HGSS)
+# Script Weather <sup>*Platinum/HGSS*</sup>
 
 The goal of this tutorial is to use `AdrsValueSet` to alter a value related to the `DefogAnimation/FlashAnimation` command to make it update to an arbitrary weather of the scripter's choice.
 
@@ -6,7 +6,7 @@ First off, have a bit of context. Technically, the Generation 4 games have a com
 
 >The following scripts change the weather `Defog`<sup>*Platinum*</sup> or `Flash`<sup>*Heartgold*</sup> set to your desired value. It then runs the `DefogAnimation`/`FlashAnimation` command to update the weather, and afterwards reverts the weather back to normal and finally sets it back to `0x0`/`0xC` so Defog/Flash work properly after the fact. This affects both in-battle and overworld weather. Obviously, if the default weather in an area is different, you'll have to make another `AdrsValueSet` to change it to that weather before setting the changed value back to default.
 By doing a `TrainerBattle` command after triggering the shift, and then doing a `DefogAnimation` right afterwards, you can set weather for the duration of a battle and turn it off afterwards.
->> Note that this does not show any unique animation or sound effect, and only updates the weather
+>> Note that this does not show any unique animation or sound effect, and only updates the weather.
 
 Keep in mind that the default value for Defog weather is 0x0 while Flash weather is 0xC.
 
@@ -18,7 +18,7 @@ Keep in mind that the default value for Defog weather is 0x0 while Flash weather
 
 The `AdrsValueSet` value you want to change depends on the game and region. It uses absolute offsets within the RAM, so if you have changed the arm9's length you may need to find it again. See [**Finding the Values**](#finding) for more information.
 
-For this tutorial there are a few offsets: 
+For this tutorial there are a few offsets used: 
 - USA Platinum uses `0x2042BF8`
 - USA Heartgold uses `0x20436D4`
 

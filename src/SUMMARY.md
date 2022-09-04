@@ -9,7 +9,7 @@
     - [Heartgold and SoulSilver]()
         - [Editing the Town Map](gen4/hgss/guides/town_map/town_map.md)
     - [Universal]()
-        - [Setting the Weather from a Script (Pt/HGSS)](gen4/universal/guides/script_weather.md)
+        - [Setting the Weather from a Script<sup>*Platinum/HGSS*</sup>](gen4/universal/guides/script_weather.md)
 - [Generation V]()
     - [Black and White]()
     - [Black 2 and White 2]()
