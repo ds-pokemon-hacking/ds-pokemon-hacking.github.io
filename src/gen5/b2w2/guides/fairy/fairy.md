@@ -19,7 +19,7 @@ Various other type graphics are leftover from possible features.  We look to rep
 ### Type Icons - ``a/0/8/2``, ``a/1/2/5``
 Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.  Tinke allows us to do this by replacing the relevant files, first in ``a/0/8/2``: 
 
-[a082_33.RLCN](a082_33.RLCN) and [a082_51.RGCN](a082_33.RGCN) should replace the ones in the ROM from an extracted ``a/0/8/2``.
+[a082_33.RLCN](a082_33.RLCN) and [a082_51.RGCN](a082_51.RGCN) should replace the ones in the ROM from an extracted ``a/0/8/2``.
 
 This replaces ![](cool_type.png) with ![](fairy_type_1.png)
 
