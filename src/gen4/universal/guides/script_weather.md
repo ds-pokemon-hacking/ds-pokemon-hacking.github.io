@@ -1,5 +1,7 @@
 # Script Weather <sup>*Platinum/HGSS*</sup>
 
+> This tutorial was written by [RefinedPlat](https://www.romhacking.net/community/6532/)
+
 The goal of this tutorial is to use `AdrsValueSet` to alter a value related to the `DefogAnimation/FlashAnimation` command to make it update to an arbitrary weather of the scripter's choice.
 
 First off, have a bit of context. Technically, the Generation 4 games have a command dubbed `ChangeWeather` that would alter the weather currently loaded by the area. Sadly, this command is dummied out, and will not work. However, the games do feature a pair of commands that set the weather to a specific value - `DefogAnimation`<sup>*Platinum*</sup> and `FlashAnimation`<sup>*Heartgold*</sup>. This, combined with a debug command called `AdrsValueSet` which allows for free editing of values in the RAM, means that these commands can be altered to change the weather to entirely different values, allowing for free control over the weather within a script with certain caveats.
