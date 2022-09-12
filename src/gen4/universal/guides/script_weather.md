@@ -18,7 +18,17 @@ Keep in mind that the default value for Defog weather is 0x0 while Flash weather
   - This basically means any screen transitions where you fade to black are off-limits, but ones where you simply move across the same matrix are okay. This includes very few areas in vanilla, however.
 - Certain weather particles are on the same layer as the battle intro nametags. Consequently, having sandstorm weather when fighting Bertha will make her name move with the particles. This is how weather works in general and not specific to this tutorial.
 
-The `AdrsValueSet` value you want to change depends on the game and region. It uses absolute offsets within the RAM, so if you have changed the arm9's length you may need to find it again. See [**Finding the Values**](#finding) for more information.
+The `AdrsValueSet` value you want to change depends on the game and region. It uses absolute offsets within the RAM, so if you have changed the arm9's length you may need to find it again. Here is how to find the offsets of the values that this tutorial uses:
+
+- Platinum:
+
+  - `70 BD 38 B5 04 1C XX XX XX XX C0 68 F7 F7 XX XX XX XX 00 21 XX XX XX XX 28 1C F7 F7 BC FD 80 34 01 1C 20 68 40 68 C0 68 XX XX XX XX 01 20 38 BD`
+
+- Heart Gold: 
+
+  - `70 BD 38 B5 04 1C XX XX XX XX C0 68 F8 F7 XX XX XX XX 0C 21 XX XX XX XX 28 1C F8 F7 52 F9 80 34 01 1C 20 68 40 68 C0 68 XX XX XX XX 01 20 38 BD`
+
+<br><br>
 
 For this tutorial there are a few offsets used: 
 - USA Platinum uses `0x2042BF8`
@@ -64,14 +74,3 @@ Script 2:
 End
 ```
 </details>
-
-# <a name="finding"></a>Finding the Values
-The precise value may **NOT** work if you've messed with the length of the arm9. To find it in a modified game/other language version, the strip of bytes is as follows:
-
-- Platinum:
-
-  - `70 BD 38 B5 04 1C XX XX XX XX C0 68 F7 F7 XX XX XX XX 00 21 XX XX XX XX 28 1C F7 F7 BC FD 80 34 01 1C 20 68 40 68 C0 68 XX XX XX XX 01 20 38 BD`
-
-- Heart Gold: 
-
-  - `70 BD 38 B5 04 1C XX XX XX XX C0 68 F8 F7 XX XX XX XX 0C 21 XX XX XX XX 28 1C F8 F7 52 F9 80 34 01 1C 20 68 40 68 C0 68 XX XX XX XX 01 20 38 BD`
