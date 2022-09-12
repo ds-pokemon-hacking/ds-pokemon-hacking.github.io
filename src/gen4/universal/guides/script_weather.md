@@ -1,4 +1,4 @@
-# Setting the Weather From a Script <sup>*Platinum/HGSS*</sup>
+# Setting the Weather From a Script <sup>*(Platinum/HGSS)*</sup>
 
 > This tutorial was written by [RefinedPlat](https://www.romhacking.net/community/6532/)
 
