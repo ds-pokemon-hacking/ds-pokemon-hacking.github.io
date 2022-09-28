@@ -8,11 +8,11 @@ So, you think you've got what it takes to have a crack at Gen V code injection? 
 
 First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there onward. To start, download (and install, where applicable) all these:
 
-- CTRMap: https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases (+ the Gen V plug-in from our server)
-- The `arm-none-eabi` GCC toolchain: https://developer.arm.com/downloads/-/gnu-rm
-- Latest RPM build of `PMC` https://github.com/kingdom-of-ds-hacking/PMC/releases
-- Pokémon White 2 development headers: https://github.com/kingdom-of-ds-hacking/swan
-- Latest NitroKernel DLL: https://github.com/HelloOO7/NitroKernel/releases
+- CTRMap: [https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases](https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases) (+ the Gen V plug-in from our server)
+- The `arm-none-eabi` GCC toolchain: [https://developer.arm.com/downloads/-/gnu-rm](https://developer.arm.com/downloads/-/gnu-rm)
+- Latest RPM build of `PMC` [https://github.com/kingdom-of-ds-hacking/PMC/releases](https://github.com/kingdom-of-ds-hacking/PMC/releases)
+- Pokémon White 2 development headers: [https://github.com/kingdom-of-ds-hacking/swan](https://github.com/kingdom-of-ds-hacking/swan)
+- Latest NitroKernel DLL: [https://github.com/HelloOO7/NitroKernel/releases](https://github.com/HelloOO7/NitroKernel/releases)
 
 Furthermore, you should have an American Pokémon White 2 (and strictly no other) ROM ready. Before you get into code injection, set up a CTRMap project and load it up. If everything went as planned, there should be a `Code injection` section in your `Extras` tab. This is where it gets interesting:
 
