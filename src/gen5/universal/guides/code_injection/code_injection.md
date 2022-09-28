@@ -56,9 +56,9 @@ Say, you've got your eye set on a function you really want to inject into, the f
 
 To have the RPM converter automatically convert your function into a relocation referring to it, it needs to be in either of the following formats:
 
-`<RELOCATION_TYPE>_FunctionName` - hooks directly into the start of a named function (e.g. `THUMB_BRANCH_BagSave_AddItem`)\
-`<RELOCATION_TYPE>_FunctionName_0xoffset` - hooks into a function-relative offset (e.g. `THUMB_BRANCH_LINK_BagSave_AddItem_0x2`)\
-`<RELOCATION_TYPE>_SEGMENT_0xaddress` - hooks at an absolute address within a segment (e.g. `FULL_COPY_ARM9_0x02008268`)\
+- `<RELOCATION_TYPE>_FunctionName` - hooks directly into the start of a named function (e.g. `THUMB_BRANCH_BagSave_AddItem`)\
+- `<RELOCATION_TYPE>_FunctionName_0xoffset` - hooks into a function-relative offset (e.g. `THUMB_BRANCH_LINK_BagSave_AddItem_0x2`)\
+- `<RELOCATION_TYPE>_SEGMENT_0xaddress` - hooks at an absolute address within a segment (e.g. `FULL_COPY_ARM9_0x02008268`)\
 
 Now, the logical question to ask is - what in the world is that `RELOCATION_TYPE` field? Simply put, there are a number of ways in which you can hook into a function. They are described in detail [here](https://github.com/HelloOO7/libRPM/blob/master/include/RPM_Control.h), but in layman's terms, they should be used as follows:
 
