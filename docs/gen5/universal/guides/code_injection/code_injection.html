@@ -135,31 +135,102 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="code-injection-guide-generation-v"><a class="header" href="#code-injection-guide-generation-v">Code Injection Guide (Generation V)</a></h1>
-<p>This guide was originally written by <a href="https://github.com/BromBromBromley">Brom</a>.</p>
-<p>*It is recommended to check out the <a href="../../../../universal/guides/code_injection/code_injection.html">universal code injection guide</a> before attempting this. </p>
-<h2 id="preparing-a-project-for-c-injected-code"><a class="header" href="#preparing-a-project-for-c-injected-code">Preparing a project for C injected code</a></h2>
+<p><em>It is recommended to check out the <a href="../../../../universal/guides/code_injection/code_injection.html">universal code injection guide</a> before attempting this. This tutorial assumes that you have intermediate C++ knowledge and know how to use a compiler or build system.</em></p>
+<h2 id="setting-up-your-environment"><a class="header" href="#setting-up-your-environment">Setting up your environment</a></h2>
+<p>So, you think you've got what it takes to have a crack at Gen V code injection? Then press onward!</p>
+<p>First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there onward. To start, download (and install, where applicable) all these:</p>
+<ul>
+<li>CTRMap: https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases (+ the Gen V plug-in from our server)</li>
+<li>The <code>arm-none-eabi</code> GCC toolchain: https://developer.arm.com/downloads/-/gnu-rm</li>
+<li>Latest RPM build of <code>PMC</code> https://github.com/kingdom-of-ds-hacking/PMC/releases</li>
+<li>Pokémon White 2 development headers: https://github.com/kingdom-of-ds-hacking/swan</li>
+<li>Latest NitroKernel DLL: https://github.com/HelloOO7/NitroKernel/releases</li>
+</ul>
+<p>Furthermore, you should have an American Pokémon White 2 (and strictly no other) ROM ready. Before you get into code injection, set up a CTRMap project and load it up. If everything went as planned, there should be a <code>Code injection</code> section in your <code>Extras</code> tab. This is where it gets interesting:</p>
 <ol>
-<li>Extract a ROM in the <code>Games</code> tab of CTRMap with the <code>Add ROM</code> button.</li>
-<li>Close CTRMap.</li>
-<li>In File Explorer, go to the folder where the jar for CTRMap is located.</li>
-<li>In the address bar, type <code>cmd</code> to open the command line in that folder.</li>
-<li>After this, run <code>java -cp &quot;&lt;ctrmap file name&gt;&quot; ctrmap.util.tools.ovl.CodeInjectionSystemGUI</code> replacing <code>&lt;ctrmap file name&gt;</code> with the name of your CTRMap jar. This will launch OvlPatchSystemGUI, also known as C Injection System GUI (CISGUI).</li>
-<li>Click <code>File &gt; Open game directory</code> then open the folder that CTRMap created when extracting the contents of your ROM.</li>
-<li>After this, locate <code>esdb.yml</code> and open that. This file holds information about function names along with the &quot;segment&quot; (ARM9/Overlay) that the function from and their addresses the function will load at in RAM.</li>
-<li>You will be prompted to install the built-in overlay loader. Select <code>No</code> since this loader is deprecated.</li>
-<li>Click the <code>+</code> button at the bottom left and load <code>arm9_decmp_off_HK_REL.rpm</code>. This should be located in the <code>build/</code> folder in the PMC folder. This will allow you to keep your arm9 decompressed along with letting the game load normally.</li>
-<li>After this, click the <code>+</code> button again to load <code>PMC.rpm</code>. At this point, you can now use dlls placed in the <code>vfs/data/patches/</code> folder of your project.</li>
+<li>Click the <code>Install/Update PMC</code> button and select your <code>PMC.rpm</code> file. You should do this every time <code>libRPM</code> is updated, as the DLLs that CTRMap produces need the latest version of PMC to be recognized.</li>
+<li>Make sure that there is a <code>patches</code> directory in your project's <code>vfs/data</code>. If there isn't one, create it. Move your <code>NitroKernel.dll</code> into that directory.</li>
+<li>Export your ROM from CTRMap.</li>
+<li>If everything went correctly, there should be a <code>00</code> byte at <code>0x02005050</code> in your game's RAM as part of PMC's initialization code.</li>
 </ol>
-<h2 id="creating-c-code-to-inject"><a class="header" href="#creating-c-code-to-inject">Creating C code to inject</a></h2>
-<p><em>This section assumes you have basic C knowledge and have also used Bond697's IDB before.</em></p>
+<h2 id="building-code-injection-patches"><a class="header" href="#building-code-injection-patches">Building code injection patches</a></h2>
+<h3 id="symbol-maps"><a class="header" href="#symbol-maps">Symbol maps</a></h3>
+<p>There are two quintessential things that you need in order to begin writing proper code injection modules. The first one - a compiler - you've already got since Chapter 1. The other is what we call an <code>ESDB</code> (short for &quot;external symbol database&quot;) and is pretty much the stepping stone for interfacing and hijacking game routines. If you've already got one from a friend or relative, you should be all set, however, should you need to build your own one, that's also an option:</p>
 <ol>
-<li>Install the <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads">arm-none-eabi version of GCC</a>. Make sure you use the installer.</li>
-<li>Write whatever C code you'd like to inject. Usually for this, you'll want to figure out an existing function that would be easy to work off of. If you want to see IDA's attempt at decompiling the Assembly, press F5. This isn't always necessarily accurate when it comes to types, but it's often a good starting point.</li>
-<li>In File Explorer, go to the folder where <code>armgcc.bat</code> is located.</li>
-<li>In the address bar, type <code>cmd</code> to open the command line in that folder.</li>
-<li>After this, enter <code>armgcc &lt;c source file location&gt; -Iswan/ &lt;desired output file location&gt;.elf</code>, replacing <code>&lt;c source file location&gt;</code> and <code>desired output file location&gt;</code>. The <code>-Iswan/</code> makes the compiler include whatever folder a header file is in as long as it's in the <code>swan/</code> folder. This can be replaced with <code>-I&lt;folder name&gt;</code> if needed.</li>
-<li>Click <code>Tools &gt; Convert ELF to RPM</code> then save the RPM. After that, click <code>Tools &gt; Convert RPM to DLL</code>. Save this DLL in <code>vfs/data/patches/</code> in the folder of a project to make use of it.</li>
+<li>Export the symbols you need from IDA using <code>File &gt; Produce file &gt; Create MAP file...</code></li>
+<li>Copy the contents of IDA's Segment Register table (<code>View &gt; Open subviews &gt; Segment registers</code>) into a text file.</li>
+<li>Open the result <code>.map</code> file in a text editor and fix the segment starting addresses to their proper values instead of <code>00000000</code>. IDA's just sometimes moody like that.</li>
+<li>Clone and build the <a href="https://github.com/HelloOO7/RPMAuthoringTools">RPM authoring tools</a>, or use the CTRMap JAR (<code>java -cp &lt;path to CTRMap JAR&gt; rpm.cli.MAP2ESDB</code>) to launch MAP2ESDB.</li>
+<li>Proceed with the instructions provided by the command line interface. Use your .map as <code>--map</code> and your segment register plaintext as <code>--thmfile</code>.</li>
+<li>Once done, you should have an <code>esdb.yml</code> or similar all built and ready for code injection.</li>
 </ol>
+<h3 id="programming"><a class="header" href="#programming">Programming</a></h3>
+<p>Here's where you'll finally put those headers you downloaded earlier to good use! Any function that you've included in your ESDB, you can now use from your C++ code as long as it is properly declared. Some of the structures and functions we've researched have been compiled into the <code>swan</code> repo for convenience, and as long as they are in your ESDB, you can use them to their full advantage. Here are a couple of things you should keep in mind:</p>
+<ul>
+<li>Functions that have C linkage should be treated as such. Declaring them inside namespaces, or even outside them as plain C++ functions, will most likely not link up with your ESDB.</li>
+<li>Failure to link a function against the ESDB is not reported in any way, since it's indistinguishable from a regular extern function present in a DLL and linked at run-time. Always make sure you've got everything registered properly before you commit.</li>
+<li>Unless you really know what you're doing and you've got all the proper ABI functions handled, you shouldn't use the C++ standard library, RTTI or exceptions (in fact, you may want to disable them with <code>-fno-rtti</code> and <code>-fno-exceptions</code> in GCC).</li>
+<li>Some C++ ABI features (pure virtual functions) are supported and backed by <code>NitroKernel</code>, but need to be included explicitly in order to prevent GCC from complaining. Including <code>ExtLib.Include</code> and its <code>ABI/exl_CxxAbi.h</code> should do the trick.</li>
+<li>Floating point operations, albeit <em>very</em> slow, are supported on the DS to an extent, but should be avoided. <code>__aeabi_#fcmp#</code> functions aren't fully present on the target, so comparisons may produce undefined behavior.</li>
+<li>Memory allocation through <code>malloc</code> and <code>free</code> will fail. This is because <code>malloc</code> by default allocates in the <code>0x02000000 - 0x02004000</code> area (as configured by the game), and said area is filled at boot for some reserved memory heaps. Instead, use the ExtLib new and delete operators (from <code>Heap/exl_MemOperators.h</code>) that pass through <code>exl::heap::Allocator</code>s, or Game Freak's <code>GFL_HeapAllocate</code> and <code>GFL_HeapDelete</code> functions. What might also be handy to know is that an <code>exl::heap::OSAllocator</code> can be created on demand for any GFL Heap ID with <code>exl::heap::OSAllocator::OSAllocator(HeapID heapId)</code>.</li>
+<li>The entirety of the <code>ExtLib.Heap</code> library is included within your NitroKernel, so it's recommended that you use it wherever possible.</li>
+<li>DLLs from the <code>lib</code> folder in the ROM root can be loaded using utility functions from NitroKernel's <code>k::dll</code> namespace.</li>
+</ul>
+<p>Got all that? Don't worry, if you didn't, I'm fairly sure this text isn't going to go anywhere. But now, we finally get to the fun part - actually injecting stuff!</p>
+<p>Say, you've got your eye set on a function you really want to inject into, the feeling may not be mutual, but you're dead sure of it - so the question is: how do you grab its attention properly? The answer is: relocations. The RPM library internally performs a set of operations known as &quot;relocation&quot;, that adjusts your executables after they are loaded into memory in order to link the function calls within to the game binary. Since we can already do all that, it's not too hard to simply reverse the process to make the game link to your own code! You've got two options:</p>
+<ol>
+<li>Use RPMTool's (<code>java -cp CTRMap.jar rpm.cli.RPMTool</code> or build RPMAuthoringTools) <code>--in-relocations-yml</code> to manually specify the relocations using an YML file (not recommended).</li>
+<li>Use the automated hook derivation process built into CTRMap.</li>
+</ol>
+<p>To have the RPM converter automatically convert your function into a relocation referring to it, it needs to be in either of the following formats:</p>
+<p><code>&lt;RELOCATION_TYPE&gt;_FunctionName</code> - hooks directly into the start of a named function (e.g. <code>THUMB_BRANCH_BagSave_AddItem</code>)<br />
+<code>&lt;RELOCATION_TYPE&gt;_FunctionName_0xoffset</code> - hooks into a function-relative offset (e.g. <code>THUMB_BRANCH_LINK_BagSave_AddItem_0x2</code>)<br />
+<code>&lt;RELOCATION_TYPE&gt;_SEGMENT_0xaddress</code> - hooks at an absolute address within a segment (e.g. <code>FULL_COPY_ARM9_0x02008268</code>)</p>
+<p>Now, the logical question to ask is - what in the world is that <code>RELOCATION_TYPE</code> field? Simply put, there are a number of ways in which you can hook into a function. They are described in detail <a href="https://github.com/HelloOO7/libRPM/blob/master/include/RPM_Control.h">here</a>, but in layman's terms, they should be used as follows:</p>
+<ul>
+<li><code>THUMB_BRANCH</code> writes a one-way branch using the 16-bit Thumb instruction encoding. In most cases, this will be converted into a <code>PUSH, BL, PUSH</code> because of Thumb short branch restrictions, meaning you'll have to use another method for functions that use the stack for parameters (basically any with more than 4*4 bytes of arguments).</li>
+<li><code>THUMB_BRANCH_SAFESTACK</code> does exactly that. While it takes up more space (which generally isn't a problem as the overriden function isn't going to be a little one just based off its argument count), this relocation type preserves all stack parameters.</li>
+<li><code>THUMB_BRANCH_LINK</code> writes a simple BL/BLX using the 16-bit Thumb instruction encoding. This is useful for intercepting a function call in only one place as opposed to replacing the entire implementation.</li>
+<li><code>ARM_BRANCH</code> and <code>ARM_BRANCH_LINK</code> - 32-bit ARM instructions equivalent to <code>THUMB_BRANCH</code> and <code>THUMB_BRANCH_LINK</code> respectively. Since ARM short branches cover a decent address range, there isn't a need for <code>THUMB_BRANCH_SAFESTACK</code>.</li>
+<li><code>FULL_COPY</code> copies the raw contents of the function/symbol onto the destination address. Bear in mind that this will not carry over relocations (unless hard-linked into the ROM, which isn't our objective here) inside the function, so it is only useful for simple injections.</li>
+</ul>
+<p>From here on, if you name your function according to these rules, the linker will magically make it so that it will override the specified code. The future is now, thanks to science!</p>
+<h3 id="compiling"><a class="header" href="#compiling">Compiling</a></h3>
+<p>You can compile your code using standard GCC CLI, or using a build system like CMake. While compiling, be sure to use the following options:</p>
+<p><code>-r</code> - produce a relocatable executable.
+<code>-march=armv5t</code> - target the ARMv5T architecture.
+<code>-mthumb (optional)</code> - generate Thumb instructions (instead of ARM).
+<code>-Os</code> - optimize for code size.</p>
+<p>Additionally, if using CMake, you'll need to provide the following variables before compiler configuration to pass the compiler test:</p>
+<pre><code>set(CMAKE_SYSTEM_NAME             Generic)
+set(CMAKE_SYSTEM_PROCESSOR            arm)
+set(CMAKE_C_FLAGS   &quot;--specs=nosys.specs&quot;)
+set(CMAKE_CXX_FLAGS &quot;--specs=nosys.specs&quot;)
+</code></pre>
+<p>If you're using dynamic linking for parts of your code, be sure to load the dependencies (and properly release them!) using <code>k::dll::LoadLibrary</code> (resp. <code>k::dll::ReleaseLibrary</code>) from NitroKernel. If you need to do this in initialization, create a <code>DllMain</code> function using libRPM's <code>RPM_DLLMAIN_DECLARE</code> and <code>RPM_DLLMAIN_DEFINE</code> macros, then write your loading code to run on module load/unload.</p>
+<h3 id="linking"><a class="header" href="#linking">Linking</a></h3>
+<p>Linking is probably the simplest part of the entire process, in fact, it's so trivial that we'll skip over it in just one (1) step:</p>
+<ol>
+<li>Click the <code>Convert ELF to DLL</code> button in CTRMap's Extras panel and follow the instructions.</li>
+</ol>
+<p>Just in case you didn't hear me, that's:</p>
+<ol>
+<li>When prompted, select the ESDB file to be used for linking (be wary that this will not be reloaded when changed on disk).</li>
+<li>Then select the ELF file you compiled and a destination DLL file.</li>
+<li>Copy the result DLL into your <code>patches</code> or <code>lib</code> folder.</li>
+<li>You're done! Save your ROM, cross your fingers and start it up!</li>
+</ol>
+<h2 id="additional-notes"><a class="header" href="#additional-notes">Additional notes</a></h2>
+<h3 id="dynamic-loading"><a class="header" href="#dynamic-loading">Dynamic loading</a></h3>
+<p>Unlike WinAPI where you need to use <code>GetProcAddress</code> unless you know the exact address layout of your DLL, libRPM's dynamic linker only requires function names to match (the lookup is done using fast hash tables, so technically there are only about 4 billion possible combos, meaning collision is possible). As a result, headers are all that's needed to properly include a library.</p>
+<p>NitroKernel's library loader forces all libraries to be stored in <code>/lib</code> with the <code>.dll</code> extension. A library named <code>Library.dll</code> would then be loaded with <code>k::dll::LoadLibrary(&quot;Library&quot;)</code>.</p>
+<h3 id="debug-prints"><a class="header" href="#debug-prints">Debug prints</a></h3>
+<p>If you're using DeSmuMe or a similar &quot;nocash message&quot; compliant emulator, you can use the <code>_DeSmuMe</code> DLL of NitroKernel to enable debug prints through <code>k::Print</code> or <code>k::Printf</code>.</p>
+<p>The maximum length of a print string in NitroKernel is 1024 characters.</p>
+<h3 id="rpm-version-support"><a class="header" href="#rpm-version-support">RPM version support</a></h3>
+<p>RPMs that do not target the libRPM version present in the installed PMC module will produce undefined behavior. It is therefore recommended to recompile all modules to the latest version in case of uncertainty.</p>
+<h3 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h3>
+<p>DeSmuME + IDA debugger is your best friend.</p>
 
                     </main>
 

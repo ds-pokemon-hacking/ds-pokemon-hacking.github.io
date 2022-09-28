@@ -9,8 +9,8 @@ Assembly injection is the process of compiling an assembly routine, and hooking 
 
 ---
 
-## C Injection
-C Injection is almost the exact same idea, except you use C to create the code which emits assembly. That's because C code uses Assembly as an intermediate between the source code stage and the binary stage. In other words, C code creates assembly code, which is then assembled. Assembly knowledge is, for the most part, not necessary.
+## C/C++ Injection
+C/C++ injection is almost the exact same idea, except you use a high-level language (mostly C or C++, though you can go wild with Rust if that's what your heart desires) to create the code which emits assembly. That's because compilers/translators of these languages use Assembly as an intermediate between the source code stage and the binary stage. In other words, C/C++ code creates assembly code, which is then assembled. Assembly knowledge is, for the most part, not necessary.
 
 **How does it work?**
 It's easier to explain with an example, so I will go with that.
@@ -120,11 +120,11 @@ The aforementioned code becomes the following:
 ```
 Pretty neat, huh? The same thing would happen to `bl LoadScript` or `bl PlayScript`, provided those were the instructions there.
 
-That being said, how do we perform linking with C Injection?
+That being said, how do we perform linking with C/C++ Injection?
 
 - In the case of Generation IV, BluRose uses the linker provided by devkitPro (which is `arm-none-eabi-ld`) and a hand crafted translation table to fix the addresses to in-game functions. They also use a linker script to rearrange the order of their binary, which is a possibility I mentioned previously.
 
-- In the case of Generation V, PlatinumMaster and Hello007 wrote a custom linker, embedded as part of CTRMap, that takes in a hand crafted translation table (known as a External Symbol Database) and fixes all calls in a relocatable patch module. They also, additionally, wrote a dynamic linker, which allows Generation V hackers to have dynamic code injection patches.
+- In the case of Generation V, the input source code is first linked using the default toolchain, then later post-processed using a provided symbol mapping database during conversion to the RPM executable format. This means that before the final step, the ELF isn't bound to a fixed binary layout, providing simpler targeting of different games/revisions. Programs that only provide support functionality (file format libraries, codecs) are game-independent and can be loaded on-demand as DLLs.
 
 After linking, we will usually end up with an ELF file that we can use to create our final binary.
 
