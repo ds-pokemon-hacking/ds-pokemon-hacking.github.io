@@ -221,6 +221,10 @@ set(CMAKE_CXX_FLAGS &quot;--specs=nosys.specs&quot;)
 <li>You're done! Save your ROM, cross your fingers and start it up!</li>
 </ol>
 <h2 id="additional-notes"><a class="header" href="#additional-notes">Additional notes</a></h2>
+<h3 id="patch-priority"><a class="header" href="#patch-priority">Patch priority</a></h3>
+<p>Should you need to change the priority of loading a DLL patch to higher than 4 (default), hold the <code>Alt</code> key while clicking <code>Convert ELF to DLL</code> and you'll be prompted to choose the priority after conversion.</p>
+<h3 id="changing-esdbs-mid-stream"><a class="header" href="#changing-esdbs-mid-stream">Changing ESDBs mid-stream</a></h3>
+<p>Holding <code>Shift</code> while clicking <code>Convert ELF to DLL</code> will prompt you to re-select an ESDB even if you've selected one already.</p>
 <h3 id="dynamic-loading"><a class="header" href="#dynamic-loading">Dynamic loading</a></h3>
 <p>Unlike WinAPI where you need to use <code>GetProcAddress</code> unless you know the exact address layout of your DLL, libRPM's dynamic linker only requires function names to match (the lookup is done using fast hash tables, so technically there are only about 4 billion possible combos, meaning collision is possible). As a result, headers are all that's needed to properly include a library.</p>
 <p>NitroKernel's library loader forces all libraries to be stored in <code>/lib</code> with the <code>.dll</code> extension. A library named <code>Library.dll</code> would then be loaded with <code>k::dll::LoadLibrary(&quot;Library&quot;)</code>.</p>
