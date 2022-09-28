@@ -105,6 +105,14 @@ Just in case you didn't hear me, that's:
 
 ## Additional notes
 
+### Patch priority
+
+Should you need to change the priority of loading a DLL patch to higher than 4 (default), hold the `Alt` key while clicking `Convert ELF to DLL` and you'll be prompted to choose the priority after conversion.
+
+### Changing ESDBs mid-stream
+
+Holding `Shift` while clicking `Convert ELF to DLL` will prompt you to re-select an ESDB even if you've selected one already.
+
 ### Dynamic loading
 
 Unlike WinAPI where you need to use `GetProcAddress` unless you know the exact address layout of your DLL, libRPM's dynamic linker only requires function names to match (the lookup is done using fast hash tables, so technically there are only about 4 billion possible combos, meaning collision is possible). As a result, headers are all that's needed to properly include a library.
