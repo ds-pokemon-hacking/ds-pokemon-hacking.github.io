@@ -138,7 +138,7 @@
 <p><em>It is recommended to check out the <a href="../../../../universal/guides/code_injection/code_injection.html">universal code injection guide</a> before attempting this. This tutorial assumes that you have intermediate C++ knowledge and know how to use a compiler or build system.</em></p>
 <h2 id="setting-up-your-environment"><a class="header" href="#setting-up-your-environment">Setting up your environment</a></h2>
 <p>So, you think you've got what it takes to have a crack at Gen V code injection? Then press onward!</p>
-<p>First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there onward. To start, download (and install, where applicable) all these:</p>
+<p>First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there on out. To start, download (and install, where applicable) all these:</p>
 <ul>
 <li>CTRMap: <a href="https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases">https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases</a> (+ the Gen V plug-in from our server)</li>
 <li>The <code>arm-none-eabi</code> GCC toolchain: <a href="https://developer.arm.com/downloads/-/gnu-rm">https://developer.arm.com/downloads/-/gnu-rm</a></li>
@@ -177,7 +177,7 @@
 <li>DLLs from the <code>lib</code> folder in the ROM root can be loaded using utility functions from NitroKernel's <code>k::dll</code> namespace.</li>
 </ul>
 <p>Got all that? Don't worry, if you didn't, I'm fairly sure this text isn't going to go anywhere. But now, we finally get to the fun part - actually injecting stuff!</p>
-<p>Say, you've got your eye set on a function you really want to inject into, the feeling may not be mutual, but you're dead sure of it - so the question is: how do you grab its attention properly? The answer is: relocations. The RPM library internally performs a set of operations known as &quot;relocation&quot;, that adjusts your executables after they are loaded into memory in order to link the function calls within to the game binary. Since we can already do all that, it's not too hard to simply reverse the process to make the game link to your own code! You've got two options:</p>
+<p>Historically, there were many ways of injecting code into existing executables, but they all essentially get down to one thing: hooks, or branches. Branches are, simply put, a processor directive that changes the program counter - a register containing a pointer to the currently executed instruction - to another value. Each ISA and CPU architecture has its own way of performing these, but in most cases only two things are required: a source and destination address. In the early days of computing where programs had a fixed load address and memory space (also known as static loading), all branches were fully deterministic at compile time. This approach is still actually supported on modern CPUs through virtual memory addressing (in fact, some ancient Microsoft Windows programs rely on it to this day) and even though it's a thing of the past in desktop programming, it is still widely used in low-power embedded software, as is the case with standard Nintendo DS development. However, since code injection is a highly volatile process with very little headroom, we've decided to borrow the more flexible approach of dynamic loading, which includes a lot of fun quirks that you can use to your own advantage. As per the definition of branches, any program jump requires a source and destination address, but since those may not be fully known at compile-time, they are often stored into a <a href="https://en.wikipedia.org/wiki/Relocation_(computing)">relocation table</a> that is used to correct the branch instructions within the program once the executable is fixed in memory. Inasmuch as the DS has next to no memory protection, we can easily use these to perform the relocation process even outside of our program - such as the game code! All you've gotta do is adjust the relocation table accordingly, for which there are a grand total of two options:</p>
 <ol>
 <li>Use RPMTool's (<code>java -cp CTRMap.jar rpm.cli.RPMTool</code> or build RPMAuthoringTools) <code>--in-relocations-yml</code> to manually specify the relocations using an YML file (not recommended).</li>
 <li>Use the automated hook derivation process built into CTRMap.</li>
@@ -188,7 +188,7 @@
 <li><code>&lt;RELOCATION_TYPE&gt;_FunctionName_0xoffset</code> - hooks into a function-relative offset (e.g. <code>THUMB_BRANCH_LINK_BagSave_AddItem_0x2</code>)</li>
 <li><code>&lt;RELOCATION_TYPE&gt;_SEGMENT_0xaddress</code> - hooks at an absolute address within a segment (e.g. <code>FULL_COPY_ARM9_0x02008268</code>)</li>
 </ul>
-<p>Now, the logical question to ask is - what in the world is that <code>RELOCATION_TYPE</code> field? Simply put, there are a number of ways in which you can hook into a function. They are described in detail <a href="https://github.com/HelloOO7/libRPM/blob/master/include/RPM_Control.h">here</a>, but in layman's terms, they should be used as follows:</p>
+<p>I know that might be a lot to take in at first, so let's take this apart piece by piece. First of all, there's the function names. If a function is to be overriden with another, these should match the names in the ESDB, meaning they require explicit C linkage if used in C++. The relocation will then take place at the address of the function as specified in the ESDB, optionally offset by a constant addend. Additionally, if you don't feel like using the name database or are aiming for some memory wizardry, you can directly input the memory address of the relocation. However, as a side effect of the static loading method used on the Nintendo DS, you also have to specify a &quot;segment&quot; (in a similar way as the ESDB segment header does) of the address, which ensures that the relocation won't be inadvertently applied to an undesirable module, such as an overlay that shares the memory area with another. Last, but certainly not least, there is the <code>RELOCATION_TYPE</code> parameter. Its value specifies what data or CPU instruction should be written to the destination address. This is especially important on the ARM architecture, as it distinguishes between two instruction sets (ARM and Thumb) which use two separate methods of encoding. As a result, you've got quite a lot of options, but be wary - they are not at all interchangeable! The specific procedures are described in detail <a href="https://github.com/HelloOO7/libRPM/blob/master/include/RPM_Control.h">here</a>, but for starters, here's a quick reference that should hopefully guide you towards a correct choice:</p>
 <ul>
 <li><code>THUMB_BRANCH</code> writes a one-way branch using the 16-bit Thumb instruction encoding. In most cases, this will be converted into a <code>PUSH, BL, PUSH</code> because of Thumb short branch restrictions, meaning you'll have to use another method for functions that use the stack for parameters (basically any with more than 4*4 bytes of arguments).</li>
 <li><code>THUMB_BRANCH_SAFESTACK</code> does exactly that. While it takes up more space (which generally isn't a problem as the overriden function isn't going to be a little one just based off its argument count), this relocation type preserves all stack parameters.</li>
@@ -199,10 +199,12 @@
 <p>From here on, if you name your function according to these rules, the linker will magically make it so that it will override the specified code. The future is now, thanks to science!</p>
 <h3 id="compiling"><a class="header" href="#compiling">Compiling</a></h3>
 <p>You can compile your code using standard GCC CLI, or using a build system like CMake. While compiling, be sure to use the following options:</p>
-<p><code>-r</code> - produce a relocatable executable.
-<code>-march=armv5t</code> - target the ARMv5T architecture.
-<code>-mthumb (optional)</code> - generate Thumb instructions (instead of ARM).
-<code>-Os</code> - optimize for code size.</p>
+<ul>
+<li><code>-r</code> - produce a relocatable executable.</li>
+<li><code>-march=armv5t</code> - target the ARMv5T architecture.</li>
+<li><code>-mthumb (optional)</code> - generate Thumb instructions (instead of ARM).</li>
+<li><code>-Os</code> - optimize for code size.</li>
+</ul>
 <p>Additionally, if using CMake, you'll need to provide the following variables before compiler configuration to pass the compiler test:</p>
 <pre><code>set(CMAKE_SYSTEM_NAME             Generic)
 set(CMAKE_SYSTEM_PROCESSOR            arm)
@@ -233,8 +235,10 @@ set(CMAKE_CXX_FLAGS &quot;--specs=nosys.specs&quot;)
 <h3 id="debug-prints"><a class="header" href="#debug-prints">Debug prints</a></h3>
 <p>If you're using DeSmuMe or a similar &quot;nocash message&quot; compliant emulator, you can use the <code>_DeSmuMe</code> DLL of NitroKernel to enable debug prints through <code>k::Print</code> or <code>k::Printf</code>.</p>
 <p>The maximum length of a print string in NitroKernel is 1024 characters.</p>
+<h3 id="multithreading"><a class="header" href="#multithreading">Multithreading</a></h3>
+<p>Should you really need to simulate a multi-threaded context on the Nintendo DS's single-core CPU (such as for audio processing or asynchronous rendering), you can do so using NitroKernel's <code>kThread</code> library. Keep in mind though that this will add a slight overhead to your code and should wherever possible be substituted with a single-threaded replacement.</p>
 <h3 id="rpm-version-support"><a class="header" href="#rpm-version-support">RPM version support</a></h3>
-<p>RPMs that do not target the libRPM version present in the installed PMC module will produce undefined behavior. It is therefore recommended to recompile all modules to the latest version in case of uncertainty.</p>
+<p>RPMs that do not target the libRPM version present in the installed PMC module will produce undefined behavior. It is therefore recommended to recompile all modules to the latest version in case of uncertainty. If you're using CTRMap, you can upgrade all modules in the <code>patches</code> and <code>lib</code> VFS folders using a button in the Extras panel.</p>
 <h3 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h3>
 <p>DeSmuME + IDA debugger is your best friend.</p>
 
