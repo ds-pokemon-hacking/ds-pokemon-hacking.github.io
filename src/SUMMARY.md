@@ -17,6 +17,8 @@
     - [Universal]()
         - [Code Injection](gen5/universal/guides/code_injection/code_injection.md)  
 - [Universal]()
+    - [Sprite Indexing](universal/guides/sprite_indexing/indexing.md)
+      - [GIMP](universal/guides/sprite_indexing/gimp/gimp.md)
 
 # Resources
 - [Generation IV]()
