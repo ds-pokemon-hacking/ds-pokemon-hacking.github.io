@@ -1,4 +1,5 @@
 # Sprite Indexing with GIMP Guide
+> This guide was written by [turtleisaac](https://github.com/turtleisaac).
 
 This guide aims to serve as general instructions for indexing a sprite using GIMP, a free and open-source image editing program which is available on GNU/Linux, macOS, Windows, and more
 
@@ -10,7 +11,7 @@ This guide aims to serve as general instructions for indexing a sprite using GIM
 2. From here, open an image of your choice in GIMP. If this image has an alpha channel, it technically can be removed, but that image most likely wouldn't be ideal for inserting in the first place and really shouldn't be used.
 3. Depending on the constraints of what kind of image you are replacing, the number of colors available for your indexed image may vary. In most cases, you are either limited to 256 colors or 16 colors. This guide will assume you are indexing an image that can only have 16 colors, but the same process will work for a 256 color image.
 
-**NOTE:** if your image is already indexed adequately, such as if you are editing an existing image exported from the ROM, you may skip ahead to "Editing an Indexed Image".
+**NOTE:** if your image is already indexed adequately, such as if you are editing an existing image exported from the ROM and you just want to change the colors, you may skip ahead to [Editing an Indexed Image](#Editing-an-Indexed-Image).
 
 ### Indexing
 
@@ -33,7 +34,7 @@ This guide aims to serve as general instructions for indexing a sprite using GIM
 
     ![img4](gimp_img_4.png)
 
-   You can also press the button that has a pencil and some lines in order to edit the currently selected color. The plus-sign button can be used to add a new color to the palette.
+   You can also press the button that has a pencil and some lines in order to edit the currently selected color. The plus-sign button can be used to add a new color to the palette. If the background color is already in index 0 of the palette, you may skip ahead to [Saving](#Saving).
 
 ### Putting the Background Color in Index 0
 

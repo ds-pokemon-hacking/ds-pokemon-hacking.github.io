@@ -12,3 +12,16 @@ Indexing is a process that converts an image from having a specific RGB(A) value
 * Sprites within these games lack an alpha channel
   * If the game is programmed to display the image with any form of transparency, it will use the color at index 0 of the palette to determine what part of the sprite should be made transparent when displaying it
 * Most sprites are 8bpp (8 bits per pixel), meaning they have a maximum palette size of 256 colors
+
+[//]: # (## Formatting Requirements for Specific Sprites)
+
+[//]: # (> Dimensions are in Width x Height format)
+
+[//]: # (* Pokémon Battle Sprites - 16 colors, index 0 is background color - )
+
+---
+
+## Guides for Specific Tools
+* [GIMP](gimp/gimp.md)
+
+> TODO: Aseprite, Photoshop, GraphicsGale, Paint.NET
