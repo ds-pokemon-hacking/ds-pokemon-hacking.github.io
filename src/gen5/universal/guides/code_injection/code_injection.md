@@ -9,7 +9,7 @@ So, you think you've got what it takes to have a crack at Gen V code injection? 
 First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there on out. To start, download (and install, where applicable) all these:
 
 - CTRMap: [https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases](https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases) (+ the Gen V plug-in from our server)
-- The `arm-none-eabi` GCC toolchain: [https://developer.arm.com/downloads/-/gnu-rm](https://developer.arm.com/downloads/-/gnu-rm)
+- The `arm-none-eabi` GCC toolchain: [https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 - Latest RPM build of `PMC` [https://github.com/kingdom-of-ds-hacking/PMC/releases](https://github.com/kingdom-of-ds-hacking/PMC/releases)
 - Pokémon White 2 development headers: [https://github.com/kingdom-of-ds-hacking/swan](https://github.com/kingdom-of-ds-hacking/swan)
 - Latest NitroKernel DLL: [https://github.com/HelloOO7/NitroKernel/releases](https://github.com/HelloOO7/NitroKernel/releases)
