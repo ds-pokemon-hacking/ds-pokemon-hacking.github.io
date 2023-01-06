@@ -13,6 +13,7 @@ First, we've got to set up a few prerequisites. It's a boring job but I promise 
 - [Latest NitroKernel DLL](https://github.com/HelloOO7/NitroKernel/releases)
 
 **Note: This guide assumes that you are using a American Pokémon White 2 [IRDO] (and strictly no other) ROM. This does not mean Black, White, or Black 2 cannot be used; as long as you provide the relevant materials, they can be used for code injection.** 
+
 Before you get into code injection, set up a CTRMap project and load it up. If everything went as planned, there should be a `Code injection` section in your `Extras` tab. This is where it gets interesting:
 
 1) Click the `Install/Update PMC` button and select your `PMC.rpm` file. You should do this every time `libRPM` is updated, as the DLLs that CTRMap produces need the latest version of PMC to be recognized.
