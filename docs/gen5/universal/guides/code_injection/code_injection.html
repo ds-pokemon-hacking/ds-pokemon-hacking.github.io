@@ -142,18 +142,20 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="code-injection-guide-generation-v"><a class="header" href="#code-injection-guide-generation-v">Code Injection Guide (Generation V)</a></h1>
-<p><em>It is recommended to check out the <a href="../../../../universal/guides/code_injection/code_injection.html">universal code injection guide</a> before attempting this. This tutorial assumes that you have intermediate C++ knowledge and know how to use a compiler or build system.</em></p>
+<p><em>It is recommended to check out the <a href="universal/guides/code_injection/code_injection.html">universal code injection guide</a> before attempting this. This tutorial assumes that you have intermediate C++/ARMv5T assembly knowledge and know how to use a compiler or build system.</em></p>
 <h2 id="setting-up-your-environment"><a class="header" href="#setting-up-your-environment">Setting up your environment</a></h2>
-<p>So, you think you've got what it takes to have a crack at Gen V code injection? Then press onward!</p>
+<p>So, you think you've got what it takes to have a crack at Generation V code injection? Then press onward!</p>
 <p>First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there on out. To start, download (and install, where applicable) all these:</p>
 <ul>
-<li>CTRMap: <a href="https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases">https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases</a> (+ the Gen V plug-in from our server)</li>
-<li>The <code>arm-none-eabi</code> GCC toolchain: <a href="https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads">https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads</a></li>
-<li>Latest RPM build of <code>PMC</code> <a href="https://github.com/kingdom-of-ds-hacking/PMC/releases">https://github.com/kingdom-of-ds-hacking/PMC/releases</a></li>
-<li>Pokémon White 2 development headers: <a href="https://github.com/kingdom-of-ds-hacking/swan">https://github.com/kingdom-of-ds-hacking/swan</a></li>
-<li>Latest NitroKernel DLL: <a href="https://github.com/HelloOO7/NitroKernel/releases">https://github.com/HelloOO7/NitroKernel/releases</a></li>
+<li><a href="https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases">CTRMap Community Edition</a></li>
+<li><a href="https://github.com/kingdom-of-ds-hacking/CTRMapV">CTRMapV (Generation V plugin for CTRMap)</a></li>
+<li><a href="https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads">The <code>arm-none-eabi</code> GCC toolchain</a></li>
+<li><a href="https://github.com/kingdom-of-ds-hacking/PMC/releases">Latest RPM build of <code>PMC</code></a></li>
+<li><a href="https://github.com/kingdom-of-ds-hacking/swan">Pokémon White 2 development headers</a></li>
+<li><a href="https://github.com/HelloOO7/NitroKernel/releases">Latest NitroKernel DLL</a></li>
 </ul>
-<p>Furthermore, you should have an American Pokémon White 2 (and strictly no other) ROM ready. Before you get into code injection, set up a CTRMap project and load it up. If everything went as planned, there should be a <code>Code injection</code> section in your <code>Extras</code> tab. This is where it gets interesting:</p>
+<p><strong>Note: This guide assumes that you are using a American Pokémon White 2 [IRDO] (and strictly no other) ROM. This does not mean Black, White, or Black 2 cannot be used; as long as you provide the relevant materials, they can be used for code injection.</strong> 
+Before you get into code injection, set up a CTRMap project and load it up. If everything went as planned, there should be a <code>Code injection</code> section in your <code>Extras</code> tab. This is where it gets interesting:</p>
 <ol>
 <li>Click the <code>Install/Update PMC</code> button and select your <code>PMC.rpm</code> file. You should do this every time <code>libRPM</code> is updated, as the DLLs that CTRMap produces need the latest version of PMC to be recognized.</li>
 <li>Make sure that there is a <code>patches</code> directory in your project's <code>vfs/data</code>. If there isn't one, create it. Move your <code>NitroKernel.dll</code> into that directory.</li>
@@ -167,12 +169,18 @@
 <li>Export the symbols you need from IDA using <code>File &gt; Produce file &gt; Create MAP file...</code></li>
 <li>Copy the contents of IDA's Segment Register table (<code>View &gt; Open subviews &gt; Segment registers</code>) into a text file.</li>
 <li>Open the result <code>.map</code> file in a text editor and fix the segment starting addresses to their proper values instead of <code>00000000</code>. IDA's just sometimes moody like that.</li>
-<li>Clone and build the <a href="https://github.com/HelloOO7/RPMAuthoringTools">RPM authoring tools</a>, or use the CTRMap JAR (<code>java -cp &lt;path to CTRMap JAR&gt; rpm.cli.MAP2ESDB</code>) to launch MAP2ESDB.</li>
+<li>Run <code>MAP2ESDB</code>. If you do not have it, there are two ways to acquire it.
+<ul>
+<li>Clone and build the <a href="https://github.com/HelloOO7/RPMAuthoringTools">RPM authoring tools</a>, then execute MAP2ESDB in your console.</li>
+<li>Use the CTRMap JAR (<code>java -cp &lt;path to CTRMap JAR&gt; rpm.cli.MAP2ESDB</code>) to launch MAP2ESDB.</li>
+</ul>
+</li>
 <li>Proceed with the instructions provided by the command line interface. Use your .map as <code>--map</code> and your segment register plaintext as <code>--thmfile</code>.</li>
 <li>Once done, you should have an <code>esdb.yml</code> or similar all built and ready for code injection.</li>
 </ol>
 <h3 id="programming"><a class="header" href="#programming">Programming</a></h3>
-<p>Here's where you'll finally put those headers you downloaded earlier to good use! Any function that you've included in your ESDB, you can now use from your C++ code as long as it is properly declared. Some of the structures and functions we've researched have been compiled into the <code>swan</code> repo for convenience, and as long as they are in your ESDB, you can use them to their full advantage. Here are a couple of things you should keep in mind:</p>
+<p>Here's where you'll finally put those headers you downloaded earlier to good use! Any function that you've included in your ESDB, you can now use from your C++ code as long as it is properly declared. <strong>If you hate C++ for some reason, <del>that's tough</del> you can also use assembly; see <a href="#using-assembly">here</a>.</strong> </p>
+<p>Some of the structures and functions we've researched have been compiled into the <code>swan</code> repo for convenience, and as long as they are in your ESDB, you can use them to their full advantage. Here are a couple of things you should keep in mind:</p>
 <ul>
 <li>Functions that have C linkage should be treated as such. Declaring them inside namespaces, or even outside them as plain C++ functions, will most likely not link up with your ESDB.</li>
 <li>Failure to link a function against the ESDB is not reported in any way, since it's indistinguishable from a regular extern function present in a DLL and linked at run-time. Always make sure you've got everything registered properly before you commit.</li>
@@ -232,6 +240,16 @@ set(CMAKE_CXX_FLAGS &quot;--specs=nosys.specs&quot;)
 <li>You're done! Save your ROM, cross your fingers and start it up!</li>
 </ol>
 <h2 id="additional-notes"><a class="header" href="#additional-notes">Additional notes</a></h2>
+<h3 id="using-assembly"><a class="header" href="#using-assembly">Using Assembly</a></h3>
+<p>If you do not feel like writing C or C++, or you want to do a relatively simple patch, then you are also able to use assembly! 
+C and C++ compile into assembly, which is then assembled into an executable and linkable format (ELF) file. Assembly is just assembled into the ELF format directly. So, you can very easily use tools such as kingcom's armips, or (if you set up the C/C++ compiler above) the GNU assembler.</p>
+<p>To use assembly, just follow the same conventions above for naming functions/symbols. Then, assemble and link your file with the instructions above. Assuming you are using the GNU assembler, you just need to use the following options when assembling your file:</p>
+<ul>
+<li><code>-march=armv5t</code> - target the ARMv5T architecture.</li>
+<li><code>-mthumb (optional)</code> - generate Thumb instructions (instead of ARM).</li>
+<li><code>-mtune=arm946e-s</code> (optional) - target the ARM946E-S architecture.</li>
+</ul>
+<p>From there, just follow the steps for <a href="#linking">linking</a>.</p>
 <h3 id="patch-priority"><a class="header" href="#patch-priority">Patch priority</a></h3>
 <p>Should you need to change the priority of loading a DLL patch to higher than 4 (default), hold the <code>Alt</code> key while clicking <code>Convert ELF to DLL</code> and you'll be prompted to choose the priority after conversion.</p>
 <h3 id="changing-esdbs-mid-stream"><a class="header" href="#changing-esdbs-mid-stream">Changing ESDBs mid-stream</a></h3>

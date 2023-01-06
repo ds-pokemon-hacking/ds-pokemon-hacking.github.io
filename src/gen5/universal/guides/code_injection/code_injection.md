@@ -1,20 +1,19 @@
 # Code Injection Guide (Generation V)
-
-*It is recommended to check out the [universal code injection guide](../../../../universal/guides/code_injection/code_injection.md) before attempting this. This tutorial assumes that you have intermediate C++ knowledge and know how to use a compiler or build system.*
+*It is recommended to check out the [universal code injection guide](universal/guides/code_injection/code_injection.md) before attempting this. This tutorial assumes that you have intermediate C++/ARMv5T assembly knowledge and know how to use a compiler or build system.*
 
 ## Setting up your environment ##
-
-So, you think you've got what it takes to have a crack at Gen V code injection? Then press onward!
+So, you think you've got what it takes to have a crack at Generation V code injection? Then press onward!
 
 First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there on out. To start, download (and install, where applicable) all these:
+- [CTRMap Community Edition](https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases)
+- [CTRMapV (Generation V plugin for CTRMap)](https://github.com/kingdom-of-ds-hacking/CTRMapV)
+- [The `arm-none-eabi` GCC toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
+- [Latest RPM build of `PMC`](https://github.com/kingdom-of-ds-hacking/PMC/releases)
+- [Pokémon White 2 development headers](https://github.com/kingdom-of-ds-hacking/swan)
+- [Latest NitroKernel DLL](https://github.com/HelloOO7/NitroKernel/releases)
 
-- CTRMap: [https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases](https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases) (+ the Gen V plug-in from our server)
-- The `arm-none-eabi` GCC toolchain: [https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-- Latest RPM build of `PMC` [https://github.com/kingdom-of-ds-hacking/PMC/releases](https://github.com/kingdom-of-ds-hacking/PMC/releases)
-- Pokémon White 2 development headers: [https://github.com/kingdom-of-ds-hacking/swan](https://github.com/kingdom-of-ds-hacking/swan)
-- Latest NitroKernel DLL: [https://github.com/HelloOO7/NitroKernel/releases](https://github.com/HelloOO7/NitroKernel/releases)
-
-Furthermore, you should have an American Pokémon White 2 (and strictly no other) ROM ready. Before you get into code injection, set up a CTRMap project and load it up. If everything went as planned, there should be a `Code injection` section in your `Extras` tab. This is where it gets interesting:
+**Note: This guide assumes that you are using a American Pokémon White 2 [IRDO] (and strictly no other) ROM. This does not mean Black, White, or Black 2 cannot be used; as long as you provide the relevant materials, they can be used for code injection.** 
+Before you get into code injection, set up a CTRMap project and load it up. If everything went as planned, there should be a `Code injection` section in your `Extras` tab. This is where it gets interesting:
 
 1) Click the `Install/Update PMC` button and select your `PMC.rpm` file. You should do this every time `libRPM` is updated, as the DLLs that CTRMap produces need the latest version of PMC to be recognized.
 2) Make sure that there is a `patches` directory in your project's `vfs/data`. If there isn't one, create it. Move your `NitroKernel.dll` into that directory.
@@ -22,21 +21,23 @@ Furthermore, you should have an American Pokémon White 2 (and strictly no other
 3) If everything went correctly, there should be a `00` byte at `0x02005050` in your game's RAM as part of PMC's initialization code.
 
 ## Building code injection patches ##
-
 ### Symbol maps
 
 There are two quintessential things that you need in order to begin writing proper code injection modules. The first one - a compiler - you've already got since Chapter 1. The other is what we call an `ESDB` (short for "external symbol database") and is pretty much the stepping stone for interfacing and hijacking game routines. If you've already got one from a friend or relative, you should be all set, however, should you need to build your own one, that's also an option:
 
 1) Export the symbols you need from IDA using `File > Produce file > Create MAP file...`
 2) Copy the contents of IDA's Segment Register table (`View > Open subviews > Segment registers`) into a text file.
-2) Open the result `.map` file in a text editor and fix the segment starting addresses to their proper values instead of `00000000`. IDA's just sometimes moody like that.
-3) Clone and build the [RPM authoring tools](https://github.com/HelloOO7/RPMAuthoringTools), or use the CTRMap JAR (`java -cp <path to CTRMap JAR> rpm.cli.MAP2ESDB`) to launch MAP2ESDB.
-3) Proceed with the instructions provided by the command line interface. Use your .map as `--map` and your segment register plaintext as `--thmfile`.
-4) Once done, you should have an `esdb.yml` or similar all built and ready for code injection.
+3) Open the result `.map` file in a text editor and fix the segment starting addresses to their proper values instead of `00000000`. IDA's just sometimes moody like that.
+3) Run `MAP2ESDB`. If you do not have it, there are two ways to acquire it.
+    - Clone and build the [RPM authoring tools](https://github.com/HelloOO7/RPMAuthoringTools), then execute MAP2ESDB in your console.
+    - Use the CTRMap JAR (`java -cp <path to CTRMap JAR> rpm.cli.MAP2ESDB`) to launch MAP2ESDB.
+4) Proceed with the instructions provided by the command line interface. Use your .map as `--map` and your segment register plaintext as `--thmfile`.
+5) Once done, you should have an `esdb.yml` or similar all built and ready for code injection.
 
 ### Programming
+Here's where you'll finally put those headers you downloaded earlier to good use! Any function that you've included in your ESDB, you can now use from your C++ code as long as it is properly declared. **If you hate C++ for some reason, ~~that's tough~~ you can also use assembly; see [here](#using-assembly).** 
 
-Here's where you'll finally put those headers you downloaded earlier to good use! Any function that you've included in your ESDB, you can now use from your C++ code as long as it is properly declared. Some of the structures and functions we've researched have been compiled into the `swan` repo for convenience, and as long as they are in your ESDB, you can use them to their full advantage. Here are a couple of things you should keep in mind:
+Some of the structures and functions we've researched have been compiled into the `swan` repo for convenience, and as long as they are in your ESDB, you can use them to their full advantage. Here are a couple of things you should keep in mind:
 
 - Functions that have C linkage should be treated as such. Declaring them inside namespaces, or even outside them as plain C++ functions, will most likely not link up with your ESDB.
 - Failure to link a function against the ESDB is not reported in any way, since it's indistinguishable from a regular extern function present in a DLL and linked at run-time. Always make sure you've got everything registered properly before you commit.
@@ -56,9 +57,9 @@ Historically, there were many ways of injecting code into existing executables, 
 
 To have the RPM converter automatically convert your function into a relocation referring to it, it needs to be in either of the following formats:
 
-- `<RELOCATION_TYPE>_FunctionName` - hooks directly into the start of a named function (e.g. `THUMB_BRANCH_BagSave_AddItem`)\
-- `<RELOCATION_TYPE>_FunctionName_0xoffset` - hooks into a function-relative offset (e.g. `THUMB_BRANCH_LINK_BagSave_AddItem_0x2`)\
-- `<RELOCATION_TYPE>_SEGMENT_0xaddress` - hooks at an absolute address within a segment (e.g. `FULL_COPY_ARM9_0x02008268`)\
+- `<RELOCATION_TYPE>_FunctionName` - hooks directly into the start of a named function (e.g. `THUMB_BRANCH_BagSave_AddItem`)
+- `<RELOCATION_TYPE>_FunctionName_0xoffset` - hooks into a function-relative offset (e.g. `THUMB_BRANCH_LINK_BagSave_AddItem_0x2`)
+- `<RELOCATION_TYPE>_SEGMENT_0xaddress` - hooks at an absolute address within a segment (e.g. `FULL_COPY_ARM9_0x02008268`)
 
 I know that might be a lot to take in at first, so let's take this apart piece by piece. First of all, there's the function names. If a function is to be overriden with another, these should match the names in the ESDB, meaning they require explicit C linkage if used in C++. The relocation will then take place at the address of the function as specified in the ESDB, optionally offset by a constant addend. Additionally, if you don't feel like using the name database or are aiming for some memory wizardry, you can directly input the memory address of the relocation. However, as a side effect of the static loading method used on the Nintendo DS, you also have to specify a "segment" (in a similar way as the ESDB segment header does) of the address, which ensures that the relocation won't be inadvertently applied to an undesirable module, such as an overlay that shares the memory area with another. Last, but certainly not least, there is the `RELOCATION_TYPE` parameter. Its value specifies what data or CPU instruction should be written to the destination address. This is especially important on the ARM architecture, as it distinguishes between two instruction sets (ARM and Thumb) which use two separate methods of encoding. As a result, you've got quite a lot of options, but be wary - they are not at all interchangeable! The specific procedures are described in detail [here](https://github.com/HelloOO7/libRPM/blob/master/include/RPM_Control.h), but for starters, here's a quick reference that should hopefully guide you towards a correct choice:
 
@@ -71,7 +72,6 @@ I know that might be a lot to take in at first, so let's take this apart piece b
 From here on, if you name your function according to these rules, the linker will magically make it so that it will override the specified code. The future is now, thanks to science!
 
 ### Compiling
-
 You can compile your code using standard GCC CLI, or using a build system like CMake. While compiling, be sure to use the following options:
 
 - `-r` - produce a relocatable executable.
@@ -104,7 +104,17 @@ Just in case you didn't hear me, that's:
 4) You're done! Save your ROM, cross your fingers and start it up!
 
 ## Additional notes
+### Using Assembly
+If you do not feel like writing C or C++, or you want to do a relatively simple patch, then you are also able to use assembly! 
+C and C++ compile into assembly, which is then assembled into an executable and linkable format (ELF) file. Assembly is just assembled into the ELF format directly. So, you can very easily use tools such as kingcom's armips, or (if you set up the C/C++ compiler above) the GNU assembler.
 
+To use assembly, just follow the same conventions above for naming functions/symbols. Then, assemble and link your file with the instructions above. Assuming you are using the GNU assembler, you just need to use the following options when assembling your file:
+- `-march=armv5t` - target the ARMv5T architecture.
+- `-mthumb (optional)` - generate Thumb instructions (instead of ARM).
+- `-mtune=arm946e-s` (optional) - target the ARM946E-S architecture.
+
+From there, just follow the steps for [linking](#linking).
+ 
 ### Patch priority
 
 Should you need to change the priority of loading a DLL patch to higher than 4 (default), hold the `Alt` key while clicking `Convert ELF to DLL` and you'll be prompted to choose the priority after conversion.
