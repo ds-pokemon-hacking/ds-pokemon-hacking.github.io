@@ -51,7 +51,14 @@ Some of the structures and functions we've researched have been compiled into th
 
 Got all that? Don't worry, if you didn't, I'm fairly sure this text isn't going to go anywhere. But now, we finally get to the fun part - actually injecting stuff!
 
-Historically, there were many ways of injecting code into existing executables, but they all essentially get down to one thing: hooks, or branches. Branches are, simply put, a processor directive that changes the program counter - a register containing a pointer to the currently executed instruction - to another value. Each ISA and CPU architecture has its own way of performing these, but in most cases only two things are required: a source and destination address. In the early days of computing where programs had a fixed load address and memory space (also known as static loading), all branches were fully deterministic at compile time. This approach is still actually supported on modern CPUs through virtual memory addressing (in fact, some ancient Microsoft Windows programs rely on it to this day) and even though it's a thing of the past in desktop programming, it is still widely used in low-power embedded software, as is the case with standard Nintendo DS development. However, since code injection is a highly volatile process with very little headroom, we've decided to borrow the more flexible approach of dynamic loading, which includes a lot of fun quirks that you can use to your own advantage. As per the definition of branches, any program jump requires a source and destination address, but since those may not be fully known at compile-time, they are often stored into a [relocation table](https://en.wikipedia.org/wiki/Relocation_(computing)) that is used to correct the branch instructions within the program once the executable is fixed in memory. Inasmuch as the DS has next to no memory protection, we can easily use these to perform the relocation process even outside of our program - such as the game code! All you've gotta do is adjust the relocation table accordingly, for which there are a grand total of two options:
+### Preparing our Code for Injection
+Historically, there were many ways of injecting code into existing executables, but they all essentially get down to one thing: hooks, or branches. Branches are, simply put, a processor directive that changes the program counter - a register containing a pointer to the currently executed instruction - to another value. Each ISA and CPU architecture has its own way of performing these, but in most cases only two things are required: a source and destination address. 
+
+In the early days of computing where programs had a fixed load address and memory space (also known as static loading), all branches were fully deterministic at compile time. This approach is still actually supported on modern CPUs through virtual memory addressing (in fact, some ancient Microsoft Windows programs rely on it to this day) and even though it's a thing of the past in desktop programming, it is still widely used in low-power embedded software, as is the case with standard Nintendo DS development. 
+
+However, since code injection is a highly volatile process with very little headroom, we've decided to borrow the more flexible approach of dynamic loading, which includes a lot of fun quirks that you can use to your own advantage. As per the definition of branches, any program jump requires a source and destination address, but since those may not be fully known at compile-time, they are often stored into a [relocation table](https://en.wikipedia.org/wiki/Relocation_(computing)) that is used to correct the branch instructions within the program once the executable is fixed in memory. 
+
+Inasmuch as the DS has next to no memory protection, we can easily use these to perform the relocation process even outside of our program - such as the game code! All you've gotta do is adjust the relocation table accordingly, for which there are a grand total of two options:
 
 1) Use RPMTool's (`java -cp CTRMap.jar rpm.cli.RPMTool` or build RPMAuthoringTools) `--in-relocations-yml` to manually specify the relocations using an YML file (not recommended).
 2) Use the automated hook derivation process built into CTRMap.
@@ -62,13 +69,15 @@ To have the RPM converter automatically convert your function into a relocation 
 - `<RELOCATION_TYPE>_FunctionName_0xoffset` - hooks into a function-relative offset (e.g. `THUMB_BRANCH_LINK_BagSave_AddItem_0x2`)
 - `<RELOCATION_TYPE>_SEGMENT_0xaddress` - hooks at an absolute address within a segment (e.g. `FULL_COPY_ARM9_0x02008268`)
 
-I know that might be a lot to take in at first, so let's take this apart piece by piece. First of all, there's the function names. If a function is to be overriden with another, these should match the names in the ESDB, meaning they require explicit C linkage if used in C++. The relocation will then take place at the address of the function as specified in the ESDB, optionally offset by a constant addend. Additionally, if you don't feel like using the name database or are aiming for some memory wizardry, you can directly input the memory address of the relocation. However, as a side effect of the static loading method used on the Nintendo DS, you also have to specify a "segment" (in a similar way as the ESDB segment header does) of the address, which ensures that the relocation won't be inadvertently applied to an undesirable module, such as an overlay that shares the memory area with another. Last, but certainly not least, there is the `RELOCATION_TYPE` parameter. Its value specifies what data or CPU instruction should be written to the destination address. This is especially important on the ARM architecture, as it distinguishes between two instruction sets (ARM and Thumb) which use two separate methods of encoding. As a result, you've got quite a lot of options, but be wary - they are not at all interchangeable! The specific procedures are described in detail [here](https://github.com/HelloOO7/libRPM/blob/master/include/RPM_Control.h), but for starters, here's a quick reference that should hopefully guide you towards a correct choice:
-
-- `THUMB_BRANCH` writes a one-way branch using the 16-bit Thumb instruction encoding. In most cases, this will be converted into a `PUSH, BL, PUSH` because of Thumb short branch restrictions, meaning you'll have to use another method for functions that use the stack for parameters (basically any with more than 4\*4 bytes of arguments).
-- `THUMB_BRANCH_SAFESTACK` does exactly that. While it takes up more space (which generally isn't a problem as the overriden function isn't going to be a little one just based off its argument count), this relocation type preserves all stack parameters.
-- `THUMB_BRANCH_LINK` writes a simple BL/BLX using the 16-bit Thumb instruction encoding. This is useful for intercepting a function call in only one place as opposed to replacing the entire implementation.
-- `ARM_BRANCH` and `ARM_BRANCH_LINK` - 32-bit ARM instructions equivalent to `THUMB_BRANCH` and `THUMB_BRANCH_LINK` respectively. Since ARM short branches cover a decent address range, there isn't a need for `THUMB_BRANCH_SAFESTACK`.
-- `FULL_COPY` copies the raw contents of the function/symbol onto the destination address. Bear in mind that this will not carry over relocations (unless hard-linked into the ROM, which isn't our objective here) inside the function, so it is only useful for simple injections.
+I know that might be a lot to take in at first, so let's take this apart piece by piece. 
+- First of all, there's the function names. If a function is to be overriden with another, these should match the names in the ESDB, meaning they require explicit C linkage if used in C++. The relocation will then take place at the address of the function as specified in the ESDB, optionally offset by a constant addend. 
+- Additionally, if you don't feel like using the name database or are aiming for some memory wizardry, you can directly input the memory address of the relocation. However, as a side effect of the static loading method used on the Nintendo DS, you also have to specify a "segment" (in a similar way as the ESDB segment header does) of the address, which ensures that the relocation won't be inadvertently applied to an undesirable module, such as an overlay that shares the memory area with another. 
+- Last, but certainly not least, there is the `RELOCATION_TYPE` parameter. Its value specifies what data or CPU instruction should be written to the destination address. This is especially important on the ARM architecture, as it distinguishes between two instruction sets (ARM and Thumb) which use two separate methods of encoding. As a result, you've got quite a lot of options, but be wary - they are not at all interchangeable! The specific procedures are described in detail [here](https://github.com/HelloOO7/libRPM/blob/master/include/RPM_Control.h), but for starters, here's a quick reference that should hopefully guide you towards a correct choice:
+    - `THUMB_BRANCH` writes a one-way branch using the 16-bit Thumb instruction encoding. In most cases, this will be converted into a `PUSH, BL, PUSH` because of Thumb short branch restrictions, meaning you'll have to use another method for functions that use the stack for parameters (basically any with more than 4\*4 bytes of arguments).
+    - `THUMB_BRANCH_SAFESTACK` does exactly that. While it takes up more space (which generally isn't a problem as the overriden function isn't going to be a little one just based off its argument count), this relocation type preserves all stack parameters.
+    - `THUMB_BRANCH_LINK` writes a simple BL/BLX using the 16-bit Thumb instruction encoding. This is useful for intercepting a function call in only one place as opposed to replacing the entire implementation.
+    - `ARM_BRANCH` and `ARM_BRANCH_LINK` - 32-bit ARM instructions equivalent to `THUMB_BRANCH` and `THUMB_BRANCH_LINK` respectively. Since ARM short branches cover a decent address range, there isn't a need for `THUMB_BRANCH_SAFESTACK`.
+    - `FULL_COPY` copies the raw contents of the function/symbol onto the destination address. Bear in mind that this will not carry over relocations (unless hard-linked into the ROM, which isn't our objective here) inside the function, so it is only useful for simple injections.
 
 From here on, if you name your function according to these rules, the linker will magically make it so that it will override the specified code. The future is now, thanks to science!
 
@@ -103,7 +112,6 @@ Just in case you didn't hear me, that's:
 2) Then select the ELF file you compiled and a destination DLL file.
 3) Copy the result DLL into your `patches` or `lib` folder.
 4) You're done! Save your ROM, cross your fingers and start it up!
-
 ## Additional notes
 ### Using Assembly
 If you do not feel like writing C or C++, or you want to do a relatively simple patch, then you are also able to use assembly! 
@@ -115,17 +123,11 @@ To use assembly, just follow the same conventions above for naming functions/sym
 - `-mtune=arm946e-s` (optional) - target the ARM946E-S architecture.
 
 From there, just follow the steps for [linking](#linking).
- 
 ### Patch priority
-
 Should you need to change the priority of loading a DLL patch to higher than 4 (default), hold the `Alt` key while clicking `Convert ELF to DLL` and you'll be prompted to choose the priority after conversion.
-
 ### Changing ESDBs mid-stream
-
 Holding `Shift` while clicking `Convert ELF to DLL` will prompt you to re-select an ESDB even if you've selected one already.
-
 ### Dynamic loading
-
 Unlike WinAPI where you need to use `GetProcAddress` unless you know the exact address layout of your DLL, libRPM's dynamic linker only requires function names to match (the lookup is done using fast hash tables, so technically there are only about 4 billion possible combos, meaning collision is possible). As a result, headers are all that's needed to properly include a library.
 
 NitroKernel's library loader forces all libraries to be stored in `/lib` with the `.dll` extension. A library named `Library.dll` would then be loaded with `k::dll::LoadLibrary("Library")`.
