@@ -920,15 +920,13 @@ C and C++ compile into assembly, which is then assembled into an executable and 
 <h3 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h3>
 <p>DeSmuME + IDA debugger is your best friend.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="general-code-injection-guide"><a class="header" href="#general-code-injection-guide">General Code Injection Guide</a></h1>
-<p>This guide aims to serve as a technical introduction to code injection in the DS Pokemon games, as well as common processes for it.</p>
-<hr />
+<p>This guide aims to serve as a technical introduction to code injection in the DS Pokemon games, as well as common processes for it. It is strongly recommended that you read this page before continuing onto generation-specific code injection, as it will attempt to familiarize you with how it generally works.</p>
 <h2 id="assembly-injection"><a class="header" href="#assembly-injection">Assembly Injection</a></h2>
 <p>Assembly injection is the process of compiling an assembly routine, and hooking it into the executable part of a ROM. </p>
-<hr />
 <h2 id="cc-injection"><a class="header" href="#cc-injection">C/C++ Injection</a></h2>
 <p>C/C++ injection is almost the exact same idea, except you use a high-level language (mostly C or C++, though you can go wild with Rust if that's what your heart desires) to create the code which emits assembly. That's because compilers/translators of these languages use Assembly as an intermediate between the source code stage and the binary stage. In other words, C/C++ code creates assembly code, which is then assembled. Assembly knowledge is, for the most part, not necessary.</p>
-<p><strong>How does it work?</strong>
-It's easier to explain with an example, so I will go with that.</p>
+<h3 id="how-does-c-injection-work"><a class="header" href="#how-does-c-injection-work">How does C Injection work?</a></h3>
+<p>It's easier to explain with an example, so I will go with that.</p>
 <p>Say we have the following C code:</p>
 <pre><code class="language-C">// We declare these so the code can compile. Can go into a separate library file.
 int AddMoney(int);
@@ -951,7 +949,7 @@ void funFunction1() {
 <p>Our compiler will take our C code and turn it into Assembly. How, you might be asking yourself? I will give you a high level idea of what is going on.</p>
 <p>See, when we do an operation in C, the operation we do has a corresponding set of Assembly. By parsing the C file, the compiler can match each operation in our C source code to a list of Assembly instructions that are functionally equivalent. This yields an intermediate Assembly file, which pertains to the architecture of the system we are compiling the binary for. In this case, it would yield ARMv5T Assembly (unless otherwise specified), which is the Assembly variant used on the Nintendo DS.</p>
 <p>In the case of our file, it would turn it into the following assembly (courtesy of <code>gcc</code>):</p>
-<pre><code class="language-ARMASM">funFunction1:
+<pre><code class="language-ASM">funFunction1:
         push    {r7, lr}
         sub     sp, sp, #16
         add     r7, sp, #0
@@ -986,7 +984,6 @@ void funFunction1() {
         pop     {r7, pc}
 </code></pre>
 <p>This code is functionally equivalent to the code we wrote, but might be harder to understand at first glance.</p>
-<hr />
 <h2 id="insertion-process"><a class="header" href="#insertion-process">Insertion Process</a></h2>
 <h3 id="fixing-our-assembly"><a class="header" href="#fixing-our-assembly">Fixing our Assembly</a></h3>
 <p>Similar to the above, assembling Assembly consists of taking our code and translating it into a format that our processor can understand. The Executable and Linkable Format, or ELF, allows us to simplify this process. </p>
@@ -994,7 +991,7 @@ void funFunction1() {
 <p>This is easily solved by converting our assembly into an ELF file. With an ELF, we can perform a process known as linking. Linking is one of the most important parts of the entire compilation process, and for good reason; with our Assembly in ELF format, we can define the addresses of functions we are calling, determine the order of multiple files being linked together, and create relocatable objects, all of which solve our earlier problems. So, let's go into detail about linking.</p>
 <h4 id="assembly-to-executable-and-linkable-format-elf-and-linking"><a class="header" href="#assembly-to-executable-and-linkable-format-elf-and-linking">Assembly to Executable and Linkable Format (ELF), and Linking</a></h4>
 <p>On the high level, linking is performed using a linker. A linker is equipped with a translation table which takes in symbol names, and translates them to addresses. This translation table is comprised of all of the addresses of functions in the binaries we link together, and a (optionally) hand-crafted symbol to address map.</p>
-<p>This hand-crafted translation table is an integral part of C Injection. Without it, calling existing functions would be practically impossible. This translation table is created by researching the ROM's code, and documenting the functions. We then give names to these functions, which we later use as symbols. This creates a one-to-one mapping that allows us to properly fix our addresses.</p>
+<p>This hand-crafted translation table is an integral part of code injection. Without it, calling existing functions would be practically impossible. This translation table is created by researching the ROM's code, and documenting the functions. We then give names to these functions, which we later use as symbols. This creates a one-to-one mapping that allows us to properly fix our addresses.</p>
 <p>Take this segment of our Assembly from above, for example.</p>
 <pre><code class="language-ARMASM">        movw    r0, #3000
         bl      AddMoney
@@ -1012,21 +1009,12 @@ END_TRANSLATION_DEFINITIONS
         bl      30 @ Note, this will likely be a relative offset (destination - address of this instruction) and not an absolute one. This is just for demonstration.
 </code></pre>
 <p>Pretty neat, huh? The same thing would happen to <code>bl LoadScript</code> or <code>bl PlayScript</code>, provided those were the instructions there.</p>
-<p>That being said, how do we perform linking with C/C++ Injection?</p>
+<p>That being said, how do we perform linking with code injection?</p>
 <ul>
-<li>
-<p>In the case of Generation IV, BluRose uses the linker provided by devkitPro (which is <code>arm-none-eabi-ld</code>) and a hand crafted translation table to fix the addresses to in-game functions. They also use a linker script to rearrange the order of their binary, which is a possibility I mentioned previously.</p>
-</li>
-<li>
-<p>In the case of Generation V, the input source code is first linked using the default toolchain, then later post-processed using a provided symbol mapping database during conversion to the RPM executable format. This means that before the final step, the ELF isn't bound to a fixed binary layout, providing simpler targeting of different games/revisions. Programs that only provide support functionality (file format libraries, codecs) are game-independent and can be loaded on-demand as DLLs.</p>
-</li>
+<li>In the case of Generation IV, BluRose uses the linker provided by devkitPro (which is <code>arm-none-eabi-ld</code>) and a hand crafted translation table to fix the addresses to in-game functions. They also use a linker script to rearrange the order of their binary, which is a possibility I mentioned previously.</li>
+<li>In the case of Generation V, the input source code is first linked using the default toolchain, then later post-processed using a provided symbol mapping database during conversion to the RPM executable format. This means that before the final step, the ELF isn't bound to a fixed binary layout, providing simpler targeting of different games/revisions. Programs that only provide support functionality (file format libraries, codecs) are game-independent and can be loaded on-demand as DLLs.</li>
 </ul>
 <p>After linking, we will usually end up with an ELF file that we can use to create our final binary.</p>
-<h3 id="making-the-binary"><a class="header" href="#making-the-binary">Making the Binary</a></h3>
-<p><strong>TODO</strong>.</p>
-<h3 id="insertion"><a class="header" href="#insertion">Insertion</a></h3>
-<p><strong>TODO</strong>.
-Depending on the Generation, this will be different.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="intro-to-sprite-indexing"><a class="header" href="#intro-to-sprite-indexing">Intro to Sprite Indexing</a></h1>
 <blockquote>
 <p>This document was written by turtleisaac</p>
