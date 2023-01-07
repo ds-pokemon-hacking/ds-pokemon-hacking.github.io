@@ -1,18 +1,13 @@
 # General Code Injection Guide
-
-This guide aims to serve as a technical introduction to code injection in the DS Pokemon games, as well as common processes for it.
-
----
+This guide aims to serve as a technical introduction to code injection in the DS Pokemon games, as well as common processes for it. It is strongly recommended that you read this page before continuing onto generation-specific code injection, as it will attempt to familiarize you with how it generally works.
 
 ## Assembly Injection
 Assembly injection is the process of compiling an assembly routine, and hooking it into the executable part of a ROM. 
 
----
-
 ## C/C++ Injection
 C/C++ injection is almost the exact same idea, except you use a high-level language (mostly C or C++, though you can go wild with Rust if that's what your heart desires) to create the code which emits assembly. That's because compilers/translators of these languages use Assembly as an intermediate between the source code stage and the binary stage. In other words, C/C++ code creates assembly code, which is then assembled. Assembly knowledge is, for the most part, not necessary.
 
-**How does it work?**
+### How does C Injection work?
 It's easier to explain with an example, so I will go with that.
 
 Say we have the following C code:
@@ -36,14 +31,13 @@ void funFunction1() {
 }
 ```
 
-
 Our compiler will take our C code and turn it into Assembly. How, you might be asking yourself? I will give you a high level idea of what is going on.
 
 See, when we do an operation in C, the operation we do has a corresponding set of Assembly. By parsing the C file, the compiler can match each operation in our C source code to a list of Assembly instructions that are functionally equivalent. This yields an intermediate Assembly file, which pertains to the architecture of the system we are compiling the binary for. In this case, it would yield ARMv5T Assembly (unless otherwise specified), which is the Assembly variant used on the Nintendo DS.
 
 In the case of our file, it would turn it into the following assembly (courtesy of `gcc`):
 
-```ARMASM
+```ASM
 funFunction1:
         push    {r7, lr}
         sub     sp, sp, #16
@@ -81,8 +75,6 @@ funFunction1:
 
 This code is functionally equivalent to the code we wrote, but might be harder to understand at first glance.
 
----
-
 ## Insertion Process
 ### Fixing our Assembly
 Similar to the above, assembling Assembly consists of taking our code and translating it into a format that our processor can understand. The Executable and Linkable Format, or ELF, allows us to simplify this process. 
@@ -94,7 +86,7 @@ This is easily solved by converting our assembly into an ELF file. With an ELF, 
 #### Assembly to Executable and Linkable Format (ELF), and Linking
 On the high level, linking is performed using a linker. A linker is equipped with a translation table which takes in symbol names, and translates them to addresses. This translation table is comprised of all of the addresses of functions in the binaries we link together, and a (optionally) hand-crafted symbol to address map.
 
-This hand-crafted translation table is an integral part of C Injection. Without it, calling existing functions would be practically impossible. This translation table is created by researching the ROM's code, and documenting the functions. We then give names to these functions, which we later use as symbols. This creates a one-to-one mapping that allows us to properly fix our addresses.
+This hand-crafted translation table is an integral part of code injection. Without it, calling existing functions would be practically impossible. This translation table is created by researching the ROM's code, and documenting the functions. We then give names to these functions, which we later use as symbols. This creates a one-to-one mapping that allows us to properly fix our addresses.
 
 
 Take this segment of our Assembly from above, for example.
@@ -120,17 +112,10 @@ The aforementioned code becomes the following:
 ```
 Pretty neat, huh? The same thing would happen to `bl LoadScript` or `bl PlayScript`, provided those were the instructions there.
 
-That being said, how do we perform linking with C/C++ Injection?
-
+That being said, how do we perform linking with code injection?
 - In the case of Generation IV, BluRose uses the linker provided by devkitPro (which is `arm-none-eabi-ld`) and a hand crafted translation table to fix the addresses to in-game functions. They also use a linker script to rearrange the order of their binary, which is a possibility I mentioned previously.
-
 - In the case of Generation V, the input source code is first linked using the default toolchain, then later post-processed using a provided symbol mapping database during conversion to the RPM executable format. This means that before the final step, the ELF isn't bound to a fixed binary layout, providing simpler targeting of different games/revisions. Programs that only provide support functionality (file format libraries, codecs) are game-independent and can be loaded on-demand as DLLs.
 
 After linking, we will usually end up with an ELF file that we can use to create our final binary.
 
-### Making the Binary
-**TODO**.
 
-### Insertion
-**TODO**.
-Depending on the Generation, this will be different.
