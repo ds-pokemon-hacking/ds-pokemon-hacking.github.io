@@ -44,8 +44,8 @@ AdrsValueSet 0x0210FA3C 0x54
 AdrsValueSet 0x0210FA3D 0xBA
 AdrsValueSet 0x0210FA3E 0x0F
 ```
-The first three commands change the original pointer to the new one in the synthetic overlay, then the Mart is opened like normal with `SpMartScreen 0`, and with the last three commands the original pointer is restored. Only 3 bytes are changed instead of 4 since RAM offsets always starts with 02. Again the pointers are written in little endian, so `0x023C8100` will look like `00 81 3C 02` in the RAM.
+The first three commands change the original pointer to the new one in the synthetic overlay, then the Mart is opened like normal with `SpMartScreen 0`, and with the last three commands the original pointer is restored. Only 3 bytes are changed instead of 4 since RAM offsets always start with 02. Again the pointers are written in little endian, so `0x023C8100` will look like `00 81 3C 02` in the RAM.
 You can save the script and test the game now.
-This is what my full script 19 looks like, I assigned it to a NPC:
+This is what my full script 19 looks like, I assigned it to a NPC which will show the new Pokemart when talked to:
 
 ![Script](https://user-images.githubusercontent.com/57636185/224319492-a06935c8-1a2f-43fb-bdb8-5b537b371c84.PNG)
