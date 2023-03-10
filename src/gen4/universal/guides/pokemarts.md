@@ -8,27 +8,27 @@ All offsets mentioned are based on the US version of the ROMs.
 ## Table of Contents
 * [Adding a new pokemart](#section)
   * [Editing Item prices](#subsection)
-* [Displaying the pokemart](#section-2)
+* [Displaying the new Pokemart](#section-2)
 
 ## Adding a new pokemart
 
 If you haven't already, you'll have to perform the ARM9 expansion since that's were the new pokemart(s) will be written to. 
-You can do so by clicking "Expand ARM9" in DSPRE toolbox, then go to Unpacked/SynthOverlay in your DSPRE project folder (which will be named ROMname_DSPRE_contents, and will be in the same folder of your ROM) and using your hex editor of choice open either the file 0009 if you're on Platinum or 0001 for HGSS.
+You can do so by clicking "Expand ARM9" in DSPRE toolbox, then go to Unpacked/SynthOverlay in your DSPRE project folder (which will be named ROMname_DSPRE_contents, and will be in the same folder of your ROM) and using your hex editor of choice open either file 0009 if you're on Platinum or 0001 for HGSS.
 
-You can write at whatever offset you want as long as it's empty, I will be writing my pokemart at 0x100. You need to sum `0x023C8000` to this offset, and write it down somehwere since you'll need it later to display the mart. In my case it will be `0x023C8100`.
+You can write at whatever offset you want as long as it's empty, I will be writing my pokemart at 0x100. You need to sum `0x023C8000` to this offset, and write it down since you'll need it later to display the mart in game. In my case it will be `0x023C8100`.
 
 Pokemarts are loaded in the RAM as a list of bytes of the items index numbers, with `FF FF` at the end of each mart, each item taking up two bytes.
 Refer to [Bulbapedia's list of items by index number](https://bulbapedia.bulbagarden.net/wiki/List_of_items_by_index_number_(Generation_IV)). 
-Keep in mind the bytes must be written in little endian! 
+Keep in mind the bytes must be written in little endian, so the order of bytes has to be swapped.
 
-In this tutorial I will be adding a pokemart that sells Rare Candies and Focus Sashes, their index numbers are respectively `0x32` and `0x0113`.
-So I will be writing `32 00 13 01 FF FF` at 0x100. Once you've added all your marts and wrote down their offsets you can save the file and close your hex editor.
-
+In this tutorial I will be adding a pokemart that sells Rare Candies and Focus Sashes, their index numbers are respectively `0x32` and `0x113`.
+So I will be writing `32 00 13 01 FF FF` at 0x100. Once you've added all your marts and wrote down their offsets you can save the file and close the hex editor.
 
 ### Editing item prices
-Item prices aren't stored in the pokemarts, instead they part of item data, meaning an item will always have the same price regardless of the pokemart.
-Item data is stored in the narc pl_item_data (Platinum) / a/0/1/7 (HGSS). The file you're looking will have the item index number as its name.
-The price is stored in the first two bytes in each file, so for example if I want to have Rare Candyies to be sold at 10'000 pokedollars (`0x2710`), I will have to edit 50.bin and change the first two bytes to `10 27`. Once you're done with hex editing remember to pack the narc before saving the ROM!
+Item prices aren't stored in the pokemarts, instead they are part of item data, meaning an item will always have the same price regardless of the pokemart it's being sold at.
+Item data is stored in the narc `pl_item_data` (Platinum) / `a/0/1/7` (HGSS). The file you're looking will have the item index number as its name.
+
+The price is stored in the first two bytes in each file, so for example if I want to have Rare Candyies to be sold at 10'000 pokedollars (`0x2710`), I will have to extract 50.bin and change the first two bytes to `10 27`. Once you've reinserted the file remember to pack the narc before saving the ROM!
 
 
 ## Displaying the new pokemart
