@@ -31,6 +31,8 @@
 - [Generation V]()
     - [Black and White]()
     - [Black 2 and White 2]()
+        - [Structures]()
+            - [Area Data](gen5/b2w2/structures/field/area_data.md)
     - [Universal]()
         - [Structures]()
             - [Maps](gen5/universal/structures/field/maps.md)
