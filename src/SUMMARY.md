@@ -33,6 +33,7 @@
     - [Black 2 and White 2]()
     - [Universal]()
         - [Structures]()
+            - [Maps](gen5/universal/structures/field/maps.md)
             - [Zone Entities](gen5/universal/structures/field/zone_entities.md)
 - [Universal]()
 

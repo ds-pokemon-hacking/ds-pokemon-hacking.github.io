@@ -1,28 +1,38 @@
 # Maps
+> Author(s): [Gonhex](https://github.com/Gonhex) <br />
+> Research: [Gonhex](https://github.com/Gonhex), [Trifindo](https://github.com/Trifindo)
+
+The term "map" is used for areas of the game world. The player can navigate through them and interact with other objects placed on the map. Usually one map has a size of 32 by 32 tile and a maximum of four of them are loaded simultaneously. The maps are usually selected by the currently active "matrix" in `a/0/0/9` but there are cases where the game chooses an other map, depending on the in-game season.
 
 ## Table of Contents
-
 * [Data Location](#data-location)
-* [Container Structure](#container-structure)
-* [Section Structures](#section-structures)
+* [Data Structure](#data-structure)
+  * [Container Structure](#container-structure)
   * [Model](#model)
   * [Permissions](#permissions)
   * [Building Table](#building-table)
+* [Specification](#specification)
+  * [Overview](#overview)
+  * [Size](#size)
+  * [Permission Data](#permission-data)
+  * [Special RD Maps](#special-rd-maps)
 * [TODO](#todo)
 ---
 
 ## Data Location
 The NARC containing these files can be found in the following game paths:
-* Black and White: /a/0/0/8
-* Black 2 and White 2: /a/0/0/8
+* Black and White: `/a/0/0/8`
+* Black 2 and White 2: `/a/0/0/8`
 --- 
 
-## Container Structure
+## Data Structure
+
+### Container Structure
 ```c
 struct ContainerMap
 {
     // header
-    int8_t signature[2];
+    uint8_t signature[2];
     uint16_t numberSections;
     uint32_t offsetModel;
     uint32_t offsetPermissions[numberSections - 2];
@@ -37,7 +47,7 @@ struct ContainerMap
 ```
 | Field Name          | Description                                                                             | Data Type       |
 |---------------------|-----------------------------------------------------------------------------------------|-----------------|
-| signature           | `"NG"`: No permission section.  <br /> `"WB"`: One permission section. <br /> `"GC"`: Two permission sections. <br /> `"RD"`: One permission section, but with a different file format. | int8_t[] |
+| signature           | `"NG"`: No permission section.  <br /> `"WB"`: One permission section. <br /> `"GC"`: Two permission sections. <br /> `"RD"`: One permission section, but with a different file format. | uint8_t[] |
 | numberSections      | Number of data sections within this file.                                               | uint16_t        |
 | offsetModel         | Points to the 3D model of the map.                                                      | uint32_t        |
 | offsetPermissions   | Points to the movement permission data.                                                 | uint32_t[]      |
@@ -47,14 +57,8 @@ struct ContainerMap
 | dataPermissions     | 0, 1 or 2 permission sections. A 2nd one can be used for things like bridges where one can walk on two different heights. | [SectionPermission](#permissions)[] |
 | dataBuildingTable   | Define appearance settings for all buildings.                                           | [SectionBuildingTable](#building-table) |
 
----
-
-## Section Structures
-
 ### Model
-The NSBMD data format is not part of this document.
-
----
+The NSBMD data format is currently not documented in this repository. You can find some information [here](https://github.com/JackHack96/nsbmd_docs/blob/master/nsbmd_docs.md) instead.
 
 ### Permissions
 ```c
@@ -110,6 +114,105 @@ struct TileTerrain
 |-------------|-------------|-----------|
 | inclination | Indexes a specific terrain slope. Probably flag based with a format like `0bTTTT'TTTT'TTTT'TTCR` with `T = terrain settings`, `C = is corner` and `R = reset` | uint16_t  |
 | distance    | Indexes values that represent the distance perpendicular to the center of the map when the plane is extended to allow that vector. If the inclination for this tile indicates a corner, the field represents the index of the corner instead. Counting starts by zero. | uint16_t  |
+
+#### Environment
+```c
+struct TileEnvironment
+{
+    uint16_t behavior;
+    uint16_t flags;
+}; // entry size = 0x4
+```
+| Field Name | Description                                                                                                            | Data Type |
+|------------|------------------------------------------------------------------------------------------------------------------------|-----------|
+| behavior   | Often used in combination with `flags`. Manages data used for interactions and affects the overall behavior of a tile. | uint16_t  |
+| flags      | Flag based tile settings that can be combined. See table below.                                                        | uint16_t  |
+
+#### Terrain extension for corners
+```c
+struct CornerTerrain
+{
+    uint16_t inclinationTop;
+    uint16_t inclinationBottom;
+    uint16_t distanceTop;
+    uint16_t distanceBottom;
+}; // entry size = 0x8
+```
+| Field Name        | Description                                                                                  | Data Type |
+|-------------------|----------------------------------------------------------------------------------------------|-----------|
+| inclinationTop    | Inclination for top-left and top-right corners, `inclination = inclinationTop - 1`.          | uint16_t  |
+| inclinationBottom | Inclination for bottom-left and bottom-right corners, `inclination = inclinationBottom * 4`. | uint16_t  |
+| distanceTop       | Distance for top-left and top-right corners, `distance = distanceTop`.                       | uint16_t  |
+| distanceBottom    | Distance for bottom-left and bottom-right corners, `distance = distanceBottom`.              | uint16_t  |
+
+---
+
+### Building Table
+```c
+struct SectionBuildingTable
+{
+    // header
+    uint32_t numberBuildings;
+    
+    // data
+    struct BuildingProperties building[numberBuildings];
+};
+```
+| Field Name        | Description                                                                                    | Data Type |
+|-------------------|------------------------------------------------------------------------------------------------|-----------|
+| numberBuildings | Header of the building table, tells how many building are assigned to the map.                   | uint32_t  |
+| building          | Display settings for a building. Includes local position, yaw rotation and the building index. | [BuildingProperties](#building-display-settings)  |
+
+#### Building display settings
+```c
+struct BuildingProperties
+{
+    fx<1.19.12> localPositionX;
+    fx<1.19.12> localPositionY;
+    fx<1.19.12> localPositionZ;
+    uint16_t rotationAngleYaw;
+    uint16_t buildingID; // big endian
+}; // entry size = 0x10
+```
+| Field Name       | Description                                                                 | Data Type        |
+|------------------|-----------------------------------------------------------------------------|------------------|
+| localPositionX   | X position relative to the center of the map.                               | [fx<1.19.12>]()  |
+| localPositionY   | Y position relative to the center of the map.                               | [fx<1.19.12>]()  |
+| localPositionZ   | Z position relative to the center of the map.                               | [fx<1.19.12>]()  |
+| rotationAngleYaw | Counterclockwise yaw rotation angle.                                        | uint16_t         |
+| buildingID       | ID of the building model. Unlike most variables, this one is in big endian. | uint16_t         |
+
+---
+
+## Specification
+### Overview
+Part of the map files are:
+1. A 3D NSBMD-model of the map. This **does not** include textures!. The teture data is in `a/0/1/4`.
+2. 0-2 permission matrices. This is basically how the game sees the map since the model does not provide any collision data. It is a 2D environment layout with additional informations about the 3rd dimension. The 2nd permission matrix is optional and almost identical to the first one, except for coordinates where two different behaviors are required (for example walking under OR on a bridge). Rails (`a/0/7/8`) also contain collision data and may be loaded eternally in some cases. This is why some maps come without own permission sections.
+3. A layout for externally loaded models (buildings).
+
+### Size
+As already mentioned, the standard size for a map is 32 by 32 tiles. But how large is a tile? The game accesses positions on the overworld using 32 bit values. These can be read as fixed point values. The default format is [fx<1.19.12>](). This means that one tile has a size of 16 units. The most textures are also mapped with 16 pixel per tile.
+
+To convert the value to one unit per tile, we can move the decimal point into the middle and read as [fx<1.15.16>]() instead. This is how the terrain values for PDSMS were calculated, since its a tile based tool.
+
+### Permission Data
+* [Corners](#corners)
+* [Terrain Inclination Values](#terrain-inclination-values)
+* [Terrain Distance Values](#terrain-distance-values)
+* [Environment Behavior Values](#environment-behavior-values)
+* [Environment Flag Values](#environment-flag-values)
+
+#### Corners
+To allow the character to walk a different slope depending from the direction, Pokemon Black and White introduced corner tiles. These store data for two differnt terrains and apply one terrain to the northern vertices and the 2nd one to the southern vertices. Since the double amount of data at random position wouldn't fit into the permission grid, this data gets appended to the end of the permission section. The `0x0002` (bit) command in the terrain inclination tells the game to read a value from the extra data. The terrain distance behaves as an index for this section.
+
+#### Terrain Inclination Values
+The 3-dimensional shape of a tile.
+
+TODO: Add tables or code.
+
+#### Terrain Distance Values
+If we extend the tile to an infinite plane, we can draw a line which is perpendicular to the plane and connect it to the origin (0, 0, 0) of the map. The length of this line is the distance. The distence is selected using indices. 
 
 <details>
 <summary>Distance table - Black and White</summary>
@@ -327,96 +430,163 @@ struct TileTerrain
  
 </details>
 
-#### Environment
-```c
-struct TileEnvironment
-{
-    uint16_t behavior;
-    uint16_t flags;
-}; // entry size = 0x4
-```
-| Field Name | Description                                                                                                            | Data Type |
-|------------|------------------------------------------------------------------------------------------------------------------------|-----------|
-| behavior   | Often used in combination with `flags`. Manages data used for interactions and affects the overall behavior of a tile. | uint16_t  |
-| flags      | Flag based tile settings that can be combined. See table below.                                                        | uint16_t  |
+#### Environment Behavior Values
+**WARNING:** SDSME and PDSMS mistakenly call them "FLAGS & LAYER 6", which can lead to confusion.
+
+Some sort of command table which can introduce different effects depending on its value. Used in combination with the `Flag` value. Can display additional textures, make sounds, add irection dependdend collisions and much more. The extra textures (...and models ...and animations) can be found in `a/0/7/5` in Black and White and `a/0/7/4` in Black 2 and White 2.
 
 <details>
-<summary>Environment flags</summary>
+<summary>Behavior descriptions.</summary>
+ 
+| Value    | Description                                                                                                     |
+|----------|-----------------------------------------------------------------------------------------------------------------|
+| ...      |                                                                                                                 |
+| `0x0001` | Used for can't pass (collision). Flag `0x0001` must be set, else no effect(?).                                  |
+| `0x0002` | Winter only footprints if flag `0x0008` is enabled(?) Used as winter path.                                      |
+| `0x0003` | Used as ground path.                                                                                            |
+| `0x0004` | Used for normal tall gras. Flag `0x0020` must be set to display the gras.                                       |
+| `0x0005` | Used for normal tall gras that can have snow in winter. Flag `0x0020` must be set to display the gras.          |
+| `0x0006` | Used for dark tall gras, possible double battels with flag `0x0004`. Flag `0x0020` must be set to display the gras. |
+| `0x0007` | Used for dark tall gras that can have snow in winter, possible double battels with flag `0x0004`. Flag `0x0020` must be set to display the gras. |
+| `0x0008` | Play longer gras enter sound. Display very tall gras, if flag `0x0020` is set. Can't use bike.                  |
+| `0x0009` | Play longer gras enter sound. Display very tall dark gras, if flag `0x0020` is set. Possible double battels with flag `0x0004`. Can't use bike. |
+| `0x000A` | Can spawn animated dirt with sound which result in getting a (type-)gem or a wild battle by moving in. Used as ground in caves. |
+| `0x000B` | Play step sound. Used as sand path.                                                                             |
+| `0x000C` | Offset character down to let it sink a bit. Play sand sound. Display dark hole if flag `0x0008` is set. Slow down bike. Used as deep sand.|
+| ...      |                                                                                                                 |
+| `0x000E` | Play snow sound. Display blue footprints, if flag `0x0008` is enabled. Used as snow.                            |
+| `0x000F` | Play snow sound. Display blue footprints, if flag `0x0008` is enabled. Can't use bike.                          |
+| `0x0010` | Slide over this tile, if next tile is can be entered (no collision there).                                      |
+| ...      |                                                                                                                 |
+| `0x0012` | Used as lake border collision (corners).                                                                        |
+| ...      |                                                                                                                 |
+| `0x0014` | Display ripple while entering and play sound. Used for puddles.                                                 |
+| `0x0015` | Display ripple while entering and play sound.                                                                   |
+| `0x0016` | Used as ground in the ´Bizarro-House´.                                                                          |
+| `0x0017` | Display water splashing and play sound. Used at beach water boarders and on sand which is slightly under water. |
+| `0x0018` | Slide over this tile, if next tile is can be entered (no collision there). Used as ice.                         |
+| `0x0019` | Play step sound. Used as sand path.                                                                             |
+| ...      |                                                                                                                 |
+| `0x001C` | Play ripple sound, no animation. Used for puddles with wild pokemon (flag `0x0004` enabled).                    |
+| `0x001D` | Used as hole for the strength rocks. Flag `0x0001` must be set, else no effect.                                 |
+| `0x001E` | Season depending flooring (footprints), if flag `0x0008` is enabled. Used if there is a spot leafs in autumn but snow in winter and something else in other seasons. |
+| `0x001F` | Used as gras path (normal not tall gras which usually is all over the place).                                   |
+| `0x0020` | Can spawn animated shadows with sound which result in getting a feather or a wild battle by moving in. Used on some bridges. |
+| `0x0021` | Display slightly different tall gras, if flag `0x0020` is enabled.                                              |
+| `0x0022` | Display slightly different dark tall gras, if flag `0x0020` is enabled. Possible double battels with flag `0x0004`(?). |
+| `0x0023` | Play step sound. Used as sand path inside a cave.                                                               |
+| `0x0024` | Play long smooth sound. Can't use bike.                                                                         |
+| `0x0025` | Display leafs flying into the air, play sound. Used when the path is full of leafes in autumn.                  |
+| ...      |                                                                                                                 |
+| `0x0030` | Display electrostatic discharge. Used in the `Chargestone Cave`. Crashes the game if loaded with wrong settings! |
+| ...      |                                                                                                                 |
+| `0x0032` | Used for charged stones in the `Chargestone Cave`. Activation field for a gimmick?                              |
+| `0x0033` | Scriptable behavior? Used for the levitation effect (slowly up and down) in the gate after route 10 in BW. No effect outside that room. |
+| ...      |                                                                                                                 |
+| `0x003D` | Can use fishing rod. Used as lake water.                                                                        |
+| `0x003E` | Can use fishing rod.                                                                                            |
+| `0x003F` | Can use fishing rod. Used as water.                                                                             |
+| `0x0040` | Used as waterfall. Flag `0x0001` must be set, else no effect. Can connect to any height.                        |
+| `0x0041` | Skip this field for water connections. Can force surf on the tile behind, fishing only if there is water. Is used as lake border. |
+| `0x0042` | Can use fishing rod.                                                                                            |
+| `0x0043` | Can use fishing rod. Used as deep sea to stard diving.                                                          |
+| `0x0044` | Skip this field for water connections. Can force surf on the tile behind, fishing only if there is water. Is used as border. |
+| ...      |                                                                                                                 |
+| `0x0051` | Collision east side.                                                                                            |
+| `0x0052` | Collision west side.                                                                                            |
+| `0x0053` | Collision north side.                                                                                           |
+| `0x0054` | Collision south side.                                                                                           |
+| `0x0055` | Collision north and east side.                                                                                  |
+| `0x0056` | Collision north and west side.                                                                                  |
+| `0x0057` | Collision south and east side.                                                                                  |
+| `0x0058` | Collision south and east side.                                                                                  |
+| ...      |                                                                                                                 |
+| `0x0072` | One way jump east. On land over one tile, on water over 3 tiles. Flag `0x0001` must be set, else no effect. Play jump sound. |
+| `0x0073` | One way jump west. On land over one tile, on water over 3 tiles. Flag `0x0001` must be set, else no effect. Play jump sound. |
+| `0x0074` | One way jump north. On land over one tile, on water over 3 tiles. Flag `0x0001` must be set, else no effect. Play jump sound. |
+| `0x0075` | One way jump south. On land over one tile, on water over 3 tiles. Flag `0x0001` must be set, else no effect. Play jump sound. |
+| `0x0076` | Start spinning while moving to east until collision. Play funny sound while spinning.                           |
+| `0x0077` | Start spinning while moving to west until collision. Play funny sound while spinning.                           |
+| `0x0078` | Start spinning while moving to north until collision. Play funny sound while spinning.                          |
+| `0x0079` | Start spinning while moving to south until collision. Play funny sound while spinning.                          |
+| ...      |                                                                                                                 |
+| `0x007C` | Used to slide on quick sand on a slope if running and animate it(?).                                            |
+| ...      |                                                                                                                 |
+| `0x0094` | Move the character to east and play sound. Used for rapids.                                                     |
+| `0x0095` | Move the character to west and play sound. Used for rapids.                                                     |
+| `0x0096` | Move the character to north and play sound. Used for rapids.                                                    |
+| `0x0097` | Move the character to south and play sound. Used for rapids.                                                    |
+| ...      |                                                                                                                 |
+| `0x009C` | Used in diving areas. Connected to a counter which limits diving time/distance(?).                              |
+| ...      |                                                                                                                 |
+| `0x00A3` | Used to connect the map grid with an external rail. The connections tiles on the rail must also use `0x00A3` and be very close to this tile in 3D space. |
+| ...      |                                                                                                                 |
+| `0x00BE` | Lose balance if standing on this tile and fall off from a side after a while. Surrounding tile must be deeper in terrain to avoid getting trapped. Used as tightrope. |
+| `0x00BF` | Connection ramp to a tightrope, safe enter and leave point.                                                     |
+| ...      |                                                                                                                 |
+| `0x00D4` | Can talk to NPC behind this tile. Flag `0x0001` must be set, else no effect.                                    |
+| ...      |                                                                                                                 |
+| `0x00D6` | Used for the PC (box, mail, ...). Flag `0x0001` must be set, else no effect.                                    |
+| ...      |                                                                                                                 |
+| `0x00D8` | Used for the TV. Flag `0x0001` must be set, else no effect.                                                     |
+| `0x00D9` | Dialog text `index 0` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DA` | Dialog text `index 1` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DB` | Dialog text `index 2` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DC` | Dialog text `index 3` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DD` | Dialog text `index 4` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DE` | Dialog text `index 4` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect. Used for the trash bin. |
+| `0x00DF` | Dialog text `index 5` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00E0` | Dialog text `index 6` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00E1` | Dialog text `index 7` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00E2` | Used for the vending machine. Flag `0x0001` must be set, else no effect.                                        |
+| ...      |                                                                                                                 |
+| `0x00FE` | Somewhere used instead of duplicates in 2nd permission layer(?). Ignore this...                                 |
+| `0x00FF` | Can't pass (collision)(?). This one doesn't rely on a flag.                                                     |
+| ...      |                                                                                                                 |
+
+</details>
+
+TODO: Document missing values.
+
+#### Environment Flag Values
+**WARNING:** SDSME and PDSMS mistakenly call them "COLLISION & SHADOW", which can lead to confusion.
+
+Sets the properties of a tile using binary flags. Multiple flags can be combined. Footprints are displayed for a short time after a character left the field. Gras is animated when the character enters a field and remains in the last frame until the character leaves. 
+
+<details>
+<summary>Flag descriptions</summary>
  
 | Bitmask  | Description                                                                                                     |
 |----------|-----------------------------------------------------------------------------------------------------------------|
 | `0x0001` | Interactable field. Usually used for collisions but depending on the behavior-value it can also result in jumping over, talk to behind, interact with furniture, ... |
 | `0x0002` | Surfable tile, does not include fishing!                                                                        |
 | `0x0004` | Enable wild pokemon encounter for this tile                                                                     |
-| `0x0008` | Footprints, appearance and sound depend on the behavior field.                                                  |
+| `0x0008` | Display footprints, appearance depends on the behavior field.                                                   |
 | `0x0010` | Enabled on water and flooded sand but not on water-borders, rapids and diveable areas. Not sure how it is used. |
-| `0x0020` | Stay in / walk through gras animation, appearance and sound depend on the behavior field.                       |
+| `0x0020` | Display gras animation and play sound, appearance depends on the behavior field.                                |
 | `0x0040` | Reflection, vertical flipped copy of the overworld under the ground.                                            |
 | `0x0080` | Has shadow. The shadow is a dark circle under the overworld.                                                    |
 | `0x0100` | Enables overworld shading with the color defined in light 3.                                                    |
 | `0xFE00` | Some of the remaining bits are enabled on corner terrain slopes but the purpose is unclear.                     |
- 
+
 </details>
 
-#### Terrain extension for corners
-```c
-struct CornerTerrain
-{
-    uint16_t inclinationTop;
-    uint16_t inclinationBottom;
-    uint16_t distanceTop;
-    uint16_t distanceBottom;
-}; // entry size = 0x8
-```
-| Field Name        | Description                                                                                  | Data Type |
-|-------------------|----------------------------------------------------------------------------------------------|-----------|
-| inclinationTop    | Inclination for top-left and top-right corners, `inclination = inclinationTop - 1`.          | uint16_t  |
-| inclinationBottom | Inclination for bottom-left and bottom-right corners, `inclination = inclinationBottom * 4`. | uint16_t  |
-| distanceTop       | Distance for top-left and top-right corners, `distance = distanceTop`.                       | uint16_t  |
-| distanceBottom    | Distance for bottom-left and bottom-right corners, `distance = distanceBottom`.              | uint16_t  |
+### Special RD Maps
+There are a handful maps which use the "RD" signature and have no terrain data within the permission section. Instead, there are a set of currently unknown bytes. These maps are special, because they allow the game to load different sets of additional 3D models, movements permissions, interactable things like NPCs (...), depending on scripting flags. RD maps work in combination with the files from `a/1/5/6` in BW and `a/1/5/4` in B2W2.
 
----
+In Pokemon Black and White, only the `Black City` and the `White Forest` are RD maps. Those places get content added, when the player poaches people through the Entralink.
 
-### Building Table
-
-```c
-struct SectionBuildingTable
-{
-    // header
-    uint32_t numberBuildings;
-    
-    // data
-    struct BuildingProperties building[numberBuildings];
-};
-```
-| Field Name        | Description                                                                                    | Data Type |
-|-------------------|------------------------------------------------------------------------------------------------|-----------|
-| numberBuildings | Header of the building table, tells how many building are assigned to the map.                   | uint32_t  |
-| building          | Display settings for a building. Includes local position, yaw rotation and the building index. | [BuildingProperties](#building-display-settings)  |
-
-#### Building display settings
-```c
-struct BuildingProperties
-{
-    int32_t localPositionX;
-    int32_t localPositionY;
-    int32_t localPositionZ;
-    uint16_t rotationAngleYaw;
-    uint16_t buildingID; // big endian
-}; // entry size = 0x10
-```
-| Field Name       | Description                                                                | Data Type |
-|------------------|----------------------------------------------------------------------------|-----------|
-| localPositionX   | X position relative to the center of the map.                              | uint32_t  |
-| localPositionY   | Y position relative to the center of the map.                              | uint32_t  |
-| localPositionZ   | Z position relative to the center of the map.                              | uint32_t  |
-| rotationAngleYaw | Counterclockwise yaw rotation angle.                                       | uint16_t  |
-| buildingID       | ID of the building model. Unlike most variables, this on is in big endian. | uint16_t  |
+In Pokemon Black 2 and White 2, only the `Join Avenue` and an island are RD maps. Here the player can talk to people passing through to add stalls at the sides of the road. The island maps, that also use these permissions, are an unused developement leftover. It is assumed that the join avenue was initially supposed to be an island, since it got some free space for eight markets in the center:
+<p align="center">
+ <img src="resources/rd_island.png" alt="RD island" style="width:80%">
+ <img src="resources/rd_island_top.png" alt="RD island top view" style="width:80%">
+</p>
 
 ---
 
 ## TODO
-- Link the NSBMD section to external resources.
-- Research and document "RD" type maps.
-- Add terrain tables or insight into its internal working. Do NOT add the one with float values!
-- Research and document the `behavior` values properly.
+* Link the NSBMD section to `src/universal/resources/nitro/graphics_3d/file_bmd0.md` once it contains information.
+* Research and document "RD" type maps.
+* Add terrain tables or insight into its internal working. Do NOT add the one with float values!
+* Document missing `behavior` values.
+* Link fixed point definition.
