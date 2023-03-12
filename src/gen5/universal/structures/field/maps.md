@@ -2,7 +2,7 @@
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: [Gonhex](https://github.com/Gonhex), [Trifindo](https://github.com/Trifindo)
 
-The term "map" is used for areas of the game world. The player can navigate through them and interact with other objects placed on the map. Usually one map has a size of 32 by 32 tile and a maximum of four of them are loaded simultaneously. The maps are usually selected by the currently active "matrix" in `a/0/0/9` but there are cases where the game chooses an other map, depending on the in-game season.
+The term "map" is used for areas of the game world. The player can navigate through them and interact with other objects placed on the map. Usually one map has a size of 32 by 32 tiles and a maximum of four of them are loaded simultaneously. The maps are usually selected by the currently active "matrix" in `a/0/0/9` but there are cases where the game chooses an other map, depending on the in-game season.
 
 ## Table of Contents
 * [Data Location](#data-location)
@@ -188,7 +188,7 @@ struct BuildingProperties
 ### Overview
 Part of the map files are:
 1. A 3D NSBMD-model of the map. This **does not** include textures!. The teture data is in `a/0/1/4`.
-2. 0-2 permission matrices. This is basically how the game sees the map since the model does not provide any collision data. It is a 2D environment layout with additional informations about the 3rd dimension. The 2nd permission matrix is optional and almost identical to the first one, except for coordinates where two different behaviors are required (for example walking under OR on a bridge). Rails (`a/0/7/8`) also contain collision data and may be loaded eternally in some cases. This is why some maps come without own permission sections.
+2. 0-2 permission matrices. This is basically how the game sees the map since the model does not provide any collision data. It is a 2D environment layout with additional informations about the 3rd dimension. The 2nd permission matrix is optional and almost identical to the first one, except for coordinates where two different behaviors are required (for example walking under OR on a bridge). Rails (`a/0/7/8`) also contain collision data and may be loaded externally in some cases. This is why some maps come without own permission sections.
 3. A layout for externally loaded models (buildings).
 
 ### Size
@@ -433,7 +433,7 @@ If we extend the tile to an infinite plane, we can draw a line which is perpendi
 #### Environment Behavior Values
 **WARNING:** SDSME and PDSMS mistakenly call them "FLAGS & LAYER 6", which can lead to confusion.
 
-Some sort of command table which can introduce different effects depending on its value. Used in combination with the `Flag` value. Can display additional textures, make sounds, add irection dependdend collisions and much more. The extra textures (...and models ...and animations) can be found in `a/0/7/5` in Black and White and `a/0/7/4` in Black 2 and White 2.
+Some sort of command table which can introduce different effects depending on its value. Used in combination with the `Flag` value. Can display additional textures, make sounds, add direction dependdend collisions and much more. The extra textures (...and models ...and animations) can be found in `a/0/7/5` in Black and White and `a/0/7/4` in Black 2 and White 2.
 
 <details>
 <summary>Behavior descriptions.</summary>
