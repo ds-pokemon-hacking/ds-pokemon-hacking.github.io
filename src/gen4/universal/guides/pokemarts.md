@@ -9,6 +9,7 @@ All offsets mentioned are based on the US version of the ROMs.
 * [Adding a new pokemart](#section)
   * [Editing Item prices](#subsection)
 * [Displaying the new Pokemart](#section-2)
+  * [Using Script Registers](#subsection-2)
 
 ## Adding a new pokemart
 
@@ -49,3 +50,14 @@ You can save the script and test the game now.
 This is what my full script 19 looks like, I assigned it to a NPC which will show the new Pokemart when talked to:
 
 ![Script](https://user-images.githubusercontent.com/57636185/224319492-a06935c8-1a2f-43fb-bdb8-5b537b371c84.PNG)
+
+### Using Script Registers
+To avoid using the AdrsValueSet three times in a row, it's possible to do the same process using the script register commands RegDataSet and AdrsRegSet, so that my earlier script will instead look like this:
+```
+RegDataSet 0 0x023C8100
+AdrsRegSet 0x0210FA3C 0
+SpMartScreen 0
+RegDataSet 0 0x020FBA54
+AdrsRegSet 0x0210FA3C 0
+```
+The only caveat is that the script is normally "broken" and only writes one byte into memory, so to fix it you have to hex edit the arm9 at `0x3F7CA` (Platinum) / `0x40996` (HGSS) and change `01 70` to `01 60`. Thanks to AdAstra for having looked into this issue.
