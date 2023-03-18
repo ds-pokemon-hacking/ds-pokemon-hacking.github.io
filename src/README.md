@@ -9,6 +9,7 @@
     - [Heartgold and SoulSilver]()
         - [Editing the Town Map](gen4/hgss/guides/town_map/town_map.md)
     - [Universal]()
+        - [Adding New Poké Marts<sup>*(Platinum/HGSS)*</sup>](gen4/universal/guides/pokemarts/pokemarts.md)
         - [Setting the Weather from a Script<sup>*(Platinum/HGSS)*</sup>](gen4/universal/guides/script_weather.md)
 - [Generation V]()
     - [Black and White]()
