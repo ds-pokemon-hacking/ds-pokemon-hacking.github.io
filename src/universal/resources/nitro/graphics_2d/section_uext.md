@@ -15,6 +15,8 @@ Holds a value which tells, if a "multi-version" of the resource will be applied.
 * [Data Structure](#data-structure)
   * [Section Container](#section-container)
   * [UEXT Container](#uext-container)
+* [Specification](#specification)
+  * [Files](#files)
 
 ---
 ## Data Structure
@@ -46,3 +48,10 @@ struct ContainerUEXT
 | Field Name      | Description                                                                             | Data Type |
 |-----------------|-----------------------------------------------------------------------------------------|-----------|
 | extended        | Enable multicell?                                                                       | uint32_t  |
+
+---
+## Specification
+
+### Files
+* [Nitro Cell Resource](file_ncer.md)
+* [Nitro Animation Resource](file_nanr.md)

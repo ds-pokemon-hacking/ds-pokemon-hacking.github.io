@@ -19,6 +19,7 @@ The character section stores the sprite-image in form of indices to colors withi
   * [Mapping Type](#mapping-type)
   * [Flags](#flags)
   * [Special Case](#special-case)
+  * [Files](#files)
 * [TODO](#todo)
 ---
 
@@ -124,6 +125,9 @@ Normally, if the image has a size, there should also be a [CPOS section](section
 The tiles are not places line by line. Instead, it looks like the the largest square with power-of-two side lengths that fits into the image constrains is calculated and placed at the top left corner. Then, this process repeats with the remaining size making the comming squares smaller. Following figure illustrates this whith one `10 * 10 tiles` example (top) and one `12 * 12 tiles` (bottom):
 
 ![](sprite_layout.png)
+
+### Files
+* [Nitro Character Graphic Resource](file_ncgr.md)
 
 ---
 ## TODO
