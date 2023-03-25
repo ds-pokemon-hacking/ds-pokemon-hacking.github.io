@@ -461,9 +461,7 @@ Furthermore, the orange block that shows it is highlighted is located at ``(0x23
 
 Putting everything together, we can run through the map rather nicely:
 
-![](final_town_map.png) ![](final_town_map_1.png) ![](final_town_map_2.png)
-
-![](final_fly_map.png) ![](final_fly_map_1.png) ![](final_fly_map_2.png)
+![](final_town_map.png) ![](final_town_map_1.png) ![](final_town_map_2.png) ![](final_fly_map.png) ![](final_fly_map_1.png) ![](final_fly_map_2.png)
 
 ## TODO
 - ``flags`` field in ``GearMapTownSelectionOverlay``
