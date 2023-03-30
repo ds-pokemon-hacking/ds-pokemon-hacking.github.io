@@ -6,9 +6,10 @@ You'll need Tinke 0.9.2 and BTX Editor 2.0 for this.
 --- 
 ## Table of Contents
 * [Extracting the Sprite](#section)
-* [Replacing](#section-2)
+* [Making your own Sprite](#section-2)
+* [Replacing](#section-3)
  * [Unused Sprites](#subsection)
-* [Changing the sprite dimension](#section-3)
+* [Changing the sprite dimension](#section-4)
 
 ## Extracting the Sprite
 Sprites are contained in BTX files, start by opening your ROM with Tinke and then navigating to the following filepath depending on your game:
@@ -19,15 +20,24 @@ You can select one and click the "View" button to see the spritesheet. Select th
 You can load this file in the BTX Editor 2.0 to either extract the spritesheet itself in a .png format or import your own spritesheet.
 
 1. The sprite you're going to insert must have the same number of frames as the one you're replacing, otherwise you'll have to change its size by hex editing. (See the section in this guide)
-2. The spritesheet must be indexed to have no more than 16 color, with the first slot in the palette being the background color. See [Sprite Indexing](kingdom-of-ds-hacking.github.io/tree/main/src/universal/guides/sprite_indexing) for more information.
+2. The spritesheet must be indexed to have no more than 16 color, with the first slot in the palette being the background color. 
 
+## Making your own Sprite
+Before proceeding you should be familiar with Sprite Indexing, as all the sprites must have at most 16 color, with the background color being indexed to the first slot of the palette.
+See [Sprite Indexing](kingdom-of-ds-hacking.github.io/tree/main/src/universal/guides/sprite_indexing) for more information.
 
+For starters you want to load the png spritesheet you previously extracted in your graphic editing software of your choice, to either make edits to it or use it as a base for your sprite. If you're making your own sprite from scratch, remember that all the frames you draw must be in the same position as the ones in the original sprite.
+You may want to enable some kind of grid visualization in order to view the proper position of each frame. In Aseprite you can do so by clicking View>Grid>Grid Settings.
+
+Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the image you made, then export the BTX.
 
 ## Replacing the Sprite
+Replacing the sprite is no simpler than just clicking the "Change File" button in Tinke on the BTX file you want to replace, and then select the BTX you either extracted or obtained from BTX Editor. Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its dimension.
 
 ### Unused Sprites
-Adding new overworld sprites requires a great deal of ASM, but luckily there are a number of unused sprites that may be useful to you:
+Adding new overworld sprites would require ASM (and forking DSPRE to read the new entries) but luckily there are a number of unused sprites that may be useful to you:
 
+![](unusedsprites.png)
 
 ## Changing the Sprite Dimension
 To change the sprite dimension you're going to need an Hex Editor, I'll use HxD for this purpose. Additionally if you're doing this on HGSS, you'll also need blz to decompress the overlay
