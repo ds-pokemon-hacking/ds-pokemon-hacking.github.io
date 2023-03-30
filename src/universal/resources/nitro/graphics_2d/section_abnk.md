@@ -140,7 +140,7 @@ struct FrameProperties
 | Field Name | Description                                                                             | Data Type |
 |------------|-----------------------------------------------------------------------------------------|-----------|
 | cellIndex  | Index of the displayed cell or multi cell block.                                        | uint16_t  |
-| angle      | Rotation angle, using the full range of uint16_t for one turn.                          | uint16_t  |
+| rotate     | Rotation angle, using the full range of uint16_t for one turn.                          | uint16_t  |
 | unknown0   | Unused, `0x0` or `0xBEEF`.                                                              | uint16_t  |
 | scaleW     | Width scaling factor.                                                                   | [fx<1.19.12>]() |
 | scaleH     | Height scaling factor.                                                                  | [fx<1.19.12>]() |
