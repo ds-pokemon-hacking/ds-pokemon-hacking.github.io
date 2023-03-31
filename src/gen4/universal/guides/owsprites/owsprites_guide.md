@@ -75,13 +75,45 @@ Adding new overworld sprites would require ASM (and forking DSPRE to read the ne
 ![](unusedsprites.png)
 
 ## Changing the Sprite Properties
-If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all.
-To fix this you can change each sprite properties by Hex Editing. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created named *YourROMName*_DSPRE_Contents/overlay. 
+If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all if it has a different size. 
+Unless your sprite is only made of one frame and has the same size the original one, you will need to fix this by hex editing each sprite properties. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created by DSPRE, which will be named *YourROMName*_DSPRE_Contents/overlay. 
+
 All the offsets listed are based on the US version of the ROM and it has not been tested on other versions.
 
 ### Platinum
-Overlay ??? 
-There are two tables
+In Platinum there are two tables we need to look at up for changing the sprite properties, both are in Overlay 5.
+
+First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 HGSS following sprite with 8 frames.
+The first table is at 0x2BC34 and will look like this:
+
+![](pt_owtable1.PNG)
+
+Each entry is made of 8 bytes, the first 4 in red for the ID number and the latter 4 in blue for the mmodel number. We already know the model number, which in little endian is 96 01, so we just need to search those bytes using HxD search hex values function with the search direction being set to "forward", then click Search All.
+Since my mmodel number is greater than 255, I'll get a single result, being the two bytes corresponding to the model number, the next 2 bytes are going to be 00 00 and the next 4 bytes are the ID number we are looking for, in my case F4 00 00 00.
+
+If your model number was less than or equal to 255, **you need to look at the second result in the results tab**.
+
+With this information we can go to the second table at 0x2CA08, which is structured like this:
+
+![](pt_owtable2.PNG)
+
+Each row is an entry, the bytes in the red columns are the ID numbers of each sprites and the bytes in green are the sprite properties. You can scroll down until you see the ID number from the 1st table in the red columns. The bytes you want to edit are right before the ID number, in my case it will be which is a standard 32x32 16 frames NPC.
+ 
+The bytes you want to replace for this are going to be depending on which Sprite Property you want to have:
+
+| Byte Sequence  | Corresponding Property |
+| ------------- | ------------- |
+| 00 00 00 00 00 00 00 00 C0 B2 1F 02  | 32x32 Sprite with 16 frames |
+| Content Cell  | 32x32 Sprite with 8 frames  |
+| Content Cell  | 64x64 Sprite with 2 frames  |
+| Content Cell  | 64x64 Sprite with 8 frames  |
+| Content Cell  | 128x64 Sprite with 2 frames  |
+
+
+Overlay 5  Pt - adress 0x2BC34 
+Settings are stored at 0x2CA08 (Pt)
 
 ### HGSS
-Overlay 1
+Fortunately in HGSS there is only one table, it's at offset 0x21BA8 in Overlay 1.
+The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the "Configure Overlay 1 as uncompressed" patch from DSPRE's toolbox.
+
