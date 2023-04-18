@@ -1,8 +1,16 @@
 # Overworld Sprite Replacement Guide
-> This guide was written by SpagoAsparago. Sprite size research by BagBoy, Following Pokemon sprite by Mikeland and AdAstra. [Known Sprite Locations document](https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU/edit).
+> This guide was written by SpagoAsparago. Credits:
+
+> OW Tables research by BagBoy
+
+> Following Pokémon sprite settings by Mikelan and AdAstra
+
+> [Known Sprite Locations document](https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU/edit)
 
 This is a guide on how to extract, replace, change the properties and make your own overworld sprites.
-You'll need Tinke 0.9.2 and BTX Editor 2.0 for this.
+The necessary tools are Tinke 0.9.2 and BTX Editor 2.0
+
+In addition for the Sprite Properties section you need an Hex Editor like Hx and DSPRE, and in case you're using HGSS, blz as well.
 
 --- 
 ## Table of Contents
@@ -81,7 +89,7 @@ Unless your sprite is only made of one frame and has the same size the original 
 All the offsets listed are based on the US version of the ROM and it has not been tested on other versions.
 
 ### Platinum
-In Platinum there are two tables we need to look at up for changing the sprite properties, both are in Overlay 5.
+In Platinum there are two tables we need to look up for changing sprite properties, both are in Overlay 5.
 
 First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 HGSS following sprite with 8 frames.
 The first table is at 0x2BC34 and will look like this:
@@ -101,13 +109,13 @@ Each row is an entry, the bytes in the red columns are the ID numbers of each sp
  
 The bytes you want to replace for this are going to be depending on which Sprite Property you want to have:
 
-| Byte Sequence  | Corresponding Property |
-| ------------- | ------------- |
-| 00 00 00 00 00 00 00 00 C0 B2 1F 02  | 32x32 Sprite with 16 frames |
-| Content Cell  | 32x32 Sprite with 8 frames  |
-| Content Cell  | 64x64 Sprite with 2 frames  |
-| Content Cell  | 64x64 Sprite with 8 frames  |
-| Content Cell  | 128x64 Sprite with 2 frames  |
+| Byte Sequence  | Corresponding Property | Example |
+| ------------- | ------------- |  ------------- |
+| 00 00 00 00 00 00 00 00 C0 B2 1F 02  | 32x32 Sprite with 16 frames | Regular NPCs |
+| Content Cell  | 32x32 Sprite with 8 frames | HGSS Following Pokèmons | 
+| 00 00 05 00 00 00 08 00 00 00 AC B1  | 64x64 Sprite with 2 frames  | DPPt larger Legendaries like Palkia and Dialga |
+| Content Cell  | 64x64 Sprite with 8 frames  | HGSS larger Following Pokèmons |
+| 0B 00 00 00 15 00 00 00 64 B1 | 128x64 Sprite with 2 frames  | DPPt Giratina Distortion World Sprite |
 
 
 Overlay 5  Pt - adress 0x2BC34 
