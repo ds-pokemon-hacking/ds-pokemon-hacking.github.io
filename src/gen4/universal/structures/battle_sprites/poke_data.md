@@ -80,7 +80,8 @@ struct SpriteDataEntry
 
 ### Movement Types
 
-* See [Movement types](front_movement_types.md)
+* See [Front sprite movement types](front_movement_types.md)
+* See [Back sprite movement types](back_movement_types.md)
 
 #### ShadowSize
 There are four different possible values for ShadowSize.

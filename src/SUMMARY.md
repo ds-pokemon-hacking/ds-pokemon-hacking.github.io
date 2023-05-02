@@ -37,6 +37,7 @@
       - [Resources]()
         - [Battle Sprite Properties](gen4/universal/structures/battle_sprites/battle_sprite_properties.md)
           - [Front Sprite Movement Type Examples](gen4/universal/structures/battle_sprites/front_movement_types.md)
+          - [Back Sprite Movement Type Examples](gen4/universal/structures/battle_sprites/back_movement_types.md)
 - [Generation V]()
     - [Black and White]()
     - [Black 2 and White 2]()
