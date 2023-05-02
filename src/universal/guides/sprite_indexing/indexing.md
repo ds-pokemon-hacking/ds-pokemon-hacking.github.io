@@ -1,5 +1,5 @@
 # Intro to Sprite Indexing
-> This document was written by turtleisaac
+> This document was written by [turtleisaac](https://github.com/turtleisaac)
 
 This document aims to introduce the concept of indexing a sprite
 
