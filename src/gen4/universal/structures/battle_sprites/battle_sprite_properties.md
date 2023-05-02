@@ -10,5 +10,6 @@ This document is meant to guide you to information relating to the data that the
 ## Sections
 There are two separate files containing the relevant data addressed by this document. They can be found below:
 * [Sprite Poke_Data NARC](poke_data.md)
+  * [Front Sprite Movement Type Examples](front_movement_types.md)
 * [Sprite Height NARC](height.md)
 

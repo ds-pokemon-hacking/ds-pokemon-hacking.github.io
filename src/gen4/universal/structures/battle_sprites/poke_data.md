@@ -62,7 +62,7 @@ struct SpriteDataEntry
 | Field Name    | Description                                                                                                                                                                         | Data Type   |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | unkByte       | Currently unknown purpose.                                                                                                                                                          | uint8_t     |
-| movement      | Value used to determine the animation played when an opposing individual of this species appears.                                                                                   | uint8_t     |
+| movement      | Value used to determine the animation played when an opposing individual of this species appears. See [Movement types](front_movement_types.md)                                           | uint8_t     |
 | unkSection1   | Currently unknown contents and purposes.                                                                                                                                            | uint8_t[42] |
 | backMovement  | Value used to determine the animation played when the player or an ally sends out an individual of this species.                                                                    | uint8_t     |
 | unkSection2   | Currently unknown contents and purposes.                                                                                                                                            | uint8_t[41] |
@@ -79,26 +79,7 @@ struct SpriteDataEntry
 
 ### Movement Types
 
-<details>
- <summary>Movement 0</summary>
-
-![Movement 0](https://imgur.com/WWcNuRJ.gif)
-
-</details>
-
-<details>
- <summary>Movement 1</summary>
-
-![Movement 1](https://imgur.com/9p4p6d6.gif)
-
-</details>
-
-<details>
- <summary>Movement 2</summary>
-
-![Movement 2](https://imgur.com/09h3wrG.gif)
-
-</details>
+* See [Movement types](front_movement_types.md)
 
 #### ShadowSize
 There are four different possible values for ShadowSize.
