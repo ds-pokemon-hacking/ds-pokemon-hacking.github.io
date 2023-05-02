@@ -15,6 +15,7 @@ This NARC contains a single sub-file which contains one large table. This table 
     * [SpriteDataEntry](#spritedataentry)
 * [Specification](#specification)
     * [Sections](#sections)
+      * [Movement Types](#movement-types)
       * [ShadowSize](#shadowsize)
 * [Other](#other)
   * [Relevant Tools](#tools-with-editing-capability)
