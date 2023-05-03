@@ -50,7 +50,7 @@ You can save the script and test the game now.
 Note that in Platinum the pointer will have to be changed back to `0x20EB978` instead.
 This is what my full script 19 looks like, I assigned it to a NPC which will show the new Pokè Mart when talked to:
 
-![](pokemart_script1.PNG)
+![](resources/pokemart_script1.PNG)
 
 ### Using Script Registers
 To avoid using the AdrsValueSet three times in a row, it's possible to do the same process using the script register commands `RegDataSet` and `AdrsRegSet`, so that my earlier script will instead look like this:
