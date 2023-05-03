@@ -124,7 +124,7 @@ Normally, if the image has a size, there should also be a [CPOS section](section
 #### 3. Image layout
 The tiles are not places line by line. Instead, it looks like the the largest square with power-of-two side lengths that fits into the image constrains is calculated and placed at the top left corner. Then, this process repeats with the remaining size making the comming squares smaller. Following figure illustrates this whith one `10 * 10 tiles` example (top) and one `12 * 12 tiles` (bottom):
 
-![](sprite_layout.png)
+![](resources/sprite_layout.png)
 
 ### Files
 * [Nitro Character Graphic Resource](file_ncgr.md)

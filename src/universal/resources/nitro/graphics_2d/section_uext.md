@@ -26,7 +26,7 @@ Holds a value which tells, if a "multi-version" of the resource will be applied.
 struct ContainerSectionUEXT
 {
     /* 0x0 */ struct NitroSectionHeader sectionHeader;
-    /* 0x0 */ struct ContainerUEXT sectionData;
+    /* 0x8 */ struct ContainerUEXT sectionData;
 }; // entry size = sectionHeader.lengthSection
 ```
 | Field Name     | Description                                                                             | Data Type    |
