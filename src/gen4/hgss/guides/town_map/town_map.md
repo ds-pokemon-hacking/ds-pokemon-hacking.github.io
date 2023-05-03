@@ -1,4 +1,4 @@
-# Town Map Editing - HGSS
+# Town Map Editing <sup>*(HGSS)*</sup>
 > All research for this guide & the writing was done by [BluRose](https://github.com/BluRosie).
 
 The Town Map in Heart Gold is located solely within the Poké Gear, a departure from some previous games where the Town Map is a key item that gets a very large area to mess around on.  Because of this, the region is actually relatively cramped to start out with--Kanto makes a few sacrifices to nicely fit into the 32x32 blocks that the game uses--every square that the town map has corresponds to a 32x32 grid block, hence the reason that glitches like tweaking work in Platinum to go out of bounds and access the islands for Shaymin, Darkrai, and Cresselia.
@@ -31,21 +31,21 @@ First thing's first, the graphics are the easy part.  ``a/1/4/4`` contains all o
 ### Protagonist Portraits
 Clicking on the NCLR file 0 and then the NCGR file 1 will give you the town map portraits and the selectors--set the width to 16 and the height to 232.  Here you can replace the protagonist mugshots with whatever you can fit in the 16x16 space that uses very few colors to keep the rest of the indicators the same.  The roamers are also here, all of the Beasts and the Lati twins--feel free to change those as your hack requires!
 
-![](original_portraits.png)
+![](resources/original_portraits.png)
 
 When saving, make sure to click replace palette or whatever the checkbox is.  The graphic I will use is this one:
 
-![](new_portraits.png)
+![](resources/new_portraits.png)
 
 You can even check out the portraits in the game if you repack the narc and resave the ROM:
 
-![](new_portrait_in_game.png)
+![](resources/new_portrait_in_game.png)
 
 
 ### Town Previews
 Clicking on the NCLR file 14, the NCGR file 12, and the NSCR file 13 (in that order to load resources properly for editing) will give the Town Previews.  These are the things shown along the top of the Poké Gear when the town is hovered over.  There are 20 of these slots available--as this serves the purposes for my hack, I haven't looked into expanding it, but may eventually.  Kanto and Johto combined give a lot of leeway in this sense.
 
-![](old_previews.png)
+![](resources/old_previews.png)
 
 I've also been pretty careful about replacing old city maps with cities in my hack to ensure that every facet of this tutorial goes over well.  It requires a bit of planning, but will keep things nice and easy for you if you choose to edit the town map.  Editing that image and replacing the NSCR file with tiling encoding enabled will conclude the Town Previews.
 
@@ -84,17 +84,17 @@ This somewhat constrains what you can and can't do mapping-wise.  I know I have 
 
 Clicking on NCLR file 23, NCGR file 10, and NSCR 11 will net this massive image.
 
-![](old_town_map.png)
+![](resources/old_town_map.png)
 
 This is a lot to take in at first.  We have the actual town map on top of the many little highlight sections at the bottom.  Here, we whip out a new town map for our new region in the top section:
 
-![](town_map_red_area_done.png)
+![](resources/town_map_red_area_done.png)
 
 *Make sure that the top leftmost tile is just the transparent (first) color in the palette!*  Issues come up if you do not abide by this, and you'll think that everything is buggy until you realize that you just didn't do this.  This is just because of how Tinke does the tiling in the NSCR file.
 
 As we can see as well, we need to take into account that the Safari Zone areas are blocked out first, so I make sure to replace those down in the bottom right as well.  Saving this image and reopening it in the ROM:
 
-![](poke_gear_screen_red_area.png)
+![](resources/poke_gear_screen_red_area.png)
 
 *This being a garbled mess is 100% expected!*  We still have to deal with tables.
 
@@ -102,11 +102,11 @@ Trust the process here, it will look better, but it isn't then worth it to stres
 
 From here, we add the gray areas to the overall image as well:
 
-![](town_map_gray_area_done.png)
+![](resources/town_map_gray_area_done.png)
 
 Then we just need to add the highlighted orange areas to the image, or rather the ones that are missing (including the routes):
 
-![](town_map_orange_area_done.png)
+![](resources/town_map_orange_area_done.png)
 
 Now we move to making this look alright in the game and into overlay 101.
 
@@ -206,11 +206,11 @@ How do we interpret the ``redX``, ``redY``, ``grayX``, and ``grayY`` fields?
 
 Tiles form tilesets (NCGR) and are 8x8 pixels, with the idea being that the tilemap (NSCR) then "maps" the tiles to the overall image that Tinke lets you view.  The coordinate fields are all coordinates in the overall image that is dumped:
 
-![](old_town_map_but_8x8_annotated.png)
+![](resources/old_town_map_but_8x8_annotated.png)
 
 We can start to circle gray positions really nicely, but circling red positions seems to be weird (bear with me, the circles are red and gray respectively and are a little hard to see):
 
-![](old_town_map_with_wrong_circles.png)
+![](resources/old_town_map_with_wrong_circles.png)
 
 Entries 0x00 (Pallet), 0x01 (Viridian), and 0x05 (Vermilion) are circled on the map using the raw coordinates.
 
@@ -218,7 +218,7 @@ For whatever reason, the red position fields are offset by 1 each.  So on the im
 
 The gray fields are not affected by this issue.  Circling the adjusted red ones, offset 1 left and 1 down:
 
-![](old_town_map_with_right_circles.png)
+![](resources/old_town_map_with_right_circles.png)
 
 That shows the top left of each city and the place that its replaced with.
 
@@ -230,11 +230,11 @@ Entry ``0x0D`` corresponds to a map header of ``49 00``--after converting from l
 Its ``entry1``--which I believe is something of a "flight spot flag"--is ``0xD`` with an ``entry2``--which I believe is some sort of "city visited" flag--of ``0xC``.
 The ``redX``, ``redY`` fields show it belonging here (after being adjusted with the 1 offsets), and the ``grayX``, ``grayY`` position is circled as well.  The areas are both circled to account for ``replDim``, with ``townDim`` being located inside of each at an offset of ``offsetPos``.
 
-![](old_town_map_violet_focus.png)
+![](resources/old_town_map_violet_focus.png)
 
 I would strongly recommend making something like an Excel sheet or a Google Sheets workbook to keep track of all of this!  It allows for quick adjustments such that you know what each field is in addition to being something you can always keep open to reference.  Mine looks like this:
 
-![](excel_town_map_red_gray.png)
+![](resources/excel_town_map_red_gray.png)
 
 This can then just copy-paste the table into HxD or similar for easy updating and editing (especially on a ROM with entirely decompressed overlays).
 
@@ -271,7 +271,7 @@ My table looks like:
 ```
 Inserting into the ROM:
 
-![](town_map_first_pass_in_rom.png)
+![](resources/town_map_first_pass_in_rom.png)
 
 We can see that unregistered areas (Pacifidlog, Dewford, Lavaridge) are copied properly from their gray entries below.  All the red areas are also properly partitioned and are just fine when registered.
 
@@ -280,7 +280,7 @@ We can see that unregistered areas (Pacifidlog, Dewford, Lavaridge) are copied p
 
 Next part:  The orange selection blocks.  Walking around the map will show that the old selection blocks are still there:
 
-![](town_map_first_pass_in_rom_1.png)
+![](resources/town_map_first_pass_in_rom_1.png)
 
 As previously mentioned, overlay 101 has another table.  This table is at 0xFC32 (0x021F7372) of overlay 101, and has the format for each entry:
 ```c
@@ -433,7 +433,7 @@ This table is (somewhat) sporadically labeled, instead of being super in-depth.
 
 These are all as simple as the table makes it seem.  When anywhere within the coordinates ``(baseX+dimX, baseY+dimY)``, the PokéGear will select the entire orange area as specified on the image by the area ``(orangeBaseX+orangeDimX, orangeBaseY+orangeDimY)``.
 
-This can also similarly be broken down into a nice spreadsheet for easy editing and pasting into the ROM.  I actually include mine as a [template for you to download](town_map_blocks.xlsx).  My entries look something like this (each commented):
+This can also similarly be broken down into a nice spreadsheet for easy editing and pasting into the ROM.  I actually include mine as a [template for you to download](resources/town_map_blocks.xlsx).  My entries look something like this (each commented):
 ```
         mapHeader  baseX  baseY  dim  flags  textEntry  flySpot  padding      orangeBaseX  orangeBaseY  orangeDimX  orangeDimY
 [0x00]  31 00      06     0E     11   00     0A         01       00 00 00 00  00           20           03          03          // littleroot
@@ -461,7 +461,7 @@ Furthermore, the orange block that shows it is highlighted is located at ``(0x23
 
 Putting everything together, we can run through the map rather nicely:
 
-![](final_town_map.png) ![](final_town_map_1.png) ![](final_town_map_2.png) ![](final_fly_map.png) ![](final_fly_map_1.png) ![](final_fly_map_2.png)
+![](resources/final_town_map.png) ![](resources/final_town_map_1.png) ![](resources/final_town_map_2.png) ![](resources/final_fly_map.png) ![](resources/final_fly_map_1.png) ![](resources/final_fly_map_2.png)
 
 ## TODO
 - ``flags`` field in ``GearMapTownSelectionOverlay``
