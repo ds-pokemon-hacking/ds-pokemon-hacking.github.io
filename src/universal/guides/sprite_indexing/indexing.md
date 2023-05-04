@@ -10,7 +10,7 @@ Indexing is a process that converts an image from having a specific color assign
 
 By doing this, each pixel is assigned a specific index within the palette instead of an individual color. This allows image files to take up less space.
 
-![Indexed Image Example](../../resources/sprite_indexing/indexed_image_example.png)
+![Indexed Image Example](resources/indexed_image_example.png)
 
 ## Special Considerations for the Nintendo DS
 * The Pokémon DS games (and most others) use NCGR files for storing images, and NCLR files for storing palettes. The NCLR file that a NCGR pulls its palette information from is determined by the code of the game, so when viewing or replacing NCGR files in a tool like Tinke, you must first select the proper NCLR for that image for the correct palette to be displayed
@@ -27,6 +27,6 @@ By doing this, each pixel is assigned a specific index within the palette instea
 ---
 
 ## Guides for Specific Tools
-* [GIMP](../../resources/sprite_indexing/gimp/gimp.md)
+* [GIMP](resources/gimp/gimp.md)
 
 > TODO: Aseprite, Photoshop, GraphicsGale, Paint.NET
