@@ -20,9 +20,9 @@
 <summary>Platinum</summary>
 <br>
 
-[Adding New Poké Marts](gen4/universal/guides/pokemarts/pokemarts.md)
+[Adding New Poké Marts](gen4/guides/field/pt_hgss-pokemarts.md)
 
-[Setting the Weather from a Script](gen4/universal/guides/script_weather.md)
+[Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md)
 
 </details>
 
@@ -30,11 +30,11 @@
 <summary>Heartgold and SoulSilver</summary>
 <br>
 
-[Adding New Poké Marts](gen4/universal/guides/pokemarts/pokemarts.md)
+[Adding New Poké Marts](gen4/guides/field/pt_hgss-pokemarts.md)
 
-[Editing the Town Map](gen4/hgss/guides/town_map/town_map.md)
+[Editing the Town Map](gen4/guides/interface/hgss-town_map.md)
 
-[Setting the Weather from a Script](gen4/universal/guides/script_weather.md)
+[Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md
 
 </details>
 <br>
@@ -52,17 +52,13 @@
 <summary>Black and White</summary>
 <br>
 
-[Code Injection](gen5/universal/guides/code_injection/code_injection.md)  
-
 </details>
 
 <details>
 <summary>Black 2 and White 2</summary>
 <br>
 
-[Fairy Type Insertion](gen5/b2w2/guides/fairy/fairy.md)
-
-[Code Injection](gen5/universal/guides/code_injection/code_injection.md)  
+[Fairy Type Insertion](gen5/guides/misc/b2w2-fairy.md)
 
 </details>
 
