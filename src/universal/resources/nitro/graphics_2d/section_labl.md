@@ -57,6 +57,6 @@ struct ContainerLABL
 ## Specification
 
 ### Files
-* [Nitro Cell Resource](file_ncer.md)
-* [Nitro Animation Resource](file_nanr.md)
-* [Nitro Multi Animation Resource](file_nmar.md)
+* [Nitro Cell Runtime](file_ncer.md)
+* [Nitro Animation Runtime](file_nanr.md)
+* [Nitro Multi Animation Runtime](file_nmar.md)

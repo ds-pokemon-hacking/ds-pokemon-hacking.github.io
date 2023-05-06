@@ -200,8 +200,8 @@ $$
 $$
 
 ### Files
-* [Nitro Animation Resource](file_nanr.md)
-* [Nitro Multi Animation Resource](file_nmar.md)
+* [Nitro Animation Runtime](file_nanr.md)
+* [Nitro Multi Animation Runtime](file_nmar.md)
 
 ---
 ## TODO

@@ -6,7 +6,7 @@ flowchart BT;
     NCLR(N. Color R.)-->G2D(Graphics 2D);
     PCMP(Palette Count Map)-.->NCLR;
 ```
-The count map is an optional component for the color resource. It reduces the number of palettes, if the palette section allows 16 of them. Useful to save memory but not often used.
+The count map is an optional component for the color runtime. It reduces the number of palettes, if the palette section allows 16 of them. Useful to save memory but not often used.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
@@ -55,4 +55,4 @@ struct ContainerPCMP
 ## Specification
 
 ### Files
-* [Nitro Color Resource](file_nclr.md)
+* [Nitro Color Runtime](file_nclr.md)

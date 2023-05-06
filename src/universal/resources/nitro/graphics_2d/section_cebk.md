@@ -7,7 +7,7 @@ flowchart BT;
     NCER(N. Cell R.)-->G2D(Graphics 2D);
     CEBK(Cell Bank)-->NCER;
 ```
-The cell bank creates a number of cells by combining tiles and selecting a palette for each cell. It usually operates on dimensionless (1D mapped) character graphics and is used in combination with the animation resource to display dynamic objects.
+The cell bank creates a number of cells by combining tiles and selecting a palette for each cell. It usually operates on dimensionless (1D mapped) character graphics and is used in combination with the animation runtime to display dynamic objects.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
@@ -29,7 +29,7 @@ struct ContainerSectionCEBK
 {
     /* 0x0    */ struct NitroSectionHeader sectionHeader;
     /* 0x8    */ struct ContainerCEBK sectionData;
-    /* append */ uint8_t paddingDWORD[?]
+    /* append */ uint8_t paddingDWORD[?];
 }; // entry size = sectionHeader.lengthSection
 ```
 | Field Name     | Description                                                                             | Data Type    |
@@ -194,7 +194,7 @@ void setSizeInTiles(uint16_t widthInTiles, uint16_t heightInTiles)
 ```
 
 ### Files
-* [Nitro Cell Resource](file_ncer.md)
+* [Nitro Cell Runtime](file_ncer.md)
 
 ---
 ## TODO

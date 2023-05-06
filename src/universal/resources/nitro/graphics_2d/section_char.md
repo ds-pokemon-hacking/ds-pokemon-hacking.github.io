@@ -102,10 +102,10 @@ $$
 \end{align}
 $$
 
-Sometimes the width and height values are both set to `-1`. In this case the image itself has no size and the [CPOS section](section_cpos.md) is not part of the file. To display the sprite anyway, a width of four tiles often makes the image recognizable. The real image is constructed by the [cell resource](file_ncer.md), which picks the needed tiles and positions them.
+Sometimes the width and height values are both set to `-1`. In this case the image itself has no size and the [CPOS section](section_cpos.md) is not part of the file. To display the sprite anyway, a width of four tiles often makes the image recognizable. The real image is constructed by the [cell runtime](file_ncer.md), which picks the needed tiles and positions them.
 
 ### Mapping Type
-These values are `0`, if the image uses 2D mapping (positive values in `heightInTiles` an `widhtInTiles`). Both dimension values `== -1` indicate 1D mapping. In this case `mappingType0` usually has a value like `0x10`. In the most cases, the [cell resource](file_ncer.md) indexes 1D mapped tiles.
+These values are `0`, if the image uses 2D mapping (positive values in `heightInTiles` an `widhtInTiles`). Both dimension values `== -1` indicate 1D mapping. In this case `mappingType0` usually has a value like `0x10`. In the most cases, the [cell runtime](file_ncer.md) indexes 1D mapped tiles.
 
 ### Flags
 Apply properties to the sprite.
@@ -124,10 +124,10 @@ Normally, if the image has a size, there should also be a [CPOS section](section
 #### 3. Image layout
 The tiles are not places line by line. Instead, it looks like the the largest square with power-of-two side lengths that fits into the image constrains is calculated and placed at the top left corner. Then, this process repeats with the remaining size making the comming squares smaller. Following figure illustrates this whith one `10 * 10 tiles` example (top) and one `12 * 12 tiles` (bottom):
 
-![](resources/sprite_layout.png)
+![](resources/section_char/sprite_layout.png)
 
 ### Files
-* [Nitro Character Graphic Resource](file_ncgr.md)
+* [Nitro Character Graphic Runtime](file_ncgr.md)
 
 ---
 ## TODO

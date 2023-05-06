@@ -91,7 +91,7 @@ struct MultiCellProperties
 ```
 | Field Name        | Description                                                                             | Data Type |
 |-------------------|-----------------------------------------------------------------------------------------|-----------|
-| indexAnimatedCell | Selects sub-sprite from the animation resource.                                         | uint16_t  |
+| indexAnimatedCell | Selects sub-sprite from the animation runtime.                                         | uint16_t  |
 | translateX        | X translation of the animated base.                                                     | int16_t   |
 | translateY        | Y translation of the animated base.                                                     | int16_t   |
 | unknown0          | Usually `32 (0x20)`, but `33` also possible. Others, too?                               | uint8_t   |
@@ -101,7 +101,7 @@ struct MultiCellProperties
 ## Specification
 
 ### Files
-* [Nitro Multi Cell Resource](file_nmcr.md)
+* [Nitro Multi Cell Runtime](file_nmcr.md)
 
 ---
 ## TODO

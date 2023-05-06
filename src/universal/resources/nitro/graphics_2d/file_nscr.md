@@ -1,4 +1,4 @@
-# NSCR ("RCSN") - Nitro Screen Resource
+# NSCR ("RCSN") - Nitro Screen Runtime
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: (see sections)
 
@@ -7,7 +7,7 @@ flowchart BT;
     NSCR(N. Screen R.)-->G2D(Graphics 2D);
     SCRN(Screen)-->NSCR;
 ```
-The screen resource is used to rearrange the tiles of the character graphic on the screen. It also has the ability to flip tiles and change their palette index.
+The screen runtime is used to rearrange the tiles of the character graphic on the screen. It also has the ability to flip tiles and change their palette index.
 
 ## Table of Contents
 * [Data Structure](#data-structure)

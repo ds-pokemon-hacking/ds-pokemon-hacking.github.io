@@ -78,4 +78,4 @@ struct TileProperties
 ## Specification
 
 ### Files
-* [Nitro Screen Resource](file_nscr.md)
+* [Nitro Screen Runtime](file_nscr.md)

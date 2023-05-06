@@ -100,4 +100,4 @@ enum DimensionPalette : uint64_t
 This serves as a lookup table with four possible values. The number of colors per palette is set to either 16 or 256. The number of palettes can be limited to a lower value by the [count map](section_pcmp.md), if it is set to 16.
 
 ### Files
-* [Nitro Color Resource](file_nclr.md)
+* [Nitro Color Runtime](file_nclr.md)

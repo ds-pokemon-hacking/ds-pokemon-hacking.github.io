@@ -1,4 +1,4 @@
-# NANR ("RNAN") - Nitro Animation Resource
+# NANR ("RNAN") - Nitro Animation Runtime
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: (see sections)
 
@@ -9,7 +9,7 @@ flowchart BT;
     LABL(Label)-->NANR;
     UEXT(Use Extension?)-->NANR;
 ```
-The animation resource creates frame by frame animations using cells. Affine transformations can also be applied to frames.
+The animation runtime creates frame by frame animations using cells. Affine transformations can also be applied to frames.
 
 ## Table of Contents
 * [Data Structure](#data-structure)

@@ -9,7 +9,7 @@ flowchart BT;
     UEXT(Use Extension?)-->NCER;
     UEXT-->NANR;
 ```
-Holds a value which tells, if a "multi-version" of the resource will be applied.
+Holds a value which tells, if a "multi-version" of the cell or animation runtime will be applied.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
@@ -53,5 +53,5 @@ struct ContainerUEXT
 ## Specification
 
 ### Files
-* [Nitro Cell Resource](file_ncer.md)
-* [Nitro Animation Resource](file_nanr.md)
+* [Nitro Cell Runtime](file_ncer.md)
+* [Nitro Animation Runtime](file_nanr.md)

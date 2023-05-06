@@ -55,4 +55,4 @@ struct ContainerCPOS
 ## Specification
 
 ### Files
-* [Nitro Character Graphic Resource](file_ncgr.md)
+* [Nitro Character Graphic Runtime](file_ncgr.md)

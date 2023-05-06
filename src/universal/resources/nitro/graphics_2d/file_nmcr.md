@@ -1,4 +1,4 @@
-# NMCR ("RCMN") - Nitro Multi Cell Resource
+# NMCR ("RCMN") - Nitro Multi Cell Runtime
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: (see sections)
 
@@ -7,7 +7,7 @@ flowchart BT;
     NMCR(N. Multi Cell R.)-->G2D(Graphics 2D);
     MCBK(Multi Cell Bank)-->NMCR;
 ```
-The multi cell resource combines multiple animated cells into objects. These can be animated again to allow more complex animations.
+The multi cell runtime combines multiple animated cells into objects. These can be animated again to allow more complex animations.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
