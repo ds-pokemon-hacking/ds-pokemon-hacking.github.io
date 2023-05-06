@@ -87,9 +87,9 @@ struct Sprite
 ```c
 struct Size
 {
-    /* 0x0 */ uint32_t unknown0 : 12;     // 0b11111111'11110000'00000000'00000000
+    /* 0x0 */ uint32_t unknown0 : 12;     // 0b00000000'00000000'00001111'11111111
               uint32_t bitmapSize : 8;    // 0b00000000'00001111'11110000'00000000
-              uint32_t displayScale : 12; // 0b00000000'00000000'00001111'11111111
+              uint32_t displayScale : 12; // 0b11111111'11110000'00000000'00000000
 }; // entry size = 0x4
 ```
 | Field Name     | Description                                                                             | Data Type      |
