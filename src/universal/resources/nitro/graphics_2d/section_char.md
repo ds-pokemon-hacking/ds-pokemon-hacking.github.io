@@ -13,8 +13,8 @@ The character section stores the sprite-image in form of indices to colors withi
 * [Data Structure](#data-structure)
   * [Section Container](#section-container)
   * [CHAR Container](#char-container)
-  * [Tile](#tile)
 * [Specification](#specification)
+  * [Pixel Data](#pixel-data)
   * [Dimensions](#dimensions)
   * [Mapping Type](#mapping-type)
   * [Flags](#flags)
@@ -66,31 +66,22 @@ struct ContainerCHAR
 | flags           | Binary flags for different purposes. See [Flags](#flags).                               | uint32_t  |
 | lengthDataImage | Length of the image data section in bytes.                                              | uint32_t  |
 | offsetDataImage | Offset to the image data section relative to `ContainerCHAR`.                           | uint32_t  |
-| dataImage       | Array holding all color indices to create an image.                                     | [Tile[]](#tile) |
-
-### Tile
-```c
-struct Tile
-{
-    union
-    {
-        struct
-        {
-            /* 0x00 */ uint8_t lsn : 4;
-                       uint8_t msn : 4;
-        } /* 0x00 */ nibble;
-        /* 0x00 */ uint8_t byte;
-    } /* 0x00 */ indices[4 << pixelFormat];
-}; // entry size = 4 << pixelFormat
-```
-| Field Name | Description                                                                             | Data Type |
-|------------|-----------------------------------------------------------------------------------------|-----------|
-| nibble     | If `pixelFormat == 3`, index on 16-color palette.                                       | struct{uint8_t : 4, uint8_t : 4}   |
-| byte       | If `pixelFormat == 4`, index on 256-color palette.                                      | uint8_t   |
-| indices    | Array of pixel-indices in one tile.                                                     | uint8_t[] |
+| dataImage       | Array holding all color indices to create an image, see [Pixel Data](#pixel-data).      | uint8_t[] |
 
 ---
 ## Specification
+
+### Pixel Data
+
+#### Color
+The character graphic stores indices to colors on a [palette](section_pltt.md). This palette provides either 16 or 256 colors. The density of indices depends on the palette size. For a value of `0...15` only 4 bits (1 nibble) are needed. This allows to squeeze two indices into one byte, reducing the overall size by half.
+* `pixelFormat == 3`: use 16 colors 
+* `pixelFormat == 4`: use 256 colors
+
+#### Layout
+The 2D engine uses a tile based system. The pixel layout in the file represents this and can be imagined as a box with a width of 8 pixels and an infinite length. The data is written line by line into this box. Each tile can now be accessed at `y * 8`. Now we have 1D mapped tiles. For 2D mapping these tiles are also layed out row by row.
+
+If the image is to be used by the 3D engine, the "infinite length box" from before becomes a bitmap which has the dimensions of the image. There are no tiles in this case. 
 
 ### Dimensions
 The first two entries of [ContainerCHAR](#char-container) define the size of the sprite in tiles. To get the pixel values, multiply them with the side length of a tile (which is 8).
