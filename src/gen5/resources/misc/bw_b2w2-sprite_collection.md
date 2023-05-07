@@ -60,7 +60,7 @@ struct SpritePair
 | Field Name     | Description                                                                             | Data Type         |
 |----------------|-----------------------------------------------------------------------------------------|-------------------|
 | bodyPart       | One sprite. It is equivalent to a cell from the NCER.                                   | [Sprite](#sprite) |
-| component      | Usually all values are zeroed out. Only used for game-controled parts, see [Optional Component](#optional-component). | [Sprite](#sprite) |
+| component      | Usually all values are zeroed out. Only used for game-controlled parts, see [Optional Component](#optional-component). | [Sprite](#sprite) |
 
 ### Sprite
 ```c

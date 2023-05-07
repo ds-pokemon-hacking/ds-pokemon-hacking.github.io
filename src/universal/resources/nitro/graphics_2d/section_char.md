@@ -53,8 +53,8 @@ struct ContainerCHAR
     /* 0x14 */ uint32_t offsetDataImage;
     
     // data
-    /* 0x18 */ struct Tile dataImage[heightInTiles * widthInTiles];
-}; // entry size = lengthDataImage + offsetDataImage
+    /* offsetDataImage */ uint8_t dataImage[lengthDataImage];
+}; // entry size = offsetDataImage + lengthDataImage
 ```
 | Field Name      | Description                                                                             | Data Type |
 |-----------------|-----------------------------------------------------------------------------------------|-----------|

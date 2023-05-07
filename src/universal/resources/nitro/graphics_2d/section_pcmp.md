@@ -41,7 +41,7 @@ struct ContainerPCMP
     /* 0x4 */ uint32_t offsetDataIndices;
     
     // data
-    /* 0x8 */ uint16_t dataIndices[numberPalettes];
+    /* offsetDataIndices */ uint16_t dataIndices[numberPalettes];
 }; // entry size = numberPalettes * 2 + offsetDataIndices
 ```
 | Field Name        | Description                                                                             | Data Type  |
