@@ -166,7 +166,7 @@ Editing trainer sprites without patterns *(Aka: An apology letter from Jay-san a
 
 10. <a name="10"></a> Once you’ve selected the best first frame, next change the “Palette Import Option” to Replace Palette. Use the Import button to import your edited frame that matches the one that Tinke is displaying. Since you picked “Replace Palette”, this will replace the colors in the related palette with all the colors of your sprite. So in my example, this would change the colors on `trbgra_1.RLCN`.
 
-	This is why it was so important to find the right frame that showed all of your colors in step #10. To make sure all colors were added into the new palette. All 8 of the frames that the ball throw sprite I am editing will pull their colors from trbgra_1.RLCN. So if I pick a first frame that is missing colors that the others need, those other frames will have those colors removed when you import them.
+	This is why it was so important to find the right frame that showed all of your colors in <a href="#10">step 10</a>. To make sure all colors were added into the new palette. All 8 of the frames that the ball throw sprite I am editing will pull their colors from `trbgra_1.RLCN`. So if I pick a first frame that is missing colors that the others need, those other frames will have those colors removed when you import them.
 
 	[![Palette import button in Tinke](img/tinke_palette_import.png)](img/tinke_palette_import.png)
 
@@ -197,7 +197,7 @@ Editing trainer sprites without patterns *(Aka: An apology letter from Jay-san a
 	> <hr>
 	> A follow up issue that can happen after you do the <a href="#fix-1">fix</a> is that some of the colors of the sprite may be missing. Like if you look REALLY close at my sprite below, my pants are transparent. The fix I found is the steps below, but if all the colors on all your sprites look ok you can skip this step.
 	> 
-	> 📝 **NOTE:** This is a **newly discovered issue**, so this fix is not widely tested yet. If the steps below give you any trouble let us know in the sprite support channel in the discord and we’ll try to help further. 
+	> <blockquote style="padding:1em;background-color:rgba(242,245,255,.075);">📝 <strong>NOTE:</strong> This is a <strong>newly discovered issue</strong>, so this fix is not widely tested yet. If the steps below give you any trouble let us know in the sprite support channel in the discord and we’ll try to help further. </blockquote>
 	> 
     > 1. Type **442** into the Threshold field that is next to the “Pallet Import Options”.
     > *(**442** is just the **max value** this field can hold)*
