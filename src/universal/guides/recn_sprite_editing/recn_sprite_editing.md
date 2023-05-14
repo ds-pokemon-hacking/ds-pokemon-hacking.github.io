@@ -20,9 +20,10 @@
 		padding: 1em;
 		margin: 1em 0;
 		background-color: rgba(1,1,1,.2);
-		max-width: 432px;
+		max-width: 480px;
 	}
 	.video-responsive{
+		margin-top:1em;
 		overflow:hidden;
 		border-radius: 5px;
 		padding-bottom:56.25%;
@@ -30,7 +31,6 @@
 		height:0;
 	}
 	.video-responsive iframe{
-		margin-top:1em;
 		left:0;
 		top:0;
 		height:100%;
@@ -65,6 +65,12 @@
 
 Editing trainer sprites without patterns *(Aka: An apology letter from Jay-san about Tutorial Episode 2)*
 
+> <details>
+> <summary style="margin:.5em 0em;">🎥 Video version</summary>
+> <hr>
+> <div class="card" style="--card-color: red"><a href="https://www.youtube.com/watch?v=kZW9LTiAfrY"><strong>Pokemon DS Rom Editing Tutorial Pt 2.5: Easier Editing w/ RECN Files (Aka: NCER)</strong></a><div class="video-responsive"><iframe type="text/html" width="480" height="270" src="http://www.youtube.com/embed/kZW9LTiAfrY" frameborder="0" title="Jay-San: Pokemon DS Rom Editing Tutorial Pt 2.5: Easier Editing w/ RECN Files (Aka: NCER)" allowfullscreen></iframe></div></div>
+> </details>
+
 --- 
 
 ## 📌 Table of Contents
@@ -97,7 +103,7 @@ Editing trainer sprites without patterns *(Aka: An apology letter from Jay-san a
 	[![Tinke Launcher](img/tinke_launcher.png)](img/tinke_launcher.png)
 
 	> <details>
-	> <summary style="margin:.5em 0em;">⚠️ If you get an error.</summary>
+	> <summary style="margin:.5em 0em;">⚠️ If you get an error</summary>
 	> <hr>
 	> A few people have gotten the error below when opening Tinke 0.9.2 specifically.
 	> 
