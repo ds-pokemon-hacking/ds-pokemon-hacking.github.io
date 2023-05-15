@@ -578,8 +578,8 @@ In Pokemon Black and White, only the `Black City` and the `White Forest` are RD 
 
 In Pokemon Black 2 and White 2, only the `Join Avenue` and an island are RD maps. Here the player can talk to people passing through to add stalls at the sides of the road. The island maps, that also use these permissions, are an unused developement leftover. It is assumed that the join avenue was initially supposed to be an island, since it got some free space for eight markets in the center:
 <p align="center">
- <img src="resources/rd_island.png" alt="RD island" style="width:80%">
- <img src="resources/rd_island_top.png" alt="RD island top view" style="width:80%">
+ <img src="resources/bw_b2w2-maps/rd_island.png" alt="RD island" style="width:80%">
+ <img src="resources/bw_b2w2-maps/rd_island_top.png" alt="RD island top view" style="width:80%">
 </p>
 
 ---

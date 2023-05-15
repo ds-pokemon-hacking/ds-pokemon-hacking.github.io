@@ -19,25 +19,25 @@ Various other type graphics are leftover from possible features.  We look to rep
 ### Type Icons - ``a/0/8/2``, ``a/1/2/5``
 Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.  Tinke allows us to do this by replacing the relevant files, first in ``a/0/8/2``: 
 
-[a082_33.RLCN](a082_33.RLCN) and [a082_51.RGCN](a082_51.RGCN) should replace the ones in the ROM from an extracted ``a/0/8/2``.
+[a082_33.RLCN](resources/b2w2-fairy/a082_33.RLCN) and [a082_51.RGCN](resources/b2w2-fairy/a082_51.RGCN) should replace the ones in the ROM from an extracted ``a/0/8/2``.
 
-This replaces ![](cool_type.png) with ![](fairy_type_1.png)
+This replaces ![](resources/b2w2-fairy/cool_type.png) with ![](resources/b2w2-fairy/fairy_type_1.png)
 
-Similarly in ``a/1/2/5``, we just replace the ??? type icon at the bottom of an image to now be the Fairy type, replacing the files in ``a/1/2/5`` with [a125_22.RLCN](a125_22.RLCN) and [a125_23.RGCN](a125_23.RGCN)
+Similarly in ``a/1/2/5``, we just replace the ??? type icon at the bottom of an image to now be the Fairy type, replacing the files in ``a/1/2/5`` with [a125_22.RLCN](resources/b2w2-fairy/a125_22.RLCN) and [a125_23.RGCN](resources/b2w2-fairy/a125_23.RGCN)
 
-This replaces ![](question_type.png) with ![](fairy_type_2.png).
+This replaces ![](resources/b2w2-fairy/question_type.png) with ![](resources/b2w2-fairy/fairy_type_2.png).
 
 ### Move Selection Palette - ``a/0/1/1``
 Here we add a new palette to ``a/0/1/1`` to make Fairy moves appear as pink in the move selection screen.
 
-This file is [a011_572.RLCN](a011_572.RLCN).
+This file is [a011_572.RLCN](resources/b2w2-fairy/a011_572.RLCN).
 
 ``a011`` originally just has 571 files.  We add a 572nd file for our purposes.  You can either unpack/repack using narchive (included in the b2w2-fairy repository) or Extract directory using Tinke, add the file, and Change by directory using Tinke again.  
 
 ### Hall of Fame Palette - ``a/2/1/3``
 Here we add a new palette to ``a/2/1/3`` to make Fairy Pokémon show up in the Hall of Fame with a pink nameplate.  This is currently bugged and unfinished, but once the code is written it will be fixed in the Git repo.
 
-The file to replace with once extracted:  [a213_9.RLCN](a213_9.RLCN)
+The file to replace with once extracted:  [a213_9.RLCN](resources/b2w2-fairy/a213_9.RLCN)
 
 ## Code - ASM File
 I have made a [repository](https://github.com/BluRosie/b2w2-fairy) which should be downloaded as-is that has the fairy type code and is maintained as such.  Any additions or changes (future bugfixes!) will be included there.
@@ -104,7 +104,7 @@ Here, the table `u32 type_to_loaded_gfx_hof[NUM_OF_TYPES]` exists to map the typ
 
 </details>
 
-![](summary_1.png) ![](summary_2.png) ![](select.png) ![](pc_screen.png)
+![](resources/b2w2-fairy/summary_1.png) ![](resources/b2w2-fairy/summary_2.png) ![](resources/b2w2-fairy/select.png) ![](resources/b2w2-fairy/pc_screen.png)
 
 ## Cleanup
 From there, just make Struggle type 18 to make it typeless.  Assign all the Pokémon that need it to be Fairy type.  Make moves that have the Fairy typing as well.  It's now a functional type entirely!
