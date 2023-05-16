@@ -91,7 +91,8 @@ All the offsets listed are based on the US version of the ROM and it has not bee
 ### Platinum
 In Platinum there are two tables we need to look up for changing sprite properties, both are in Overlay 5.
 
-First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 Ho-Oh Sprite ripped from HGSS, having two frames.
+First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 Ho-Oh Sprite ripped from HGSS, having two frames:
+![](hooh64x64.png)
 
 The first table is at 0x2BC34 and will look like this:
 
@@ -116,9 +117,7 @@ The bytes you want to replace for this are going to be depending on which Sprite
 | 05 00 00 00 00 00 00 00 C0 B2 1F 02 | 64x64 Sprite with 2 frames  | DPPt larger Legendaries like Palkia and Dialga |
 | 0B 00 00 00 15 00 00 00 64 B1 1F 02 | 128x64 Sprite with 2 frames  | DPPt Giratina Distortion World Sprite |
 
-
-Overlay 5  Pt - adress 0x2BC34 
-Settings are stored at 0x2CA08 (Pt)
+You can paste them with Ctrl+B in the green section of the row shown above. Then, save the overlay and save the ROM from DSPRE. If you have done the process correctly, it will show up in game.
 
 ### HGSS
 Fortunately in HGSS there is only one table, it's at offset 0x21BA8 in Overlay 1.
