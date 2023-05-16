@@ -67,8 +67,12 @@ Heroine:
 Before proceeding you should be familiar with Sprite Indexing, as all the sprites must have at most 16 color, with the background color being indexed to the first slot of the palette.
 See [Sprite Indexing](kingdom-of-ds-hacking.github.io/tree/main/src/universal/guides/sprite_indexing) for more information.
 
-For starters you want to load the png spritesheet you previously extracted in the graphic editing software of your choice, to either make edits to it or use it as a base for your spritesheet. If you're making your own sprite from scratch, remember that all the frames you draw must be in the same position as the ones in the original sprite.
-You may want to enable some kind of grid visualization in order to view the proper position of each frame. In Aseprite you can do so by clicking View>Grid>Grid Settings.
+First you want to load the png spritesheet you previously extracted in the graphic editing software of your choice, to either make edits to it or use it as a base for your spritesheet. 
+You may also want to enable some kind of grid visualization in order to view the proper position of each frame. In Aseprite you can do so by clicking View>Grid>Grid Settings.
+
+If you're making your own sprite from scratch, remember that all the frames you draw must be in the same position as the ones in the original sprite, otherwise the movement in game will look wrong; for example the following image is not a correct spritesheet since the three walking frames aren't in the same position as the original one:
+
+![](wrongsprite.png)
 
 Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the spritesheet you made, then save the BTX.
 
@@ -122,4 +126,8 @@ You can paste them with Ctrl+B in the green section of the row shown above. Then
 ### HGSS
 Fortunately in HGSS there is only one table, it's at offset 0x21BA8 in Overlay 1.
 The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the "Configure Overlay 1 as uncompressed" patch from DSPRE's toolbox.
+I will be fixing the unused glitched bulbasaur sprite at , so first I need to find the correspondent ID number.
+The table will look like this: 
+
+There are X bytes for each entry, with the first 4 consisting of the mmodel number, the following 4 for the ID and the last 4 for the sprite properties. H
 
