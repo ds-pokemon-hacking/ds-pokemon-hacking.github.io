@@ -68,15 +68,15 @@ If you're making your own sprite from scratch, remember that all the frames you 
 
 ![](wrongsprite.png)
 
-Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the spritesheet you made, then save the BTX.
+Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the spritesheet you made, and save the BTX.
 
 ## Replacing the Sprite
 Replacing the sprite simply consists in just clicking the "Change File" button in Tinke on the BTX file you want to replace, and then select the BTX you either extracted or obtained from BTX Editor. Don't forget to **click the Pack button on the narc file** after you've replaced the BTX. Now you can save the ROM.
 
-Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its properties. 
+Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its properties to get the movement working correctly even if it's the same size. Single-frame sprites with the same dimension as the original won't have the issue however.
 
 ### Unused Sprites
-Adding new overworld sprites would require ASM (and forking DSPRE to read the new entries) but luckily there are a number of unused sprites that may be useful to you:
+Adding new overworld sprites would require ASM but luckily there are a number of unused sprites that may be useful to you:
 
 ![](unusedsprites.png)
 
