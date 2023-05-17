@@ -125,7 +125,7 @@ The Overlay 1 needs to be uncompressed, so you either have to use blz to decompr
 I will be replacing the glitched bulbasaur sprite with a standard 32x32 NPC, so first I need to find the correspondent ID number.
 The table will look like this: 
 
-![](hgss_owtable.png)
+![](hgss_owtable.PNG)
 
 There are 6 bytes for each entry, with the first two bytes (red) are the Overworld ID, the following two bytes (blue) for the number of the BTX filename in the a/0/8/1 narc, and the last two bytes (green) for the sprite properties.
 
