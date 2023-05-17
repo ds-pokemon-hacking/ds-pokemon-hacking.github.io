@@ -4,7 +4,7 @@
 This is a guide on how to extract, replace, change the properties and make your own overworld sprites.
 The necessary tools are Tinke 0.9.2 and BTX Editor 2.0
 
-In addition for the Sprite Properties section you need an Hex Editor like Hx and DSPRE, and in case you're using HGSS, blz as well.
+In addition for the Sprite Properties section you will need DSPRE and an Hex Editor like HxD as well.
 
 --- 
 ## Table of Contents
@@ -23,7 +23,12 @@ Overworld sprites are contained in BTX files, start by opening your ROM with Tin
 
 Once you've navigated to this directory in Tinke, select the narc file and click unpack to see see all the BTX files. 
 You can select one and click the "View" button to see the spritesheet. Select the one you want to replace and click Extract, so that you will obtain the BTX file.
+
+![](resources/pt_hgss-owsprites/tinke.PNG)
+
 You can load this file in the BTX Editor 2.0 to either extract the spritesheet itself in a .png format or import your own spritesheet.
+
+![](resources/pt_hgss-owsprites/btxeditor.PNG)
 
 <details>
  <summary>Where to find all Player Character Sprites.</summary>
@@ -66,7 +71,7 @@ You may also want to enable some kind of grid visualization in order to view the
 
 If you're making your own sprite from scratch, remember that all the frames you draw must be in the same position as the ones in the original sprite, otherwise the movement in game will look wrong; for example the following image is not a correct spritesheet since the three walking frames aren't in the same position as the original one:
 
-![](wrongsprite.png)
+![](resources/pt_hgss-owsprites/wrongsprite.PNG)
 
 Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the spritesheet you made, and save the BTX.
 
@@ -78,7 +83,7 @@ Just remember that the sprite you're inserting must have the same size and numbe
 ### Unused Sprites
 Adding new overworld sprites would require ASM but luckily there are a number of unused sprites that may be useful to you:
 
-![](unusedsprites.png)
+![](resources/pt_hgss-owsprites/unusedsprites.png)
 
 ## Changing the Sprite Properties
 If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all if it has a different size. 
@@ -91,11 +96,11 @@ In Platinum there are two tables we need to look up for changing sprite properti
 
 First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 Ho-Oh Sprite ripped from HGSS, having two frames:
 
-![](hooh64x64.png)
+![](resources/pt_hgss-owsprites/hooh64x64.png)
 
 The first table is at 0x2BC34 and will look like this:
 
-![](pt_owtable1.PNG)
+![](resources/pt_hgss-owsprites/pt_owtable1.PNG)
 
 Each entry is made of 8 bytes, the first 4 in red for the ID number and the latter 4 in blue for the mmodel number. We already know the model number, which in little endian is 96 01, so we just need to search those bytes using HxD search hex values function with the search direction being set to "forward", then click Search All.
 Since my mmodel number is greater than 255, I'll get a single result, being the two bytes corresponding to the model number, the next 2 bytes are going to be 00 00 and the next 4 bytes are the ID number we are looking for, in my case F4 00 00 00.
@@ -104,7 +109,7 @@ If your model number was less than or equal to 255, **you need to look at the se
 
 With this information we can go to the second table at 0x2CA08, which is structured like this:
 
-![](pt_owtable2.PNG)
+![](resources/pt_hgss-owsprites/pt_owtable2.PNG)
 
 Each row is an entry, the bytes in the red columns are the ID numbers of each sprites and the bytes in green are the sprite properties. You can scroll down until you see the ID number from the 1st table in the red columns. The bytes you want to edit are right before the ID number, in my case it will be which is a standard 32x32 16 frames NPC.
  
@@ -125,7 +130,7 @@ The Overlay 1 needs to be uncompressed, so you either have to use blz to decompr
 I will be replacing the glitched bulbasaur sprite with a standard 32x32 NPC, so first I need to find the correspondent ID number.
 The table will look like this: 
 
-![](hgss_owtable.PNG)
+![](resources/pt_hgss-owsprites/hgss_owtable.PNG)
 
 There are 6 bytes for each entry, with the first two bytes (red) are the Overworld ID, the following two bytes (blue) for the number of the BTX filename in the a/0/8/1 narc, and the last two bytes (green) for the sprite properties.
 
