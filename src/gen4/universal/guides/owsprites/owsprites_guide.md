@@ -1,11 +1,5 @@
 # Overworld Sprite Replacement Guide
-> This guide was written by SpagoAsparago. Credits:
-
-> OW Tables research by BagBoy
-
-> Following Pokémon sprite settings by Mikelan and AdAstra
-
-> [Known Sprite Locations document](https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU/edit)
+> This guide was written by SpagoAsparago. Credits to the [Known Sprite Locations document](https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU/edit) and BagBoy for the OW tables research.
 
 This is a guide on how to extract, replace, change the properties and make your own overworld sprites.
 The necessary tools are Tinke 0.9.2 and BTX Editor 2.0
@@ -79,7 +73,7 @@ Once you're done, you can open the BTX you previously extracted in BTX Editor 2.
 ## Replacing the Sprite
 Replacing the sprite simply consists in just clicking the "Change File" button in Tinke on the BTX file you want to replace, and then select the BTX you either extracted or obtained from BTX Editor. Don't forget to **click the Pack button on the narc file** after you've replaced the BTX. Now you can save the ROM.
 
-Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its dimension. 
+Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its properties. 
 
 ### Unused Sprites
 Adding new overworld sprites would require ASM (and forking DSPRE to read the new entries) but luckily there are a number of unused sprites that may be useful to you:
@@ -96,6 +90,7 @@ All the offsets listed are based on the US version of the ROM and it has not bee
 In Platinum there are two tables we need to look up for changing sprite properties, both are in Overlay 5.
 
 First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 Ho-Oh Sprite ripped from HGSS, having two frames:
+
 ![](hooh64x64.png)
 
 The first table is at 0x2BC34 and will look like this:
@@ -119,15 +114,22 @@ The bytes you want to replace for this are going to be depending on which Sprite
 | ------------- | ------------- |  ------------- |
 | 00 00 00 00 00 00 00 00 C0 B2 1F 02 | 32x32 Sprite with 16 frames | Regular NPCs |
 | 05 00 00 00 00 00 00 00 C0 B2 1F 02 | 64x64 Sprite with 2 frames  | DPPt larger Legendaries like Palkia and Dialga |
-| 0B 00 00 00 15 00 00 00 64 B1 1F 02 | 128x64 Sprite with 2 frames  | DPPt Giratina Distortion World Sprite |
+| 0B 00 00 00 15 00 00 00 64 B1 1F 02 | 128x64 Sprite with 2 frames  | DPPt Giratina Distortion World sprite |
 
 You can paste them with Ctrl+B in the green section of the row shown above. Then, save the overlay and save the ROM from DSPRE. If you have done the process correctly, it will show up in game.
+If the two frames are different you can set the OW movement to *20-Running Up, Down* in DSPRE event editor to have the animation play out costantly.
 
 ### HGSS
-Fortunately in HGSS there is only one table, it's at offset 0x21BA8 in Overlay 1.
-The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the "Configure Overlay 1 as uncompressed" patch from DSPRE's toolbox.
-I will be fixing the unused glitched bulbasaur sprite at , so first I need to find the correspondent ID number.
+Fortunately in HGSS there is only one table, it's at offset `0x21BA8` in Overlay 1.
+The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the *Configure Overlay 1 as uncompressed* patch from DSPRE's toolbox.
+I will be replacing the glitched bulbasaur sprite with a standard 32x32 NPC, so first I need to find the correspondent ID number.
 The table will look like this: 
 
-There are X bytes for each entry, with the first 4 consisting of the mmodel number, the following 4 for the ID and the last 4 for the sprite properties. H
+![](hgss_owtable.png)
 
+There are 6 bytes for each entry, with the first two bytes (red) are the Overworld ID, the following two bytes (blue) for the number of the BTX filename in the a/0/8/1 narc, and the last two bytes (green) for the sprite properties.
+
+The glitched Bulbasaur sprite I'm replacing is 1_201.BTX0, so in little endian the filename number I'm looking for is `C9 00`. We can find the corresponding result by searching those bytes with HxD search function, with search direction set *forward* and clicking *Search All*, and we have to look for the 2nd result if it exists (regardless if the number is smaller or greather than 255), which will be at `0x22EC4` in my case. The bytes I'm looking for are the next two, so at `0x22EC6`, and you will need to replace them with `00 00` for the standard 32x32 NPC.
+
+So I will replace the `25 4E` bytes with `00 00`. You can save the overlay 1, and then save the ROM in DSPRE. If you did all the steps correctly the sprite you replaced will show up correctly in game.
+The other two offsets to fix the remaining bulbasaur glitched sprites (1_202.BTX0 and 1_203.BTX0) are respectively at `0x22ECC` and `0x22ED2`.
