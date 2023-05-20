@@ -66,37 +66,37 @@ struct SpritePair
 ```c
 struct Sprite
 {
-    /* 0x00 */ fx<1.23.8> displayPositionX;
-    /* 0x04 */ fx<1.23.8> displayPositionY;
+    /* 0x00 */ fx<1.23.8> spritePositionX;
+    /* 0x04 */ fx<1.23.8> spritePositionY;
     /* 0x08 */ struct Size sizePropertiesX;
     /* 0x0C */ struct Size sizePropertiesY;
-    /* 0x10 */ fx<1.19.12> bitmapPositionX;
-    /* 0x14 */ fx<1.19.12> bitmapPositionY;
+    /* 0x10 */ fx<1.19.12> texturePositionX;
+    /* 0x14 */ fx<1.19.12> texturePositionY;
 }; // entry size = 0x18
 ```
 | Field Name       | Description                                                                             | Data Type       |
 |------------------|-----------------------------------------------------------------------------------------|-----------------|
-| displayPositionX | Initial x position. The final position on screen depends on further processing.         | [fx<1.23.8>]()  |
-| displayPositionY | Initial y position. The final position on screen depends on further processing.         | [fx<1.23.8>]()  |
+| spritePositionX  | Initial x position. The final position on screen depends on further processing.         | [fx<1.23.8>]()  |
+| spritePositionY  | Initial y position. This coordinate is upside down (multiply with -1).                  | [fx<1.23.8>]()  |
 | sizePropertiesX  | Horizontal sizes.                                                                       | [Size](#size)   |
 | sizePropertiesY  | Vertical sizes.                                                                         | [Size](#size)   |
-| bitmapPositionX  | Left edge position on the texture image.                                                | [fx<1.19.12>]() |
-| bitmapPositionY  | Top edge position on the texture image.                                                 | [fx<1.19.12>]() |
+| texturePositionX | Left edge position on the texture image.                                                | [fx<1.19.12>]() |
+| texturePositionY | Top edge position on the texture image.                                                 | [fx<1.19.12>]() |
 
 ### Size
 ```c
 struct Size
 {
     /* 0x0 */ uint32_t unknown0 : 12;     // 0b00000000'00000000'00001111'11111111
-              uint32_t bitmapSize : 8;    // 0b00000000'00001111'11110000'00000000
-              uint32_t displayScale : 12; // 0b11111111'11110000'00000000'00000000
+              uint32_t dimension : 8;     // 0b00000000'00001111'11110000'00000000
+              uint32_t undocumented : 12; // 0b11111111'11110000'00000000'00000000
 }; // entry size = 0x4
 ```
 | Field Name     | Description                                                                             | Data Type      |
 |----------------|-----------------------------------------------------------------------------------------|----------------|
 | unknown0       | Unused?                                                                                 | uint32_t : 12  |
-| bitmapSize     | Width or height of the sprite's bounding box.                                           | uint32_t : 8   |
-| displayScale   | Scales the sprite if not `0`, currently undocumented.                                   | uint32_t : 12  |
+| dimension      | Width or height of the sprite's bounding box.                                           | uint32_t : 8   |
+| undocumented   | Most significant bits apply scaling factors, other do something else, unknown.          | uint32_t : 12  |
 
 ---
 ## Specification
@@ -112,5 +112,5 @@ For the most body parts this isn't needed (not linked to the head). In these cas
 
 ---
 ## TODO
-* Document `displayScale` in [Size](#size)
+* Document `undocumented` in [Size](#size)
 * Link fixed point definition

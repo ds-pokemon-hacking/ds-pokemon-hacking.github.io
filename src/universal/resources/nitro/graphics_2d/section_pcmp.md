@@ -1,4 +1,4 @@
-# PCMP ("PMCP") - Palette Count Map
+# PCMP ("PMCP") - Palette Compression
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: [NOCASH](https://problemkaputt.de)
 ```mermaid
@@ -6,7 +6,7 @@ flowchart BT;
     NCLR(N. Color R.)-->G2D(Graphics 2D);
     PCMP(Palette Count Map)-.->NCLR;
 ```
-The count map is an optional component for the color runtime. It reduces the number of palettes, if the palette section allows 16 of them. Useful to save memory but not often used.
+The palette compression is an optional component for the color runtime. It reduces the number of palettes, if the palette section allows 16 of them. Useful to save memory but not often used.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
