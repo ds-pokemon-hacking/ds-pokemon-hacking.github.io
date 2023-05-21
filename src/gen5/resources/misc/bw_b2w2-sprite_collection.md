@@ -87,16 +87,16 @@ struct Sprite
 ```c
 struct Size
 {
-    /* 0x0 */ uint32_t unknown0 : 12;     // 0b00000000'00000000'00001111'11111111
-              uint32_t dimension : 8;     // 0b00000000'00001111'11110000'00000000
-              uint32_t undocumented : 12; // 0b11111111'11110000'00000000'00000000
+    /* 0x0 */ uint32_t unknown0 : 12;  // 0b00000000'00000000'00001111'11111111
+              uint32_t dimension : 12; // 0b00000000'11111111'11110000'00000000
+              uint32_t scaling : 8;    // 0b11111111'00000000'00000000'00000000
 }; // entry size = 0x4
 ```
 | Field Name     | Description                                                                             | Data Type      |
 |----------------|-----------------------------------------------------------------------------------------|----------------|
 | unknown0       | Unused?                                                                                 | uint32_t : 12  |
-| dimension      | Width or height of the sprite's bounding box.                                           | uint32_t : 8   |
-| undocumented   | Most significant bits apply scaling factors, other do something else, unknown.          | uint32_t : 12  |
+| dimension      | Width or height of the sprite's bounding box.                                           | uint32_t : 12  |
+| scaling        | Effects sprite scaling but not on the shadow, undocumented behavior.                    | uint32_t : 8   |
 
 ---
 ## Specification
@@ -112,5 +112,5 @@ For the most body parts this isn't needed (not linked to the head). In these cas
 
 ---
 ## TODO
-* Document `undocumented` in [Size](#size)
+* Document `scaling` in [Size](#size)
 * Link fixed point definition
