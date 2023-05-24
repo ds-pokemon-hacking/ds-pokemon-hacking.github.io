@@ -7,7 +7,7 @@ flowchart BT;
     NMCR(N. Multi Cell R.)-->G2D(Graphics 2D);
     MCBK(Multi Cell Bank)-->NMCR;
 ```
-The multi cell bank combines multiple animated cells into cluster. This allows more complex animations by grouping related cells into one unit. 
+The multi cell bank combines multiple animated cells into cluster. This allows more complex animations by grouping related sequences into one unit. 
 
 ## Table of Contents
 * [Data Structure](#data-structure)
@@ -16,8 +16,8 @@ The multi cell bank combines multiple animated cells into cluster. This allows m
   * [Multi Cell](#multi-cell)
   * [Multi Cell Properties](#multi-cell-properties)
 * [Specification](#specification)
+  * [Frame Mode](#frame-mode)
   * [Files](#files)
-* [TODO](#todo)
 
 ---
 ## Data Structure
@@ -82,27 +82,30 @@ struct MultiCell
 ```c
 struct MultiCellProperties
 {
-    /* 0x0 */ uint16_t indexAnimatedCell;
+    /* 0x0 */ uint16_t indexSequence;
     /* 0x2 */ int16_t translateX;
     /* 0x4 */ int16_t translateY;
-    /* 0x6 */ uint8_t unknown0;
-    /* 0x7 */ uint8_t indexData;
+    /* 0x6 */ uint8_t frameMode;
+    /* 0x7 */ uint8_t uniqueID;
 }; // entry size = 0x8
 ```
-| Field Name        | Description                                                                             | Data Type |
-|-------------------|-----------------------------------------------------------------------------------------|-----------|
-| indexAnimatedCell | Selects sub-sprite from the animation runtime.                                         | uint16_t  |
-| translateX        | X translation of the animated base.                                                     | int16_t   |
-| translateY        | Y translation of the animated base.                                                     | int16_t   |
-| unknown0          | Usually `32 (0x20)`, but `33` also possible. Others, too?                               | uint8_t   |
-| indexData         | Local multi cell index starting by `0`.                                                 | uint8_t   |
+| Field Name        | Description                                                                                  | Data Type |
+|-------------------|----------------------------------------------------------------------------------------------|-----------|
+| indexSequence     | Selects a sequence from the animation runtime.                                               | uint16_t  |
+| translateX        | X translation of the animated base.                                                          | int16_t   |
+| translateY        | Y translation of the animated base.                                                          | int16_t   |
+| frameMode         | Behavior of the frame counter, if cell is temporary unloaded, see [Frame Mode](#frame-mode). | uint8_t   |
+| uniqueID          | Local multi cell index starting by `0`. No duplicates allowed.                               | uint8_t   |
 
 ---
 ## Specification
 
+### Frame Mode
+Defines the behavior of a sequence if the displayed multicell changes.
+* `0x20`: Reset the frame counter. The sequence will start from the beginning after the multicell regains focus.
+* `0x21`: Continue counting. The sequence will continue counting frames even if the multicell lost focus, no restart after regaining it.
+
+This value is probably a bitfield. This would explain the leading `2` which implies an always enabled flag.
+
 ### Files
 * [Nitro Multi Cell Runtime](file_nmcr.md)
-
----
-## TODO
-* Research and document `unknown0` in [MultiCell](#multi-cell)
