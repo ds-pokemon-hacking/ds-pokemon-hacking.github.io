@@ -32,7 +32,8 @@ struct NitroFileHeader
 {
     /* 0x0 */ uint8_t signature[4];
     /* 0x4 */ uint16_t byteOrderMark;
-    /* 0x6 */ fx<0.8.8> version;
+    /* 0x6 */ uint8_t versionMinor;
+    /* 0x7 */ uint8_t versionMajor;
     /* 0x8 */ uint32_t lengthFile;
     /* 0xC */ uint16_t lengthHeader;
     /* 0xE */ uint16_t numberSections;
@@ -41,8 +42,9 @@ struct NitroFileHeader
 | Field Name     | Description                                                                             | Data Type |
 |----------------|-----------------------------------------------------------------------------------------|-----------|
 | signature      | Identify type of data content.                                                          | uint8_t[] |
-| byteOrderMark  | Defines the byte order as UTF-16 character. Always `0xFEFF` -> little-endian.           | uint16_t  |
-| version        | Nitro version number.                                                                   | [fx<0.8.8>](path-to-fixed-point-definition) |
+| byteOrderMark  | Defines the byte order as UTF-16 character.                                             | uint16_t  |
+| versionMinor   | Minor nitro version number (fraction of the number). `Major.Minor`                      | uint8_t   |
+| versionMajor   | Major nitro version number (integer of the number). `Major.Minor`                       | uint8_t   |
 | lengthFile     | Length of the nitro file, including all sections.                                       | uint32_t  |
 | lengthHeader   | Length of this header, always `0x10`.                                                   | uint16_t  |
 | numberSections | Number of sections within this file.                                                    | uint16_t  |
@@ -129,5 +131,4 @@ TODO: Some words about the sound system.
 * Edit [File System](#file-system)
 * Edit [Graphics 3D](#graphics-3d)
 * Edit [Sound](#sound)
-* Link fixed point definition
 * Document other formats in the same or similar style as `Graphics 2D`
