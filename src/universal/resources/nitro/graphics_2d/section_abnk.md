@@ -34,14 +34,12 @@ struct ContainerSectionABNK
 {
     /* 0x0    */ struct NitroSectionHeader sectionHeader;
     /* 0x8    */ struct ContainerABNK sectionData;
-    /* append */ uint8_t paddingDWORD[?]
 }; // entry size = sectionHeader.lengthSection
 ```
 | Field Name     | Description                                                                             | Data Type    |
 |----------------|-----------------------------------------------------------------------------------------|--------------|
 | sectionHeader  | Header of this section. `sectionHeader.signature = "KNBA"`.   | [NitroSectionHeader](../nitro_overview.md#nitro-section-header) |
 | sectionData    | Content of this section.                                                                | [ContainerABNK](#abnk-container) |
-| paddingDWORD   | Padding for DWORD alignment, if [LABL-section](section_labl.md) follows.               | uint8_t[]    |
 
 ### ABNK Container
 ```c
@@ -146,6 +144,8 @@ struct FrameProperties
 | scaleH     | Height scaling factor.                                                                  | [fx<1.19.12>]() |
 | translateX | X position adjustment.                                                                  | int16_t   |
 | translateY | Y position adjustment.                                                                  | int16_t   |
+
+**Important:** The structs for `animationType > 0` must be DWORD aligned. If there is a region with an odd number of type-0 properties, a dummy entry is appended as padding.
 
 ---
 ## Specification
