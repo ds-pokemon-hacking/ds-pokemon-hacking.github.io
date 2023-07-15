@@ -9,12 +9,14 @@ flowchart BT;
     UEXT(Use Extension?)-->NCER;
     UEXT-->NANR;
 ```
-Holds a value which tells, if a "multi-version" of the resource will be applied.
+Holds a value which tells, if a "multi-version" of the cell or animation runtime will be applied.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
   * [Section Container](#section-container)
   * [UEXT Container](#uext-container)
+* [Specification](#specification)
+  * [Files](#files)
 
 ---
 ## Data Structure
@@ -24,7 +26,7 @@ Holds a value which tells, if a "multi-version" of the resource will be applied.
 struct ContainerSectionUEXT
 {
     /* 0x0 */ struct NitroSectionHeader sectionHeader;
-    /* 0x0 */ struct ContainerUEXT sectionData;
+    /* 0x8 */ struct ContainerUEXT sectionData;
 }; // entry size = sectionHeader.lengthSection
 ```
 | Field Name     | Description                                                                             | Data Type    |
@@ -46,3 +48,10 @@ struct ContainerUEXT
 | Field Name      | Description                                                                             | Data Type |
 |-----------------|-----------------------------------------------------------------------------------------|-----------|
 | extended        | Enable multicell?                                                                       | uint32_t  |
+
+---
+## Specification
+
+### Files
+* [Nitro Cell Runtime](file_ncer.md)
+* [Nitro Animation Runtime](file_nanr.md)

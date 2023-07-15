@@ -1,4 +1,4 @@
-# NCER ("RECN") - Nitro Cell Resource
+# NCER ("RECN") - Nitro Cell Runtime
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: (see sections)
 
@@ -9,7 +9,7 @@ flowchart BT;
     LABL(Label)-->NCER;
     UEXT(Use Extension?)-->NCER;
 ```
-The cell resource creates groups of tiles which will be displayed as small images. The cells can serve as base for frame animations.
+The cell runtime creates groups of tiles which will be displayed as small images. The cells can serve as base for frame animations.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
