@@ -25,4 +25,4 @@ copy-js = true           # include Javascript code for search
 command = "mdbook-mermaid"
 
 [output.html]
-additional-js = ["mermaid.min.js", "mermaid-init.js"]
+no-section-label = true
