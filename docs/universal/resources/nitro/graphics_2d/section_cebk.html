@@ -1,0 +1,420 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Cell Bank (CEBK) - Kingdom of DS Hacking</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../../favicon.png">
+        <link rel="stylesheet" href="../../../../css/variables.css">
+        <link rel="stylesheet" href="../../../../css/general.css">
+        <link rel="stylesheet" href="../../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../../highlight.css">
+        <link rel="stylesheet" href="../../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../../../index.html">Home</a></li><li class="chapter-item affix "><li class="part-title">Guides</li><li class="chapter-item "><div><strong aria-hidden="true">1.</strong> Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">1.1.</strong> Diamond and Pearl</div></li><li class="chapter-item "><div><strong aria-hidden="true">1.2.</strong> Platinum</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen4/guides/field/pt_hgss-pokemarts.html"><strong aria-hidden="true">1.2.1.</strong> Adding New Poké Marts</a></li><li class="chapter-item "><a href="../../../../gen4/guides/field/pt_hgss-script_weather.html"><strong aria-hidden="true">1.2.2.</strong> Setting the Weather from a Script</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">1.3.</strong> Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen4/guides/field/pt_hgss-pokemarts.html"><strong aria-hidden="true">1.3.1.</strong> Adding New Poké Marts</a></li><li class="chapter-item "><a href="../../../../gen4/guides/interface/hgss-town_map.html"><strong aria-hidden="true">1.3.2.</strong> Editing the Town Map</a></li><li class="chapter-item "><a href="../../../../gen4/guides/field/pt_hgss-script_weather.html"><strong aria-hidden="true">1.3.3.</strong> Setting the Weather from a Script</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.</strong> Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen5/guides/misc/bw_b2w2-code_injection.html"><strong aria-hidden="true">2.1.1.</strong> Code Injection</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen5/guides/misc/bw_b2w2-code_injection.html"><strong aria-hidden="true">2.2.1.</strong> Code Injection</a></li><li class="chapter-item "><a href="../../../../gen5/guides/misc/b2w2-fairy.html"><strong aria-hidden="true">2.2.2.</strong> Fairy Type Insertion</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">3.</strong> Universal</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/guides/code_injection/code_injection.html"><strong aria-hidden="true">3.1.</strong> Code Injection</a></li><li class="chapter-item "><a href="../../../../universal/guides/sprite_indexing/indexing.html"><strong aria-hidden="true">3.2.</strong> Sprite Indexing</a></li><li class="chapter-item "><a href="../../../../universal/guides/ncer_sprite_editing/ncer_sprite_editing.html"><strong aria-hidden="true">3.3.</strong> NCER Sprite Editing</a></li></ol></li><li class="chapter-item "><li class="part-title">Resources</li><li class="chapter-item "><div><strong aria-hidden="true">4.</strong> Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> Diamond and Pearl</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> Platinum</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen4/resources/interface/hgss-town_map_spots.html"><strong aria-hidden="true">4.3.1.</strong> Town Map Structures</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">5.</strong> Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">5.1.</strong> Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen5/resources/field/bw_b2w2-maps.html"><strong aria-hidden="true">5.1.1.</strong> Maps</a></li><li class="chapter-item "><a href="../../../../gen5/resources/field/bw_b2w2-zone_entities.html"><strong aria-hidden="true">5.1.2.</strong> Zone Entities</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">5.2.</strong> Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../gen5/resources/field/b2w2-area_data.html"><strong aria-hidden="true">5.2.1.</strong> Area Data</a></li><li class="chapter-item "><a href="../../../../gen5/resources/field/bw_b2w2-maps.html"><strong aria-hidden="true">5.2.2.</strong> Maps</a></li><li class="chapter-item "><a href="../../../../gen5/resources/field/bw_b2w2-zone_entities.html"><strong aria-hidden="true">5.2.3.</strong> Zone Entities</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Universal</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/nitro_overview.html"><strong aria-hidden="true">6.1.</strong> Nitro File Format Documentation</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/file_system/file_narc.html"><strong aria-hidden="true">6.2.</strong> Nintendo Archive (NARC)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/file_system/section_fatb.html"><strong aria-hidden="true">6.2.1.</strong> File Allocation Table (FATB)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/file_system/section_fntb.html"><strong aria-hidden="true">6.2.2.</strong> File Name Table (FNTB)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/file_system/section_fimg.html"><strong aria-hidden="true">6.2.3.</strong> File Image (FIMG)</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.3.</strong> G2D</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/file_nanr.html"><strong aria-hidden="true">6.3.1.</strong> Nitro Animation Runtime (NANR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_abnk.html"><strong aria-hidden="true">6.3.1.1.</strong> Animation Bank (ABNK)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_labl.html"><strong aria-hidden="true">6.3.1.2.</strong> Label (LABL)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_uext.html"><strong aria-hidden="true">6.3.1.3.</strong> User Extension (UEXT)</a></li></ol></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/file_nclr.html"><strong aria-hidden="true">6.3.2.</strong> Nitro Color Runtime (NCLR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_pltt.html"><strong aria-hidden="true">6.3.2.1.</strong> Palette (PLTT)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_pcmp.html"><strong aria-hidden="true">6.3.2.2.</strong> Palette Count Map (PCMP)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../../universal/resources/nitro/graphics_2d/file_ncer.html"><strong aria-hidden="true">6.3.3.</strong> Nitro Cell Runtime (NCER)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../../universal/resources/nitro/graphics_2d/section_cebk.html" class="active"><strong aria-hidden="true">6.3.3.1.</strong> Cell Bank (CEBK)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_labl.html"><strong aria-hidden="true">6.3.3.2.</strong> Label (LABL)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_uext.html"><strong aria-hidden="true">6.3.3.3.</strong> User Extension (UEXT)</a></li></ol></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/file_ncgr.html"><strong aria-hidden="true">6.3.4.</strong> Nitro Graphics Runtime (NCGR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_char.html"><strong aria-hidden="true">6.3.4.1.</strong> Character (CHAR)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_cpos.html"><strong aria-hidden="true">6.3.4.2.</strong> Character Position (CPOS)</a></li></ol></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/file_nmar.html"><strong aria-hidden="true">6.3.5.</strong> Nitro Multicell Animation Runtime (NMAR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_abnk.html"><strong aria-hidden="true">6.3.5.1.</strong> Animation Bank (ABNK)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_labl.html"><strong aria-hidden="true">6.3.5.2.</strong> Label (LABL)</a></li></ol></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/file_nmcr.html"><strong aria-hidden="true">6.3.6.</strong> Nitro Multicell Runtime (NMCR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_mcbk.html"><strong aria-hidden="true">6.3.6.1.</strong> Multicell Bank (MCBK)</a></li></ol></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/file_nscr.html"><strong aria-hidden="true">6.3.7.</strong> Nitro Screen Runtime (NSCR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_2d/section_scrn.html"><strong aria-hidden="true">6.3.7.1.</strong> Screen (SCRN)</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">6.4.</strong> G3D</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_3d/file_bta0.html"><strong aria-hidden="true">6.4.1.</strong> Nitro System Binary Texture Animation (NSBTA)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_3d/file_bmd0.html"><strong aria-hidden="true">6.4.2.</strong> Nitro System Binary Model (NSBMD)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_3d/file_btx0.html"><strong aria-hidden="true">6.4.3.</strong> Nitro System Binary Texture (NSBTX)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_3d/file_btp0.html"><strong aria-hidden="true">6.4.4.</strong> Nitro System Binary Texture Pattern (NSBTP)</a></li><li class="chapter-item "><a href="../../../../universal/resources/nitro/graphics_3d/file_bca0.html"><strong aria-hidden="true">6.4.5.</strong> Nitro System Binary Character Skeleton Animation (NSBCA)</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">6.5.</strong> Sound</div></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Kingdom of DS Hacking</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="cebk-kbec---cell-bank"><a class="header" href="#cebk-kbec---cell-bank">CEBK (&quot;KBEC&quot;) - Cell Bank</a></h1>
+<blockquote>
+<p>Author(s): <a href="https://github.com/Gonhex">Gonhex</a> <br />
+Research: <a href="https://problemkaputt.de">NOCASH</a>, <a href="https://github.com/Gonhex">Gonhex</a></p>
+</blockquote>
+<pre><code class="language-mermaid">flowchart BT;
+    NCER(N. Cell R.)--&gt;G2D(Graphics 2D);
+    CEBK(Cell Bank)--&gt;NCER;
+</code></pre>
+<p>The cell bank creates a number of cells by combining tiles and selecting a palette for each cell. It usually operates on dimensionless (1D mapped) character graphics and is used in combination with the animation runtime to display dynamic objects.</p>
+<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
+<ul>
+<li><a href="#data-structure">Data Structure</a>
+<ul>
+<li><a href="#section-container">Section Container</a></li>
+<li><a href="#cebk-container">CEBK Container</a></li>
+<li><a href="#cell">Cell</a></li>
+<li><a href="#object-attributes">Object Attributes</a></li>
+</ul>
+</li>
+<li><a href="#specification">Specification</a>
+<ul>
+<li><a href="#dimension-keys">Dimension Keys</a></li>
+<li><a href="#files">Files</a></li>
+</ul>
+</li>
+<li><a href="#todo">TODO</a></li>
+</ul>
+<hr />
+<h2 id="data-structure"><a class="header" href="#data-structure">Data Structure</a></h2>
+<h3 id="section-container"><a class="header" href="#section-container">Section Container</a></h3>
+<pre><code class="language-c">struct ContainerSectionCEBK
+{
+    /* 0x0    */ struct NitroSectionHeader sectionHeader;
+    /* 0x8    */ struct ContainerCEBK sectionData;
+    /* append */ uint8_t paddingDWORD[?];
+}; // entry size = sectionHeader.lengthSection
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Field Name</th><th>Description</th><th>Data Type</th></tr></thead><tbody>
+<tr><td>sectionHeader</td><td>Header of this section. <code>sectionHeader.signature = &quot;KBEC&quot;</code>.</td><td><a href="../nitro_overview.html#nitro-section-header">NitroSectionHeader</a></td></tr>
+<tr><td>sectionData</td><td>Content of this section.</td><td><a href="#cebk-container">ContainerCEBK</a></td></tr>
+<tr><td>paddingDWORD</td><td>Padding for DWORD alignment, if <a href="section_labl.html">LABL-section</a> follows.</td><td>uint8_t[]</td></tr>
+</tbody></table>
+</div>
+<h3 id="cebk-container"><a class="header" href="#cebk-container">CEBK Container</a></h3>
+<pre><code class="language-c">struct ContainerCEBK
+{
+    // header
+    /* 0x00 */ uint16_t numberCells;
+    /* 0x02 */ uint16_t useBounds;      // rename?
+    /* 0x04 */ uint32_t offsetDataCell;
+    /* 0x08 */ uint32_t sizeBoundary;
+    /* 0x0C */ uint32_t unknown0;
+    /* 0x10 */ uint32_t unknown1;
+    /* 0x14 */ uint32_t unknown2;
+    
+    // data
+    /* offsetDataCell */ struct Cell dataCell[numberCells];
+    /* offsetDataCell + numberCells * (8 &lt;&lt; useBounds) */ struct ObjectAttribute dataAttributes[?];
+}; // entry size = sectionHeader.lengthSection - 0x8
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Field Name</th><th>Description</th><th>Data Type</th></tr></thead><tbody>
+<tr><td>numberCells</td><td>Number of cells.</td><td>uint16_t</td></tr>
+<tr><td>useBounds</td><td>Extended <a href="#cell">cell struct</a>, if <code>== 1</code>.</td><td>uint16_t</td></tr>
+<tr><td>offsetDataCell</td><td>Offset to the cell table data section relative to <code>ContainerCEBK</code>.</td><td>uint32_t</td></tr>
+<tr><td>sizeBoundary</td><td>Size boundary, <code>result = sizeBoundary &lt;&lt; 6</code>.</td><td>uint32_t</td></tr>
+<tr><td>unknown0</td><td>Unused offset?</td><td>uint32_t</td></tr>
+<tr><td>unknown1</td><td>Unused offset?</td><td>uint32_t</td></tr>
+<tr><td>unknown2</td><td>Unused offset?</td><td>uint32_t</td></tr>
+<tr><td>dataCell</td><td>Cell configuration table.</td><td><a href="#cell">Cell[]</a></td></tr>
+<tr><td>dataAttributes</td><td>Object attributes.</td><td><a href="#object-attributes">ObjectAttribute[]</a></td></tr>
+</tbody></table>
+</div>
+<h3 id="cell"><a class="header" href="#cell">Cell</a></h3>
+<pre><code class="language-c">struct Cell
+{
+    // header
+    /* 0x0 */ uint16_t numberObjects;
+    /* 0x2 */ uint8_t unknown0;
+    /* 0x3 */ uint8_t unknown1;
+    /* 0x4 */ uint32_t offsetObject;
+// }; // entry size = 0x8, if useBounds == 0
+    
+    // optional. Are they redundant even if used?
+    /* 0x8 */ int16_t boundRight;
+    /* 0xA */ int16_t boundBottom;
+    /* 0xC */ int16_t boundLeft;
+    /* 0xE */ int16_t boundTop;
+}; // entry size = 0x10, if useBounds == 1
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Field Name</th><th>Description</th><th>Data Type</th></tr></thead><tbody>
+<tr><td>numberObjects</td><td>Number of objects building this cell.</td><td>uint16_t</td></tr>
+<tr><td>unknown0</td><td>What is this?</td><td>uint8_t</td></tr>
+<tr><td>unknown1</td><td>What is this?</td><td>uint8_t</td></tr>
+<tr><td>offsetObject</td><td>Offset within object attribute data.</td><td>uint32_t</td></tr>
+<tr><td>boundRight</td><td>Right border of the cell.</td><td>int16_t</td></tr>
+<tr><td>boundBottom</td><td>Bottom border of the cell.</td><td>int16_t</td></tr>
+<tr><td>boundLeft</td><td>Left border of the cell.</td><td>int16_t</td></tr>
+<tr><td>boundTop</td><td>Top border of the cell.</td><td>int16_t</td></tr>
+</tbody></table>
+</div>
+<h3 id="object-attributes"><a class="header" href="#object-attributes">Object Attributes</a></h3>
+<pre><code class="language-c">struct ObjectAttribute
+{
+    /* 0x0 */ uint16_t positionY : 8;          // 0b00000000'11111111
+              uint16_t transformable : 1;      // 0b00000001'00000000
+              uint16_t doubleSized : 1;        // 0b00000010'00000000
+              uint16_t objectMode : 2;         // 0b00001100'00000000
+              uint16_t mosaic : 1;             // 0b00010000'00000000
+              uint16_t paletteMode : 1;        // 0b00100000'00000000
+              uint16_t keyShape : 2;           // 0b11000000'00000000
+    
+    /* 0x2 */ uint16_t positionX : 9;          // 0b00000001'11111111
+              uint16_t transformParameter : 3; // 0b00001110'00000000
+              uint16_t horizontalFlip : 1;     // 0b00010000'00000000
+              uint16_t verticalFlip : 1;       // 0b00100000'00000000
+              uint16_t keySize : 2;            // 0b11000000'00000000
+    
+    /* 0x4 */ uint16_t tileIndex : 10;         // 0b00000011'11111111
+              uint16_t priority : 2;           // 0b00001100'00000000
+              uint16_t paletteIndex : 4;       // 0b11110000'00000000
+}; // entry size = 0x6
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Field Name</th><th>Description</th><th>Data Type</th></tr></thead><tbody>
+<tr><td>positionY</td><td>Y position, cast to a signed value.</td><td>uint16_t : 8</td></tr>
+<tr><td>transformable</td><td>Enable flag for affine transformations.</td><td>uint16_t : 1</td></tr>
+<tr><td>doubleSized</td><td>Double the size transformable. Not displayed if this flag is used without transformable.</td><td>uint16_t : 1</td></tr>
+<tr><td>objectMode</td><td><code>0</code> = normal, <code>1</code> = semi-transparent, <code>2</code> = OBJ window, <code>3</code> is not allowed.</td><td>uint16_t : 2</td></tr>
+<tr><td>mosaic</td><td>Enable mosaic.</td><td>uint16_t : 1</td></tr>
+<tr><td>paletteMode</td><td>Select type of the palette. <code>0</code>= 16 colors, <code>1</code> = 256 colors per palette.</td><td>uint16_t : 1</td></tr>
+<tr><td>keyShape</td><td>Shape: <code>0</code> = square, <code>1</code> = horizontal, <code>2</code> = vertical, <code>3</code> is not allowed. See <a href="#dimension-keys">Dimension Keys</a>.</td><td>uint16_t : 2</td></tr>
+<tr><td>positionX</td><td>X position, cast to a signed value.</td><td>uint16_t : 9</td></tr>
+<tr><td>transformParameter</td><td>(TODO) Currently not documented here. Read about it on <a href="https://problemkaputt.de/gbatek.htm#lcdobjoamattributes">GBATEK</a>.</td><td>uint16_t : 3</td></tr>
+<tr><td>horizontalFlip</td><td>Flip horizontally, if enabled.</td><td>uint16_t : 1</td></tr>
+<tr><td>verticalFlip</td><td>Flip vertically, if enabled.</td><td>uint16_t : 1</td></tr>
+<tr><td>keySize</td><td>Used to get the size of the OAM cell, see <a href="#dimension-keys">Dimension Keys</a>.</td><td>uint16_t : 2</td></tr>
+<tr><td>tileIndex</td><td>Index of the tile selecten from the <a href="file_ncgr.html">character graphic</a>.</td><td>uint16_t : 10</td></tr>
+<tr><td>priority</td><td>Display priority if overlapping. Lower value = higher priority.</td><td>uint16_t : 2</td></tr>
+<tr><td>paletteIndex</td><td>Index of the palette used for this OAM cell.</td><td>uint16_t : 4</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="specification"><a class="header" href="#specification">Specification</a></h2>
+<h3 id="dimension-keys"><a class="header" href="#dimension-keys">Dimension Keys</a></h3>
+<p>The width and height of an object isn't defined directly. Instead it uses key values, which allow to reconstruct the size. For example if <code>keyShape == 0</code>, the cell will be a square which size depends on <code>keySize</code>. The dimenions can be converted using lookup tables.</p>
+<h4 id="read-dimensions"><a class="header" href="#read-dimensions">Read dimensions</a></h4>
+<pre><code class="language-c">const uint16_t tableSizeInTiles[4][4] = // [keyShape][keySize]
+{
+    { 1, 2, 4, 8 },
+    { 2, 4, 4, 8 },
+    { 1, 1, 2, 4 },
+    { 1, 2, 4, 8 } // copy of row 0 for reversed index (3 - shape)
+};
+
+uint16_t getWidthInTiles()
+{
+    return tableSizeInTiles[keyShape][keySize];
+}
+
+uint16_t getHeightInTiles()
+{
+    return tableSizeInTiles[3 - keyShape][keySize];
+}
+</code></pre>
+<h4 id="write-dimensions"><a class="header" href="#write-dimensions">Write dimensions</a></h4>
+<pre><code class="language-c">const uint16_t tableShape[4][4] = // [width][height]
+{   //h1 h2 h4 h8
+    { 0, 2, 2, 0 },//w1
+    { 1, 0, 2, 0 },//w2
+    { 1, 1, 0, 2 },//w4
+    { 0, 0, 1, 0 } //w8
+};
+
+const uint16_t tableSize[4][4] = // [width][height]
+{   //h1 h2 h4 h8
+    { 0, 0, 1, 0 },//w1
+    { 0, 1, 2, 0 },//w2
+    { 1, 2, 2, 3 },//w4
+    { 0, 0, 3, 3 } //w8
+};
+
+void setSizeInTiles(uint16_t widthInTiles, uint16_t heightInTiles)
+{
+    const uint16_t width = (widthInTiles &gt;= 8) ? 3 : (widthInTiles &gt;&gt; 1);
+    const uint16_t height = (heightInTiles &gt;= 8) ? 3 : (heightInTiles &gt;&gt; 1);
+    
+    keySize = tableSize[width][height];
+    keyShape = tableShape[width][height];
+}
+</code></pre>
+<h3 id="files"><a class="header" href="#files">Files</a></h3>
+<ul>
+<li><a href="file_ncer.html">Nitro Cell Runtime</a></li>
+</ul>
+<hr />
+<h2 id="todo"><a class="header" href="#todo">TODO</a></h2>
+<ul>
+<li>Document the <a href="#object-attributes">transform parameters</a>. <code>transformParameter</code> may also need to be fused with <code>horizontalFlip</code> and <code>verticalFlip</code>, from <code>uint16_t : 3</code> to <code>uint16_t : 5</code>.</li>
+<li>Research <code>unknown0</code> and <code>unknown1</code> in <a href="#cell">cell</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../../universal/resources/nitro/graphics_2d/file_ncer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../../../universal/resources/nitro/graphics_2d/section_labl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../../universal/resources/nitro/graphics_2d/file_ncer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../../../universal/resources/nitro/graphics_2d/section_labl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../../elasticlunr.min.js"></script>
+        <script src="../../../../mark.min.js"></script>
+        <script src="../../../../searcher.js"></script>
+
+        <script src="../../../../clipboard.min.js"></script>
+        <script src="../../../../highlight.js"></script>
+        <script src="../../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
