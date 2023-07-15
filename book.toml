@@ -23,6 +23,9 @@ copy-js = true           # include Javascript code for search
 
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
+renderer = ["html"]
 
 [output.html]
 no-section-label = true
+additional-css = ["mermaid.css"]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
