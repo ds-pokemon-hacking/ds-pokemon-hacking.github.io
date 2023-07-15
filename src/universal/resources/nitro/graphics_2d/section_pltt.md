@@ -17,6 +17,7 @@ The palette section holds a table with all colors used in the sprite(s). The col
   * [Color RGB5](#color-rgb5)
 * [Specification](#specification)
   * [Palette Dimension Configuration](#palette-dimension-configuration)
+  * [Files](#files)
 
 ---
 ## Data Structure
@@ -97,3 +98,6 @@ enum DimensionPalette : uint64_t
 };
 ```
 This serves as a lookup table with four possible values. The number of colors per palette is set to either 16 or 256. The number of palettes can be limited to a lower value by the [count map](section_pcmp.md), if it is set to 16.
+
+### Files
+* [Nitro Color Runtime](file_nclr.md)

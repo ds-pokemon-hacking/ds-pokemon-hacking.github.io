@@ -1,4 +1,4 @@
-# NCLR ("RLCN") - Nitro Color Resource
+# NCLR ("RLCN") - Nitro Color Runtime
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: (see sections)
 
@@ -8,7 +8,7 @@ flowchart BT;
     PLTT(Palette)-->NCLR;
     PCMP(Palette Count Map)-.->NCLR;
 ```
-The color resource serves as base for all other 2D graphics components. It provides color palettes which are accessed via indexing. The count map (PCMP) is optional and sometimes used to limit the number of individual palettes. One palette can have either 16 or 256 colors. The number of colors is the same in all palettes of one file. 
+The color runtime serves as base for all other 2D graphics components. It provides color palettes which are accessed via indexing. The count map (PCMP) is optional and sometimes used to limit the number of individual palettes. One palette can have either 16 or 256 colors. The number of colors is the same in all palettes of one file. 
 
 ## Table of Contents
 * [Data Structure](#data-structure)
