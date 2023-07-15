@@ -42,8 +42,7 @@
     - [Area Data](gen5/resources/field/b2w2-area_data.md)
     - [Maps](gen5/resources/field/bw_b2w2-maps.md)
     - [Zone Entities](gen5/resources/field/bw_b2w2-zone_entities.md)
-   
--  [Nitro](universal/resources/nitro/nitro_overview.md)
+- [Nitro](universal/resources/nitro/nitro_overview.md)
   - [Nitro Archive (NARC)](universal/resources/nitro/file_system/file_narc.md)
     - [File Allocation Table (FATB)](universal/resources/nitro/file_system/section_fatb.md)
     - [File Name Table (FNTB)](universal/resources/nitro/file_system/section_fntb.md)
