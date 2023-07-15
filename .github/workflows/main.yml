@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Setup mdBook
-      - uses: jontze/action-mdbook@v2
+        uses: jontze/action-mdbook@v2
         with:
           token: ${{secrets.GITHUB_TOKEN}}
           use-linkcheck: true
