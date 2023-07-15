@@ -1,6 +1,6 @@
 # Home
 
-[Home](SUMMARY.md)
+[Home](README.md)
 
 # Guides
 
