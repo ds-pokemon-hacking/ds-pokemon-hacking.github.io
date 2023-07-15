@@ -1,0 +1,471 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>NCER Sprite Editing - Kingdom of DS Hacking</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../../index.html">Home</a></li><li class="chapter-item affix "><li class="part-title">Guides</li><li class="chapter-item "><div><strong aria-hidden="true">1.</strong> Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">1.1.</strong> Diamond and Pearl</div></li><li class="chapter-item "><div><strong aria-hidden="true">1.2.</strong> Platinum</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-pokemarts.html"><strong aria-hidden="true">1.2.1.</strong> Adding New Poké Marts</a></li><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-script_weather.html"><strong aria-hidden="true">1.2.2.</strong> Setting the Weather from a Script</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">1.3.</strong> Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-pokemarts.html"><strong aria-hidden="true">1.3.1.</strong> Adding New Poké Marts</a></li><li class="chapter-item "><a href="../../../gen4/guides/interface/hgss-town_map.html"><strong aria-hidden="true">1.3.2.</strong> Editing the Town Map</a></li><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-script_weather.html"><strong aria-hidden="true">1.3.3.</strong> Setting the Weather from a Script</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.</strong> Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">2.1.</strong> Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen5/guides/misc/bw_b2w2-code_injection.html"><strong aria-hidden="true">2.1.1.</strong> Code Injection</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen5/guides/misc/bw_b2w2-code_injection.html"><strong aria-hidden="true">2.2.1.</strong> Code Injection</a></li><li class="chapter-item "><a href="../../../gen5/guides/misc/b2w2-fairy.html"><strong aria-hidden="true">2.2.2.</strong> Fairy Type Insertion</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> Universal</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/guides/code_injection/code_injection.html"><strong aria-hidden="true">3.1.</strong> Code Injection</a></li><li class="chapter-item "><a href="../../../universal/guides/sprite_indexing/indexing.html"><strong aria-hidden="true">3.2.</strong> Sprite Indexing</a></li><li class="chapter-item expanded "><a href="../../../universal/guides/ncer_sprite_editing/ncer_sprite_editing.html" class="active"><strong aria-hidden="true">3.3.</strong> NCER Sprite Editing</a></li></ol></li><li class="chapter-item "><li class="part-title">Resources</li><li class="chapter-item "><div><strong aria-hidden="true">4.</strong> Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">4.1.</strong> Diamond and Pearl</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.2.</strong> Platinum</div></li><li class="chapter-item "><div><strong aria-hidden="true">4.3.</strong> Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen4/resources/interface/hgss-town_map_spots.html"><strong aria-hidden="true">4.3.1.</strong> Town Map Structures</a></li></ol></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">5.</strong> Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div><strong aria-hidden="true">5.1.</strong> Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen5/resources/field/bw_b2w2-maps.html"><strong aria-hidden="true">5.1.1.</strong> Maps</a></li><li class="chapter-item "><a href="../../../gen5/resources/field/bw_b2w2-zone_entities.html"><strong aria-hidden="true">5.1.2.</strong> Zone Entities</a></li></ol></li><li class="chapter-item "><div><strong aria-hidden="true">5.2.</strong> Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen5/resources/field/b2w2-area_data.html"><strong aria-hidden="true">5.2.1.</strong> Area Data</a></li><li class="chapter-item "><a href="../../../gen5/resources/field/bw_b2w2-maps.html"><strong aria-hidden="true">5.2.2.</strong> Maps</a></li><li class="chapter-item "><a href="../../../gen5/resources/field/bw_b2w2-zone_entities.html"><strong aria-hidden="true">5.2.3.</strong> Zone Entities</a></li></ol></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Kingdom of DS Hacking</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <style>
+	/* 	'main' to only affect page content
+		rounded edges */
+	main img, main blockquote, main code, main iframe {
+		border-radius: 5px;
+	}
+
+	main summary{
+		cursor: pointer;
+	}
+
+	main img{
+		background-color: rgba(1,1,1,.1);
+	}
+	
+	/* Site Cards */
+	.card{
+		border-left: 4px solid var(--card-color);
+		border-radius: 5px;
+		padding: 1em;
+		margin: 1em 0;
+		background-color: rgba(1,1,1,.2);
+		max-width: 480px;
+	}
+	.video-responsive{
+		margin-top:1em;
+		overflow:hidden;
+		border-radius: 5px;
+		padding-bottom:56.25%;
+		position:relative;
+		height:0;
+	}
+	.video-responsive iframe{
+		left:0;
+		top:0;
+		height:100%;
+		width:100%;
+		position:absolute;
+	}
+
+	/* Lists */
+	main hr {
+		border: 1px solid white;
+		opacity: .125;
+	}
+
+	main ol {
+		list-style: none;
+		counter-reset: num;
+	}
+	main ol li {
+		counter-increment: num;
+	}
+	main ol li::before {
+		content: counter(num) ". ";
+		font-weight: bold;
+		float: left;
+		margin-left: -1.5em;
+		padding-right: .25em;
+	}
+</style>
+<h1 id="editing-a-ncer-file"><a class="header" href="#editing-a-ncer-file">Editing a NCER file</a></h1>
+<blockquote>
+<p>This guide was written by <a href="">Jay</a> and formatted for this wiki by <a href="">Sunnhild</a>.</p>
+</blockquote>
+<p>Editing trainer sprites without patterns <em>(Aka: An apology letter from Jay-san about Tutorial Episode 2)</em></p>
+<blockquote>
+<details>
+<summary style="margin:.5em 0em;">🎥 Video version</summary>
+<hr>
+<div class="card" style="--card-color: red"><a href="https://www.youtube.com/watch?v=kZW9LTiAfrY"><strong>Pokemon DS Rom Editing Tutorial Pt 2.5: Easier Editing w/ RECN Files (Aka: NCER)</strong></a><div class="video-responsive"><iframe type="text/html" width="480" height="270" src="http://www.youtube.com/embed/kZW9LTiAfrY" frameborder="0" title="Jay-San: Pokemon DS Rom Editing Tutorial Pt 2.5: Easier Editing w/ NCER Files (Aka: NCER)" allowfullscreen></iframe></div></div>
+</details>
+</blockquote>
+<hr />
+<h2 id="-table-of-contents"><a class="header" href="#-table-of-contents">📌 Table of Contents</a></h2>
+<ul>
+<li><a href="#-intro">📋 Intro</a></li>
+<li><a href="#-getting-tinke-092">💾 Getting Tinke 0.9.2:</a></li>
+<li><a href="#-editing-your-sprite">🛠️ Editing your sprite:</a></li>
+</ul>
+<h2 id="-intro"><a class="header" href="#-intro">📋 Intro</a></h2>
+<p>  Hello! You are seeing this as you’ve most likely seen my video on editing the RGCN trainer sprites with the colored pattern I shared. While this method technically still works, I came up with it before I was more experienced in rom hacking and admittedly is just a little inefficient. It turns out that <strong>ONLY</strong> if you use a certain version of Tinke, you can edit an NCER “cell” file that is a complete image instead of having to split the sprite into pieces. Which will hopefully be far simpler to edit sprites with.</p>
+<h2 id="-getting-tinke-092"><a class="header" href="#-getting-tinke-092">💾 Getting Tinke 0.9.2:</a></h2>
+<blockquote>
+<p><strong>⚠️ (IMPORTANT: This method will not work on Tinke 0.9.0 or older versions. Be sure to get the version below if you don’t have it already.)</strong></p>
+</blockquote>
+<ol>
+<li>
+<p>First of all, here is the version of TInke you’ll want to use. It’s a copy stored in the google drive owned by the hacking server:</p>
+<p><a href="https://drive.google.com/file/d/1lNMtiqKPoQigTExe-2eL7CFJApOaWX8q/view?usp=sharing">https://drive.google.com/file/d/1lNMtiqKPoQigTExe-2eL7CFJApOaWX8q/view?usp=sharing</a></p>
+</li>
+<li>
+<p>You want to use the download button in the upper right to download it</p>
+<p><a href="resources/tinke_download.png"><img src="resources/tinke_download.png" alt="Tinke download image" /></a></p>
+</li>
+<li>
+<p>Once you’ve downloaded the zip file, be sure to extract the contents into the folder of your choice.</p>
+</li>
+</ol>
+<h2 id="-editing-your-sprite"><a class="header" href="#-editing-your-sprite">🛠️ Editing your sprite:</a></h2>
+<ol>
+<li>
+<p>Once you have an extracted copy of Tinke 0.9.2 folder ready to use, you want to click the Tinke launcher.</p>
+<p><a href="resources/tinke_launcher.png"><img src="resources/tinke_launcher.png" alt="Tinke Launcher" /></a></p>
+<blockquote>
+<details>
+<summary style="margin:.5em 0em;">⚠️ If you get an error</summary>
+<hr>
+A few people have gotten the error below when opening Tinke 0.9.2 specifically.
+<p><a href="resources/tinke092_error.png"><img src="resources/tinke092_error.png" alt="Tinke 0.9.2 error" /></a></p>
+<p>This seems to be related to their computer putting a block on the Tinke files. If you see this error you should:</p>
+<ol>
+<li>
+<p>Delete the Tinke folder you just made.</p>
+</li>
+<li>
+<p>Locate the zip file you downloaded from the link above.</p>
+</li>
+<li>
+<p>Right click it and select Properties.</p>
+</li>
+<li>
+<p>If you see an “Unblock” checkbox like the one circled below, uncheck it and click OK.</p>
+<p><a href="resources/unblock_tinke_properties.png"><img src="resources/unblock_tinke_properties.png" alt="Unblock Tinke in properties" /></a></p>
+</li>
+<li>
+<p>Then extract your zip file again to make a new Tinke Folder, and try to open Tinke to see if the error is fixed.</p>
+</li>
+</ol>
+<blockquote style="padding:1em;background-color:rgba(242,245,255,.075);"><strong>📝 Note: If the error continues please let us know in Discord.</strong></blockquote>
+</details>
+</blockquote>
+</li>
+<li>
+<p>Then a window will open where you can browse to the rom you want to edit and open it.</p>
+</li>
+<li>
+<p>Browse the rom files and expand the narc that holds the sprite you are looking for. </p>
+<blockquote>
+<p>💡 If you want any help locating certain sprites in your nds pokemon rom, check out this narc list we wrote <a href="https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU">HERE</a>. <!-- TODO add list of known sprite location ressource --></p>
+</blockquote>
+<p>Anyway, for my example I am going to edit the male player’s ball throw sprite in platinum. Which is located at the file path <code>poketool / trga / trbgra</code>. Where I’ll click <code>trbgra.narc</code> and click <strong>Unpack</strong> to see its contents.</p>
+<p><a href="resources/tinke_unpack.png"><img src="resources/tinke_unpack.png" alt="Tinke unpack trbgra.narc" /></a></p>
+<p>And are these files here.</p>
+<p><a href="resources/tinke_files.png"><img src="resources/tinke_files.png" alt="Files you will edit with Tinke" /></a></p>
+</li>
+<li>
+<p>First I need to double click file <code>trbgra_1.RLCN</code>, which is the palette.</p>
+</li>
+<li>
+<p>Then I click <code>trbgra_0.RGCN</code> and click <strong>“View”</strong>. This brings up the puzzle-like RGCN file you may have seen me talk about in my video.</p>
+<p><a href="resources/puzzle_rgcn_tinke.png"><img src="resources/puzzle_rgcn_tinke.png" alt="Puzzle-like RGCN preview in Tinke" /></a></p>
+</li>
+<li>
+<p>Now we go one step further by clicking <code>trbgra_2.NCER</code> and then clicking <strong>View</strong> again. This opens the “Cell” file where you can see the sprite as a complete image. If you scroll through the “Bank” circled picklist below you will jump between the different frames of this animated sprite. Our goal is to replace each of these frames with a matching edited version of the sprite you want to use.</p>
+<p><a href="resources/cell_bank_tinke.png"><img src="resources/cell_bank_tinke.png" alt="Cell bank complete image in Tinke" /></a></p>
+</li>
+<li>
+<p><a name="7"></a> Before working with the NCER file, it is very important that you first <strong>uncheck</strong> the “Transparency” checkbox as shown below. This will get the background color to show up. Which is important for both export and importing the frames in the next steps.</p>
+<p><a href="resources/uncheck_transparency_tinke.png"><img src="resources/uncheck_transparency_tinke.png" alt="Uncheck transparency box in Tinke" /></a></p>
+<blockquote>
+<details>
+<summary style="margin:.5em 0em;"><strong>💡(Optional)</strong> Exporting frames</summary>
+<hr>
+If you want, you can export each of the frames of this sprite as png images by scrolling to each of them in the “Bank” picklist and clicking <strong>Export</strong> for each one. Then you could use them as references when making your own edited frames that you want to insert in the next step. However if you already have the edited frames you want, you can skip this step.
+<p><a href="resources/export_frames_tinke.png"><img src="resources/export_frames_tinke.png" alt="Export frames in Tinke" /></a></p>
+<p>When you export a frame it will look like the example below. Where the frame is a tiny box in the center of a large transparent image. You want to make sure the background is displaying like my example below, by following <a href="#7">step 7</a>.</p>
+<p>The area covered by the background is your drawable area, but you still want to make sure your edited frame keeps the same large transparent border around it like my example in the next step. </p>
+<p><a href="resources/exported_frame_tinke.png"><img src="resources/exported_frame_tinke.png" alt="Exported frame" /></a> </p>
+</details>
+</blockquote>
+</li>
+<li>
+<p>Once you are done you want your edited frames to look like my example below. Then you’ll need to repeat this process for each of the frames that this sprite uses. Like for the Platinum ball throw sprite, I’ll need to make 8 frames.</p>
+<p><a href="resources/edited_frame.png"><img src="resources/edited_frame.png" alt="Edited frame" /></a></p>
+</li>
+<li>
+<p>Once all your frames are ready, you want to scroll the “Bank” picklist to the first frame you want to replace. Normally people just start with the first frame. However if there are any colors that are not being shown on the first frame, you want to switch to a frame that displays all the colors your sprite uses. </p>
+<blockquote>
+<p>💡 For example if your character has a yellow emblem on their shirt that’s not showing until after they throw the pokeball and their chest turns towards the camera. So you’d want to pick any later frame that shows the colors used by that emblem, if those colors aren’t shown on the earlier frames already.</p>
+</blockquote>
+</li>
+<li>
+<p><a name="10"></a> Once you’ve selected the best first frame, next change the “Palette Import Option” to <strong>Replace Palette</strong>. Use the Import button to import your edited frame that matches the one that Tinke is displaying. Since you picked “Replace Palette”, this will replace the colors in the related palette with all the colors of your sprite. So in my example, this would change the colors on <code>trbgra_1.RLCN</code>.</p>
+<p>This is why it was so important to find the right frame that showed all of your colors in <a href="#10">step 10</a>. To make sure all colors were added into the new palette. All 8 of the frames that the ball throw sprite I am editing will pull their colors from <code>trbgra_1.RLCN</code>. So if I pick a first frame that is missing colors that the others need, those other frames will have those colors removed when you import them.</p>
+<p><a href="resources/tinke_palette_import.png"><img src="resources/tinke_palette_import.png" alt="Palette import button in Tinke" /></a></p>
+<blockquote>
+<details>
+<summary style="margin:.5em 0em;">💡 If you have trouble getting the right colors into your palette</summary>
+<hr>
+You can use <strong>Console Tool</strong> to set the colors manually. Then you can import all frames just using “Swap to Original Palette” instead. You can learn about how to do so with this video:
+<div class="card" style="--card-color: red"><a href="https://www.youtube.com/watch?v=ESQjr7OB1pA"><strong>Pokemon DS Rom Editing Tutorial Pt 14: Quick Color Changes with Console Tool</strong></a><div class="video-responsive"><iframe type="text/html" width="480" height="270" src="http://www.youtube.com/embed/ESQjr7OB1pA" frameborder="0" title="Jay-San: Pokemon DS Rom Editing Tutorial Pt 14: Quick Color Changes with Console Tool" allowfullscreen></iframe></div></div>
+</details>
+</blockquote>
+<blockquote>
+<details>
+<a name="fix-1"></a><summary style="margin:.5em 0em;">⚠️ If you have a <strong>glitched spot</strong></summary>
+<hr>
+Now after importing your first frame it’s possible that it looks mostly ok but has a glitched spot like mine below. Worry not, this seems to happen a lot.
+<p><a href="resources/glitched_image_import.png"><img src="resources/glitched_image_import.png" alt="Glitched imported image" /></a></p>
+<p>The fix should be to:</p>
+<ol>
+<li>Change the <strong>Palette Import Option</strong> to “Swap to Original Palette”.</li>
+<li>Import your frame again.</li>
+</ol>
+<p>Since your colors should be correctly inserted into the Palette by <a href="#10">step 10</a>, they are reapplied to the frame automatically. This seems to fix the glitched spot, though we are not certain why this happens.</p>
+<blockquote style="background-color:rgba(242,245,255,.075);margin: 17px 0;"><details>
+<a name="fix-2"></a><summary style="margin:.5em 0em;">⚠️ Possible <strong>follow up issue</strong></summary>
+<hr>
+A follow up issue that can happen after you do the <a href="#fix-1">fix</a> is that some of the colors of the sprite may be missing. Like if you look REALLY close at my sprite below, my pants are transparent. The fix I found is the steps below, but if all the colors on all your sprites look ok you can skip this step.
+<blockquote style="padding:1em;background-color:rgba(242,245,255,.075);">📝 <strong>NOTE:</strong> This is a <strong>newly discovered issue</strong>, so this fix is not widely tested yet. If the steps below give you any trouble let us know in the sprite support channel in the discord and we’ll try to help further. </blockquote>
+<ol>
+<li>
+<p>Type <strong>442</strong> into the Threshold field that is next to the “Pallet Import Options”.
+<em>(<strong>442</strong> is just the <strong>max value</strong> this field can hold)</em></p>
+<p><a href="resources/palette_threshold_fix.png"><img src="resources/palette_threshold_fix.png" alt="Palette threshold value fix" /></a></p>
+</li>
+<li>
+<p>Change the “Pallet Import Option” back to <strong>Replace Palette</strong>.</p>
+</li>
+<li>
+<p><strong>Import</strong> your frame again.</p>
+</li>
+<li>
+<p>You may need to <strong>repeat</strong> the <a href="#fix-1">fix</a> above to fix the glitched area again.</p>
+</li>
+<li>
+<p>The sprite should now look 100% correct!</p>
+</li>
+</ol>
+</details></blockquote>
+</blockquote>
+</li>
+<li>
+<p>Once your first frame is inserted and it looks correct, you want to make sure the “Pallet Import Option” is set to “Swap to Original Palette” and <strong>import</strong> each of the other frames. To do so, you just need to scroll to another frame and click <strong>import</strong>, then scroll to the next frame, and repeat the import until all the frames are replaced.</p>
+<p><a href="resources/tinke_palette_import.png"><img src="resources/tinke_palette_import.png" alt="Palette import button in Tinke" /></a></p>
+</li>
+<li>
+<p>Be sure to look each of the new frames over closely to make sure none of them have any parts that are transparent that shouldn’t be. If you find some missing colors you will want to first try the <a href="#fix-2">fix</a> above, if you haven’t already. Then <strong>reinsert</strong> all your frames again.</p>
+</li>
+<li>
+<p>If all frames look good, then it’s time to <strong>pack</strong> the narc! </p>
+<blockquote>
+<p>💡 if you are not sure how to do this, check out this document <a href="https://docs.google.com/document/d/1nyuRlun9Gm_5lWodBVLZgOwTgU26k8oyfscnPZZSfV8/edit?usp=sharing">HERE</a>.<!-- TODO add how to pack a NARC in ressource --></p>
+</blockquote>
+</li>
+<li>
+<p>Then you should be set to <strong>save</strong> a new rom and test your sprite!</p>
+<p><a href="resources/tinke_save_rom.png"><img src="resources/tinke_save_rom.png" alt="Save rom in Tinke" /></a></p>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../universal/guides/sprite_indexing/indexing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../../gen4/resources/interface/hgss-town_map_spots.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../universal/guides/sprite_indexing/indexing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../../gen4/resources/interface/hgss-town_map_spots.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

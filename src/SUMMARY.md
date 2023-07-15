@@ -24,6 +24,7 @@
 - [Universal]()
   - [Code Injection](universal/guides/code_injection/code_injection.md)
   - [Sprite Indexing](universal/guides/sprite_indexing/indexing.md)
+  - [NCER Sprite Editing](universal/guides/ncer_sprite_editing/ncer_sprite_editing.md)
 
 
 # Resources
