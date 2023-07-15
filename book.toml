@@ -27,5 +27,3 @@ renderer = ["html"]
 
 [output.html]
 no-section-label = true
-additional-css = ["mermaid.css"]
-additional-js = ["mermaid.min.js", "mermaid-init.js"]
