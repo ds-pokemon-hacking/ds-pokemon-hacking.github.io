@@ -16,7 +16,7 @@ In this guide, I look to turn Johto & a little of Kanto into Hoenn.  While the i
 * [Part 2 - Overlay 101 Hex Editing](#part-2---overlay-101-hex-editing)
   * [Red/Gray Map Chunks, Flight Spots](#redgray-map-chunks-flight-spots)
   * [Orange Selection Blocks](#orange-selection-blocks)
-* [Appendix](#appendix)
+  * [ARM9 Exact Flight Positions](#arm9-flight-positions)
 * [TODO](#todo)
 
 ## Prerequisites
@@ -462,6 +462,34 @@ Furthermore, the orange block that shows it is highlighted is located at ``(0x23
 Putting everything together, we can run through the map rather nicely:
 
 ![](resources/hgss-town_map/final_town_map.png) ![](resources/hgss-town_map/final_town_map_1.png) ![](resources/hgss-town_map/final_town_map_2.png) ![](resources/hgss-town_map/final_fly_map.png) ![](resources/hgss-town_map/final_fly_map_1.png) ![](resources/hgss-town_map/final_fly_map_2.png)
+
+### ARM9 Exact Flight Positions
+
+Finally, there is a table that works with the orange selection blocks structure to map both fly positions and whiteout respawn positions.  Research on this thanks to BagBoy on the KoDSH server.
+
+This is in the ARM9 binary at 0xF9E82 (0x020F9E82).  The table has the structure:
+```
+struct FlyRespawnPosition
+{
+    /* 0x00 */ u16 mapHeader;    // map header in dspre for the room you respawn in
+    /* 0x02 */ u8 x;             // global x pos in room
+    /* 0x03 */ u8 y;             // global y pos in room
+    /* 0x04 */ u16 fieldId;      // map header in dspre for the spot you fly to
+    /* 0x06 */ u16 fieldCoordX;  // global x pos in field spot
+    /* 0x08 */ u16 fieldCoordY;  // global y pos in field spot
+    /* 0x0A */ u16 fieldId2;     // duplicate of fieldId
+    /* 0x0C */ u16 fieldCoordX2; // duplicate of fieldCoordX
+    /* 0x0E */ u16 fieldCoordY2; // duplicate of fieldCoordY
+    /* 0x10 */ u8 flySpot;       // flySpot id to correspond with orange selection blocks structure
+    /* 0x11 */ u8 flags;         // only 2 least significant bits are important
+}; // size = 0x12
+```
+Here's an annotated hex dump, skipping the table dump from before:
+```
+come back and worry about this
+```
+
+Note that the first entry is set as the default respawn point at the beginning of the game.  It can be whichever `flySpot`--just needs to be accessed as the first entry.
 
 ## TODO
 - ``flags`` field in ``GearMapTownSelectionOverlay``
