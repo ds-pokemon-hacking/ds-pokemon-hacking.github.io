@@ -467,27 +467,67 @@ Putting everything together, we can run through the map rather nicely:
 
 Finally, there is a table that works with the orange selection blocks structure to map both fly positions and whiteout respawn positions.  Research on this thanks to BagBoy on the KoDSH server.
 
-This is in the ARM9 binary at 0xF9E82 (0x020F9E82).  The table has the structure:
+This is in the ARM9 binary at 0xF9E80 (0x020F9E80).  The table has the structure:
 ```
 struct FlyRespawnPosition
 {
-    /* 0x00 */ u16 mapHeader;    // map header in dspre for the room you respawn in
-    /* 0x02 */ u8 x;             // global x pos in room
-    /* 0x03 */ u8 y;             // global y pos in room
-    /* 0x04 */ u16 fieldId;      // map header in dspre for the spot you fly to
-    /* 0x06 */ u16 fieldCoordX;  // global x pos in field spot
-    /* 0x08 */ u16 fieldCoordY;  // global y pos in field spot
-    /* 0x0A */ u16 fieldId2;     // duplicate of fieldId
-    /* 0x0C */ u16 fieldCoordX2; // duplicate of fieldCoordX
-    /* 0x0E */ u16 fieldCoordY2; // duplicate of fieldCoordY
-    /* 0x10 */ u8 flySpot;       // flySpot id to correspond with orange selection blocks structure
-    /* 0x11 */ u8 flags;         // only 2 least significant bits are important
+    /* 0x00 */ u8 flySpot;       // flySpot id to correspond with orange selection blocks structure
+    /* 0x01 */ u8 flags;         // only 2 least significant bits are important
+    /* 0x02 */ u16 mapHeader;    // map header in dspre for the room you respawn in
+    /* 0x04 */ u8 x;             // global x pos in room
+    /* 0x05 */ u8 y;             // global y pos in room
+    /* 0x06 */ u16 fieldId;      // map header in dspre for the spot you fly to
+    /* 0x08 */ u16 fieldCoordX;  // global x pos in field spot
+    /* 0x0A */ u16 fieldCoordY;  // global y pos in field spot
+    /* 0x0C */ u16 fieldId2;     // duplicate of fieldId
+    /* 0x0E */ u16 fieldCoordX2; // duplicate of fieldCoordX
+    /* 0x10 */ u16 fieldCoordY2; // duplicate of fieldCoordY
 }; // size = 0x12
 ```
 Here's an annotated hex dump, skipping the table dump from before:
 ```
-come back and worry about this
+        flySpot flags mapHeader  x   y   fieldId fieldCoordX fieldCoordY fieldId2 fieldCoordX2 fieldCoordY2
+[0x00]  0B      03    3F 00      06  08  3C 00   B7 02       8D 01       3C 00    B7 02        8D 01 
+[0x01]  0C      03    45 00      08  0D  43 00   34 02       88 01       43 00    34 02        88 01 
+[0x02]  0D      03    9E 00      08  0D  49 00   F1 01       10 01       49 00    F1 01        10 01 
+[0x03]  0E      03    A6 00      08  0D  4A 00   9A 01       CD 01       4A 00    9A 01        CD 01 
+[0x04]  0F      03    EC 00      08  0D  4B 00   BB 00       72 01       4B 00    BB 00        72 01 
+[0x05]  10      03    B9 00      08  0D  4C 00   60 01       71 01       4C 00    60 01        71 01 
+[0x06]  11      03    E2 00      08  0D  4D 00   10 01       02 01       4D 00    10 01        02 01 
+[0x07]  12      03    51 00      08  0D  4E 00   8D 01       B8 00       4E 00    8D 01        B8 00 
+[0x08]  13      03    F6 00      08  0D  57 00   16 02       B8 00       57 00    16 02        B8 00 
+[0x09]  14      02    58 00      08  0D  58 00   18 02       5A 00       58 00    18 02        5A 00 
+[0x0A]  15      03    25 01      08  0D  59 00   A2 02       B1 00       59 00    A2 02        B1 00 
+[0x0B]  16      03    02 02      08  0D  5A 00   34 03       0A 01       5A 00    34 03        0A 01 
+[0x0C]  00      02    31 00      08  0D  31 00   09 04       6C 01       31 00    09 04        6C 01 
+[0x0D]  01      03    F5 01      08  0D  32 00   08 04       07 01       32 00    08 04        07 01 
+[0x0E]  02      03    DB 01      08  0D  33 00   18 04       6B 00       33 00    18 04        6B 00 
+[0x0F]  03      03    AC 01      08  0D  34 00   1D 05       84 00       34 00    1D 05        84 00 
+[0x10]  04      03    B2 01      08  0D  35 00   8A 05       EB 00       35 00    8A 05        EB 00 
+[0x11]  05      03    66 01      08  0D  36 00   11 05       27 01       36 00    11 05        27 01 
+[0x12]  06      03    89 01      08  0D  37 00   CF 04       EE 00       37 00    CF 04        EE 00 
+[0x13]  07      03    E2 01      08  0D  38 00   B9 04       B8 01       38 00    B9 04        B8 01 
+[0x14]  08      02    FC 01      08  0D  39 00   0F 04       F7 01       39 00    0F 04        F7 01 
+[0x15]  09      03    2C 01      06  15  3A 00   90 03       C9 00       3A 00    90 03        C9 00 
+[0x16]  0A      03    97 01      08  0D  3B 00   0E 05       F3 00       3B 00    0E 05        F3 00 
+[0x17]  1E      03    16 02      08  0D  AE 00   52 00       2F 01       AE 00    52 00        2F 01 
+[0x18]  1F      03    10 02      08  0D  9B 01   08 00       0F 00       5E 00    ED 00        0B 01 
+[0x19]  23      00    18 01      08  0D  18 01   2A 00       17 00       27 00    6A 01        0B 01 
+[0x1A]  21      00    2B 01      08  0D  1E 00   8D 03       29 01       1E 00    8D 03        29 01 
+[0x1B]  1B      01    A9 00      08  0D  24 00   D4 01       A3 01       24 00    D4 01        A3 01 
+[0x1C]  24      01    FF 01      08  0D  0B 00   8F 04       6B 00       0B 00    8F 04        6B 00 
+[0x1D]  25      01    D2 01      08  0D  12 00   92 05       A4 00       12 00    92 05        A4 00
 ```
+
+The ``flySpot`` field is the fly spot id that corresponds with the orange selection blocks structure.
+
+The ``flags`` field covers whether or not the entry can be flown to (0x2) or if it's a whiteout spawn (0x1).  Add them together if both.
+
+The ``mapHeader`` field is the inside map to warp to upon whiteout.  This is or'd with 0x100 if it is a whiteout spawn, and 0x200 if it's a flying spawn.
+
+The ``x`` and ``y`` coordinates immediately following this are the global x and y coordinates within the matrix that the ``mapHeader`` is located in.
+
+The ``fieldId`` is the map header at which you spawn when you fly or teleport to the spawn location.  This is duplicated in the ``fieldId2`` field.  The player spawns at the ``fieldCoordX`` and ``fieldCoordY`` fields (which are also duplicated).
 
 Note that the first entry is set as the default respawn point at the beginning of the game.  It can be whichever `flySpot`--just needs to be accessed as the first entry.
 
