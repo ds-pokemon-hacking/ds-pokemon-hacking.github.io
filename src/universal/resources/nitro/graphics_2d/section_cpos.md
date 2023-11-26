@@ -13,6 +13,8 @@ This section does only exist, if the character image has a specified size. The p
 * [Data Structure](#data-structure)
   * [Section Container](#section-container)
   * [CPOS Container](#cpos-container)
+* [Specification](#specification)
+  * [Files](#files)
 
 ---
 ## Data Structure
@@ -35,12 +37,12 @@ struct ContainerSectionCPOS
 struct ContainerCPOS
 {
     // header
-    // ...empty
-    
-    // data
     /* 0x0 */ uint32_t padding0;
     /* 0x4 */ uint16_t widthInTiles;
     /* 0x6 */ uint16_t heightInTiles;
+    
+    // data
+    // ...empty
 }; // entry size = 0x8
 ```
 | Field Name      | Description                                                                                                          | Data Type |
@@ -48,3 +50,9 @@ struct ContainerCPOS
 | padding0        | Always `0`.                                                                                                          | uint32_t  |
 | widthInTiles    | Same as [ContainerCHAR::widthInTiles](section_char.md#char-container) or next higher base-2 value. Size boundaries?  | uint16_t  |
 | heightInTiles   | Same as [ContainerCHAR::heightInTiles](section_char.md#char-container) or next higher base-2 value. Size boundaries? | uint16_t  |
+
+---
+## Specification
+
+### Files
+* [Nitro Character Graphic Runtime](file_ncgr.md)

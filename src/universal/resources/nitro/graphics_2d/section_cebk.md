@@ -7,7 +7,7 @@ flowchart BT;
     NCER(N. Cell R.)-->G2D(Graphics 2D);
     CEBK(Cell Bank)-->NCER;
 ```
-The cell bank creates a number of cells by combining tiles and selecting a palette for each cell. It usually operates on dimensionless (1D mapped) character graphics and is used in combination with the animation resource to display dynamic objects.
+The cell bank creates a number of cells by combining tiles and selecting a palette for each cell. It usually operates on dimensionless (1D mapped) character graphics and is used in combination with the animation runtime to display dynamic objects.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
@@ -17,6 +17,7 @@ The cell bank creates a number of cells by combining tiles and selecting a palet
   * [Object Attributes](#object-attributes)
 * [Specification](#specification)
   * [Dimension Keys](#dimension-keys)
+  * [Files](#files)
 * [TODO](#todo)
 
 ---
@@ -28,7 +29,7 @@ struct ContainerSectionCEBK
 {
     /* 0x0    */ struct NitroSectionHeader sectionHeader;
     /* 0x8    */ struct ContainerCEBK sectionData;
-    /* append */ uint8_t paddingDWORD[?]
+    /* append */ uint8_t paddingDWORD[?];
 }; // entry size = sectionHeader.lengthSection
 ```
 | Field Name     | Description                                                                             | Data Type    |
@@ -52,7 +53,7 @@ struct ContainerCEBK
     
     // data
     /* offsetDataCell */ struct Cell dataCell[numberCells];
-    /* offsetDataCell + numberCells * (8 << tableAttribute) */ struct ObjectAttribute dataAttributes[?];
+    /* offsetDataCell + numberCells * (8 << useBounds) */ struct ObjectAttribute dataAttributes[?];
 }; // entry size = sectionHeader.lengthSection - 0x8
 ```
 | Field Name     | Description                                                                             | Data Type |
@@ -75,15 +76,15 @@ struct Cell
     /* 0x0 */ uint16_t numberObjects;
     /* 0x2 */ uint8_t unknown0;
     /* 0x3 */ uint8_t unknown1;
-    /* 0x4 */ uint32_t offsetCell;
-// }; // entry size = 0x8, if tableAttribute == 0
+    /* 0x4 */ uint32_t offsetObject;
+// }; // entry size = 0x8, if useBounds == 0
     
     // optional. Are they redundant even if used?
     /* 0x8 */ int16_t boundRight;
     /* 0xA */ int16_t boundBottom;
     /* 0xC */ int16_t boundLeft;
     /* 0xE */ int16_t boundTop;
-}; // entry size = 0x10, if tableAttribute == 1
+}; // entry size = 0x10, if useBounds == 1
 ```
 | Field Name         | Description                                                                             | Data Type |
 |--------------------|-----------------------------------------------------------------------------------------|-----------|
@@ -127,9 +128,9 @@ struct ObjectAttribute
 | objectMode         | `0` = normal, `1` = semi-transparent, `2` = OBJ window, `3` is not allowed.              | uint16_t : 2  |
 | mosaic             | Enable mosaic.                                                                           | uint16_t : 1  |
 | paletteMode        | Select type of the palette. `0`= 16 colors, `1` = 256 colors per palette.                | uint16_t : 1  |
-| keyShape           | Shape: `0` = square, `1` = horizontal, `2` = vertical, `3` is not allowed. See [Dimension Keys](#dimension-keys) | uint16_t : 2  |
+| keyShape           | Shape: `0` = square, `1` = horizontal, `2` = vertical, `3` is not allowed. See [Dimension Keys](#dimension-keys). | uint16_t : 2  |
 | positionX          | X position, cast to a signed value.                                                      | uint16_t : 9  |
-| transformParameter | TODO: document this.                                                                     | uint16_t : 3  |
+| transformParameter | (TODO) Currently not documented here. Read about it on [GBATEK](https://problemkaputt.de/gbatek.htm#lcdobjoamattributes). | uint16_t : 3  |
 | horizontalFlip     | Flip horizontally, if enabled.                                                           | uint16_t : 1  |
 | verticalFlip       | Flip vertically, if enabled.                                                             | uint16_t : 1  |
 | keySize            | Used to get the size of the OAM cell, see [Dimension Keys](#dimension-keys).             | uint16_t : 2  |
@@ -150,7 +151,7 @@ const uint16_t tableSizeInTiles[4][4] = // [keyShape][keySize]
     { 1, 2, 4, 8 },
     { 2, 4, 4, 8 },
     { 1, 1, 2, 4 },
-    { 1, 2, 3, 4 } // copy of row 0 for reversed index (3 - shape)
+    { 1, 2, 4, 8 } // copy of row 0 for reversed index (3 - shape)
 };
 
 uint16_t getWidthInTiles()
@@ -192,7 +193,10 @@ void setSizeInTiles(uint16_t widthInTiles, uint16_t heightInTiles)
 }
 ```
 
+### Files
+* [Nitro Cell Runtime](file_ncer.md)
+
 ---
 ## TODO
-* Document the transform parameters
+* Document the [transform parameters](#object-attributes). `transformParameter` may also need to be fused with `horizontalFlip` and `verticalFlip`, from `uint16_t : 3` to `uint16_t : 5`.
 * Research `unknown0` and `unknown1` in [cell](#cell)

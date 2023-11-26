@@ -80,6 +80,8 @@
 
 [Sprite Indexing](universal/guides/sprite_indexing/indexing.md)
 
+[NCER Sprite Editing](universal/guides/ncer_sprite_editing/ncer_sprite_editing.md)
+
 <br>
 </details>
 

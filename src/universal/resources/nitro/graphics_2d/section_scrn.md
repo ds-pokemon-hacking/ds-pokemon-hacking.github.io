@@ -14,6 +14,8 @@ The screen section, also known as tile map, is used to create an image by rearra
   * [Section Container](#section-container)
   * [SCRN Container](#scrn-container)
   * [Tile Properties](#tile-properties)
+* [Specification](#specification)
+  * [Files](#files)
 
 ---
 ## Data Structure
@@ -71,3 +73,9 @@ struct TileProperties
 | horizontalFlip | Flip/mirror tile horizontally.                                                          | uint16_t  |
 | verticalFlip   | Flip/mirror tile vertically.                                                            | uint16_t  |
 | paletteIndex   | Index of the palette used for this tile.                                                | uint16_t  |
+
+---
+## Specification
+
+### Files
+* [Nitro Screen Runtime](file_nscr.md)

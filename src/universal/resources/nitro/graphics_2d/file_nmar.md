@@ -1,4 +1,4 @@
-# NMAR ("RAMN") - Nitro Multi Animation Resource
+# NMAR ("RAMN") - Nitro Multi Animation Runtime
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: (see sections)
 
@@ -8,7 +8,7 @@ flowchart BT;
     ANBK(Animation Bank)-->NMAR;
     LABL(Label)-->NMAR;
 ```
-The multi animation resource works in the same way as the animation resource does, but on multi cells. The animations on the individual cells are not effected.
+The multi animation runtime works in the same way as the animation runtime does, but on multi cells. The animations on the individual cells are not effected.
 
 ## Table of Contents
 * [Data Structure](#data-structure)
