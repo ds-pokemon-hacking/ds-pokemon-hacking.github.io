@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Kingdom of DS Hacking</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
         
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -32,7 +32,7 @@
         <!-- Custom theme stylesheets -->
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -62,29 +62,34 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="index.html">Home</a></li><li class="chapter-item affix "><li class="part-title">Guides</li><li class="chapter-item "><div>Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Diamond and Pearl</div></li><li class="chapter-item "><div>Platinum</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen4/guides/field/pt_hgss-pokemarts.html">Adding New Poké Marts</a></li><li class="chapter-item "><a href="gen4/guides/field/pt_hgss-script_weather.html">Setting the Weather from a Script</a></li></ol></li><li class="chapter-item "><div>Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen4/guides/field/pt_hgss-pokemarts.html">Adding New Poké Marts</a></li><li class="chapter-item "><a href="gen4/guides/interface/hgss-town_map.html">Editing the Town Map</a></li><li class="chapter-item "><a href="gen4/guides/field/pt_hgss-script_weather.html">Setting the Weather from a Script</a></li></ol></li></ol></li><li class="chapter-item "><div>Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen5/guides/misc/bw_b2w2-code_injection.html">Code Injection</a></li></ol></li><li class="chapter-item "><div>Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen5/guides/misc/bw_b2w2-code_injection.html">Code Injection</a></li><li class="chapter-item "><a href="gen5/guides/misc/b2w2-fairy.html">Fairy Type Insertion</a></li></ol></li></ol></li><li class="chapter-item "><div>Universal</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/guides/code_injection/code_injection.html">Code Injection</a></li><li class="chapter-item "><a href="universal/guides/sprite_indexing/indexing.html">Sprite Indexing</a></li><li class="chapter-item "><a href="universal/guides/ncer_sprite_editing/ncer_sprite_editing.html">NCER Sprite Editing</a></li></ol></li><li class="chapter-item "><li class="part-title">Resources</li><li class="chapter-item "><div>Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Diamond and Pearl</div></li><li class="chapter-item "><div>Platinum</div></li><li class="chapter-item "><div>Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen4/resources/interface/hgss-town_map_spots.html">Town Map Structures</a></li></ol></li></ol></li><li class="chapter-item "><div>Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen5/resources/field/bw_b2w2-maps.html">Maps</a></li><li class="chapter-item "><a href="gen5/resources/field/bw_b2w2-zone_entities.html">Zone Entities</a></li></ol></li><li class="chapter-item "><div>Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen5/resources/field/b2w2-area_data.html">Area Data</a></li><li class="chapter-item "><a href="gen5/resources/field/bw_b2w2-maps.html">Maps</a></li><li class="chapter-item "><a href="gen5/resources/field/bw_b2w2-zone_entities.html">Zone Entities</a></li></ol></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/nitro_overview.html">Nitro</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/file_system/file_narc.html">Nitro Archive (NARC)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/file_system/section_fatb.html">File Allocation Table (FATB)</a></li><li class="chapter-item "><a href="universal/resources/nitro/file_system/section_fntb.html">File Name Table (FNTB)</a></li><li class="chapter-item "><a href="universal/resources/nitro/file_system/section_fimg.html">File Image (FIMG)</a></li></ol></li><li class="chapter-item "><div>G2D</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nanr.html">Nitro Animation Runtime (NANR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_abnk.html">Animation Bank (ABNK)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_uext.html">User Extension (UEXT)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nclr.html">Nitro Color Runtime (NCLR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_pltt.html">Palette (PLTT)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_pcmp.html">Palette Count Map (PCMP)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_ncer.html">Nitro Cell Runtime (NCER)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_cebk.html">Cell Bank (CEBK)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_uext.html">User Extension (UEXT)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_ncgr.html">Nitro Graphics Runtime (NCGR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_char.html">Character (CHAR)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_cpos.html">Character Position (CPOS)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nmar.html">Nitro Multicell Animation Runtime (NMAR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_abnk.html">Animation Bank (ABNK)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nmcr.html">Nitro Multicell Runtime (NMCR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_mcbk.html">Multicell Bank (MCBK)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nscr.html">Nitro Screen Runtime (NSCR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_scrn.html">Screen (SCRN)</a></li></ol></li></ol></li><li class="chapter-item "><div>G3D</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_bta0.html">Nitro System Binary Texture Animation (NSBTA)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_bmd0.html">Nitro System Binary Model (NSBMD)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_btx0.html">Nitro System Binary Texture (NSBTX)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_btp0.html">Nitro System Binary Texture Pattern (NSBTP)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_bca0.html">Nitro System Binary Character Skeleton Animation (NSBCA)</a></li></ol></li><li class="chapter-item "><div>Sound</div></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="index.html">Home</a></li><li class="chapter-item affix "><li class="part-title">Guides</li><li class="chapter-item "><div>Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Diamond and Pearl</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen4/guides/field/owsprites.html">Overworld Sprites Replacement</a></li></ol></li><li class="chapter-item "><div>Platinum</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen4/guides/field/owsprites.html">Overworld Sprites Replacement</a></li><li class="chapter-item "><a href="gen4/guides/field/pt_hgss-pokemarts.html">Adding New Poké Marts</a></li><li class="chapter-item "><a href="gen4/guides/field/pt_hgss-script_weather.html">Setting the Weather from a Script</a></li></ol></li><li class="chapter-item "><div>Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen4/guides/field/owsprites.html">Overworld Sprites Replacement</a></li><li class="chapter-item "><a href="gen4/guides/field/pt_hgss-pokemarts.html">Adding New Poké Marts</a></li><li class="chapter-item "><a href="gen4/guides/interface/hgss-town_map.html">Editing the Town Map</a></li><li class="chapter-item "><a href="gen4/guides/field/pt_hgss-script_weather.html">Setting the Weather from a Script</a></li></ol></li></ol></li><li class="chapter-item "><div>Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen5/guides/misc/bw_b2w2-code_injection.html">Code Injection</a></li></ol></li><li class="chapter-item "><div>Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen5/guides/misc/bw_b2w2-code_injection.html">Code Injection</a></li><li class="chapter-item "><a href="gen5/guides/misc/b2w2-fairy.html">Fairy Type Insertion</a></li></ol></li></ol></li><li class="chapter-item "><div>Universal</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/guides/code_injection/code_injection.html">Code Injection</a></li><li class="chapter-item "><a href="universal/guides/sprite_indexing/indexing.html">Sprite Indexing</a></li><li class="chapter-item "><a href="universal/guides/ncer_sprite_editing/ncer_sprite_editing.html">NCER Sprite Editing</a></li></ol></li><li class="chapter-item "><li class="part-title">Resources</li><li class="chapter-item "><div>Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Diamond and Pearl</div></li><li class="chapter-item "><div>Platinum</div></li><li class="chapter-item "><div>Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen4/resources/interface/hgss-town_map_spots.html">Town Map Structures</a></li></ol></li></ol></li><li class="chapter-item "><div>Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen5/resources/field/bw_b2w2-maps.html">Maps</a></li><li class="chapter-item "><a href="gen5/resources/field/bw_b2w2-zone_entities.html">Zone Entities</a></li></ol></li><li class="chapter-item "><div>Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="gen5/resources/field/b2w2-area_data.html">Area Data</a></li><li class="chapter-item "><a href="gen5/resources/field/bw_b2w2-maps.html">Maps</a></li><li class="chapter-item "><a href="gen5/resources/field/bw_b2w2-zone_entities.html">Zone Entities</a></li></ol></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/nitro_overview.html">Nitro</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/file_system/file_narc.html">Nitro Archive (NARC)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/file_system/section_fatb.html">File Allocation Table (FATB)</a></li><li class="chapter-item "><a href="universal/resources/nitro/file_system/section_fntb.html">File Name Table (FNTB)</a></li><li class="chapter-item "><a href="universal/resources/nitro/file_system/section_fimg.html">File Image (FIMG)</a></li></ol></li><li class="chapter-item "><div>G2D</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nanr.html">Nitro Animation Runtime (NANR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_abnk.html">Animation Bank (ABNK)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_uext.html">User Extension (UEXT)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nclr.html">Nitro Color Runtime (NCLR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_pltt.html">Palette (PLTT)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_pcmp.html">Palette Count Map (PCMP)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_ncer.html">Nitro Cell Runtime (NCER)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_cebk.html">Cell Bank (CEBK)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_uext.html">User Extension (UEXT)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_ncgr.html">Nitro Graphics Runtime (NCGR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_char.html">Character (CHAR)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_cpos.html">Character Position (CPOS)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nmar.html">Nitro Multicell Animation Runtime (NMAR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_abnk.html">Animation Bank (ABNK)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nmcr.html">Nitro Multicell Runtime (NMCR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_mcbk.html">Multicell Bank (MCBK)</a></li></ol></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/file_nscr.html">Nitro Screen Runtime (NSCR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_2d/section_scrn.html">Screen (SCRN)</a></li></ol></li></ol></li><li class="chapter-item "><div>G3D</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_bta0.html">Nitro System Binary Texture Animation (NSBTA)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_bmd0.html">Nitro System Binary Model (NSBMD)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_btx0.html">Nitro System Binary Texture (NSBTX)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_btp0.html">Nitro System Binary Texture Pattern (NSBTP)</a></li><li class="chapter-item "><a href="universal/resources/nitro/graphics_3d/file_bca0.html">Nitro System Binary Character Skeleton Animation (NSBCA)</a></li></ol></li><li class="chapter-item "><div>Sound</div></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -117,9 +122,9 @@
                                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -265,6 +270,230 @@
 <br>
 </details>
 <hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overworld-sprite-replacement-guide"><a class="header" href="#overworld-sprite-replacement-guide">Overworld Sprite Replacement Guide</a></h1>
+<blockquote>
+<p>This guide was written by SpagoAsparago. Credits to the <a href="https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU/edit">Known Sprite Locations document</a> and BagBoy for the OW tables research.</p>
+</blockquote>
+<p>This is a guide on how to extract, replace, change the properties and make your own overworld sprites.
+The necessary tools are Tinke 0.9.2 and BTX Editor 2.0</p>
+<p>In addition for the Sprite Properties section you will need DSPRE and an Hex Editor like HxD as well.</p>
+<hr />
+<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#section">Extracting the Sprite</a></li>
+<li><a href="gen4/guides/field/owsprites.html#section-2">Making your own Sprite</a></li>
+<li><a href="gen4/guides/field/owsprites.html#section-3">Replacing</a>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#subsection">Unused Sprites</a></li>
+</ul>
+</li>
+<li><a href="gen4/guides/field/owsprites.html#section-4">Changing the Sprite Properties</a>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#subsection-2">Platinum</a></li>
+<li><a href="gen4/guides/field/owsprites.html#subsection-3">HGSS</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="extracting-the-sprite"><a class="header" href="#extracting-the-sprite">Extracting the Sprite</a></h2>
+<p>Overworld sprites are contained in BTX files, start by opening your ROM with Tinke and then navigating to the following filepath depending on your game:</p>
+<ul>
+<li><strong>DPPt</strong>: mmodel/mmodel.narc</li>
+<li><strong>HGSS</strong>: a/0/8/1</li>
+</ul>
+<p>Once you've navigated to this directory in Tinke, select the narc file and click unpack to see see all the BTX files. 
+You can select one and click the &quot;View&quot; button to see the spritesheet. Select the one you want to replace and click Extract, so that you will obtain the BTX file.</p>
+<p><img src="gen4/guides/field/resources/owsprites/tinke.PNG" alt="" /></p>
+<p>You can load this file in the BTX Editor 2.0 to either extract the spritesheet itself in a .png format or import your own spritesheet.</p>
+<p><img src="gen4/guides/field/resources/owsprites/btxeditor.PNG" alt="" /></p>
+<details>
+ <summary>Where to find all Player Character Sprites.</summary>
+ <p>
+   Diamond and Pearl
+   Lucas:
+		90 - Walking/Running
+		92 - Bike
+		155 - Pull out Pokeball
+		157 - Water flower
+		159 - Surf
+164 - Tux
+166 - Fishing
+363 - Aerobics
+365 - Save
+367 - Pokecenter
+<p>Heroine:
+91 - Walking/Running
+93 - Bike
+156 - Pull out Pokeball
+158 - Water flower
+160 - Surf
+165 - Dress
+167 - Fishing
+364 - Aerobics
+366 - Save
+368 - Pokecenter</p>
+</p>
+</details>
+<h2 id="making-your-own-sprite"><a class="header" href="#making-your-own-sprite">Making your own Sprite</a></h2>
+<p>Before proceeding you should be familiar with Sprite Indexing, as all the sprites must have at most 16 color, with the background color being indexed to the first slot of the palette.
+See <a href="gen4/guides/field/kingdom-of-ds-hacking.github.io/tree/main/src/universal/guides/sprite_indexing">Sprite Indexing</a> for more information.</p>
+<p>First you want to load the png spritesheet you previously extracted in the graphic editing software of your choice, to either make edits to it or use it as a base for your spritesheet. 
+You may also want to enable some kind of grid visualization in order to view the proper position of each frame. In Aseprite you can do so by clicking View&gt;Grid&gt;Grid Settings.</p>
+<p>If you're making your own sprite from scratch, remember that all the frames you draw must be in the same position as the ones in the original sprite, otherwise the movement in game will look wrong; for example the following image is not a correct spritesheet since the three walking frames aren't in the same position as the original one:</p>
+<p><img src="gen4/guides/field/resources/owsprites/wrongsprite.PNG" alt="" /></p>
+<p>Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the spritesheet you made, and save the BTX.</p>
+<h2 id="replacing-the-sprite"><a class="header" href="#replacing-the-sprite">Replacing the Sprite</a></h2>
+<p>Replacing the sprite simply consists in just clicking the &quot;Change File&quot; button in Tinke on the BTX file you want to replace, and then select the BTX you either extracted or obtained from BTX Editor. Don't forget to <strong>click the Pack button on the narc file</strong> after you've replaced the BTX. Now you can save the ROM.</p>
+<p>Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its properties to get the movement working correctly even if it's the same size. Single-frame sprites with the same dimension as the original won't have the issue however.</p>
+<h3 id="unused-sprites"><a class="header" href="#unused-sprites">Unused Sprites</a></h3>
+<p>Adding new overworld sprites would require ASM but luckily there are a number of unused sprites that may be useful to you:</p>
+<p><img src="gen4/guides/field/resources/owsprites/unusedsprites.png" alt="" /></p>
+<h2 id="changing-the-sprite-properties"><a class="header" href="#changing-the-sprite-properties">Changing the Sprite Properties</a></h2>
+<p>If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all if it has a different size. 
+Unless your sprite is only made of one frame and has the same size the original one, you will need to fix this by hex editing each sprite properties. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created by DSPRE, which will be named <em>YourROMName</em>_DSPRE_Contents/overlay. </p>
+<p>All the offsets listed are based on the US version of the ROM and it has not been tested on other versions.</p>
+<h3 id="platinum"><a class="header" href="#platinum">Platinum</a></h3>
+<p>In Platinum there are two tables we need to look up for changing sprite properties, both are in Overlay 5.</p>
+<p>First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 Ho-Oh Sprite ripped from HGSS, having two frames:</p>
+<p><img src="gen4/guides/field/resources/owsprites/hooh64x64.png" alt="" /></p>
+<p>The first table is at 0x2BC34 and will look like this:</p>
+<p><img src="gen4/guides/field/resources/owsprites/pt_owtable1.PNG" alt="" /></p>
+<p>Each entry is made of 8 bytes, the first 4 in red for the ID number and the latter 4 in blue for the mmodel number. We already know the model number, which in little endian is 96 01, so we just need to search those bytes using HxD search hex values function with the search direction being set to &quot;forward&quot;, then click Search All.
+Since my mmodel number is greater than 255, I'll get a single result, being the two bytes corresponding to the model number, the next 2 bytes are going to be 00 00 and the next 4 bytes are the ID number we are looking for, in my case F4 00 00 00.</p>
+<p>If your model number was less than or equal to 255, <strong>you need to look at the second result in the results tab</strong>.</p>
+<p>With this information we can go to the second table at 0x2CA08, which is structured like this:</p>
+<p><img src="gen4/guides/field/resources/owsprites/pt_owtable2.PNG" alt="" /></p>
+<p>Each row is an entry, the bytes in the red columns are the ID numbers of each sprites and the bytes in green are the sprite properties. You can scroll down until you see the ID number from the 1st table in the red columns. The bytes you want to edit are right before the ID number, in my case it will be which is a standard 32x32 16 frames NPC.</p>
+<p>The bytes you want to replace for this are going to be depending on which Sprite Property you want to have:</p>
+<div class="table-wrapper"><table><thead><tr><th>Byte Sequence</th><th>Corresponding Property</th><th>Example</th></tr></thead><tbody>
+<tr><td>00 00 00 00 00 00 00 00 C0 B2 1F 02</td><td>32x32 Sprite with 16 frames</td><td>Regular NPCs</td></tr>
+<tr><td>05 00 00 00 00 00 00 00 C0 B2 1F 02</td><td>64x64 Sprite with 2 frames</td><td>DPPt larger Legendaries like Palkia and Dialga</td></tr>
+<tr><td>0B 00 00 00 15 00 00 00 64 B1 1F 02</td><td>128x64 Sprite with 2 frames</td><td>DPPt Giratina Distortion World sprite</td></tr>
+</tbody></table>
+</div>
+<p>You can paste them with Ctrl+B in the green section of the row shown above. Then, save the overlay and save the ROM from DSPRE. If you have done the process correctly, it will show up in game.
+If the two frames are different you can set the OW movement to <em>20-Running Up, Down</em> in DSPRE event editor to have the animation play out costantly.</p>
+<h3 id="hgss"><a class="header" href="#hgss">HGSS</a></h3>
+<p>Fortunately in HGSS there is only one table, it's at offset <code>0x21BA8</code> in Overlay 1.
+The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the <em>Configure Overlay 1 as uncompressed</em> patch from DSPRE's toolbox.
+I will be replacing the glitched bulbasaur sprite with a standard 32x32 NPC, so first I need to find the correspondent ID number.
+The table will look like this: </p>
+<p><img src="gen4/guides/field/resources/owsprites/hgss_owtable.PNG" alt="" /></p>
+<p>There are 6 bytes for each entry, with the first two bytes (red) are the Overworld ID, the following two bytes (blue) for the number of the BTX filename in the a/0/8/1 narc, and the last two bytes (green) for the sprite properties.</p>
+<p>The glitched Bulbasaur sprite I'm replacing is 1_201.BTX0, so in little endian the filename number I'm looking for is <code>C9 00</code>. We can find the corresponding result by searching those bytes with HxD search function, with search direction set <em>forward</em> and clicking <em>Search All</em>, and we have to look for the 2nd result if it exists (regardless if the number is smaller or greather than 255), which will be at <code>0x22EC4</code> in my case. The bytes I'm looking for are the next two, so at <code>0x22EC6</code>, and you will need to replace them with <code>00 00</code> for the standard 32x32 NPC.</p>
+<p>So I will replace the <code>25 4E</code> bytes with <code>00 00</code>. You can save the overlay 1, and then save the ROM in DSPRE. If you did all the steps correctly the sprite you replaced will show up correctly in game.
+The other two offsets to fix the remaining bulbasaur glitched sprites (1_202.BTX0 and 1_203.BTX0) are respectively at <code>0x22ECC</code> and <code>0x22ED2</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overworld-sprite-replacement-guide-1"><a class="header" href="#overworld-sprite-replacement-guide-1">Overworld Sprite Replacement Guide</a></h1>
+<blockquote>
+<p>This guide was written by SpagoAsparago. Credits to the <a href="https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU/edit">Known Sprite Locations document</a> and BagBoy for the OW tables research.</p>
+</blockquote>
+<p>This is a guide on how to extract, replace, change the properties and make your own overworld sprites.
+The necessary tools are Tinke 0.9.2 and BTX Editor 2.0</p>
+<p>In addition for the Sprite Properties section you will need DSPRE and an Hex Editor like HxD as well.</p>
+<hr />
+<h2 id="table-of-contents-1"><a class="header" href="#table-of-contents-1">Table of Contents</a></h2>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#section">Extracting the Sprite</a></li>
+<li><a href="gen4/guides/field/owsprites.html#section-2">Making your own Sprite</a></li>
+<li><a href="gen4/guides/field/owsprites.html#section-3">Replacing</a>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#subsection">Unused Sprites</a></li>
+</ul>
+</li>
+<li><a href="gen4/guides/field/owsprites.html#section-4">Changing the Sprite Properties</a>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#subsection-2">Platinum</a></li>
+<li><a href="gen4/guides/field/owsprites.html#subsection-3">HGSS</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="extracting-the-sprite-1"><a class="header" href="#extracting-the-sprite-1">Extracting the Sprite</a></h2>
+<p>Overworld sprites are contained in BTX files, start by opening your ROM with Tinke and then navigating to the following filepath depending on your game:</p>
+<ul>
+<li><strong>DPPt</strong>: mmodel/mmodel.narc</li>
+<li><strong>HGSS</strong>: a/0/8/1</li>
+</ul>
+<p>Once you've navigated to this directory in Tinke, select the narc file and click unpack to see see all the BTX files. 
+You can select one and click the &quot;View&quot; button to see the spritesheet. Select the one you want to replace and click Extract, so that you will obtain the BTX file.</p>
+<p><img src="gen4/guides/field/resources/owsprites/tinke.PNG" alt="" /></p>
+<p>You can load this file in the BTX Editor 2.0 to either extract the spritesheet itself in a .png format or import your own spritesheet.</p>
+<p><img src="gen4/guides/field/resources/owsprites/btxeditor.PNG" alt="" /></p>
+<details>
+ <summary>Where to find all Player Character Sprites.</summary>
+ <p>
+   Diamond and Pearl
+   Lucas:
+		90 - Walking/Running
+		92 - Bike
+		155 - Pull out Pokeball
+		157 - Water flower
+		159 - Surf
+164 - Tux
+166 - Fishing
+363 - Aerobics
+365 - Save
+367 - Pokecenter
+<p>Heroine:
+91 - Walking/Running
+93 - Bike
+156 - Pull out Pokeball
+158 - Water flower
+160 - Surf
+165 - Dress
+167 - Fishing
+364 - Aerobics
+366 - Save
+368 - Pokecenter</p>
+</p>
+</details>
+<h2 id="making-your-own-sprite-1"><a class="header" href="#making-your-own-sprite-1">Making your own Sprite</a></h2>
+<p>Before proceeding you should be familiar with Sprite Indexing, as all the sprites must have at most 16 color, with the background color being indexed to the first slot of the palette.
+See <a href="gen4/guides/field/kingdom-of-ds-hacking.github.io/tree/main/src/universal/guides/sprite_indexing">Sprite Indexing</a> for more information.</p>
+<p>First you want to load the png spritesheet you previously extracted in the graphic editing software of your choice, to either make edits to it or use it as a base for your spritesheet. 
+You may also want to enable some kind of grid visualization in order to view the proper position of each frame. In Aseprite you can do so by clicking View&gt;Grid&gt;Grid Settings.</p>
+<p>If you're making your own sprite from scratch, remember that all the frames you draw must be in the same position as the ones in the original sprite, otherwise the movement in game will look wrong; for example the following image is not a correct spritesheet since the three walking frames aren't in the same position as the original one:</p>
+<p><img src="gen4/guides/field/resources/owsprites/wrongsprite.PNG" alt="" /></p>
+<p>Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the spritesheet you made, and save the BTX.</p>
+<h2 id="replacing-the-sprite-1"><a class="header" href="#replacing-the-sprite-1">Replacing the Sprite</a></h2>
+<p>Replacing the sprite simply consists in just clicking the &quot;Change File&quot; button in Tinke on the BTX file you want to replace, and then select the BTX you either extracted or obtained from BTX Editor. Don't forget to <strong>click the Pack button on the narc file</strong> after you've replaced the BTX. Now you can save the ROM.</p>
+<p>Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its properties to get the movement working correctly even if it's the same size. Single-frame sprites with the same dimension as the original won't have the issue however.</p>
+<h3 id="unused-sprites-1"><a class="header" href="#unused-sprites-1">Unused Sprites</a></h3>
+<p>Adding new overworld sprites would require ASM but luckily there are a number of unused sprites that may be useful to you:</p>
+<p><img src="gen4/guides/field/resources/owsprites/unusedsprites.png" alt="" /></p>
+<h2 id="changing-the-sprite-properties-1"><a class="header" href="#changing-the-sprite-properties-1">Changing the Sprite Properties</a></h2>
+<p>If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all if it has a different size. 
+Unless your sprite is only made of one frame and has the same size the original one, you will need to fix this by hex editing each sprite properties. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created by DSPRE, which will be named <em>YourROMName</em>_DSPRE_Contents/overlay. </p>
+<p>All the offsets listed are based on the US version of the ROM and it has not been tested on other versions.</p>
+<h3 id="platinum-1"><a class="header" href="#platinum-1">Platinum</a></h3>
+<p>In Platinum there are two tables we need to look up for changing sprite properties, both are in Overlay 5.</p>
+<p>First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 Ho-Oh Sprite ripped from HGSS, having two frames:</p>
+<p><img src="gen4/guides/field/resources/owsprites/hooh64x64.png" alt="" /></p>
+<p>The first table is at 0x2BC34 and will look like this:</p>
+<p><img src="gen4/guides/field/resources/owsprites/pt_owtable1.PNG" alt="" /></p>
+<p>Each entry is made of 8 bytes, the first 4 in red for the ID number and the latter 4 in blue for the mmodel number. We already know the model number, which in little endian is 96 01, so we just need to search those bytes using HxD search hex values function with the search direction being set to &quot;forward&quot;, then click Search All.
+Since my mmodel number is greater than 255, I'll get a single result, being the two bytes corresponding to the model number, the next 2 bytes are going to be 00 00 and the next 4 bytes are the ID number we are looking for, in my case F4 00 00 00.</p>
+<p>If your model number was less than or equal to 255, <strong>you need to look at the second result in the results tab</strong>.</p>
+<p>With this information we can go to the second table at 0x2CA08, which is structured like this:</p>
+<p><img src="gen4/guides/field/resources/owsprites/pt_owtable2.PNG" alt="" /></p>
+<p>Each row is an entry, the bytes in the red columns are the ID numbers of each sprites and the bytes in green are the sprite properties. You can scroll down until you see the ID number from the 1st table in the red columns. The bytes you want to edit are right before the ID number, in my case it will be which is a standard 32x32 16 frames NPC.</p>
+<p>The bytes you want to replace for this are going to be depending on which Sprite Property you want to have:</p>
+<div class="table-wrapper"><table><thead><tr><th>Byte Sequence</th><th>Corresponding Property</th><th>Example</th></tr></thead><tbody>
+<tr><td>00 00 00 00 00 00 00 00 C0 B2 1F 02</td><td>32x32 Sprite with 16 frames</td><td>Regular NPCs</td></tr>
+<tr><td>05 00 00 00 00 00 00 00 C0 B2 1F 02</td><td>64x64 Sprite with 2 frames</td><td>DPPt larger Legendaries like Palkia and Dialga</td></tr>
+<tr><td>0B 00 00 00 15 00 00 00 64 B1 1F 02</td><td>128x64 Sprite with 2 frames</td><td>DPPt Giratina Distortion World sprite</td></tr>
+</tbody></table>
+</div>
+<p>You can paste them with Ctrl+B in the green section of the row shown above. Then, save the overlay and save the ROM from DSPRE. If you have done the process correctly, it will show up in game.
+If the two frames are different you can set the OW movement to <em>20-Running Up, Down</em> in DSPRE event editor to have the animation play out costantly.</p>
+<h3 id="hgss-1"><a class="header" href="#hgss-1">HGSS</a></h3>
+<p>Fortunately in HGSS there is only one table, it's at offset <code>0x21BA8</code> in Overlay 1.
+The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the <em>Configure Overlay 1 as uncompressed</em> patch from DSPRE's toolbox.
+I will be replacing the glitched bulbasaur sprite with a standard 32x32 NPC, so first I need to find the correspondent ID number.
+The table will look like this: </p>
+<p><img src="gen4/guides/field/resources/owsprites/hgss_owtable.PNG" alt="" /></p>
+<p>There are 6 bytes for each entry, with the first two bytes (red) are the Overworld ID, the following two bytes (blue) for the number of the BTX filename in the a/0/8/1 narc, and the last two bytes (green) for the sprite properties.</p>
+<p>The glitched Bulbasaur sprite I'm replacing is 1_201.BTX0, so in little endian the filename number I'm looking for is <code>C9 00</code>. We can find the corresponding result by searching those bytes with HxD search function, with search direction set <em>forward</em> and clicking <em>Search All</em>, and we have to look for the 2nd result if it exists (regardless if the number is smaller or greather than 255), which will be at <code>0x22EC4</code> in my case. The bytes I'm looking for are the next two, so at <code>0x22EC6</code>, and you will need to replace them with <code>00 00</code> for the standard 32x32 NPC.</p>
+<p>So I will replace the <code>25 4E</code> bytes with <code>00 00</code>. You can save the overlay 1, and then save the ROM in DSPRE. If you did all the steps correctly the sprite you replaced will show up correctly in game.
+The other two offsets to fix the remaining bulbasaur glitched sprites (1_202.BTX0 and 1_203.BTX0) are respectively at <code>0x22ECC</code> and <code>0x22ED2</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="adding-new-poké-marts-platinumhgss"><a class="header" href="#adding-new-poké-marts-platinumhgss">Adding New Poké Marts <sup><em>(Platinum/HGSS)</em></sup></a></h1>
 <blockquote>
 <p>This guide was written by SpagoAsparago.</p>
@@ -272,7 +501,7 @@
 <p>This is a guide on how to add and display new Poké Marts in Platinum and HGSS.
 All offsets mentioned are based on the US version of the ROMs. </p>
 <hr />
-<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
+<h2 id="table-of-contents-2"><a class="header" href="#table-of-contents-2">Table of Contents</a></h2>
 <ul>
 <li><a href="gen4/guides/field/pt_hgss-pokemarts.html#section">Adding a new Poké Mart</a>
 <ul>
@@ -399,6 +628,118 @@ End
 End
 </code></pre>
 </details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overworld-sprite-replacement-guide-2"><a class="header" href="#overworld-sprite-replacement-guide-2">Overworld Sprite Replacement Guide</a></h1>
+<blockquote>
+<p>This guide was written by SpagoAsparago. Credits to the <a href="https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU/edit">Known Sprite Locations document</a> and BagBoy for the OW tables research.</p>
+</blockquote>
+<p>This is a guide on how to extract, replace, change the properties and make your own overworld sprites.
+The necessary tools are Tinke 0.9.2 and BTX Editor 2.0</p>
+<p>In addition for the Sprite Properties section you will need DSPRE and an Hex Editor like HxD as well.</p>
+<hr />
+<h2 id="table-of-contents-3"><a class="header" href="#table-of-contents-3">Table of Contents</a></h2>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#section">Extracting the Sprite</a></li>
+<li><a href="gen4/guides/field/owsprites.html#section-2">Making your own Sprite</a></li>
+<li><a href="gen4/guides/field/owsprites.html#section-3">Replacing</a>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#subsection">Unused Sprites</a></li>
+</ul>
+</li>
+<li><a href="gen4/guides/field/owsprites.html#section-4">Changing the Sprite Properties</a>
+<ul>
+<li><a href="gen4/guides/field/owsprites.html#subsection-2">Platinum</a></li>
+<li><a href="gen4/guides/field/owsprites.html#subsection-3">HGSS</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="extracting-the-sprite-2"><a class="header" href="#extracting-the-sprite-2">Extracting the Sprite</a></h2>
+<p>Overworld sprites are contained in BTX files, start by opening your ROM with Tinke and then navigating to the following filepath depending on your game:</p>
+<ul>
+<li><strong>DPPt</strong>: mmodel/mmodel.narc</li>
+<li><strong>HGSS</strong>: a/0/8/1</li>
+</ul>
+<p>Once you've navigated to this directory in Tinke, select the narc file and click unpack to see see all the BTX files. 
+You can select one and click the &quot;View&quot; button to see the spritesheet. Select the one you want to replace and click Extract, so that you will obtain the BTX file.</p>
+<p><img src="gen4/guides/field/resources/owsprites/tinke.PNG" alt="" /></p>
+<p>You can load this file in the BTX Editor 2.0 to either extract the spritesheet itself in a .png format or import your own spritesheet.</p>
+<p><img src="gen4/guides/field/resources/owsprites/btxeditor.PNG" alt="" /></p>
+<details>
+ <summary>Where to find all Player Character Sprites.</summary>
+ <p>
+   Diamond and Pearl
+   Lucas:
+		90 - Walking/Running
+		92 - Bike
+		155 - Pull out Pokeball
+		157 - Water flower
+		159 - Surf
+164 - Tux
+166 - Fishing
+363 - Aerobics
+365 - Save
+367 - Pokecenter
+<p>Heroine:
+91 - Walking/Running
+93 - Bike
+156 - Pull out Pokeball
+158 - Water flower
+160 - Surf
+165 - Dress
+167 - Fishing
+364 - Aerobics
+366 - Save
+368 - Pokecenter</p>
+</p>
+</details>
+<h2 id="making-your-own-sprite-2"><a class="header" href="#making-your-own-sprite-2">Making your own Sprite</a></h2>
+<p>Before proceeding you should be familiar with Sprite Indexing, as all the sprites must have at most 16 color, with the background color being indexed to the first slot of the palette.
+See <a href="gen4/guides/field/kingdom-of-ds-hacking.github.io/tree/main/src/universal/guides/sprite_indexing">Sprite Indexing</a> for more information.</p>
+<p>First you want to load the png spritesheet you previously extracted in the graphic editing software of your choice, to either make edits to it or use it as a base for your spritesheet. 
+You may also want to enable some kind of grid visualization in order to view the proper position of each frame. In Aseprite you can do so by clicking View&gt;Grid&gt;Grid Settings.</p>
+<p>If you're making your own sprite from scratch, remember that all the frames you draw must be in the same position as the ones in the original sprite, otherwise the movement in game will look wrong; for example the following image is not a correct spritesheet since the three walking frames aren't in the same position as the original one:</p>
+<p><img src="gen4/guides/field/resources/owsprites/wrongsprite.PNG" alt="" /></p>
+<p>Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the spritesheet you made, and save the BTX.</p>
+<h2 id="replacing-the-sprite-2"><a class="header" href="#replacing-the-sprite-2">Replacing the Sprite</a></h2>
+<p>Replacing the sprite simply consists in just clicking the &quot;Change File&quot; button in Tinke on the BTX file you want to replace, and then select the BTX you either extracted or obtained from BTX Editor. Don't forget to <strong>click the Pack button on the narc file</strong> after you've replaced the BTX. Now you can save the ROM.</p>
+<p>Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its properties to get the movement working correctly even if it's the same size. Single-frame sprites with the same dimension as the original won't have the issue however.</p>
+<h3 id="unused-sprites-2"><a class="header" href="#unused-sprites-2">Unused Sprites</a></h3>
+<p>Adding new overworld sprites would require ASM but luckily there are a number of unused sprites that may be useful to you:</p>
+<p><img src="gen4/guides/field/resources/owsprites/unusedsprites.png" alt="" /></p>
+<h2 id="changing-the-sprite-properties-2"><a class="header" href="#changing-the-sprite-properties-2">Changing the Sprite Properties</a></h2>
+<p>If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all if it has a different size. 
+Unless your sprite is only made of one frame and has the same size the original one, you will need to fix this by hex editing each sprite properties. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created by DSPRE, which will be named <em>YourROMName</em>_DSPRE_Contents/overlay. </p>
+<p>All the offsets listed are based on the US version of the ROM and it has not been tested on other versions.</p>
+<h3 id="platinum-2"><a class="header" href="#platinum-2">Platinum</a></h3>
+<p>In Platinum there are two tables we need to look up for changing sprite properties, both are in Overlay 5.</p>
+<p>First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 Ho-Oh Sprite ripped from HGSS, having two frames:</p>
+<p><img src="gen4/guides/field/resources/owsprites/hooh64x64.png" alt="" /></p>
+<p>The first table is at 0x2BC34 and will look like this:</p>
+<p><img src="gen4/guides/field/resources/owsprites/pt_owtable1.PNG" alt="" /></p>
+<p>Each entry is made of 8 bytes, the first 4 in red for the ID number and the latter 4 in blue for the mmodel number. We already know the model number, which in little endian is 96 01, so we just need to search those bytes using HxD search hex values function with the search direction being set to &quot;forward&quot;, then click Search All.
+Since my mmodel number is greater than 255, I'll get a single result, being the two bytes corresponding to the model number, the next 2 bytes are going to be 00 00 and the next 4 bytes are the ID number we are looking for, in my case F4 00 00 00.</p>
+<p>If your model number was less than or equal to 255, <strong>you need to look at the second result in the results tab</strong>.</p>
+<p>With this information we can go to the second table at 0x2CA08, which is structured like this:</p>
+<p><img src="gen4/guides/field/resources/owsprites/pt_owtable2.PNG" alt="" /></p>
+<p>Each row is an entry, the bytes in the red columns are the ID numbers of each sprites and the bytes in green are the sprite properties. You can scroll down until you see the ID number from the 1st table in the red columns. The bytes you want to edit are right before the ID number, in my case it will be which is a standard 32x32 16 frames NPC.</p>
+<p>The bytes you want to replace for this are going to be depending on which Sprite Property you want to have:</p>
+<div class="table-wrapper"><table><thead><tr><th>Byte Sequence</th><th>Corresponding Property</th><th>Example</th></tr></thead><tbody>
+<tr><td>00 00 00 00 00 00 00 00 C0 B2 1F 02</td><td>32x32 Sprite with 16 frames</td><td>Regular NPCs</td></tr>
+<tr><td>05 00 00 00 00 00 00 00 C0 B2 1F 02</td><td>64x64 Sprite with 2 frames</td><td>DPPt larger Legendaries like Palkia and Dialga</td></tr>
+<tr><td>0B 00 00 00 15 00 00 00 64 B1 1F 02</td><td>128x64 Sprite with 2 frames</td><td>DPPt Giratina Distortion World sprite</td></tr>
+</tbody></table>
+</div>
+<p>You can paste them with Ctrl+B in the green section of the row shown above. Then, save the overlay and save the ROM from DSPRE. If you have done the process correctly, it will show up in game.
+If the two frames are different you can set the OW movement to <em>20-Running Up, Down</em> in DSPRE event editor to have the animation play out costantly.</p>
+<h3 id="hgss-2"><a class="header" href="#hgss-2">HGSS</a></h3>
+<p>Fortunately in HGSS there is only one table, it's at offset <code>0x21BA8</code> in Overlay 1.
+The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the <em>Configure Overlay 1 as uncompressed</em> patch from DSPRE's toolbox.
+I will be replacing the glitched bulbasaur sprite with a standard 32x32 NPC, so first I need to find the correspondent ID number.
+The table will look like this: </p>
+<p><img src="gen4/guides/field/resources/owsprites/hgss_owtable.PNG" alt="" /></p>
+<p>There are 6 bytes for each entry, with the first two bytes (red) are the Overworld ID, the following two bytes (blue) for the number of the BTX filename in the a/0/8/1 narc, and the last two bytes (green) for the sprite properties.</p>
+<p>The glitched Bulbasaur sprite I'm replacing is 1_201.BTX0, so in little endian the filename number I'm looking for is <code>C9 00</code>. We can find the corresponding result by searching those bytes with HxD search function, with search direction set <em>forward</em> and clicking <em>Search All</em>, and we have to look for the 2nd result if it exists (regardless if the number is smaller or greather than 255), which will be at <code>0x22EC4</code> in my case. The bytes I'm looking for are the next two, so at <code>0x22EC6</code>, and you will need to replace them with <code>00 00</code> for the standard 32x32 NPC.</p>
+<p>So I will replace the <code>25 4E</code> bytes with <code>00 00</code>. You can save the overlay 1, and then save the ROM in DSPRE. If you did all the steps correctly the sprite you replaced will show up correctly in game.
+The other two offsets to fix the remaining bulbasaur glitched sprites (1_202.BTX0 and 1_203.BTX0) are respectively at <code>0x22ECC</code> and <code>0x22ED2</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="adding-new-poké-marts-platinumhgss-1"><a class="header" href="#adding-new-poké-marts-platinumhgss-1">Adding New Poké Marts <sup><em>(Platinum/HGSS)</em></sup></a></h1>
 <blockquote>
 <p>This guide was written by SpagoAsparago.</p>
@@ -406,7 +747,7 @@ End
 <p>This is a guide on how to add and display new Poké Marts in Platinum and HGSS.
 All offsets mentioned are based on the US version of the ROMs. </p>
 <hr />
-<h2 id="table-of-contents-1"><a class="header" href="#table-of-contents-1">Table of Contents</a></h2>
+<h2 id="table-of-contents-4"><a class="header" href="#table-of-contents-4">Table of Contents</a></h2>
 <ul>
 <li><a href="gen4/guides/field/pt_hgss-pokemarts.html#section">Adding a new Poké Mart</a>
 <ul>
@@ -465,7 +806,7 @@ AdrsRegSet 0x0210FA3C 0
 <p>The Town Map in Heart Gold is located solely within the Poké Gear, a departure from some previous games where the Town Map is a key item that gets a very large area to mess around on.  Because of this, the region is actually relatively cramped to start out with--Kanto makes a few sacrifices to nicely fit into the 32x32 blocks that the game uses--every square that the town map has corresponds to a 32x32 grid block, hence the reason that glitches like tweaking work in Platinum to go out of bounds and access the islands for Shaymin, Darkrai, and Cresselia.</p>
 <p>In this guide, I look to turn Johto &amp; a little of Kanto into Hoenn.  While the images are included here as examples of what you can do, I ask that you refrain from copying my images (at least while I am still an active hacker, actively developing for my own hack).  Otherwise, just let me know if you want to use resources and we can talk.</p>
 <hr />
-<h2 id="table-of-contents-2"><a class="header" href="#table-of-contents-2">Table of Contents</a></h2>
+<h2 id="table-of-contents-5"><a class="header" href="#table-of-contents-5">Table of Contents</a></h2>
 <ul>
 <li><a href="gen4/guides/interface/hgss-town_map.html#prerequisites">Prerequisites</a></li>
 <li><a href="gen4/guides/interface/hgss-town_map.html#part-1---graphics">Part 1 - Graphics</a>
@@ -1207,7 +1548,7 @@ C and C++ compile into assembly, which is then assembled into an executable and 
 </blockquote>
 <p>This is a tutorial that details how to insert the Fairy type in Black 2 and White 2 using MeroMero's <a href="https://www.pokecommunity.com/showthread.php?t=349000">initial research from years ago</a> and building upon it with a new and improved better understanding of just what happens in the assembly.  While yet imperfect, the improvements allow for a much better Fairy representation overall, eliminating the appearance of glitched graphics and crashes entirely.</p>
 <hr />
-<h2 id="table-of-contents-3"><a class="header" href="#table-of-contents-3">Table of Contents</a></h2>
+<h2 id="table-of-contents-6"><a class="header" href="#table-of-contents-6">Table of Contents</a></h2>
 <ul>
 <li><a href="gen5/guides/misc/b2w2-fairy.html#graphics">Graphics</a>
 <ul>
@@ -1743,7 +2084,7 @@ A follow up issue that can happen after you do the <a href="universal/guides/nce
 Research: <a href="https://github.com/Gonhex">Gonhex</a>, <a href="https://github.com/Trifindo">Trifindo</a></p>
 </blockquote>
 <p>The term &quot;map&quot; is used for areas of the game world. The player can navigate through them and interact with other objects placed on the map. Usually one map has a size of 32 by 32 tiles and a maximum of four of them are loaded simultaneously. The maps are usually selected by the currently active &quot;matrix&quot; in <code>a/0/0/9</code> but there are cases where the game chooses an other map, depending on the in-game season.</p>
-<h2 id="table-of-contents-4"><a class="header" href="#table-of-contents-4">Table of Contents</a></h2>
+<h2 id="table-of-contents-7"><a class="header" href="#table-of-contents-7">Table of Contents</a></h2>
 <ul>
 <li><a href="gen5/resources/field/bw_b2w2-maps.html#data-location">Data Location</a></li>
 <li><a href="gen5/resources/field/bw_b2w2-maps.html#data-structure">Data Structure</a>
@@ -2394,7 +2735,7 @@ struct Tile
 Research: <a href="https://github.com/Bond697">Bond697</a>, <a href="https://github.com/PlatinumMaster">PlatinumMaster</a>, <a href="https://github.com/Gonhex">Gonhex</a>, <a href="https://github.com/HelloOO7">Hello007</a></p>
 </blockquote>
 <p>The area data describes the current state of the overworld. It selects all the optical elements. The area is selected by the zone data in <code>a/0/1/2</code> but can also depend on the season.</p>
-<h2 id="table-of-contents-5"><a class="header" href="#table-of-contents-5">Table of Contents</a></h2>
+<h2 id="table-of-contents-8"><a class="header" href="#table-of-contents-8">Table of Contents</a></h2>
 <ul>
 <li><a href="gen5/resources/field/b2w2-area_data.html#data-location">Data Location</a></li>
 <li><a href="gen5/resources/field/b2w2-area_data.html#data-structure">Data Structure</a>
@@ -2493,7 +2834,7 @@ uint32_t getAreaID(uint32_t zoneAreaID)
 Research: <a href="https://github.com/Gonhex">Gonhex</a>, <a href="https://github.com/Trifindo">Trifindo</a></p>
 </blockquote>
 <p>The term &quot;map&quot; is used for areas of the game world. The player can navigate through them and interact with other objects placed on the map. Usually one map has a size of 32 by 32 tiles and a maximum of four of them are loaded simultaneously. The maps are usually selected by the currently active &quot;matrix&quot; in <code>a/0/0/9</code> but there are cases where the game chooses an other map, depending on the in-game season.</p>
-<h2 id="table-of-contents-6"><a class="header" href="#table-of-contents-6">Table of Contents</a></h2>
+<h2 id="table-of-contents-9"><a class="header" href="#table-of-contents-9">Table of Contents</a></h2>
 <ul>
 <li><a href="gen5/resources/field/bw_b2w2-maps.html#data-location">Data Location</a></li>
 <li><a href="gen5/resources/field/bw_b2w2-maps.html#data-structure">Data Structure</a>
@@ -3150,7 +3491,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a>, various</p>
     S(Sound)--&gt;N;
 </pre>
 <p>The Nintendo DS provides a set of data structures for fast memory access. These are used by the Pokemon main line games among others and can be grouped into different categories, see flowchart above. This documentation aims to provide information about the nitro system in an easily accessible way. Please note that the data is based on reverse engineering by various people and therefore mistakes can not be ruled out.</p>
-<h2 id="table-of-contents-7"><a class="header" href="#table-of-contents-7">Table of Contents</a></h2>
+<h2 id="table-of-contents-10"><a class="header" href="#table-of-contents-10">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/nitro_overview.html#data-structure">Data Structure</a>
 <ul>
@@ -3287,7 +3628,7 @@ Research: (see sections)</p>
     FIMG(File Image)--&gt;NARC;
 </pre>
 <p>Nitro archives are virtual file systems (fs) nested into the fs of the ROM. They are often used to group related files at the final branches of the file tree.</p>
-<h2 id="table-of-contents-8"><a class="header" href="#table-of-contents-8">Table of Contents</a></h2>
+<h2 id="table-of-contents-11"><a class="header" href="#table-of-contents-11">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/file_system/file_narc.html#data-structure">Data Structure</a>
 <ul>
@@ -3336,7 +3677,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     FATB(File Allocation Table)--&gt;NARC;
 </pre>
 <p>The file allocation table stores offsets to beginning and end of all entries within the file image.</p>
-<h2 id="table-of-contents-9"><a class="header" href="#table-of-contents-9">Table of Contents</a></h2>
+<h2 id="table-of-contents-12"><a class="header" href="#table-of-contents-12">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/file_system/section_fatb.html#data-structure">Data Structure</a>
 <ul>
@@ -3410,7 +3751,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     FIMG(File Image)--&gt;NARC;
 </pre>
 <p>A data buffer for all the files stored in this archive.</p>
-<h2 id="table-of-contents-10"><a class="header" href="#table-of-contents-10">Table of Contents</a></h2>
+<h2 id="table-of-contents-13"><a class="header" href="#table-of-contents-13">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/file_system/section_fimg.html#data-structure">Data Structure</a>
 <ul>
@@ -3470,7 +3811,7 @@ Research: (see sections)</p>
     UEXT(Use Extension?)--&gt;NANR;
 </pre>
 <p>The animation runtime creates frame by frame animations using cells. Affine transformations can also be applied to frames.</p>
-<h2 id="table-of-contents-11"><a class="header" href="#table-of-contents-11">Table of Contents</a></h2>
+<h2 id="table-of-contents-14"><a class="header" href="#table-of-contents-14">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/file_nanr.html#data-structure">Data Structure</a>
 <ul>
@@ -3521,7 +3862,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a>, <a href="https://github
     ABNK--&gt;NMAR;
 </pre>
 <p>The animation bank is used to animate 2D graphics. It requires an object to work on, which can be either a cell bank or a multi cell bank. Internally it works like frame by frame animations. To achieve more dynamic results, affine transformations can be applied to selected frames.</p>
-<h2 id="table-of-contents-12"><a class="header" href="#table-of-contents-12">Table of Contents</a></h2>
+<h2 id="table-of-contents-15"><a class="header" href="#table-of-contents-15">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_abnk.html#data-structure">Data Structure</a>
 <ul>
@@ -3732,7 +4073,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     LABL--&gt;NMAR;
 </pre>
 <p>Gives names to all cells or objects.</p>
-<h2 id="table-of-contents-13"><a class="header" href="#table-of-contents-13">Table of Contents</a></h2>
+<h2 id="table-of-contents-16"><a class="header" href="#table-of-contents-16">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_labl.html#data-structure">Data Structure</a>
 <ul>
@@ -3796,7 +4137,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     UEXT--&gt;NANR;
 </pre>
 <p>Holds a value which tells, if a &quot;multi-version&quot; of the cell or animation runtime will be applied.</p>
-<h2 id="table-of-contents-14"><a class="header" href="#table-of-contents-14">Table of Contents</a></h2>
+<h2 id="table-of-contents-17"><a class="header" href="#table-of-contents-17">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_uext.html#data-structure">Data Structure</a>
 <ul>
@@ -3856,7 +4197,7 @@ Research: (see sections)</p>
     PCMP(Palette Count Map)-.-&gt;NCLR;
 </pre>
 <p>The color runtime serves as base for all other 2D graphics components. It provides color palettes which are accessed via indexing. The count map (PCMP) is optional and sometimes used to limit the number of individual palettes. One palette can have either 16 or 256 colors. The number of colors is the same in all palettes of one file. </p>
-<h2 id="table-of-contents-15"><a class="header" href="#table-of-contents-15">Table of Contents</a></h2>
+<h2 id="table-of-contents-18"><a class="header" href="#table-of-contents-18">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/file_nclr.html#data-structure">Data Structure</a>
 <ul>
@@ -3902,7 +4243,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a>, <a href="https://github
     PLTT(Palette)--&gt;NCLR;
 </pre>
 <p>The palette section holds a table with all colors used in the sprite(s). The color information is squeezed into one WORD resulting in five bits per component (r, g, b) and one unused bit.</p>
-<h2 id="table-of-contents-16"><a class="header" href="#table-of-contents-16">Table of Contents</a></h2>
+<h2 id="table-of-contents-19"><a class="header" href="#table-of-contents-19">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_pltt.html#data-structure">Data Structure</a>
 <ul>
@@ -4003,7 +4344,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     PCMP(Palette Count Map)-.-&gt;NCLR;
 </pre>
 <p>The palette compression is an optional component for the color runtime. It reduces the number of palettes, if the palette section allows 16 of them. Useful to save memory but not often used.</p>
-<h2 id="table-of-contents-17"><a class="header" href="#table-of-contents-17">Table of Contents</a></h2>
+<h2 id="table-of-contents-20"><a class="header" href="#table-of-contents-20">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_pcmp.html#data-structure">Data Structure</a>
 <ul>
@@ -4068,7 +4409,7 @@ Research: (see sections)</p>
     UEXT(Use Extension?)--&gt;NCER;
 </pre>
 <p>The cell runtime creates groups of tiles which will be displayed as small images. The cells can serve as base for frame animations.</p>
-<h2 id="table-of-contents-18"><a class="header" href="#table-of-contents-18">Table of Contents</a></h2>
+<h2 id="table-of-contents-21"><a class="header" href="#table-of-contents-21">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/file_ncer.html#data-structure">Data Structure</a>
 <ul>
@@ -4117,7 +4458,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a>, <a href="https://github
     CEBK(Cell Bank)--&gt;NCER;
 </pre>
 <p>The cell bank creates a number of cells by combining tiles and selecting a palette for each cell. It usually operates on dimensionless (1D mapped) character graphics and is used in combination with the animation runtime to display dynamic objects.</p>
-<h2 id="table-of-contents-19"><a class="header" href="#table-of-contents-19">Table of Contents</a></h2>
+<h2 id="table-of-contents-22"><a class="header" href="#table-of-contents-22">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_cebk.html#data-structure">Data Structure</a>
 <ul>
@@ -4321,7 +4662,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     LABL--&gt;NMAR;
 </pre>
 <p>Gives names to all cells or objects.</p>
-<h2 id="table-of-contents-20"><a class="header" href="#table-of-contents-20">Table of Contents</a></h2>
+<h2 id="table-of-contents-23"><a class="header" href="#table-of-contents-23">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_labl.html#data-structure">Data Structure</a>
 <ul>
@@ -4385,7 +4726,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     UEXT--&gt;NANR;
 </pre>
 <p>Holds a value which tells, if a &quot;multi-version&quot; of the cell or animation runtime will be applied.</p>
-<h2 id="table-of-contents-21"><a class="header" href="#table-of-contents-21">Table of Contents</a></h2>
+<h2 id="table-of-contents-24"><a class="header" href="#table-of-contents-24">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_uext.html#data-structure">Data Structure</a>
 <ul>
@@ -4445,7 +4786,7 @@ Research: (see sections)</p>
     CPOS(Caracter Position?)-.-&gt;NCGR;
 </pre>
 <p>The character graphic runtime holds the image data, usually in form of tiles. The image can be displayed directly or used as tile buffer for further processing as <a href="universal/resources/nitro/graphics_2d/file_nscr.html">screen map</a> or <a href="universal/resources/nitro/graphics_2d/file_ncer.html">cells</a>.</p>
-<h2 id="table-of-contents-22"><a class="header" href="#table-of-contents-22">Table of Contents</a></h2>
+<h2 id="table-of-contents-25"><a class="header" href="#table-of-contents-25">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/file_ncgr.html#data-structure">Data Structure</a>
 <ul>
@@ -4491,7 +4832,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a>, <a href="https://github
     CHAR(Character)--&gt;NCGR;
 </pre>
 <p>The character section stores the sprite-image in form of indices to colors within a palette. The array layout is usually a tile map where each tile has a size of <code>8 * 8 pixels</code>, but can also be a line buffer which maps the image directly to the target.</p>
-<h2 id="table-of-contents-23"><a class="header" href="#table-of-contents-23">Table of Contents</a></h2>
+<h2 id="table-of-contents-26"><a class="header" href="#table-of-contents-26">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_char.html#data-structure">Data Structure</a>
 <ul>
@@ -4611,7 +4952,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     CPOS(Character Position?)-.-&gt;NCGR;
 </pre>
 <p>This section does only exist, if the character image has a specified size. The purpose is not clear.</p>
-<h2 id="table-of-contents-24"><a class="header" href="#table-of-contents-24">Table of Contents</a></h2>
+<h2 id="table-of-contents-27"><a class="header" href="#table-of-contents-27">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_cpos.html#data-structure">Data Structure</a>
 <ul>
@@ -4674,7 +5015,7 @@ Research: (see sections)</p>
     LABL(Label)--&gt;NMAR;
 </pre>
 <p>The multi animation runtime works in the same way as the animation runtime does, but on multi cells. The animations on the individual cells are not effected.</p>
-<h2 id="table-of-contents-25"><a class="header" href="#table-of-contents-25">Table of Contents</a></h2>
+<h2 id="table-of-contents-28"><a class="header" href="#table-of-contents-28">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/file_nmar.html#data-structure">Data Structure</a>
 <ul>
@@ -4722,7 +5063,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a>, <a href="https://github
     ABNK--&gt;NMAR;
 </pre>
 <p>The animation bank is used to animate 2D graphics. It requires an object to work on, which can be either a cell bank or a multi cell bank. Internally it works like frame by frame animations. To achieve more dynamic results, affine transformations can be applied to selected frames.</p>
-<h2 id="table-of-contents-26"><a class="header" href="#table-of-contents-26">Table of Contents</a></h2>
+<h2 id="table-of-contents-29"><a class="header" href="#table-of-contents-29">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_abnk.html#data-structure">Data Structure</a>
 <ul>
@@ -4933,7 +5274,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     LABL--&gt;NMAR;
 </pre>
 <p>Gives names to all cells or objects.</p>
-<h2 id="table-of-contents-27"><a class="header" href="#table-of-contents-27">Table of Contents</a></h2>
+<h2 id="table-of-contents-30"><a class="header" href="#table-of-contents-30">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_labl.html#data-structure">Data Structure</a>
 <ul>
@@ -4995,7 +5336,7 @@ Research: (see sections)</p>
     MCBK(Multi Cell Bank)--&gt;NMCR;
 </pre>
 <p>The multi cell runtime combines multiple animated cells into objects. These can be animated again to allow more complex animations.</p>
-<h2 id="table-of-contents-28"><a class="header" href="#table-of-contents-28">Table of Contents</a></h2>
+<h2 id="table-of-contents-31"><a class="header" href="#table-of-contents-31">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/file_nmcr.html#data-structure">Data Structure</a>
 <ul>
@@ -5038,7 +5379,7 @@ Research: <a href="https://github.com/Gonhex">Gonhex</a></p>
     MCBK(Multi Cell Bank)--&gt;NMCR;
 </pre>
 <p>The multi cell bank combines multiple animated cells into cluster. This allows more complex animations by grouping related sequences into one unit. </p>
-<h2 id="table-of-contents-29"><a class="header" href="#table-of-contents-29">Table of Contents</a></h2>
+<h2 id="table-of-contents-32"><a class="header" href="#table-of-contents-32">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_mcbk.html#data-structure">Data Structure</a>
 <ul>
@@ -5151,7 +5492,7 @@ Research: (see sections)</p>
     SCRN(Screen)--&gt;NSCR;
 </pre>
 <p>The screen runtime is used to rearrange the tiles of the character graphic on the screen. It also has the ability to flip tiles and change their palette index.</p>
-<h2 id="table-of-contents-30"><a class="header" href="#table-of-contents-30">Table of Contents</a></h2>
+<h2 id="table-of-contents-33"><a class="header" href="#table-of-contents-33">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/file_nscr.html#data-structure">Data Structure</a>
 <ul>
@@ -5194,7 +5535,7 @@ Research: <a href="https://problemkaputt.de">NOCASH</a></p>
     SCRN(Screen)--&gt;NSCR;
 </pre>
 <p>The screen section, also known as tile map, is used to create an image by rearranging and flipping tiles. Each position on the raster gets one. This can save a lot of memory since duplicated tiles can be avoided.</p>
-<h2 id="table-of-contents-31"><a class="header" href="#table-of-contents-31">Table of Contents</a></h2>
+<h2 id="table-of-contents-34"><a class="header" href="#table-of-contents-34">Table of Contents</a></h2>
 <ul>
 <li><a href="universal/resources/nitro/graphics_2d/section_scrn.html#data-structure">Data Structure</a>
 <ul>

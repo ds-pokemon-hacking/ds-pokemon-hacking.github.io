@@ -6,10 +6,13 @@
 
 - [Generation IV]()
   - [Diamond and Pearl]()
+    - [Overworld Sprites Replacement](gen4/guides/field/owsprites.md)
   - [Platinum]()
+    - [Overworld Sprites Replacement](gen4/guides/field/owsprites.md)
     - [Adding New Poké Marts](gen4/guides/field/pt_hgss-pokemarts.md)
     - [Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md)
   - [Heartgold and SoulSilver]()
+    - [Overworld Sprites Replacement](gen4/guides/field/owsprites.md)
     - [Adding New Poké Marts](gen4/guides/field/pt_hgss-pokemarts.md)
     - [Editing the Town Map](gen4/guides/interface/hgss-town_map.md)
     - [Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md)
