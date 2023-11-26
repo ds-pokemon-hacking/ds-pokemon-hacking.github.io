@@ -58,7 +58,7 @@ Also, in HxD you can see the decimal value of the bytes you currently have selec
 
 Once you are at the right offset you can simply type the bytes you want to replace and save the file, or use the Ctrl+B shortcut, which will overwrite the amount of bytes you have currently copied at the offset location. In HxD the bytes you edited before saving the file will be displayed in red.
 
-![](resources/hexpaste.PNG)
+![](resources/hexpaste.png)
 
 **Remember to only replace bytes and never expand the size of the original file, unless you know what you are doing**.
 The game expects an exact amount of data, generally expanding the size of the file will break your game unless you are also accounting for that trough code editing.
