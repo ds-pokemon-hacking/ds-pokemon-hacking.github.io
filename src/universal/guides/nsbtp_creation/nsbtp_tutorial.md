@@ -1,4 +1,5 @@
 # Making a new texture flipbook animation from scratch
+> This guide was written by [Brom](https://github.com/BromBromBromley).
 
 ## What is a texture flipbook?
 
