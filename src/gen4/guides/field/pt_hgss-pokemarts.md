@@ -14,7 +14,7 @@ All offsets mentioned are based on the US version of the ROMs.
 ## Adding a new Poké Mart
 
 If you haven't already, you'll have to perform the ARM9 expansion since that's were the new Poké Mart(s) will be written to. 
-You can do so by clicking "Expand ARM9" in DSPRE toolbox, then go to Unpacked/SynthOverlay in your DSPRE project folder (which will be named ROMname_DSPRE_contents, and will be in the same folder of your ROM) and using your hex editor of choice open either file 0009 if you're on Platinum or 0001 for HGSS.
+You can do so by clicking "Expand ARM9" in DSPRE toolbox, then go to Unpacked/SynthOverlay in your DSPRE project folder (which will be named ROMname_DSPRE_contents, and will be in the same folder of your ROM) and using your hex editor of choice open either file 0009 if you're on Platinum or 0000 for HGSS.
 
 You can write at whatever offset you want as long as it's empty, I will be writing my Poké Mart at 0x100. You need to sum `0x023C8000` to this offset, and write it down since you'll need it later to display the mart in game. In my case it will be `0x023C8100`.
 
