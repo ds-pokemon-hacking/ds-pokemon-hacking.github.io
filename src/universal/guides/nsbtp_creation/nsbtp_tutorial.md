@@ -6,7 +6,7 @@ Ever seen flowers on the field change between different frames in their animatio
 
 ## What is an NSBTP?
 
-For the Nintendo DS, games that are 3D primarily use NSBTP (NITRO System Binary Texture Pattern animation) files to make texture flipbooks. In tools like Tinke, you may see these files as ".btp0" files, but don't worry, they're the same as NSBTP files.
+For the Nintendo DS, games that are 3D primarily use [NSBTP (NITRO System Binary Texture Pattern animation)](https://kingdom-of-ds-hacking.github.io/universal/resources/nitro/graphics_3d/file_btp0.html) files to make texture flipbooks. In tools like Tinke, you may see these files as ".btp0" files, but don't worry, they're the same as NSBTP files.
 
 ## What is an ITP?
 
