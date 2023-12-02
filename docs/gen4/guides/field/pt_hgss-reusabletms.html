@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Making TMs Reusable - Kingdom of DS Hacking</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../../index.html">Home</a></li><li class="chapter-item affix "><li class="part-title">Guides</li><li class="chapter-item expanded "><div>Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Diamond and Pearl</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen4/guides/field/owsprites.html">Overworld Sprites Replacement</a></li></ol></li><li class="chapter-item "><div>Platinum</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen4/guides/field/owsprites.html">Overworld Sprites Replacement</a></li><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-pokemarts.html">Adding New Poké Marts</a></li><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-script_weather.html">Setting the Weather from a Script</a></li><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-reusabletms.html" class="active">Making TMs Reusable</a></li></ol></li><li class="chapter-item expanded "><div>Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen4/guides/field/owsprites.html">Overworld Sprites Replacement</a></li><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-pokemarts.html">Adding New Poké Marts</a></li><li class="chapter-item "><a href="../../../gen4/guides/interface/hgss-town_map.html">Editing the Town Map</a></li><li class="chapter-item "><a href="../../../gen4/guides/field/pt_hgss-script_weather.html">Setting the Weather from a Script</a></li><li class="chapter-item expanded "><a href="../../../gen4/guides/field/pt_hgss-reusabletms.html" class="active">Making TMs Reusable</a></li></ol></li></ol></li><li class="chapter-item "><div>Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen5/guides/misc/bw_b2w2-code_injection.html">Code Injection</a></li><li class="chapter-item "><a href="../../../gen5/guides/field/bw_b2w2-map_insertion.html">Map Insertion</a></li><li class="chapter-item "><a href="../../../gen5/guides/field/bw_b2w2-buildings.html">Exporting and Importing Buildings</a></li></ol></li><li class="chapter-item "><div>Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen5/guides/misc/bw_b2w2-code_injection.html">Code Injection</a></li><li class="chapter-item "><a href="../../../gen5/guides/misc/b2w2-fairy.html">Fairy Type Insertion</a></li><li class="chapter-item "><a href="../../../gen5/guides/field/bw_b2w2-map_insertion.html">Map Insertion</a></li><li class="chapter-item "><a href="../../../gen5/guides/field/bw_b2w2-buildings.html">Exporting and Importing Buildings</a></li></ol></li></ol></li><li class="chapter-item "><div>Universal</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/guides/code_injection/code_injection.html">Code Injection</a></li><li class="chapter-item "><a href="../../../universal/guides/sprite_indexing/indexing.html">Sprite Indexing</a></li><li class="chapter-item "><a href="../../../universal/guides/ncer_sprite_editing/ncer_sprite_editing.html">NCER Sprite Editing</a></li><li class="chapter-item "><a href="../../../universal/guides/hex_hediting/hex_editing.html">Hex Editing</a></li></ol></li><li class="chapter-item "><li class="part-title">Resources</li><li class="chapter-item "><div>Generation IV</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Diamond and Pearl</div></li><li class="chapter-item "><div>Platinum</div></li><li class="chapter-item "><div>Heartgold and SoulSilver</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen4/resources/interface/hgss-town_map_spots.html">Town Map Structures</a></li></ol></li></ol></li><li class="chapter-item "><div>Generation V</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Black and White</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen5/resources/field/bw_b2w2-maps.html">Maps</a></li><li class="chapter-item "><a href="../../../gen5/resources/field/bw_b2w2-zone_entities.html">Zone Entities</a></li></ol></li><li class="chapter-item "><div>Black 2 and White 2</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../gen5/resources/field/b2w2-area_data.html">Area Data</a></li><li class="chapter-item "><a href="../../../gen5/resources/field/bw_b2w2-maps.html">Maps</a></li><li class="chapter-item "><a href="../../../gen5/resources/field/bw_b2w2-zone_entities.html">Zone Entities</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../../universal/resources/nitro/nitro_overview.html">Nitro</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/file_system/file_narc.html">Nitro Archive (NARC)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/file_system/section_fatb.html">File Allocation Table (FATB)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/file_system/section_fntb.html">File Name Table (FNTB)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/file_system/section_fimg.html">File Image (FIMG)</a></li></ol></li><li class="chapter-item "><div>G2D</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/file_nanr.html">Nitro Animation Runtime (NANR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_abnk.html">Animation Bank (ABNK)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_uext.html">User Extension (UEXT)</a></li></ol></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/file_nclr.html">Nitro Color Runtime (NCLR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_pltt.html">Palette (PLTT)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_pcmp.html">Palette Count Map (PCMP)</a></li></ol></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/file_ncer.html">Nitro Cell Runtime (NCER)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_cebk.html">Cell Bank (CEBK)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_uext.html">User Extension (UEXT)</a></li></ol></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/file_ncgr.html">Nitro Graphics Runtime (NCGR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_char.html">Character (CHAR)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_cpos.html">Character Position (CPOS)</a></li></ol></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/file_nmar.html">Nitro Multicell Animation Runtime (NMAR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_abnk.html">Animation Bank (ABNK)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_labl.html">Label (LABL)</a></li></ol></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/file_nmcr.html">Nitro Multicell Runtime (NMCR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_mcbk.html">Multicell Bank (MCBK)</a></li></ol></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/file_nscr.html">Nitro Screen Runtime (NSCR)</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_2d/section_scrn.html">Screen (SCRN)</a></li></ol></li></ol></li><li class="chapter-item "><div>G3D</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_3d/file_bta0.html">Nitro System Binary Texture Animation (NSBTA)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_3d/file_bmd0.html">Nitro System Binary Model (NSBMD)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_3d/file_btx0.html">Nitro System Binary Texture (NSBTX)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_3d/file_btp0.html">Nitro System Binary Texture Pattern (NSBTP)</a></li><li class="chapter-item "><a href="../../../universal/resources/nitro/graphics_3d/file_bca0.html">Nitro System Binary Character Skeleton Animation (NSBCA)</a></li></ol></li><li class="chapter-item "><div>Sound</div></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Kingdom of DS Hacking</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="how-to-make-tms-reusableplatinumhgss"><a class="header" href="#how-to-make-tms-reusableplatinumhgss">How to make TMs Reusable<sup><em>(Platinum/HGSS)</em></sup></a></h1>
+<blockquote>
+<p>This guide was originally written by Drayano and formatted for this wiki by SpagoAsparago.</p>
+</blockquote>
+<blockquote>
+<p>The Research was made by Mikelan98 with help from NextWorld and Bagboy.
+Mikelan98 has requested that you give credit to him if you implement this in your hack.</p>
+</blockquote>
+<p>This is a guide on how to implement reusable TMs in Platinum and HGSS. The US versions of those games are used, so offsets may be not be the same if you're using a different version.</p>
+<p>The tools required are an hex editor and Tinke 0.9.2, or instead CrystalTile2 if you're using HGSS.</p>
+<hr />
+<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
+<ul>
+<li><a href="#section">Extracting the files</a>
+<ul>
+<li><a href="#subsection-1">Platinum</a></li>
+<li><a href="#subsection-2">HGSS</a></li>
+</ul>
+</li>
+<li><a href="#section-2">Hex Editing</a>
+<ul>
+<li><a href="#subsection-1">Making TMs infinte</a></li>
+<li><a href="#subsection-2">Removing the TM item count</a></li>
+</ul>
+</li>
+<li><a href="#section-3">Reinserting the files</a></li>
+</ul>
+<h2 id="extracting-the-files"><a class="header" href="#extracting-the-files">Extracting the files</a></h2>
+<p>First you need to extract the relative files in order to perform the hex editing</p>
+<h3 id="platinum"><a class="header" href="#platinum">Platinum</a></h3>
+<p>For Platinum the files you need are <em>arm9.bin</em> and <em>overaly9_84</em>.</p>
+<p>Open your ROM in Tinke, search the file, select it and click the extract button.</p>
+<h3 id="hgss"><a class="header" href="#hgss">HGSS</a></h3>
+<p>For HGSS you need to extract <em>arm9.bin</em> and <em>overlay_0015.bin</em>, but they are compressed unlike in Platinum hence the need for CystalTile2.
+Open CrystalTile2 and then select File&gt;Open and select your ROM. Then click the NDS icon in the top bar, which should open a window called <em>NDS filesystem information</em>:</p>
+<p><img src="resources/pt_hgss-reusabletms/tms_ct2screen.PNG" alt="" /></p>
+<p>Select the file you want to export, right click and click <em>Extract (U)</em>, and save it somewhere.
+You can also use the arm9.bin from your DSPRE project folder, which is already uncompressed.</p>
+<h2 id="hex-editing"><a class="header" href="#hex-editing">Hex Editing</a></h2>
+<p>Load the files you extracted in a hex editor, then change the bytes according to the following steps, then save the files.</p>
+<h3 id="making-tms-infinite"><a class="header" href="#making-tms-infinite">Making TMs infinite</a></h3>
+<ul>
+<li>For Platinum, at offset <code>0x865EB</code> in the arm9.bin change <code>D1</code> to <code>E0</code></li>
+<li>For HGSS, at <code>0x825A7</code> in the arm9.bin change <code>D1</code> to <code>E0</code> </li>
+</ul>
+<h3 id="removing-the-tm-item-count"><a class="header" href="#removing-the-tm-item-count">Removing the TM item count</a></h3>
+<ul>
+<li>For Platinum, at <code>0x4372</code> in overlay 84 change <code>FF F7 83 FF</code> to <code>00 00 00 00</code></li>
+<li>For HGSS,  at <code>0x6239</code> in overlay 15 change <code>D3</code> to <code>E0</code></li>
+</ul>
+<h2 id="reinserting-the-files"><a class="header" href="#reinserting-the-files">Reinserting the files</a></h2>
+<ul>
+<li>
+<p>For Platinum just open your ROM in Tinke again, search the files you previously extracted, select them and click the <em>Change File</em> button to replace them with the ones you hex edited. Then save the ROM.</p>
+</li>
+<li>
+<p>For HGSS, in the NDS filesystem information window, you can select the files you previously extracted, right click and this time click <em>Compression</em> and select your own hex edited files. If you're using the arm9 from DSPRE project folder, you only need to click <em>Import</em> instead. After you're done you can use <code>File&gt;Build ROM...</code> to save your ROM.</p>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../gen4/guides/field/pt_hgss-script_weather.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../gen4/guides/field/owsprites.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../gen4/guides/field/pt_hgss-script_weather.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../gen4/guides/field/owsprites.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
