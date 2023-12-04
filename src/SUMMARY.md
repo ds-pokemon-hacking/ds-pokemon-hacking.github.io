@@ -11,24 +11,31 @@
     - [Overworld Sprites Replacement](gen4/guides/field/owsprites.md)
     - [Adding New Poké Marts](gen4/guides/field/pt_hgss-pokemarts.md)
     - [Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md)
+    - [Making TMs Reusable](gen4/guides/field/pt_hgss-reusabletms.md)
   - [Heartgold and SoulSilver]()
     - [Overworld Sprites Replacement](gen4/guides/field/owsprites.md)
     - [Adding New Poké Marts](gen4/guides/field/pt_hgss-pokemarts.md)
     - [Editing the Town Map](gen4/guides/interface/hgss-town_map.md)
     - [Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md)
+    - [Making TMs Reusable](gen4/guides/field/pt_hgss-reusabletms.md)
 
 - [Generation V]()
   - [Black and White]()
     - [Code Injection](gen5/guides/misc/bw_b2w2-code_injection.md)
+    - [Map Insertion](gen5/guides/field/bw_b2w2-map_insertion.md)
+    - [Exporting and Importing Buildings](gen5/guides/field/bw_b2w2-buildings.md)
   - [Black 2 and White 2]()
     - [Code Injection](gen5/guides/misc/bw_b2w2-code_injection.md)
     - [Fairy Type Insertion](gen5/guides/misc/b2w2-fairy.md)
-
+    - [Map Insertion](gen5/guides/field/bw_b2w2-map_insertion.md)
+    - [Exporting and Importing Buildings](gen5/guides/field/bw_b2w2-buildings.md)
 - [Universal]()
   - [Code Injection](universal/guides/code_injection/code_injection.md)
   - [Sprite Indexing](universal/guides/sprite_indexing/indexing.md)
   - [NCER Sprite Editing](universal/guides/ncer_sprite_editing/ncer_sprite_editing.md)
+  - [Hex Editing](universal/guides/hex_hediting/hex_editing.md)
   - [Texture Flipbook (NSBTP) Creation](universal/guides/nsbtp_creation/nsbtp_tutorial.md)
+
 
 
 # Resources
