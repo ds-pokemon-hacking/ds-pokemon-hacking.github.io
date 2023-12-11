@@ -80,6 +80,8 @@
 
 [Sprite Indexing](universal/guides/sprite_indexing/indexing.md)
 
+- [Sprite Indexing with GIMP](universal/guides/sprite_indexing/resources/gimp/gimp.md)
+
 [NCER Sprite Editing](universal/guides/ncer_sprite_editing/ncer_sprite_editing.md)
 
 <br>
