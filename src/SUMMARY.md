@@ -32,6 +32,7 @@
 - [Universal]()
   - [Code Injection](universal/guides/code_injection/code_injection.md)
   - [Sprite Indexing](universal/guides/sprite_indexing/indexing.md)
+    - [Sprite Indexing with GIMP](universal/guides/sprite_indexing/resources/gimp/gimp.md)
   - [NCER Sprite Editing](universal/guides/ncer_sprite_editing/ncer_sprite_editing.md)
   - [Hex Editing](universal/guides/hex_editing/hex_editing.md)
   - [Texture Flipbook (NSBTP) Creation](universal/guides/nsbtp_creation/nsbtp_tutorial.md)
