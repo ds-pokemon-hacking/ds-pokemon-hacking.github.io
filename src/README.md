@@ -13,6 +13,7 @@
 <summary>Diamond and Pearl</summary>
 <br>
 
+[Overworld Sprites Replacement](gen4/guides/field/owsprites.md)
 
 </details>
 
@@ -20,9 +21,13 @@
 <summary>Platinum</summary>
 <br>
 
+[Overworld Sprites Replacement](gen4/guides/field/owsprites.md)
+
 [Adding New Poké Marts](gen4/guides/field/pt_hgss-pokemarts.md)
 
 [Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md)
+
+[Making TMs Reusable](gen4/guides/field/pt_hgss-reusabletms.md)
 
 </details>
 
@@ -30,11 +35,15 @@
 <summary>Heartgold and SoulSilver</summary>
 <br>
 
+[Overworld Sprites Replacement](gen4/guides/field/owsprites.md)
+
 [Adding New Poké Marts](gen4/guides/field/pt_hgss-pokemarts.md)
 
 [Editing the Town Map](gen4/guides/interface/hgss-town_map.md)
 
 [Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md)
+
+[Making TMs Reusable](gen4/guides/field/pt_hgss-reusabletms.md)
 
 </details>
 <br>
@@ -54,6 +63,10 @@
 
 [Code Injection](gen5/guides/misc/bw_b2w2-code_injection.md)
 
+[Map Insertion](gen5/guides/field/bw_b2w2-map_insertion.md)
+
+[Exporting and Importing Buildings](gen5/guides/field/bw_b2w2-buildings.md)
+
 </details>
 
 <details>
@@ -63,6 +76,10 @@
 [Code Injection](gen5/guides/misc/bw_b2w2-code_injection.md)
 
 [Fairy Type Insertion](gen5/guides/misc/b2w2-fairy.md)
+
+[Map Insertion](gen5/guides/field/bw_b2w2-map_insertion.md)
+
+[Exporting and Importing Buildings](gen5/guides/field/bw_b2w2-buildings.md)
 
 </details>
 
@@ -83,6 +100,10 @@
 - [Sprite Indexing with GIMP](universal/guides/sprite_indexing/resources/gimp/gimp.md)
 
 [NCER Sprite Editing](universal/guides/ncer_sprite_editing/ncer_sprite_editing.md)
+
+[Hex Editing](universal/guides/hex_editing/hex_editing.md)
+
+[Texture Flipbook (NSBTP) Creation](universal/guides/nsbtp_creation/nsbtp_tutorial.md)
 
 <br>
 </details>
@@ -155,5 +176,14 @@
 
 <br>
 </details>
+
+---
+
+# Contributing
+
+---
+
+
+[Contribution Guide](contribution_guide.md)
 
 ---
