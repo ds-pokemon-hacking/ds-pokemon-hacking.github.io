@@ -30,7 +30,7 @@
 
 ## Pull Requests
 1) Once you've finished writing your markdown file, click the *Commit Changes* button and commit to your main branch.
-2) In order for your file to show up on the wiki you need to edit `SUMMARY.md` at `src/SUMMARY.md`. Add an entry for your file to every game it applies (unless it's in the Universal section).
+2) In order for your file to show up on the wiki you need to edit `SUMMARY.md` and `README.md` in the `src` folder. Add an entry for your file to every game it applies (unless it's in the Universal section).
 3) Make sure your branch is up to date before submitting a PR, you can do so by using the *Sync Fork* button in the main page of your repo.
 4) In your repository, click the *Pull Requests* tab and then *New Pull Request*. Make sure you are comparing your branch and the main branch of the original repository.
 5) Fill in the form and then submit the PR.
