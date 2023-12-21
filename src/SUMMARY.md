@@ -88,3 +88,5 @@
     - [Nitro System Binary Texture Pattern (NSBTP)](universal/resources/nitro/graphics_3d/file_btp0.md)
     - [Nitro System Binary Character Skeleton Animation (NSBCA)](universal/resources/nitro/graphics_3d/file_bca0.md)
   - [Sound]()
+# Contributing
+- [Contribution Guide](contribution_guide.md)
