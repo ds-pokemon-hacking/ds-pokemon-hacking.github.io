@@ -178,3 +178,12 @@
 </details>
 
 ---
+
+# Contributing
+
+---
+
+
+[Contribution Guide](contribution_guide.md)
+
+---
