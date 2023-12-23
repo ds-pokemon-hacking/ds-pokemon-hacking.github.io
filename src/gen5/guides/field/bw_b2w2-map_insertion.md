@@ -1,5 +1,5 @@
 # Inserting your own Maps in Gen V games
-> This guide was written by Gonhex and was formatted and expanded for this wiki by SpagoAsparago
+> This guide was written by SpagoAsparago, based on information provided by Gonhex
 
 
 This is a tutorial on how to insert your own maps in generation 5 games, as well as change the Area Data textures.
@@ -16,10 +16,10 @@ It is assumed you have already made your map in PDSMS (or Blender) and have all 
 * [Updating the Area Data](#section-5)
 
 ## Replacing Maps
-First you need to open CTRMap Zone Loader, and select the map you want to replace. From this window you want to keep in minding:
-1) The Header number
+First you need to open CTRMap Zone Loader, and select the map you want to replace. From this window you want to keep in mind:
+1) The Zone ID (Header Number in SDSME)
 2) The Matrix
-3) If you map is using textures not present in the original map, then the *Area* value as well
+3) If your map is using textures not present in the original map, then the *Area* value as well
 
 ![](resources/bw_b2w2-map_insertion/mapinsertion.png)
 
@@ -28,14 +28,14 @@ Now you have to find the file number of the map you want to replace, you can do 
 
 * Using SDSME:
 
-**SDSME is very old and not recommended, it's recommended to only use it for viewing purposes and don't make any edits with it**.
+**Only use SDSME for viewing purposes, you shouldn't use it to extract or import files**.
 
-Go to the Matrix Editor tab and select your Matrix. Then in the Map Headers tab find out where your Header number is located. Open the Map Files tab, and the number you're looking for will be at the same spot of that header in the previous tab. If there is no Map Header tab for the Matrix you've selected, it means all Map Files share the same header.
+Go to the Matrix Editor tab and select your Matrix. Then in the Map Headers tab find out where your Zone ID is located. Open the Map Files tab, and the number you're looking for will be at the same spot of that header in the previous tab. If there is no Map Header tab for the Matrix you've selected, it means all Map Files share the same header.
 
 * Using GFMatrixEditor:
 
 First you have to oepn your ROM with [TinkeDSi](https://github.com/R-YaTian/TinkeDSi/releases/tag/V0.9.3), navigate the filesystem to a/0/0/9, and extract the file corrisponding to the matrix number.
-Then launch GFMatrixEditor and click the GFMat->Pack button, it will generate two spreadsheet, contaning the Headers and Map files for that matrix. Open the Headers spreadsheet and check where your header number is located, then open the Map Files spreadsheet and at the same spot check what number is there. That's the Map File you're looking for.
+Then launch [GFMatrixEditor](https://drive.google.com/file/d/1w6SL2llu9oiIev5XIV2XdEQpJm-APm27/view?usp=sharing) and click the GFMat->Pack button, it will generate two spreadsheet, contaning the Headers and Map files for that matrix. Open the Headers spreadsheet and check where your Zone ID is located, then open the Map Files spreadsheet and at the same spot check what number is there. That's the Map File you're looking for.
 
 ## Inserting the Map
 There are two different programs that can insert the map:
