@@ -22,7 +22,7 @@ Launch the Command Prompt in that same folder. On Windows you can type "cmd" in 
 To unpack the NARC, you can use the command 
 
 ```Knarc -u file```
-With `file` being the extracted NARC. This will extract all its content in the folder the NARC is currently located, if you want to extract them to a different folder, then use
+With `file` being the extracted NARC filename. This will extract all its content in the folder the NARC is currently located, if you want to extract them to a different folder, then use
 
 ```Knarc -d folder -u file```
 With `folder` being the address of the destination folder you want. You can create a new folder inside the one from where you launched Knarc and simply use that folder name in the command.
