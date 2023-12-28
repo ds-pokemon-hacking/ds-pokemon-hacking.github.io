@@ -15,12 +15,7 @@ First, extract the NARC you want to unpack with Tinke and save it in the same fo
 
 Launch the Command Prompt in that same folder. On Windows you can type "cmd" in the folder address:
 
- <video width="320" height="240" controls>
-  <source src="resources/quickcmdvideo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video> 
-
-
+<video src="resources/quickcmdvideo.mp4" width="320" height="240" controls></video>
 
 ## Unpacking the NARC
 
