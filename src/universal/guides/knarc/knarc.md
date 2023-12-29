@@ -13,9 +13,12 @@ You can download Knarc.exe from [here](https://github.com/kr3nshaw/knarc/release
 ## Opening the CMD
 First, extract the NARC you want to unpack with Tinke and save it in the same folder as the Knarc.exe file.
 
-Launch the Command Prompt in that same folder. On Windows you can type "cmd" in the folder address:
+Launch the Command Prompt in that same folder.
 
-<video src="resources/quickcmdvideo.mp4" width="320" height="240" controls></video>
+<details>
+ <summary>On Windows you can type `cmd` in the folder address and press enter:</summary>
+
+<video src="resources/quickcmdvideo.mp4" width="640" height="480" controls></video>
 
 ## Unpacking the NARC
 
