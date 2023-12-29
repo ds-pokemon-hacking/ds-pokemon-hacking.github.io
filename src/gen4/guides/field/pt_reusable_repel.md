@@ -1,4 +1,4 @@
-# Tutorial Name
+# Reusable Repel<sup>*(Platinum)*</sup>
 > This guide was written by SpagoAsparago. Credits to BluRose for helping with the ASM and to brahulus for the Repel AR Code.
 
 This is a tutorial on how to implement the reusable repel in Platinum.
