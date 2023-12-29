@@ -4,7 +4,9 @@
 This is a tutorial on how to implement the reusable repel in Platinum.
 When the repel runs out, a prompt will appear, from which the player can choose to use another repel:
 
-![The options only appear if the player has the appropriate repel item(s) in the bag](resources/pt_reusable_repel/pt_reusable_repel.png)
+![](resources/pt_reusable_repel/pt_reusable_repel.png)
+
+The options only appear if the player has the appropriate repel item(s) in the bag
 
 You'll need to use [DSPRE](https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor/releases) and a Hex Editor. If you don't know how to hex edit, check out the [Hex Editing Guide](./././)
 
