@@ -19,7 +19,7 @@ This **only works on the US Version of the game**. Attempting to replace the sam
   * [Text](#subsection-1)
 * [Hex Editing](#section-2)
 
-## Section
+## DSPRE
 If you don't have one already, create a new project by loading your ROM in DSPRE. Then go to the *Scripting* tab.
 
 ### Scripting
