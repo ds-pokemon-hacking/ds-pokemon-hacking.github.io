@@ -34,3 +34,20 @@
 3) Make sure your branch is up to date before submitting a PR, you can do so by using the *Sync Fork* button in the main page of your repo.
 4) In your repository, click the *Pull Requests* tab and then *New Pull Request*. Make sure you are comparing your branch and the main branch of the original repository.
 5) Fill in the form and then submit the PR.
+
+## Videos and Local Clone
+Videos can be to the repo along images if they're small enough, otherwise they can be embedded to your markdown file from an external hosting service like youtube. You can use html, css or javascript.
+
+Check out the syntax used in [NCER Guide](https://github.com/kingdom-of-ds-hacking/kingdom-of-ds-hacking.github.io/blob/main/src/universal/guides/ncer_sprite_editing/ncer_sprite_editing.md) or the [Knarc Guide](https://github.com/kingdom-of-ds-hacking/kingdom-of-ds-hacking.github.io/blob/main/src/universal/guides/knarc/knarc.md) for examples of embedded videos.
+However you can't check if the video will actually play on github's markdown viewer, so you need to host a local clone of the website.
+
+In order to do so you first need to install Cargo and Rust and then build mdbook from source.You may want to check out [mdbook Installation Guide](https://rust-lang.github.io/mdBook/guide/installation.html), 
+
+If you're on Windows:
+1) Install [Rust](https://www.rust-lang.org/tools/install)
+2) This should install all the tools at `C:\Users\user\.cargo\bin` and add this address to your PATH Environment Variable. Make sure it is actually present.
+3) Now launch Windows PowerShell and run the command `cargo install mdbook`
+4) Go to the github homepage of your fork, click the green `<> Code ` button and go to *Local*>*Download Zip*, then unzip everything in a folder. Alternatively you can use github desktop to do the same.
+5) Open the Windows PowerShell in the folder where you've downloaded the code. You can do so by *Shift+Right Click* in the folder > *Open Windows PowerShell here*
+6) Run the command `mdbook serve`, then open your browser (without closing the PowerShell) and go to the address `http://localhost:3000`. If all goes well you should now be hosting a local clone of your repository.
+7) You can now check if your video player is being displayed correctly, and also any edit you perform to the files in your folder will be automatically applied to the local website after saving and reloading the page. Closing the PowerShell will shut it down.
