@@ -29,6 +29,10 @@
 
 [Making TMs Reusable](gen4/guides/field/pt_hgss-reusabletms.md)
 
+[Making Repels Reusable](gen4/guides/field/pt_reusable_repel.md)
+
+[Changing the HP Bar Speed](gen4/guides/interface/pt_hgss-hp_bar_speed.md)
+
 </details>
 
 <details>
@@ -44,6 +48,8 @@
 [Setting the Weather from a Script](gen4/guides/field/pt_hgss-script_weather.md)
 
 [Making TMs Reusable](gen4/guides/field/pt_hgss-reusabletms.md)
+
+[Changing the HP Bar Speed](gen4/guides/interface/pt_hgss-hp_bar_speed.md)
 
 </details>
 <br>
@@ -104,6 +110,8 @@
 [Hex Editing](universal/guides/hex_editing/hex_editing.md)
 
 [Texture Flipbook (NSBTP) Creation](universal/guides/nsbtp_creation/nsbtp_tutorial.md)
+
+[Packing and Unpacking NARC files with Knarc](universal/guides/knarc/knarc.md)
 
 <br>
 </details>
