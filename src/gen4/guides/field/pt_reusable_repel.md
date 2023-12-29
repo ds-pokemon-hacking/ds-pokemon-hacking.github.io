@@ -8,7 +8,7 @@ When the repel runs out, a prompt will appear, from which the player can choose 
 
 The options only appear if the player has the appropriate repel item(s) in the bag
 
-You'll need to use [DSPRE](https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor/releases) and a Hex Editor. If you don't know how to hex edit, check out the [Hex Editing Guide](./././)
+You'll need to use [DSPRE](https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor/releases) and a Hex Editor. If you don't know how to hex edit, check out the [Hex Editing Guide](../../../universal/guides/hex_editing/hex_editing.md)
 
 This **only works on the US Version of the game**. Attempting to replace the same bytes on a different language game will not work.
 
