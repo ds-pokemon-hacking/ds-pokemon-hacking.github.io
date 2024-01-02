@@ -24,20 +24,20 @@
     - [Code Injection](gen5/guides/misc/bw_b2w2-code_injection.md)
     - [Map Insertion](gen5/guides/field/bw_b2w2-map_insertion.md)
     - [Exporting and Importing Buildings](gen5/guides/field/bw_b2w2-buildings.md)
+    - [Using CTRMap](gen5/guides/misc/using-ctrmap.md)
   - [Black 2 and White 2]()
     - [Code Injection](gen5/guides/misc/bw_b2w2-code_injection.md)
     - [Fairy Type Insertion](gen5/guides/misc/b2w2-fairy.md)
     - [Map Insertion](gen5/guides/field/bw_b2w2-map_insertion.md)
     - [Exporting and Importing Buildings](gen5/guides/field/bw_b2w2-buildings.md)
+    - [Using CTRMap](gen5/guides/misc/using-ctrmap.md)
 - [Universal]()
   - [Code Injection](universal/guides/code_injection/code_injection.md)
   - [Sprite Indexing](universal/guides/sprite_indexing/indexing.md)
-    - [Sprite Indexing with GIMP](universal/guides/sprite_indexing/resources/gimp/gimp.md)
+    - [Indexing with GIMP](universal/guides/sprite_indexing/resources/gimp/gimp.md)
   - [NCER Sprite Editing](universal/guides/ncer_sprite_editing/ncer_sprite_editing.md)
   - [Hex Editing](universal/guides/hex_editing/hex_editing.md)
   - [Texture Flipbook (NSBTP) Creation](universal/guides/nsbtp_creation/nsbtp_tutorial.md)
-
-
 
 # Resources
 - [Generation IV]()

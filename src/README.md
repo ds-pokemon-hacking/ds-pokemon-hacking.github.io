@@ -1,3 +1,7 @@
+# Kingdom of DS Hacking
+
+Welcome to the Kingdom of DS Hacking!
+
 # Home
 
 [Home](README.md)
@@ -73,7 +77,7 @@
 <summary>Black 2 and White 2</summary>
 <br>
 
-[Code Injection](gen5/guides/misc/bw_b2w2-code_injection.md)
+[Code InjectiSon](gen5/guides/misc/bw_b2w2-code_injection.md)
 
 [Fairy Type Insertion](gen5/guides/misc/b2w2-fairy.md)
 

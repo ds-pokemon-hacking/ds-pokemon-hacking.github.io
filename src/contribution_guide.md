@@ -1,13 +1,13 @@
 # Contribution Guide
---- 
+
 ## Creating a Fork
-1) If you don't have one already, you first need to create a [Github account](https://github.com/signup)
+1) If you don't have one already, you first need to create a [Github account](https://github.com/signup).  
 2) Go to the [main repo](https://github.com/kingdom-of-ds-hacking/kingdom-of-ds-hacking.github.io) and click the Fork button in the top right. Check out [Github's official article](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) for more details.
 
 ## Creating a new Markdown File
 1) Open [guide.md](https://github.com/kingdom-of-ds-hacking/kingdom-of-ds-hacking.github.io/blob/main/templates/guides/guides.md) if you're making a guide, or [resources.md](https://github.com/kingdom-of-ds-hacking/kingdom-of-ds-hacking.github.io/blob/main/templates/resources/resources.md) if you're making a resource, click the *Code* button and copy its contents.
 2) In your repo, go to the appropriate folder:
-   * If it's for either a gen 4 or 5 game(s), go to either `src/gen4/guides`/`src/gen5/guides` (or `src/gen4/resources`/`src/gen5/resources` for resources) and from there choose the right subfolder
+   * If your addition is for a specific generation (or one of its ), go to either `src/gen4/guides`/`src/gen5/guides` (or `src/gen4/resources`/`src/gen5/resources` for resources) and from there choose the right subfolder
    * If it applies to all games, go to `src/universal/guides` (or `src/universal/resources`)
 3) Once you're in the correct folder, click the *Add File*>*Create New File*. You have to name it appropriately:
    * First part of the filename should be the games it applies (unless it's for every game in the generation): for example if it's only for Platinum and HGSS games, it should start with `pt_hgss`
@@ -17,11 +17,11 @@
    * Paste the text you copied from the `guides.md` or `resources.md` template in the body. Now you can start writing the markdown file.
 
 ## Markdown Formatting and Images
-1) The syntax used must follow the [Markdown Format](https://www.markdownguide.org/basic-syntax/), which is the same as discord uses.
+1) The syntax used must follow the [Markdown Format](https://www.markdownguide.org/basic-syntax/), which is the same as Discord uses.
 2) Use the template you copypasted as a guideline. Remember that there is a preview button you can use!
 3) If you wish to add images to your file, they must first be uploaded to the repo in the appropriate folder:
-   * For either the gen4 or gen5 folder, go to the corresponding `resources` subfolder. Create an empty markdown file and create a new folder along with it, named the same as your markdown file name.
-   * For the universal folder, create a new folder called `resources` inside the folder with the same name as your file.
+   * For either the `gen4` or `gen5` folder, go to the corresponding `resources` subfolder. Create an empty markdown file and create a new folder along with it, named the same as your markdown file name.
+   * For the `universal` folder, create a new folder called `resources` inside the folder with the same name as your file.
    * In the folder you just created, upload your images. Keep the filename recognizable and short enough, and they should be in a png format. Once you've uploaded them, delete the empty markdown file.
 4) To link images, you can simply use ```![Optional Description](filepath/image.png) ```. With the *filepath* being relative to your guide's location
    * For example, in the indexing guide the image is linked with `![Indexed Image Example](resources/indexed_image_example.png)`
