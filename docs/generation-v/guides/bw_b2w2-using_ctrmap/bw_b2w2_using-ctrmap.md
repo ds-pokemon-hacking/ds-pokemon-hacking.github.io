@@ -311,7 +311,7 @@ If you're planning to import the building in a gen 4 game, both DSPRE and PDSMS 
 ##### Exporting Animations
 If the building you want to export has an animation, you can export it by selecting the animation on the menu on the right side of the editor after having selected the building, then click the *Open in CS* button right below it. This will open CreativeStudio, where you can then export it to whatever format you see fit.
 
-![](img/ctrmapanims.PNG)
+![](img/ctrmapanims.png)
 
 
 In CreativeStudio, select the animation in the dropdown menu (it will be either in the Material or Skeletal Animation folder), then right click on it, click `Export`, and it will be saved as a `.nsbta/.nsbca` file depending on the animation type.
