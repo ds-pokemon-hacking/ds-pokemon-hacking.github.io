@@ -1,3 +1,17 @@
+---
+title: Knarc (General)
+tags:
+  - Guide (Diamond)
+  - Guide (Pearl)
+  - Guide (Platinum)
+  - Guide (HeartGold)
+  - Guide (SoulSilver)  
+  - Guide (Black)
+  - Guide (White)
+  - Guide (Black 2)
+  - Guide (White 2)
+---
+
 # How to use Knarc
 > Author: SpagoAsparago
 
