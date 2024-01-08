@@ -32,7 +32,7 @@ First you need to open CTRMap Zone Loader, and select the map you want to replac
 2) The Matrix
 3) If your map is using textures not present in the original map, then the *Area* value as well
 
-![](resources/bw_b2w2-map_insertion/mapinsertion.png)
+![](resources/mapinsertion.png)
 
 ## Finding the map file
 Now you have to find the file number of the map you want to replace, you can do so in two ways:
