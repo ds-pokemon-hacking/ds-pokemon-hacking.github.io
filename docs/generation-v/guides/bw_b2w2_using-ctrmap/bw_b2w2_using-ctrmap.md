@@ -313,6 +313,7 @@ If the building you want to export has an animation, you can export it by select
 
 ![](img/ctrmapanims.png)
 
+
 In CreativeStudio, select the animation in the dropdown menu (it will be either in the Material or Skeletal Animation folder), then right click on it, click `Export`, and it will be saved as a `.nsbta/.nsbca` file depending on the animation type.
 
 ![](img/animscs.png)
