@@ -311,12 +311,12 @@ If you're planning to import the building in a gen 4 game, both DSPRE and PDSMS 
 ##### Exporting Animations
 If the building you want to export has an animation, you can export it by selecting the animation on the menu on the right side of the editor after having selected the building, then click the *Open in CS* button right below it. This will open CreativeStudio, where you can then export it to whatever format you see fit.
 
-![](img/ctrmapanims.png)
+![](img/ctrmapanims.PNG)
 
 
 In CreativeStudio, select the animation in the dropdown menu (it will be either in the Material or Skeletal Animation folder), then right click on it, click `Export`, and it will be saved as a `.nsbta/.nsbca` file depending on the animation type.
 
-![](img/animscs.png)
+![](img/animscs.PNG)
 
 ##### Saving Changes
 Click `Commit changes > Resource bundle` to save the changes you have made to your resource bundle, and `Commit changes > Static texture pack` to save the changes to the texture banks. From there, you should be able to use it.
