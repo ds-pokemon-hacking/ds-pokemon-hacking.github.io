@@ -176,9 +176,9 @@ The custom command works by setting the repel counter at the byte written at 15F
 <details>
  <summary>Detailed Explanation for the Custom Command and Repel Counter</summary>
 
-The repel counter is a dynamic offset located at (Address at 0x02101D40) + (0x8087). This is only valid for the US version, hence my code won't work on other regionswithout writing a new custom command.
+The repel counter is a dynamic offset located at (Address at 0x02101D40) + (0x8087). This is only valid for the US version, hence my code won't work on other regions without writing a new custom command.
 
-When the repel counter runs out, the game will automatically execut Script 33 in Script File 211. 
+When the repel counter runs out, the game will automatically execute Script 33 in Script File 211. 
 
 After the scripting and hex edits performed, now Script 33 will:
 1) Check if the player has any repel item in their bag
@@ -189,6 +189,7 @@ After the scripting and hex edits performed, now Script 33 will:
 6) Trough the `DummyTakeTrap`, the repel counter is increased by the previously set value
 
 The `DummyTakeTrap` command is otherwise unused, so it's been replaced with a custom one in order to access the dynamic offset of the repel counter, and set the counter to the new value. 
+The custom command is necessary as there is no way to access the dynamic offset using only vanilla scripting commands.
 This is the raw assembly code:
 
 <details>
