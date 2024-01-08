@@ -197,9 +197,9 @@ struct BuildingProperties
 ```
 | Field Name       | Description                                                                 | Data Type        |
 |------------------|-----------------------------------------------------------------------------|------------------|
-| localPositionX   | X position relative to the center of the map.                               | [fx<1.19.12>]()  |
-| localPositionY   | Y position relative to the center of the map.                               | [fx<1.19.12>]()  |
-| localPositionZ   | Z position relative to the center of the map.                               | [fx<1.19.12>]()  |
+| localPositionX   | X position relative to the center of the map.                               | [`fx<1.19.12>`]()  |
+| localPositionY   | Y position relative to the center of the map.                               | [`fx<1.19.12>`]()  |
+| localPositionZ   | Z position relative to the center of the map.                               | [`fx<1.19.12>`]()  |
 | rotationAngleYaw | Counterclockwise yaw rotation angle.                                        | uint16_t         |
 | buildingID       | ID of the building model. Unlike most variables, this one is in big endian. | uint16_t         |
 
@@ -213,9 +213,9 @@ Part of the map files are:
 3. A layout for externally loaded models (buildings).
 
 ### Size
-As already mentioned, the standard size for a map is 32 by 32 tiles. But how large is a tile? The game accesses positions on the overworld using 32 bit values. These can be read as fixed point values. The default format is [fx<1.19.12>](). This means that one tile has a size of 16 units. The most textures are also mapped with 16 pixel per tile.
+As already mentioned, the standard size for a map is 32 by 32 tiles. But how large is a tile? The game accesses positions on the overworld using 32 bit values. These can be read as fixed point values. The default format is [`fx<1.19.12>`](). This means that one tile has a size of 16 units. The most textures are also mapped with 16 pixel per tile.
 
-To convert the value to one unit per tile, we can move the decimal point into the middle and read as [fx<1.15.16>]() instead. This is how the terrain values for PDSMS were calculated, since its a tile based tool.
+To convert the value to one unit per tile, we can move the decimal point into the middle and read as [`fx<1.15.16>`]() instead. This is how the terrain values for PDSMS were calculated, since its a tile based tool.
 
 ### Permission Data
 * [Corners](#corners)
