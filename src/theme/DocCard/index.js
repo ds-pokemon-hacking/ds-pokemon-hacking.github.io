@@ -34,11 +34,6 @@ function CardLayout({href, icon, title, description}) {
           {description}
         </p>
       )}
-      <footer>
-        
-      <button>Platinum</button>
-      <button>HGSS</button>
-      </footer>
     </CardContainer>
   );
 }
