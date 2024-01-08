@@ -19,7 +19,7 @@ const config: Config = {
   organizationName: 'kingdom-of-ds-hacking', // Usually your GitHub org/user name.
   projectName: 'kingdom-of-ds-hacking.github.io', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
@@ -29,7 +29,6 @@ const config: Config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-  onBrokenLinks: 'ignore',
   presets: [
     [
       'classic',
