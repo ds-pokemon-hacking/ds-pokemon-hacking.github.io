@@ -1,0 +1,62 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --ifm-font-family-base: 'Raleway';
+  --ifm-color-primary: #0314af;
+  --ifm-color-primary-dark: #03129e;
+  --ifm-color-primary-darker: #031195;
+  --ifm-color-primary-darkest: #020e7b;
+  --ifm-color-primary-light: #0316c1;
+  --ifm-color-primary-lighter: #0317c9;
+  --ifm-color-primary-lightest: #041ae3;
+  --ifm-background-color: #f2f2f2;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  font-feature-settings: 'lnum' 1;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #00b1c6;
+  --ifm-color-primary-dark: #009fb2;
+  --ifm-color-primary-darker: #0096a8;
+  --ifm-color-primary-darkest: #007c8b;
+  --ifm-color-primary-light: #00c3da;
+  --ifm-color-primary-lighter: #00cce4;
+  --ifm-color-primary-lightest: #02e4ff;
+  --ifm-background-color: #000000;
+}
+
+code {
+  color: var(--ifm-color-primary-lightest);
+}
+
+[data-theme='dark'] code {
+  color: var(--ifm-color-primary-lightest);
+}
+
+.menu__link {
+  font-size: .873rem;
+}
+
+.menu__link:hover {
+  background: var(--ifm-background-color);
+}
+
+.menu__link .menu__link--active {
+  background: var(--ifm-background-color);
+}
+
+.menu__link--sublist {
+  padding: 8px;
+  font-weight: bold;
+}
+
+ul .table-of-contents__link {
+  list-style: square;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Rubik';
+  --ifm-leading: 8px;
+}

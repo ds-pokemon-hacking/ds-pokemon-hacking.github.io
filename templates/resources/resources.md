@@ -1,3 +1,17 @@
+---
+title: Resource Name
+tags:
+  - Guide (Diamond)
+  - Guide (Pearl)
+  - Guide (Platinum)
+  - Guide (HeartGold)
+  - Guide (SoulSilver)  
+  - Guide (Black)
+  - Guide (White)
+  - Guide (Black 2)
+  - Guide (White 2)
+---
+
 # Resource Name
 > Author(s): [MyUsername]() <br />
 > Research: [Someone](), [AnotherOne]()
@@ -11,14 +25,17 @@ flowchart BT;
 This Text provides a brief introduction to the resource. What are we looking at? What should be said about this? Refer to the flowchart above if needed. A short summary can also be helpful.
 
 ## Table of Contents
-* [Data Location](#data-location)
-* [Data Structure](#data-structure)
-  * [Resource Format Container](#resource-format-container)
-  * [SubFormat](#subformat)
-* [Specification](#specification)
-  * [Section](#section)
-  * [Section 2](#section-2)
-* [TODO](#todo)
+- [Resource Name](#resource-name)
+  - [Table of Contents](#table-of-contents)
+  - [Data Location](#data-location)
+  - [Data Structure](#data-structure)
+    - [Resource Format Container](#resource-format-container)
+    - [SubFormat](#subformat)
+  - [Specification](#specification)
+    - [Section](#section)
+      - [Subsection](#subsection)
+    - [Section 2](#section-2)
+  - [TODO](#todo)
 ---
 
 ## Data Location

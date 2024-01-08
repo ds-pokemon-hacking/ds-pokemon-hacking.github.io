@@ -1,14 +1,31 @@
+---
+title: Tutorial Name
+tags:
+  - Guide (Diamond)
+  - Guide (Pearl)
+  - Guide (Platinum)
+  - Guide (HeartGold)
+  - Guide (SoulSilver)  
+  - Guide (Black)
+  - Guide (White)
+  - Guide (Black 2)
+  - Guide (White 2)
+---
+
 # Tutorial Name
-> This guide was written by [MartyMcFly]().
+> Author(s): [MartyMcFly]().
 
 This is a tutorial on how to make tutorials. I think.
 
 --- 
 ## Table of Contents
-* [Section](#section)
-  * [Subsection](#subsection)
-* [Section 2](#section-2)
-* [Section 3](#section-3)
+- [Tutorial Name](#tutorial-name)
+  - [Table of Contents](#table-of-contents)
+  - [Section](#section)
+    - [Subsection](#subsection)
+    - [Subsection 2](#subsection-2)
+  - [Section 2](#section-2)
+  - [Section 3](#section-3)
 
 ## Section
 ### Subsection
@@ -22,12 +39,12 @@ You can use steps, if you want.
 
 ### Subsection 2
 You can use bullet points, if you want.
-* Something
-* Like
-* This
-* Is
-* Also
-* Fine
+- Something
+- Like
+- This
+- Is
+- Also
+- Fine
 
 ## Section 2
 Dropdowns are cool. Look.
@@ -40,4 +57,4 @@ Dropdowns are cool. Look.
 ## Section 3
 Inserting images works as well. Any method that clearly presents the image should be just fine.
 
-<img src="https://images.unsplash.com/photo-1549740425-5e9ed4d8cd34?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXwzOTU0NTB8fGVufDB8fHw%3D&w=1000&q=80" alt="Trulli" style="width:100%">
+![](https://images.unsplash.com/photo-1549740425-5e9ed4d8cd34?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXwzOTU0NTB8fGVufDB8fHw%3D&w=1000&q=80")

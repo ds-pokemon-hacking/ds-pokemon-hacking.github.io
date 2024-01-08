@@ -1,2 +1,2 @@
 # Pokemon-DS-Hacking
-Guides, tutorials, and resources for Nintendo DS
+Guides and resources for hacking the DS Pokemon games.
