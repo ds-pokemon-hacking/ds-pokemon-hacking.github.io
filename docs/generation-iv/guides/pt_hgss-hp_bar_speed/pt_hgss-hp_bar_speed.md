@@ -7,7 +7,7 @@ tags:
 ---
 
 # Changing HP bar speed<sup>*(Platinum/HGSS)*</sup>
-> Author(s): AdAstra (original), SpagoAsparago (reformatting). 
+> Author(s): AdAstra (original), SpagoAsparago (reformatting) <br />
 > Research: AdAstra, Mikelan98, Nitram
 
 This is a tutorial on how to change the HP Bar speed in gen 4 games. You'll need an Hex Editor and either Tinke 0.9.2 (Platinum) or CrystalTile2 (HGSS).
