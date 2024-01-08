@@ -23,7 +23,6 @@ The animation bank is used to animate 2D graphics. It requires an object to work
   - [Specification](#specification)
     - [Animation](#animation)
     - [Loop Mode](#loop-mode)
-    - [Affine Transformation](#affine-transformation)
     - [Files](#files)
   - [TODO](#todo)
 
@@ -169,7 +168,7 @@ The loop mode defines what to do, after the animation reached its last frame. Th
 
 Other values are not supported and end up in the behavior of `1`.
 
-### Affine Transformation
+<!-- ### Affine Transformation
 The transformation matrices are applied in the following order:
 1. Scaling
 
@@ -199,7 +198,7 @@ $$
  0 & 1 & \textbf{translateY} \\
  0 & 0 & 1                   \\
 \end{bmatrix}
-$$
+$$ -->
 
 ### Files
 * [Nitro Animation Runtime](file_nanr.md)

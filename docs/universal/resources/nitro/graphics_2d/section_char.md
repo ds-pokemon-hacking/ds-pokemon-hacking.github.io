@@ -10,17 +10,24 @@ flowchart BT;
 The character section stores the sprite-image in form of indices to colors within a palette. The array layout is usually a tile map where each tile has a size of `8 * 8 pixels`, but can also be a line buffer which maps the image directly to the target.
 
 ## Table of Contents
-* [Data Structure](#data-structure)
-  * [Section Container](#section-container)
-  * [CHAR Container](#char-container)
-* [Specification](#specification)
-  * [Pixel Data](#pixel-data)
-  * [Dimensions](#dimensions)
-  * [Mapping Type](#mapping-type)
-  * [Flags](#flags)
-  * [Special Case](#special-case)
-  * [Files](#files)
-* [TODO](#todo)
+- [CHAR ("RHAC") - Character](#char-rhac---character)
+  - [Table of Contents](#table-of-contents)
+  - [Data Structure](#data-structure)
+    - [Section Container](#section-container)
+    - [CHAR Container](#char-container)
+  - [Specification](#specification)
+    - [Pixel Data](#pixel-data)
+      - [Color](#color)
+      - [Layout](#layout)
+    - [Dimensions](#dimensions)
+    - [Mapping Type](#mapping-type)
+    - [Flags](#flags)
+    - [Special Case](#special-case)
+      - [1. File length](#1-file-length)
+      - [2. Missing CPOS section](#2-missing-cpos-section)
+      - [3. Image layout](#3-image-layout)
+    - [Files](#files)
+  - [TODO](#todo)
 ---
 
 ## Data Structure
@@ -86,12 +93,12 @@ If the image is to be used by the 3D engine, the "infinite length box" from befo
 ### Dimensions
 The first two entries of [ContainerCHAR](#char-container) define the size of the sprite in tiles. To get the pixel values, multiply them with the side length of a tile (which is 8).
 
-$$
+<!-- $$
 \begin{align}
     height_{pixel} &= heigh_{tiles}\cdot 8\\
     width_{pixel} &= width_{tiles}\cdot 8
 \end{align}
-$$
+$$ -->
 
 Sometimes the width and height values are both set to `-1`. In this case the image itself has no size and the [CPOS section](section_cpos.md) is not part of the file. To display the sprite anyway, a width of four tiles often makes the image recognizable. The real image is constructed by the [cell runtime](file_ncer.md), which picks the needed tiles and positions them.
 
