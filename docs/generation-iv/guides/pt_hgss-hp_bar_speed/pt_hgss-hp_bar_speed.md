@@ -1,4 +1,12 @@
-# How to change the HP Bar speed<sup>*(Platinum/HGSS)*</sup>
+---
+title: Changing the HP bar Speed
+tags:
+  - Guide (Platinum)
+  - Guide (HeartGold)
+  - Guide (SoulSilver)
+---
+
+# Changing HP bar speed<sup>*(Platinum/HGSS)*</sup>
 > Author(s): AdAstra (original), SpagoAsparago (reformatting). 
 > Research: AdAstra, Mikelan98, Nitram
 
