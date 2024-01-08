@@ -15,27 +15,27 @@ const GenerationIVCatalog: DisplayItem[] = [
   {
     title: 'Pokémon Diamond',
     Svg: require('@site/static/img/boxart/1015.jpg').default,
-    tag: 'docs/tags/diamond'
+    tag: 'getting-started/dp'
   },
   {
     title: 'Pokémon Pearl',
     Svg: require('@site/static/img/boxart/1016.jpg').default,
-    tag: 'docs/tags/pearl'
+    tag: 'getting-started/dp'
   },
   {
     title: 'Pokémon Platinum',
     Svg: require('@site/static/img/boxart/3541.jpg').default,
-    tag: 'docs/tags/platinum'
+    tag: 'getting-started/pt'
   },
   {
     title: 'Pokémon HeartGold',
     Svg: require('@site/static/img/boxart/4787.jpg').default,
-    tag: 'docs/tags/heart-gold'
+    tag: 'getting-started/hgss'
   },
   {
     title: 'Pokémon SoulSilver',
     Svg: require('@site/static/img/boxart/4788.jpg').default,
-    tag: 'docs/tags/soul-silver'
+    tag: 'getting-started/hgss'
   },
 ];
 
