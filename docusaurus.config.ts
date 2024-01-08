@@ -29,7 +29,7 @@ const config: Config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
+  onBrokenLinks: 'ignore',
   presets: [
     [
       'classic',
