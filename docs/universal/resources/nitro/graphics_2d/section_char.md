@@ -93,12 +93,12 @@ If the image is to be used by the 3D engine, the "infinite length box" from befo
 ### Dimensions
 The first two entries of [ContainerCHAR](#char-container) define the size of the sprite in tiles. To get the pixel values, multiply them with the side length of a tile (which is 8).
 
-<!-- $$
+$$
 \begin{align}
-    height_{pixel} &= heigh_{tiles}\cdot 8\\
+    height_{pixel} &= height_{tiles}\cdot 8\\
     width_{pixel} &= width_{tiles}\cdot 8
 \end{align}
-$$ -->
+$$
 
 Sometimes the width and height values are both set to `-1`. In this case the image itself has no size and the [CPOS section](section_cpos.md) is not part of the file. To display the sprite anyway, a width of four tiles often makes the image recognizable. The real image is constructed by the [cell runtime](file_ncer.md), which picks the needed tiles and positions them.
 
