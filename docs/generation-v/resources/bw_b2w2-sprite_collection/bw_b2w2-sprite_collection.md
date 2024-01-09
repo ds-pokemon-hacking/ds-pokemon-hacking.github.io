@@ -14,14 +14,16 @@ flowchart RL;
 This file functionally replaces the NCER, if the render target is provided by the 3D engine of the DS. It uses the NCGR (must contain a line buffer, no tiles!) as texture to create multiple sprites. It is used for battle sprites (Trainer and Pokemon) and in the game intro (professor juniper).
 
 ## Table of Contents
-* [Data Structure](#data-structure)
-  * [Sprite Container](#sprite-container)
-  * [Sprite Pair](#sprite-pair)
-  * [Sprite](#sprite)
-  * [Size](#size)
-* [Specification](#specification)
-  * [Optional Component](#optional-component)
-* [TODO](#todo)
+- [Sprite Collection](#sprite-collection)
+  - [Table of Contents](#table-of-contents)
+  - [Data Structure](#data-structure)
+    - [Sprite Container](#sprite-container)
+    - [Sprite Pair](#sprite-pair)
+    - [Sprite](#sprite)
+    - [Size](#size)
+  - [Specification](#specification)
+    - [Optional Component](#optional-component)
+  - [TODO](#todo)
 
 ---
 ## Data Structure
@@ -76,12 +78,12 @@ struct Sprite
 ```
 | Field Name       | Description                                                                             | Data Type       |
 |------------------|-----------------------------------------------------------------------------------------|-----------------|
-| spritePositionX  | Initial x position. The final position on screen depends on further processing.         | [fx<1.23.8>]()  |
-| spritePositionY  | Initial y position. This coordinate is upside down (multiply with -1).                  | [fx<1.23.8>]()  |
+| spritePositionX  | Initial x position. The final position on screen depends on further processing.         | [`fx<1.23.8>`](/docs/universal/resources/data-types/data-types.md)  |
+| spritePositionY  | Initial y position. This coordinate is upside down (multiply with -1).                  | [`fx<1.23.8>`](/docs/universal/resources/data-types/data-types.md)  |
 | sizePropertiesX  | Horizontal sizes.                                                                       | [Size](#size)   |
 | sizePropertiesY  | Vertical sizes.                                                                         | [Size](#size)   |
-| texturePositionX | Left edge position on the texture image.                                                | [fx<1.19.12>]() |
-| texturePositionY | Top edge position on the texture image.                                                 | [fx<1.19.12>]() |
+| texturePositionX | Left edge position on the texture image.                                                | [`fx<1.19.12>`](/docs/universal/resources/data-types/data-types.md) |
+| texturePositionY | Top edge position on the texture image.                                                 | [`fx<1.19.12>`](/docs/universal/resources/data-types/data-types.md) |
 
 ### Size
 ```c

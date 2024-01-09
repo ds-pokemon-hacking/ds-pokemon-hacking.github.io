@@ -34,7 +34,7 @@ In this guide, I look to turn Johto & a little of Kanto into Hoenn.  While the i
 
 
 ## Part 1 - Graphics
-First thing's first, the graphics are the easy part.  ``a/1/4/4`` contains all of the graphics for the Town Map.  These are all easily editable using Tinke--a tutorial for which will not be covered here.  Refer to Jay's tutorials on YouTube for a basics of graphics editing tutorial.
+First thing's first, the graphics are the easy part.  ``/a/1/4/4`` contains all of the graphics for the Town Map.  These are all easily editable using Tinke--a tutorial for which will not be covered here.  Refer to Jay's tutorials on YouTube for a basics of graphics editing tutorial.
 
 
 ### Protagonist Portraits

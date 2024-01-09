@@ -37,7 +37,7 @@ So I will be writing `32 00 13 01 FF FF` at 0x100. Once you've added all your ma
 
 ### Editing item prices
 Item prices aren't stored in the Poké Marts, instead they are part of item data, meaning an item will always have the same price regardless of the Poké Mart it's being sold at.
-Item data is stored in the narc `pl_item_data` (Platinum) / `a/0/1/7` (HGSS). The file you're looking will have the item index number as its name.
+Item data is stored in the narc `pl_item_data` (Platinum) / `/a/0/1/7` (HGSS). The file you're looking will have the item index number as its name.
 
 The price is stored in the first two bytes in each file, so for example if I want to have Rare Candyies to be sold at 10,000 Pokèdollars (`0x2710`), I will have to extract 50.bin and change the first two bytes to `10 27`. Once you've reinserted the file remember to pack the narc before saving the ROM!
 

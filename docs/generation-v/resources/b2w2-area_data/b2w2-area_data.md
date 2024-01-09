@@ -11,7 +11,7 @@ tags:
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: [Bond697](https://github.com/Bond697), [PlatinumMaster](https://github.com/PlatinumMaster), [Gonhex](https://github.com/Gonhex), [Hello007](https://github.com/HelloOO7)
 
-The area data describes the current state of the overworld. It selects all the optical elements. The area is selected by the zone data in `a/0/1/2` but can also depend on the season.
+The area data describes the current state of the overworld. It selects all the optical elements. The area is selected by the zone data in `/a/0/1/2` but can also depend on the season.
 
 ## Table of Contents
 - [Area Data](#area-data)
@@ -58,13 +58,13 @@ struct AreaData
 ```
 | Field Name         | Description                                                                                           | Data Type |
 |--------------------|-------------------------------------------------------------------------------------------------------|-----------|
-| buildings          | Select builing container from the NARC:<br />Interior: Model = `a/2/2/6`, texture = `a/1/7/5`.<br />Exterior: Model = `a/2/2/5`, texture = `a/1/7/4`. | uint16_t |
-| mapTextures        | Select map texture NSBTX from the NARC: `a/0/1/4`.                                                    | uint16_t  |
-| textureAnimation   | Select map texture SRT animation NSBTA from the NARC: `a/0/6/8`. Is `0xFF` if none.                   | uint8_t   |
-| frameAnimation     | Select map frame animation container from the NARC: `a/0/6/9`. Is `0xFF` if none.                     | uint8_t   |
+| buildings          | Select builing container from the NARC:<br />Interior: Model = `/a/2/2/6`, texture = `/a/1/7/5`.<br />Exterior: Model = `/a/2/2/5`, texture = `/a/1/7/4`. | uint16_t |
+| mapTextures        | Select map texture NSBTX from the NARC: `/a/0/1/4`.                                                    | uint16_t  |
+| textureAnimation   | Select map texture SRT animation NSBTA from the NARC: `/a/0/6/8`. Is `0xFF` if none.                   | uint8_t   |
+| frameAnimation     | Select map frame animation container from the NARC: `/a/0/6/9`. Is `0xFF` if none.                     | uint8_t   |
 | fieldEnvironment   | Area type: `0` = interior, `1` = exterior.                                                            | uint8_t   |
-| ambientLight       | Select ambient light settings from NARC: `a/0/6/0`. Note: Weather can overwrite the setting.          | uint8_t   |
-| outlineColor       | Select outline color profile from NARC: `a/0/1/5`. Is `0xFF` if none.                                 | uint8_t   |
+| ambientLight       | Select ambient light settings from NARC: `/a/0/6/0`. Note: Weather can overwrite the setting.          | uint8_t   |
+| outlineColor       | Select outline color profile from NARC: `/a/0/1/5`. Is `0xFF` if none.                                 | uint8_t   |
 | bbdMdlColors       | Material preset for actor billboards.                                                                 | uint8_t   |
 
 ---

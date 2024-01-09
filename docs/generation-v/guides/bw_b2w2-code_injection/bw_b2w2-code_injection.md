@@ -1,11 +1,11 @@
 ---
-title: Code Injection Guide (Generation V)
+title: Code Injection (Generation V)
 tags:
   - Guide (Black 2)
   - Guide (White 2)
 ---
 
-# Code Injection Guide (Generation V)
+# Code Injection (Generation V)
 > Author(s): [Hello007](https://github.com/HelloOO7), [PlatinumMaster](https://github.com/PlatinumMaster)
 
 ## Disclaimers

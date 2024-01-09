@@ -1,5 +1,5 @@
 ---
-title: Using CTRMap for Generation V Hacking
+title: Using CTRMap
 tags:
   - Guide (Black)
   - Guide (White)
@@ -7,7 +7,7 @@ tags:
   - Guide (White 2)
 ---
 
-# Using CTRMap for Generation V Hacking
+# Using CTRMap
 > Author(s): [PlatinumMaster](https://github.com/PlatinumMaster), [SpagoAsparago](https://github.com/SpagoAsparago)
 
 CTRMap is an experimental level and script editor with strong emphasis on graphical interface and interactivity. It has the goal of facilitating the modification of Generation V games, allowing for modifications to scripts, text, field object properties, dynamic camera placements, and more!

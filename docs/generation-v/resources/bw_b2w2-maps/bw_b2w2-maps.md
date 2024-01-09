@@ -11,7 +11,7 @@ tags:
 > Author(s): [Gonhex](https://github.com/Gonhex) <br />
 > Research: [Gonhex](https://github.com/Gonhex), [Trifindo](https://github.com/Trifindo)
 
-The term "map" is used for areas of the game world. The player can navigate through them and interact with other objects placed on the map. Usually one map has a size of 32 by 32 tiles and a maximum of four of them are loaded simultaneously. The maps are usually selected by the currently active "matrix" in `a/0/0/9` but there are cases where the game chooses an other map, depending on the in-game season.
+The term "map" is used for areas of the game world. The player can navigate through them and interact with other objects placed on the map. Usually one map has a size of 32 by 32 tiles and a maximum of four of them are loaded simultaneously. The maps are usually selected by the currently active "matrix" in `/a/0/0/9` but there are cases where the game chooses an other map, depending on the in-game season.
 
 ## Table of Contents
 - [Maps](#maps)
@@ -197,9 +197,9 @@ struct BuildingProperties
 ```
 | Field Name       | Description                                                                 | Data Type        |
 |------------------|-----------------------------------------------------------------------------|------------------|
-| localPositionX   | X position relative to the center of the map.                               | [`fx<1.19.12>`]()  |
-| localPositionY   | Y position relative to the center of the map.                               | [`fx<1.19.12>`]()  |
-| localPositionZ   | Z position relative to the center of the map.                               | [`fx<1.19.12>`]()  |
+| localPositionX   | X position relative to the center of the map.                               | [`fx<1.19.12>`](/docs/universal/resources/data-types/data-types.md)  |
+| localPositionY   | Y position relative to the center of the map.                               | [`fx<1.19.12`](/docs/universal/resources/data-types/data-types.md)  |
+| localPositionZ   | Z position relative to the center of the map.                               | [`fx<1.19.12`](/docs/universal/resources/data-types/data-types.md)  |
 | rotationAngleYaw | Counterclockwise yaw rotation angle.                                        | uint16_t         |
 | buildingID       | ID of the building model. Unlike most variables, this one is in big endian. | uint16_t         |
 
@@ -208,14 +208,14 @@ struct BuildingProperties
 ## Specification
 ### Overview
 Part of the map files are:
-1. A 3D NSBMD-model of the map. This **does not** include textures!. The teture data is in `a/0/1/4`.
-2. 0-2 permission matrices. This is basically how the game sees the map since the model does not provide any collision data. It is a 2D environment layout with additional informations about the 3rd dimension. The 2nd permission matrix is optional and almost identical to the first one, except for coordinates where two different behaviors are required (for example walking under OR on a bridge). Rails (`a/0/7/8`) also contain collision data and may be loaded externally in some cases. This is why some maps come without own permission sections.
+1. A 3D NSBMD-model of the map. This **does not** include textures!. The texture data is in `/a/0/1/4`.
+2. 0-2 permission matrices. This is basically how the game sees the map since the model does not provide any collision data. It is a 2D environment layout with additional informations about the 3rd dimension. The 2nd permission matrix is optional and almost identical to the first one, except for coordinates where two different behaviors are required (for example walking under OR on a bridge). Rails (`/a/0/7/8`) also contain collision data and may be loaded externally in some cases. This is why some maps come without own permission sections.
 3. A layout for externally loaded models (buildings).
 
 ### Size
-As already mentioned, the standard size for a map is 32 by 32 tiles. But how large is a tile? The game accesses positions on the overworld using 32 bit values. These can be read as fixed point values. The default format is [`fx<1.19.12>`](). This means that one tile has a size of 16 units. The most textures are also mapped with 16 pixel per tile.
+As already mentioned, the standard size for a map is 32 by 32 tiles. But how large is a tile? The game accesses positions on the overworld using 32 bit values. These can be read as fixed point values. The default format is [`fx<1.19.12`](/docs/universal/resources/data-types/data-types.md). This means that one tile has a size of 16 units. The most textures are also mapped with 16 pixel per tile.
 
-To convert the value to one unit per tile, we can move the decimal point into the middle and read as [`fx<1.15.16>`]() instead. This is how the terrain values for PDSMS were calculated, since its a tile based tool.
+To convert the value to one unit per tile, we can move the decimal point into the middle and read as [`fx<1.15.16`](/docs/universal/resources/data-types/data-types.md) instead. This is how the terrain values for PDSMS were calculated, since its a tile based tool.
 
 ### Permission Data
 * [Corners](#corners)
@@ -454,7 +454,7 @@ If we extend the tile to an infinite plane, we can draw a line which is perpendi
 #### Environment Behavior Values
 **WARNING:** SDSME and PDSMS mistakenly call them "FLAGS & LAYER 6", which can lead to confusion.
 
-Some sort of command table which can introduce different effects depending on its value. Used in combination with the `Flag` value. Can display additional textures, make sounds, add direction dependdend collisions and much more. The extra textures (...and models ...and animations) can be found in `a/0/7/5` in Black and White and `a/0/7/4` in Black 2 and White 2.
+Some sort of command table which can introduce different effects depending on its value. Used in combination with the `Flag` value. Can display additional textures, make sounds, add direction dependdend collisions and much more. The extra textures (...and models ...and animations) can be found in `/a/0/7/5` in Black and White and `/a/0/7/4` in Black 2 and White 2.
 
 <details>
 <summary>Behavior descriptions.</summary>
@@ -550,15 +550,15 @@ Some sort of command table which can introduce different effects depending on it
 | `0x00D6` | Used for the PC (box, mail, ...). Flag `0x0001` must be set, else no effect.                                    |
 | ...      |                                                                                                                 |
 | `0x00D8` | Used for the TV. Flag `0x0001` must be set, else no effect.                                                     |
-| `0x00D9` | Dialog text `index 0` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
-| `0x00DA` | Dialog text `index 1` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
-| `0x00DB` | Dialog text `index 2` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
-| `0x00DC` | Dialog text `index 3` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
-| `0x00DD` | Dialog text `index 4` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
-| `0x00DE` | Dialog text `index 4` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect. Used for the trash bin. |
-| `0x00DF` | Dialog text `index 5` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
-| `0x00E0` | Dialog text `index 6` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
-| `0x00E1` | Dialog text `index 7` from file 10 in `a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00D9` | Dialog text `index 0` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DA` | Dialog text `index 1` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DB` | Dialog text `index 2` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DC` | Dialog text `index 3` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DD` | Dialog text `index 4` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00DE` | Dialog text `index 4` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect. Used for the trash bin. |
+| `0x00DF` | Dialog text `index 5` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00E0` | Dialog text `index 6` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
+| `0x00E1` | Dialog text `index 7` from file 10 in `/a/0/0/3`. Flag `0x0001` must be set, else no effect.                     |
 | `0x00E2` | Used for the vending machine. Flag `0x0001` must be set, else no effect.                                        |
 | ...      |                                                                                                                 |
 | `0x00FE` | Somewhere used instead of duplicates in 2nd permission layer(?). Ignore this...                                 |
@@ -593,14 +593,15 @@ Sets the properties of a tile using binary flags. Multiple flags can be combined
 </details>
 
 ### Special RD Maps
-There are a handful maps which use the "RD" signature and have no terrain data within the permission section. Instead, there are a set of currently unknown bytes. These maps are special, because they allow the game to load different sets of additional 3D models, movements permissions, interactable things like NPCs (...), depending on scripting flags. RD maps work in combination with the files from `a/1/5/6` in BW and `a/1/5/4` in B2W2.
+There are a handful maps which use the "RD" signature and have no terrain data within the permission section. Instead, there are a set of currently unknown bytes. These maps are special, because they allow the game to load different sets of additional 3D models, movements permissions, interactable things like NPCs (...), depending on scripting flags. RD maps work in combination with the files from `/a/1/5/6` in BW and `/a/1/5/4` in B2W2.
 
 In Pokemon Black and White, only the `Black City` and the `White Forest` are RD maps. Those places get content added, when the player poaches people through the Entralink.
 
 In Pokemon Black 2 and White 2, only the `Join Avenue` and an island are RD maps. Here the player can talk to people passing through to add stalls at the sides of the road. The island maps, that also use these permissions, are an unused developement leftover. It is assumed that the join avenue was initially supposed to be an island, since it got some free space for eight markets in the center:
+
 <p align="center">
- <img src="resources/rd_island.png" alt="RD island" style="width:80%">
- <img src="resources/rd_island_top.png" alt="RD island top view" style="width:80%">
+![RD island](resources/rd_island.png)
+![RD island top view](resources/rd_island_top.png)
 </p>
 
 ---
