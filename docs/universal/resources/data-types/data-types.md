@@ -83,6 +83,11 @@ Each of these bits, as stated before, can be converted to base-10 value by multi
 6. At bit index 5, we have a value of `1`. $$1 \times 2^5 = 1 \times 32 = 32$$.
 7. At bit index 6, we have a value of `1`. $$1 \times 2^6 = 1 \times 64 = 64$$.
 8. At bit index 7, we have a value of `0`. $$0 \times 2^7 = 0 \times 128 = 0$$.
+  
+Summing the values, we get:
+$$
+
+$$
 
 ## Byte
 A `byte`, is a group of 8 bits in a sequential order. 
