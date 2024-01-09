@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkkodsh_wiki_new=self.webpackChunkkodsh_wiki_new||[]).push([[3887],{5128:e=>{e.exports=JSON.parse('{"title":"Guides","slug":"/category/guides-1","permalink":"/docs/category/guides-1","navigation":{"next":{"title":"Code Injection Guide (Generation V)","permalink":"/docs/generation-v/guides/bw_b2w2_code-injection/"}}}')}}]);
