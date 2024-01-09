@@ -10,13 +10,13 @@ tags:
 # Event Scripting (Generation V)
 > Author(s): [PlatinumMaster](https://github.com/PlatinumMaster)
 
-## Introduction
+<!-- ## Introduction
 Scripting is the most important aspect of Generation V hacking that you should learn, other than modifying the game's compiled code directly. It plays an integral role in the Generation V games; from trainer battles, to random NPCs giving you items, to controlling move animations, it is a very versatile concept, allowing developers to quickly develop complex scenes and gameplay without much trouble.
 
 As such, we will go into understanding the underpinnings of this system, and how you can use it to create new scripts.
 
 ## Script Virtual Machine
-The scripting virtual machine is the system responsible for the execution of all game scripts. 
+Whenever a script is to be run, a virtual machine is created to deal with the execution of the script.
 
 ## Script Containers
 
@@ -27,4 +27,4 @@ PokeScript is a high-level scripting language for the Generation V games develop
 
 ### Launching the IDE
 
-### 
+###  -->

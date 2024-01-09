@@ -51,23 +51,23 @@ Then, replace the bytes at this offset with the following sequence, depending on
 
 <details> 
  <summary>HGSS</summary>
- 
-| Byte Sequence  | Speed |
-| ------------- | ------------- |  
-| 80 01 | x0.25 |
-| C0 01 | x0.5  | 
-| 40 02 | x2  | 
-| 80 02 | x4  | 
-| C0 02 | x8  | 
-
+ <div>
+  | Byte Sequence  | Speed |
+  | ------------- | ------------- |  
+  | 80 01 | x0.25 |
+  | C0 01 | x0.5  | 
+  | 40 02 | x2  | 
+  | 80 02 | x4  | 
+  | C0 02 | x8  | 
+  </div>
 If you want a speed that is not listed above:
 <details> 
  <summary>HGSS - Custom Speed</summary>
- 
+ <div>
  1) You'll need to use either [Shell-storm online assembler and disassembler](https://shell-storm.org/online/Online-Assembler-and-Disassembler/) or an assembler like [Armips](https://github.com/Kingcom/armips)
  2) Assemble the instruction `LSLS R0, R0, #yourNumber`, with the default `#yourNumber` being 8, which means the base speed is `2^8 = 256`.
  3) Paste the assembled bytes in the overlay
-
+ </div>
 </details>
  
 </details>
@@ -75,6 +75,7 @@ If you want a speed that is not listed above:
 <details> 
  <summary>Platinum</summary>
  
+ <div>
 | Byte Sequence  | Speed |
 | ------------- | ------------- |  
 | 88 1E | x2 |
@@ -83,38 +84,39 @@ If you want a speed that is not listed above:
 | 48 1F | x5  | 
 | 88 1F | x6  | 
 | C8 1F | x7  | 
-
+</div>
 </details>
 
 If you want to fine-tune the speed Animation:
 
-<details><summary>How to fine-tune the speed Animation (HGSS only):</summary>
+<details>
+  <summary>How to fine-tune the speed Animation (HGSS only):</summary>
+  <div>
+  1) If you haven't already, you need to expand the arm9 using DSPRE's toolbox
+  
+  2) Paste this at 0x14FF0 of your synthetic overlay file:
+  ```
+  2D 2D 48 50 20 42 41 52 20 53 50 45 45 44 2D 2D 
+  80 21 49 00 48 43 11 1C 70 47 C0 46 FF FF FF FF
+  ```
+  * The first byte of the second row (default is `0x80`) represents the speed "fine control".
+  
+  * `80 21 49 00` means the speed is 128\*2 = 256. [x1]
+  * `A0 21 49 00` means the speed is 160\*2 = 320. [x1.25]
+  * `C0 21 49 00` means the speed is 192\*2 = 384. [x1.5]
+  * ...up to `FF 21 49 00`, which means the speed is 255\*2 = 510. [x1.9921]
+  
+  * The third byte of the second row (default is `0x49`) acts as a cumulative multiplier, or "coarse control". 
 
-1) If you haven't already, you need to expand the arm9 using DSPRE's toolbox
- 
-2) Paste this at 0x14FF0 of your synthetic overlay file:
-```
-2D 2D 48 50 20 42 41 52 20 53 50 45 45 44 2D 2D 
-80 21 49 00 48 43 11 1C 70 47 C0 46 FF FF FF FF
-```
-* The first byte of the second row (default is `0x80`) represents the speed "fine control".
- 
-* `80 21 49 00` means the speed is 128\*2 = 256. [x1]
-* `A0 21 49 00` means the speed is 160\*2 = 320. [x1.25]
-* `C0 21 49 00` means the speed is 192\*2 = 384. [x1.5]
-* ...up to `FF 21 49 00`, which means the speed is 255\*2 = 510. [x1.9921]
- 
-* The third byte of the second row (default is `0x49`) acts as a cumulative multiplier, or "coarse control". 
-
-* Increasing that value will allow you to set the speed even higher.
- 
-* `60 21 89 00` means the speed is 96\*4 = 384. [x1.5]
-* `80 21 89 00` means the speed is 128\*4 = 512. [x2]
-* `EC 21 89 00` means the speed is 236\*4 = 944. [x3.6875]
-* ...up to `FF 21 89 00`, which means the speed is 255\*4 = 1020. [x3.9843]
- 
-3) Paste `77 F1 D1 FA` at `0x2E17A` offset of uncompressed overlay12.
-
+  * Increasing that value will allow you to set the speed even higher.
+  
+  * `60 21 89 00` means the speed is 96\*4 = 384. [x1.5]
+  * `80 21 89 00` means the speed is 128\*4 = 512. [x2]
+  * `EC 21 89 00` means the speed is 236\*4 = 944. [x3.6875]
+  * ...up to `FF 21 89 00`, which means the speed is 255\*4 = 1020. [x3.9843]
+  
+  3) Paste `77 F1 D1 FA` at `0x2E17A` offset of uncompressed overlay12.
+  </div>
 </details>
 
 ### Reinserting the files
