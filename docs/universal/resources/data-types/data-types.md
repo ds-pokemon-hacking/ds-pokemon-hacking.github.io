@@ -71,7 +71,7 @@ Since floor(0.5) = 0, we are done. The final binary representation is the remain
 We can also verify that the number of bits we got is correct by taking the logarithm of 62 (with respect to base-2). $$ceil(log_{2}(62)) = 6$$, meaning we would need to perform 6 division operations to get our representation (which is what we just did above). This means that to store the value 62 in base-2, you would need 6 bits.
 
 ### Converting From Base-2 to Base-10
-Going to base-10 from base-2 is a fairly standard procedure. Let us use the binary string `01101101` for an example.
+Going from base-2 to base-10 is also a fairly standard procedure. Let us use the binary string `01101101` for an example.
 
 Each of these bits, as stated before, can be converted to base-10 value by multiplying the digit by it's base raised to the power of the index of the digit. We can then take the sum of all of these base-10 values, and get the final value. Note that the indexing of the bits starts at 0, and the 0th bit is the **right-most** bit.
 
@@ -86,11 +86,27 @@ Each of these bits, as stated before, can be converted to base-10 value by multi
   
 Summing the values, we get:
 $$
-
+1 + 0 + 4 + 8 + 0 + 32 + 64 + 0 = 109
 $$
 
+Therefore, $int(0b01101101) = 109$.
+
+> **Hint:**
+> You may have noticed that when you multiply the digit by $2^i$ (where $i$ is the index of the bit), you will be multiplying by either 0 or 1. Given a number $C$:
+> - $0 \times C = 0$.
+> - $1 \times C = C$.
+> 
+> As such, you can simplify the binary rules: if a bit at index $i$ is `1`, the value of that bit is just $2^i$. If it is 0, then the value of the bit is also 0. 
+
+## Hexadecimal (Base-16)
+Hexadecimal is a number system which has 16 possible digits: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, and F.
+
 ## Byte
-A `byte`, is a group of 8 bits in a sequential order. 
+A `byte`, in ARMv5T, is a group of 8 bits in a sequential order. You can think of a byte as a single binary string with __exactly__ 8 bits. For example:
+- `00000000` is 1 byte.
+- `10000000` is 1 byte.
+- `11111111` is 1 byte.
+- `100000000` is **NOT** 1 byte. However, it can be represented in multiple bytes (as we will talk about later).
 
 
 ## Integers
