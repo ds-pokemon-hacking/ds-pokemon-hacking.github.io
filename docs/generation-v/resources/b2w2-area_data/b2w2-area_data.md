@@ -1,8 +1,6 @@
 ---
 title: Area Data
 tags:
-  - Resource (Black)
-  - Resource (White)
   - Resource (Black 2)
   - Resource (White 2)
 ---
