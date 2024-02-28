@@ -22,10 +22,6 @@ The character section stores the sprite-image in form of indices to colors withi
     - [Dimensions](#dimensions)
     - [Mapping Type](#mapping-type)
     - [Flags](#flags)
-    - [Special Case](#special-case)
-      - [1. File length](#1-file-length)
-      - [2. Missing CPOS section](#2-missing-cpos-section)
-      - [3. Image layout](#3-image-layout)
     - [Files](#files)
   - [TODO](#todo)
 ---
@@ -109,20 +105,6 @@ These values are `0`, if the image uses 2D mapping (positive values in `heightIn
 Apply properties to the sprite.
 * `(flags & 0x00000001) > 0`: Use a line buffer instead of tiles.
 * `(flags & 0x00000100) > 0`: Unknown. Maybe related to [Mapping Type](#mapping-type)?
-
-### Special Case
-There are sprites, which seem to breake some rules of the format. It looks like it applies to images with a width, that is not a power of two. Examples are the trainer and pokemon preview sprites in generation V games, which have a size of `10 * 10 tiles` for trainers and `12 * 12 tiles` for pokemon. There are three issues with these sprites:
-
-#### 1. File length
-The length specified in the [headers (both, file and section)](../nitro_overview.md) of the file/section does not match the actual length of the file/section. Instead, it assumes the image had side lengths of the next higher power-of-two-values.
-
-#### 2. Missing CPOS section
-Normally, if the image has a size, there should also be a [CPOS section](section_cpos.md) available within the file. Here this is not the case. Might be related to the wrong file length.
-
-#### 3. Image layout
-The tiles are not places line by line. Instead, it looks like the the largest square with power-of-two side lengths that fits into the image constrains is calculated and placed at the top left corner. Then, this process repeats with the remaining size making the comming squares smaller. Following figure illustrates this whith one `10 * 10 tiles` example (top) and one `12 * 12 tiles` (bottom):
-
-![](resources/section_char/sprite_layout.png)
 
 ### Files
 * [Nitro Character Graphic Runtime](file_ncgr.md)
