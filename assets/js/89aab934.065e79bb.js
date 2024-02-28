@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkodsh_wiki_new=self.webpackChunkkodsh_wiki_new||[]).push([[7502],{7267:e=>{e.exports=JSON.parse('{"title":"Guides","slug":"/category/guides-1","permalink":"/docs/category/guides-1","navigation":{"next":{"title":"Fairy Type Implementation","permalink":"/docs/generation-v/guides/b2w2-fairy/"}}}')}}]);
