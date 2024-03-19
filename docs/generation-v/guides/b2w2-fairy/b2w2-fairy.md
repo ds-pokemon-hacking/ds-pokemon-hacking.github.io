@@ -100,17 +100,15 @@ First, we double the memory heap allocation size for the summary screen to give 
 
 <b>Overlay 255</b>
 
-Similarly, the PC Screen has a structure `0xA5BC` in size.  At `0xA268` of this structure, the type icon OAM id's are stored once again.  This would be as simple as moving it to the end, but `0xA268` is actually just a part of a substructure that is baked into the overall structure that starts at `0x18C`.  At `0xA0DC` of this substructure, there is a massive array of OAM id's for every sprite that is possibly on screen.  This includes and captures the `0xA268` from the overall structure--so I end up writing a hook into that area that checks for the overall structure offset and will redirect it to the end if it's part of the type icons.
+Similarly, the PC Screen has a structure `0xA5BC` in size.  At `0xA268` of this structure, the type icon OAM id's are stored once again.  This would be as simple as moving it to the end, but `0xA268` is actually just a part of a substructure that is baked into the overall structure that starts at `0x18C`.  At `0xA0DC` of this substructure, there is a massive array of OAM id's for every sprite that is possibly on screen.  This includes and captures the `0xA268` from the overall structure--so the code is written to move the type icons to the end of the structure at tag 475.  This prevents any overlap with other sprites that are present on screen as well.
 
 Whenever switching off of a Pokémon, the type icons are all deleted and and replaced--this is done by deleting all of the type OAM id's in a for loop.  There are two separate code areas that are run for these, one for switching onto a new Pokémon and another for switching into blank space.  These for loops are both expanded to run one more time for the Fairy type.
-
-This new type then takes the tag of one of the boxes when "move Pokémon" is selected, so the box is then deleted instead of loaded in properly.  Need to look into moving the boxes to be one tag later.
 
 <br />
 
 <b>Overlay 265</b>
 
-Here, the table `u32 type_to_loaded_gfx_hof[NUM_OF_TYPES]` exists to map the types to their loaded SPA file when the hall of fame cutscene happens.  This SPA is all of the particles that appear when the Pokémon slides on screen.  Similarly, the palette table is at the very end of the overlay, but currently assigning a valid palette causes a crash in the hall of fame.  As such, we currently just load an invalid palette to prevent the crash.
+Here, the table `u32 type_to_loaded_gfx_hof[NUM_OF_TYPES]` exists to map the types to their loaded SPA file when the hall of fame cutscene happens.  This SPA is all of the particles that appear when the Pokémon slides on screen.  Similarly, the palette table is at the very end of the overlay, and the code was modified to make that table consist of halfwords over u32's to allow us to add more to the end without overflowing the overlay's memory region.
 
 <br />
 
