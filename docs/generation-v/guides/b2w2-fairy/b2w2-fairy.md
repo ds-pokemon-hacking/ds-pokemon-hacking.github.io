@@ -27,7 +27,7 @@ This is a tutorial that details how to insert the Fairy type in Black 2 and Whit
 Various other type graphics are leftover from possible features.  We look to replace those here.
 
 ### Type Icons - ``/a/0/8/2``, ``/a/1/2/5``
-Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.  Tinke allows us to do this by replacing the relevant files, first in ``/a/0/8/2``: 
+Here we replace the Cool and ??? type icons with the Fairy type icon to allow us to print the icon.  Tinke allows us to do this by replacing the relevant files, first in ``/a/0/8/2``:
 
 [a082_33.RLCN](resources/a082_33.RLCN) and [a082_51.RGCN](resources/a082_51.RGCN) should replace the ones in the ROM from an extracted ``/a/0/8/2``.
 
@@ -42,7 +42,7 @@ Here we add a new palette to ``/a/0/1/1`` to make Fairy moves appear as pink in 
 
 This file is [a011_572.RLCN](resources/a011_572.RLCN).
 
-``a011`` originally just has 571 files.  We add a 572nd file for our purposes.  You can either unpack/repack using narchive (included in the b2w2-fairy repository) or Extract directory using Tinke, add the file, and Change by directory using Tinke again.  
+``a011`` originally just has 571 files.  We add a 572nd file for our purposes.  You can either unpack/repack using narchive (included in the b2w2-fairy repository) or Extract directory using Tinke, add the file, and Change by directory using Tinke again.
 
 ### Hall of Fame Palette - ``/a/2/1/3``
 Here we add a new palette to ``/a/2/1/3`` to make Fairy Pokémon show up in the Hall of Fame with a pink nameplate.  This is currently bugged and unfinished, but once the code is written it will be fixed in the Git repo.
@@ -112,14 +112,21 @@ This new type then takes the tag of one of the boxes when "move Pokémon" is sel
 
 Here, the table `u32 type_to_loaded_gfx_hof[NUM_OF_TYPES]` exists to map the types to their loaded SPA file when the hall of fame cutscene happens.  This SPA is all of the particles that appear when the Pokémon slides on screen.  Similarly, the palette table is at the very end of the overlay, but currently assigning a valid palette causes a crash in the hall of fame.  As such, we currently just load an invalid palette to prevent the crash.
 
+<br />
+
+<b>Overlay 296</b>
+
+Here, there is a lot of handling to increase the PokéDex's loaded sprites.  We increase the amount of space for the Dex structure and go on to move all of the type objects to the end of the structure so that the fairy type icon can be loaded as well.
+
+<br />
+
+<b>Overlay 298</b>
+
+There is an initializer in the PokéDex routines that determines how many files can be loaded.  This limit is increased.
+
 </details>
 
-![](resources/summary_1.png) ![](resources/summary_2.png) ![](resources/select.png) ![](resources/pc_screen.png)
+![](resources/summary_1.png) ![](resources/summary_2.png) ![](resources/select.png) ![](resources/pc_screen.png) ![](resources/pokedex.png)
 
 ## Cleanup
 From there, just make Struggle type 18 to make it typeless.  Assign all the Pokémon that need it to be Fairy type.  Make moves that have the Fairy typing as well.  It's now a functional type entirely!
-
-## TODO
-- Type icon in the Dex does not show up--pure fairy types don't have anything show up!  Does not crash, though.
-- Hall of Fame palette loading--memory overflow or something?  Having it load nothing works fine, but appears as a black void.
-- PC Screen tag overlap--fairy is loaded in the same sprite slot as one of the box icons and is both scrolled as such and the box icon doesn't show up in the menu.
