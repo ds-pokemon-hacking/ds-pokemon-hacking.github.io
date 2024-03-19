@@ -7,7 +7,7 @@ tags:
 
 # Fairy Type in B2W2
 > Author(s): [BluRose](https://github.com/BluRosie) <br />
-> Research: [BluRose](https://github.com/BluRosie), [MeroMero](https://www.pokecommunity.com/showthread.php?t=349000)
+> Research: [BluRose](https://github.com/BluRosie), Sunk, [MeroMero](https://www.pokecommunity.com/showthread.php?t=349000)
 
 This is a tutorial that details how to insert the Fairy type in Black 2 and White 2 using MeroMero's [initial research from years ago](https://www.pokecommunity.com/showthread.php?t=349000) and building upon it with a new and improved better understanding of just what happens in the assembly.  While yet imperfect, the improvements allow for a much better Fairy representation overall, eliminating the appearance of glitched graphics and crashes entirely.
 
