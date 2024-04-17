@@ -12,9 +12,9 @@ tags:
   - Guide (White 2)
 ---
 
+# General Code Injection Guide
 > Author(s): [PlatinumMaster](https://github.com/PlatinumMaster), [Hello007](https://github.com/HelloOO7)
 
-# General Code Injection Guide
 This guide aims to serve as a technical introduction to code injection in the DS Pokemon games, as well as common processes for it. It is strongly recommended that you read this page before continuing onto generation-specific code injection, as it will attempt to familiarize you with how it generally works.
 
 ## Assembly Injection

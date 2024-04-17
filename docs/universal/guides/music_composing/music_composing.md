@@ -38,29 +38,26 @@ Now what most of you are probably here for. This is your sequence file, which co
 
 ndspy's API has a full list of the commands available in SSEQ, but just looking at official SSEQs through Nitro Studio 2 Deluxe's plaintext editor will tell you a lot of what you need to know as well. I'm not going to go through every single one because I don't understand them all that's not really the point of this guide, so I'll go over some of the ones you'll be using the most often:
 
-- The Modulation commands<br>
+- The Modulation commands
 Also known as low frequency oscillator, or "LFO", commands, these control when and how individual tracks respond to modulation. Most of these range from 0 to 127 unless otherwise noted. These are the following:
-	- mod_depth<br>
-The main one, and the one that determines whether or not you'll even notice the others. By default, this is set to 0. This is how much the sound is affected: for instance, setting it to 32 means it will affect a fourth of the sound, setting it to 64 means it will affect half the sound, and setting it to 127 means it will affect the entirety of the sound.
-	- mod_speed<br>
-This controls how fast the modulation occurs. By default, this is set to 16.
-	- mod_type<br>
-This controls the way the sound will modulate. By default, this is set to 0. While it can be any value from 0 to 127, only values of 0, 1, and 2 are meaningful. Type 0 modulates pitch, Type 1 modulates volume, and Type 2 modulates panorama.
-	- mod_range<br>
-This controls how far out the modulation reaches in either direction. By default, this is set to 1.
-- Portamento commands<br>
+	- `mod_depth`: The main one, and the one that determines whether or not you'll even notice the others. By default, this is set to 0. This is how much the sound is affected: for instance, setting it to 32 means it will affect a fourth of the sound, setting it to 64 means it will affect half the sound, and setting it to 127 means it will affect the entirety of the sound.
+	- `mod_speed`: This controls how fast the modulation occurs. By default, this is set to 16.
+	- `mod_type`: This controls the way the sound will modulate. By default, this is set to 0. While it can be any value from 0 to 127, only values of 0, 1, and 2 are meaningful. Type 0 modulates pitch, Type 1 modulates volume, and Type 2 modulates panorama.
+	- `mod_range`: This controls how far out the modulation reaches in either direction. By default, this is set to 1.
+  
+- Portamento commands
 Use these to configure how and when notes glide between each other.
-	- porta_on / porta_off<br>
-Simple toggles that control when it is active or not. These do not have any parameters.
-	- porta_time<br>
-The length of the glide.
-	- porta<br>
-The key to glide from. If none is specified, it will glide from the one that was last pressed.
-- Expression<br>
+	- `porta_on` / `porta_off`: Simple toggles that control when it is active or not. These do not have any parameters.
+	- `porta_time`: The length of the glide.
+	- `porta`: The key to glide from. If none is specified, it will glide from the one that was last pressed.
+
+- Expression
 Known internally as volume2, this is a secondary volume control generally used for sweeping, like with a saxophone. You can get away with using normal volume exclusively, and those on the GBA had no choice, but I find that to be messy and reserve volume for when I need to vary the overall volume of the track and don't want to mess with velocity.
-- Pitch bend<br>
+
+- Pitch bend
 Bends the sound up or down. Programmatically, pitchbends range from values of -128 to 127, although when composing it's better to let the converter approximate.
-- Bend range<br>
+
+- Bend range
 How far in semitones the pitchbends reach. In most cases, it is set to 12, which means pitchbends reach a full octave in both directions.
 - Attack, Decay, Sustain, Release
 These commands will override the ADSR of any instrument playing on the specified track. They work exactly as they would in the bank.
@@ -103,11 +100,11 @@ Another thing to make sure of when composing is to keep your MIDI as small as po
 
 Take this curve on CC11, for instance:
 
-<img src="img/complicated_curve.png"  width="25%">
+![Complex Curve](img/complicated_curve.png)
 
 Obviously general audio renders dictate that more articulate event curves means smoother and therefore more realistic ones. However, following this practice to the letter on the DS, or anything with very limited memory, will greatly balloon the size of your sequence, because each one of these tiny changes is another event change. So instead of making it ultra smooth, it's better to do something like this:
 
-<img src="img/simple_curve.png"  width="25%">
+![Simple Curve](img/simple_curve.png)
 
 This accomplishes the same effect while sounding more or less indistinguishable from its articulate counterpart in real time and making a much smaller MIDI. Of course, this is not exhaustive, and different tracks will need different things. But if there's ever a situation in which you have a MIDI with rather simple notation that is so large it breaks the heap, overly articulate event curves are a likely suspect.
 
@@ -152,7 +149,7 @@ In any case, keep information on your desired programs somewhere or memorize it.
 
 Next, we're gonna create a new wave archive. To create a slot for it, right click the wave archives dropdown (making sure to actually drop it down first so you can see it), and hit add, and it will put it in the next available empty slot at the bottom.
 
-![](img/add_wave_archive.png)<br>
+![](img/add_wave_archive.png)
 ![](img/wave_archive_added.png)
 
 You can move it to any slot by going to the top left where it says Item Index, changing the number to one currently not used, and hitting Swap with Index, but take care to not rearrange any of the old ones; you *will* misalign everything and break the sound. Open it by double clicking the entry, and you should see a "wave archive" icon with nothing below it.
@@ -161,10 +158,10 @@ You can move it to any slot by going to the top left where it says Item Index, c
 
 Right click it and hit add, and select your first .SWAV file.
 
-![](img/add_wave.png)<br>
+![](img/add_wave.png)
 ![](img/select_wave.png)
 
-Now you can collapse the wave archive icon and see what's inside it like the others.<br>
+Now you can collapse the wave archive icon and see what's inside it like the others.
 ![](img/wave_archive_list.png)
 
 Repeat this for as many as you have. You can add them in any order you wish; just be sure to remember what order they're in and what number they're assigned to. Once you're done, **make sure you hit File -> Save before you close the window; otherwise, your changes will not save**.
@@ -185,13 +182,14 @@ The next step is to make the new bank. Go to the bank dropdown, and before you m
 
 You'll see why in a bit.
 
-You create your bank in the same manner that you create your wave archive, by right clicking the dropdown and hitting add. Again, you can use Swap to Index to move it, but just be sure to not rearrange the existing slots.<br>
-![](img/add_bank.png)<br>
+You create your bank in the same manner that you create your wave archive, by right clicking the dropdown and hitting add. Again, you can use Swap to Index to move it, but just be sure to not rearrange the existing slots.
+
+![](img/add_bank.png)
 ![](img/bank_added.png)
 
 Next, you want to right click this new bank, hit `Replace`, and select the SBNK you just saved.
 
-![](img/replace_bank.png)<br>
+![](img/replace_bank.png)
 ![](img/select_bank.png)
 
 This is not a mandatory step, but because Gen 4 games are built around the basic bank, it's frivolous to exclude any of the data; otherwise, you'd have to recreate all of those programs manually.
@@ -204,7 +202,7 @@ To assign the wave archives accordingly, making sure the new bank is still selec
 
 Now we can edit the bank by double clicking it. Technically you can just change the existing program numbers to anything you want because this bank will only affect this slot, but when it comes to doing Gen 4 stuff I find it easier to just leave everything as is. Adding new programs is done in the same fashion as adding anything else new, by right clicking the dropdown and hitting add.
 
-![](img/add_program.png)<br>
+![](img/add_program.png)
 ![](img/program_added.png)
 
 Like before, it will be added to the bottom and assigned the next available ID, and you can change it by using the Swap to Index feature mentioned previously. We're not going to do that in this situation because we don't need to, and all of the existing program numbers from other banks don't overlap.
@@ -249,7 +247,7 @@ Again, **hit save before you close this window**, name it something else if you 
 
 Now again, we aren't going to cover making an entirely new bank with every instrument you'll need for one track, but by now you get the general principle: make wave archive, create bank assignments, give bank to sequence. But let's create a hypothetical scenario in which you need a bank containing a percussion program, a PSG program, and a noise program. This is mostly for Gen 5, or for Gen 4 if you are using AdAstra's music hack, but the general principle still applies to base Gen 4.
 
-For this example, we will create a drum program consisting of the ProSamples dance kick, the ProSamples dance hihats, the PlugSound groove snare, the Battery crash and chinese cymbals, and one of the Addictive Drums toms. One thing we *<u>won't</u>* be doing with this program is making it follow the original keymapping, and that has to do merely with preference. I like to obey General MIDI as much as possible when creating programs, and in terms of drumsets, some of these default keymaps are so obtuse I don't want to work with them. Plus, if you ever find yourself in a similar situation, this will tell you how to do it. As for the pulse and noise programs, I feel that it is easier if you play it by ear by using the keyboard in the bottom right and mess with the ADSR and duty cycle as you want until it sounds the way you like (I probably should have mentioned the keyboard earlier but it's a bit misleading as it ignores release entirely and stops once you let go of the key). Do keep in mind that, unlike the GBA, the DS does not have a wavetable generator; the best you can do for that situation is import the wavetable you want as a sample, preferably a PCM16 sample to minimize noise and compression (since it's a basic waveform it's not going to be very big). Also keep in mind that, while the instructions for creating noise and PSG instruments are in the Gen 5 section, the steps are exactly the same for Gen 4.
+For this example, we will create a drum program consisting of the ProSamples dance kick, the ProSamples dance hihats, the PlugSound groove snare, the Battery crash and chinese cymbals, and one of the Addictive Drums toms. One thing we __*won't*__ be doing with this program is making it follow the original keymapping, and that has to do merely with preference. I like to obey General MIDI as much as possible when creating programs, and in terms of drumsets, some of these default keymaps are so obtuse I don't want to work with them. Plus, if you ever find yourself in a similar situation, this will tell you how to do it. As for the pulse and noise programs, I feel that it is easier if you play it by ear by using the keyboard in the bottom right and mess with the ADSR and duty cycle as you want until it sounds the way you like (I probably should have mentioned the keyboard earlier but it's a bit misleading as it ignores release entirely and stops once you let go of the key). Do keep in mind that, unlike the GBA, the DS does not have a wavetable generator; the best you can do for that situation is import the wavetable you want as a sample, preferably a PCM16 sample to minimize noise and compression (since it's a basic waveform it's not going to be very big). Also keep in mind that, while the instructions for creating noise and PSG instruments are in the Gen 5 section, the steps are exactly the same for Gen 4.
 
 ### Creating drumsets
 
@@ -323,7 +321,7 @@ If your sample doesn't loop, just leave the next six bytes as 00 00 00 00 00 00 
 
 ![](img/swav_data_section.png)
 
-The header is now (mostly) done, so the next step is to copy over the *<u>raw</u>* audio data and paste it after the header. Then, go to the end and see if the total file size is divisible by 4.
+The header is now (mostly) done, so the next step is to copy over the *__raw__* audio data and paste it after the header. Then, go to the end and see if the total file size is divisible by 4.
 
 ![](img/swav_raw_audio.png)
 
