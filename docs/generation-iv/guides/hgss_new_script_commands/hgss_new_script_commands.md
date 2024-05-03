@@ -15,18 +15,18 @@ we will edit in this guide is called DummyTextTrap (0xD0) in DSPRE. It has two p
 ---
 
 ## Table of Contents
-<!-- - [Creating New Script Commands in HeartGold Engine](#creating-new-script-commands-in-heartgold-engine)
+  - [Creating New Script Commands in HeartGold Engine](#creating-new-script-commands-in-heartgold-engine)
   - [Table of Contents](#table-of-contents)
   - [Acknowledgements](#acknowledgements)
   - [Prerequisites](#prerequisites)
   - [Part 1 - Repointing DummyTextTrap](#part-1---repointing-dummytexttrap)
   - [Part 2 - Overlay 101 Hex Editing](#part-2---making-your-new-script-commands)
   - [Part 3 - An Example Script Command (in English HG)](#part-3---an-example-script-command-in-english-hg)
-=-->
 
 ## Acknowledgements
-BluRose: All the help in teaching me this
-AdAstra: Providing the locations of the HGSS script command table
+BluRose: All the help in teaching me this!
+
+AdAstra: Providing the locations of the HGSS script command table!
 
 ## Prerequisites
 - Comfortability with C code
@@ -36,10 +36,15 @@ AdAstra: Providing the locations of the HGSS script command table
 The table for HG script commands' pointers is located at the following offsets in a decompressed arm9:
 
 **JAP**: 0xFA4B0
+
 **ITA**: 0xFAC78
+
 **DEU**: 0xFACB4
+
 **FRA**: 0xFACE4
+
 **SPA**: 0xFACE8
+
 **ENG**: 0xFAD00
 
 To find the location of the pointer to DummyTextTrap in your game, use the following equation: (0xD0 * 4) + BASE_ADDRESS.
@@ -49,7 +54,7 @@ Once you have found your location, which for the purposes of this guide will be 
 Open up ``routinepointers``, which is at the base of your HGE folder, and add the following:
 
 ```
-# New Script Commands, ID 0xD0``
+# New Script Commands, ID 0xD0
 arm9 ScrCmd_master_new_script_command 080FB040
 ```
 
@@ -105,7 +110,7 @@ What this does is that it takes the pointer at address ``0x0210FA3C`` in the arm
 
 So, if I typed ``DummyTextTrap 0 3`` in DSPRE, it would cause ``SpMartScreen 0`` to now point to entry 3 in my array called ``NewMarts``.
 
-Now, you may be thinking "wont this screw up shop 0 in ``SpMartScreen``?" Yes, you would be correct! This is why I also have a command as case 1 to address it:
+Now, you may be thinking "wont this screw up the vanilla shop 0 in ``SpMartScreen``?" Yes, you would be correct! This is why I also have a command as case 1 to address it:
 
 ```c
 case 1: // revert shop 0
@@ -113,7 +118,7 @@ case 1: // revert shop 0
         break;
 ```
 
-This will restore the pointer for ``SpMartScreen 0`` to its original value -- I use this command after the player has finished with the shop to restore shop 0.
+This will restore the pointer for ``SpMartScreen 0`` to its original value (in ENG HG) -- I use this command after the player has finished with the shop to restore shop 0.
 
 To demonstrate ``NewMarts``, here is a picture:
 
