@@ -20,6 +20,8 @@ Assembly will not be covered here.  It is recommended you understand assembly co
   - [Manual Process](#manual-process)
   - [Shortcomings of the Manual Process](#shortcomings-of-the-manual-process)
   - [Implementation Details](#implementation-details)
+  - [Code Injection Template](#code-injection-template)
+  - [hg-engine](#hg-engine)
 
 ## Manual Process
 The Nintendo DS has 4 MB of EWRAM.  Unlike the GBA, the ROM is not directly mapped and readable in memory.  Files must be dumped into that 4 MB of memory in order to be accessed.  This includes all code that is run--the processor CPU's don't have direct access to the ROM in code execution space.
@@ -75,18 +77,18 @@ The first line inserted--literally `--HP BAR SPEED--` in ASCII--is just a marker
 ## Shortcomings of the Manual Process
 **Note that this is not a diss or anything on AdAstra and/or his tutorial.**  This is just a presentation to describe the process that we are looking to automate for code injection.
 
-Manual insertion of this is tedious.  It is also very easy to just insert and forget about.
+Manual insertion of this is tedious.
 The manual insertion process also mandates that you keep track of things in your synthetic overlay as it fills up--which is where that marker comes in as a reminder when the user is scrolling through their code binaries and forgets what each bit of otherwise-meaningless hexadecimal is.
 Sharing this with other people places this smack-dab in the middle of their synthetic overlays and cuts down on continuous free space that they may want to use for other things.  It will require reverse engineering to move this elsewhere, if they even remember the change in the game code that redirected execution out to this point.
 
 The idea with code injection frameworks is to cut down on the manual hex editing and allow code to be shared for insertion at any point in synthetic overlays--wherever there is free memory at any given point.
 
 ## Implementation Details
-When assembling and compiling code, and object file is produced.  This can then be linked to specific addresses to create a linked object of a number of direct compiled objects that are all together.  We can view these addresses, parse the symbol output with Python, and correlate it with our own custom format (also parsed by Python) that will fully automate the overlay process for us--all we have to edit is the code.
+When assembling and compiling code, an object file is produced.  This can then be linked to specific addresses to create a linked object of a number of direct compiled objects that are all together.  We can view these addresses, parse the symbol output with Python, and correlate it with our own custom format (also parsed by Python) that will fully automate the overlay process for us--all we have to edit is the code.
 
 This does not eliminate the reverse engineering step required to *find* exactly where to branch out of the game code to our code.  There is no tutorial for that--you just have to get into the weeds of the assembly directly and figure out what each piece of code is doing.  This is where the GDB Debugger in Desmume coupled with IDA Pro or Ghidra is useful--you can see exactly what is executing and when, trace it to identify what you need to do.
 
-The method chosen to decide how to highjack the game's execution is by writing hooks in the binary automatically based on a text file we create and parse.  The hook code is:
+The method chosen to decide how to highjack the game's execution is by writing hooks in the binary automatically based on a text file we create and parse.  The hook code is designed to be generic:
 
 ```arm
 ldr rN, =functionOffset
@@ -109,7 +111,7 @@ void PocketCompaction(ITEM_SLOT *slots, u32 count) {
 }
 ```
 
-This gives an 8-byte snippet of assembly (or 10 bytes if not 4-byte word aligned) that allows us to jump from any point in EWRAM to any other point in EWRAM.
+This gives an 8-byte snippet of assembly (or 10 bytes if not 4-byte word aligned, which is automatically accounted for) that allows us to jump from any point in EWRAM to any other point in EWRAM.
 
 The hook format as implemented is as follows:
 
@@ -143,7 +145,7 @@ The direct output of `nm linked_object.o` gives the addresses of all the functio
 023dcccc t Pocket_TakeItem_return_address
 ```
 
-We use Python to parse this table and create a "symbol table" of sorts that shows where code we put in the ROM will eventually be loaded into the EWRAM.  We can finally use all of this to write the hooks directly.
+We use Python to parse this output from `nm` and create a "symbol table" of sorts that shows where code we put in the ROM will eventually be loaded into the EWRAM.  We can finally use all of this to write the hooks directly.
 
 In this example, the `PocketCompaction` function is seen at `023D88CF` in the EWRAM and so the code below is written to `0x785A0` of the arm9 binary (as specified by `080785A0` in the hook entry):
 
@@ -156,6 +158,8 @@ bx r2
 Which automatically puts `00 4A 10 47 CF 88 3D 02` at `0x785A0` of the arm9 binary.  This highjacks the code execution directly to our version of `PocketCompaction`, effectively *replacing the function entirely with whatever code we write*.
 
 You do not need to replace an entire function at its start.  You can branch out of the middle of a function, write purely assembly code to tweak a register's value, or write a custom hook as a landing pad from the code binary to tweak certain registers and restore values before passing everything back to the game to run proper.
+
+* Note for functions that have more than 3 arguments:  The C standard for ARM stipulates that arguments 0-3 are passed as `r0`-`r3` in the resulting assembly.  Further arguments are passed via the stack.  To deal with this, we write a custom hook including some `bytereplacement` elements that maintains all of the registers and stack pointer going into the function from the ROM.  See the [`CantEscape` example](https://github.com/search?q=repo%3ABluRosie%2Fhg-engine%20CantEscape&type=code) for implementation details.
 
 Further convenience is afforded in these files that Python parses with `bytereplacement`, `routinepointers`, and `repoints`.
 
@@ -201,3 +205,45 @@ And `repoints` will place a pointer to any data you specify in the code in the c
 `repoints` is unique in that it lets you specify an offset to be added to the pointer before writing it to the code binaries.  This is done to mimic how the compiler handles optimizations at times by inserting a reference to a table that is offset by the position of the entry it needs.
 
 In this example, `TypeEffectivenessTable` is a list of `u8` arrays with declaration `u8 TypeEffectivenessTable[][3];`.  Each 3 bytes is in the order of attacking type, defending type, and effectiveness multiplier.  Code that only references the effectiveness multiplier may be optimized by the compiler to directly build that offset into the reference it generates (and does), so we allow the option to compensate for that here.
+
+It is also possible to use functions and data from the ROM itself.  The code injection framework achieves this by defining symbol offsets in [`rom.ld`](https://github.com/BluRosie/hg-transparent-textbox/blob/main/rom.ld).  Here we can add a function from the ROM, say `DaycareMon_GetBoxMon` which according to the [`xmap`](https://raw.githubusercontent.com/pret/pokeheartgold/xmap/heartgoldus.xMAP) is located at `020292E4` in the arm9.  To use this, we add an entry to [`rom.ld`](https://github.com/BluRosie/hg-transparent-textbox/blob/main/rom.ld):
+
+```
+DaycareMon_GetBoxMon = 0x020292E4 | 1;
+```
+
+The `0x020292E4` is the base offset of the function.  The `| 1` is due to the function being in thumb (as most functions from the ROM are).
+
+To then call this in our code, we have to add a declaration of the function (its structures, `BoxPokemon` and `DaycareMon` will have to be copied as well):
+
+```c
+BoxPokemon *DaycareMon_GetBoxMon(DaycareMon *dcmon);
+```
+
+When we do this alone, the linker assumes the function is ARM and resolves the address of the function to be `0x020292E4`, jumping to it with a `blx` instruction to swap the instruction set to ARM which will likely cause a crash.  To fix this, we introduce the `long_call` compilation attribute:
+
+```c
+BoxPokemon * __attribute__((long_call)) DaycareMon_GetBoxMon(DaycareMon *dcmon);
+```
+
+This tricks the compiler to elicit code that will not cull the thumb bit from the function address and properly jump to it.  hg-engine (covered later) has this defined as the macro `LONG_CALL`, which would allow this declaration to look like this:
+
+```c
+BoxPokemon * LONG_CALL DaycareMon_GetBoxMon(DaycareMon *dcmon);
+```
+
+`DaycareMon_GetBoxMon` can then be used in the code that you write as any other function.  The linker will resolve its address properly and the code will function as it is in the original ROM.  This is useful for copying existing functions from the ROM without needing to copy copious amounts of code from the decompilations or manually reimplement in assembly.
+
+## Code Injection Template
+For those who don't want to fully overhaul the battle system of their hacks, the [repository for transparent textboxes](https://github.com/BluRosie/hg-transparent-textbox) serves as a template for code injection.  It still uses [Mikelan and Nomura's synthetic overlay approach](https://pokehacking.com/tutorials/ramexpansion/) to code expansion, where an unused file in the file system is repurposed as a code storage container instead of directly using another overlay as is necessary for larger code injection projects with sizes that surpass the RAM size limitations afforded by this approach.  It is still completely valid for entire projects--0x18000 bytes is quite a lot, and anything but entire engine overhauls is supported by this.
+
+Its `Makefile` has an example of a NARC being edited with files that are present in the repository.  [These](https://github.com/BluRosie/hg-transparent-textbox/blob/main/Makefile#L87) [lines](https://github.com/BluRosie/hg-transparent-textbox/blob/main/Makefile#L97-L106) (there are two links there, lines 87 and 97-106) can be deleted in the event that you don't want to use the transparent textboxes that are implemented by the repository.  This will then also involve deleting the code that is present to handle the transparent textboxes--clearing out the `src` directory and the `asm/other_hooks.s`, `repoints`, `bytereplacement`, and `hooks` files will leave the repository blank for your populating.
+
+From there, adding new files in `src` will automatically compile them and link everything for insertion.  Same goes for assembly source files in `asm`.  [`asm/thumb_help.s`](https://github.com/BluRosie/hg-transparent-textbox/blob/main/asm/thumb_help.s) is a file that implements some functions that the C compiler sometimes assumes exists and uses as functions.
+
+## hg-engine
+[hg-engine](https://github.com/BluRosie/hg-engine/) is an engine overhaul for Pokémon Heartgold primarily focused on adding all of the existing Pokémon and updating the battle engine accordingly.  Any code changes can be tacked on to hg-engine as well--multiple projects add their code changes on top and use things accordingly.
+
+hg-engine adds separate overlays that are linked to existing ones--one for the overworld, one for battles, another for the PokéDex overlay, and a few for individual massive functions.  These are all separated into their own folders: `src/field`, `src/battle`, and `src/pokedex`, and `src/individual`, respectively.  All of these are linked against both `rom.ld` and the functions that are in the base `src` directory, which is now treated as an arm9 extension overlay.  These are then linked with their respective folders in `asm` as well (except for `individual` functions).
+
+hg-engine also comes with the benefit of community support.  Feel free to join the KoDSH Discord or the DS Modding Community Discord to get support with any given problem--be it setting up the repository for editing, adding new Mega Pokémon, adding your own forms, whatever you may need.
