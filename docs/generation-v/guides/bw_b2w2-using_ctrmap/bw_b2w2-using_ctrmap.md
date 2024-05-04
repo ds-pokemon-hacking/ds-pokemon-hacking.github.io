@@ -33,11 +33,11 @@ In order to use CTRMap for Generation V, you will need to follow the steps below
     - If you are on Windows, you can get it from [java.com](https://www.java.com/en/download/).
     - If you are on Linux, the exact instructions depend on your distribution.
 
-- Go to the [CTRMap-CE release page](https://github.com/kingdom-of-ds-hacking/CTRMap-CE/releases), and download the latest release. You do this by expanding the `Assets` drop down, and clicking on `CTRMap.jar`. Ensure that, when you are downloading the tool, **you download the `CTRMap.jar`, and not the source code**.
+- Go to the [CTRMap-CE release page](https://github.com/ds-pokemon-hacking/CTRMap-CE/releases), and download the latest release. You do this by expanding the `Assets` drop down, and clicking on `CTRMap.jar`. Ensure that, when you are downloading the tool, **you download the `CTRMap.jar`, and not the source code**.
    
 ![](img/image.png)
 
-- Go to the [CTRMapV release page](https://github.com/kingdom-of-ds-hacking/CTRMapV/releases), and download the latest release. You do this by expanding the `Assets` drop down, and clicking on `CTRMapV.jar`. Ensure that, when you are downloading the tool, **you download the `CTRMapV.jar`, and not the source code**.
+- Go to the [CTRMapV release page](https://github.com/ds-pokemon-hacking/CTRMapV/releases), and download the latest release. You do this by expanding the `Assets` drop down, and clicking on `CTRMapV.jar`. Ensure that, when you are downloading the tool, **you download the `CTRMapV.jar`, and not the source code**.
 
 - After installing the aforementioned, run `CTRMap.jar`. You should be greeted with the following window:
 
