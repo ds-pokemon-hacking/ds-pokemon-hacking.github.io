@@ -25,7 +25,6 @@ we will edit in this guide is called DummyTextTrap (0xD0) in DSPRE. It has two p
 
 ## Acknowledgements
 BluRose: All the help in teaching me this!
-
 AdAstra: Providing the locations of the HGSS script command table!
 
 ## Prerequisites
@@ -117,7 +116,6 @@ case 1: // revert shop 0
         *(u32 *)(0x0210FA3C) = 0x020FBA54;
         break;
 ```
-
 This will restore the pointer for ``SpMartScreen 0`` to its original value (in ENG HG) -- I use this command after the player has finished with the shop to restore shop 0.
 
 To demonstrate ``NewMarts``, here is a picture:

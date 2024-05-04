@@ -121,7 +121,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`Home`}
-      description="Description will go into a meta tag in <head />">
+      description="Guides and resources for hacking the DS Pokémon games.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

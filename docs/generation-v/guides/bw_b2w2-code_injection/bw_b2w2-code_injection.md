@@ -22,8 +22,8 @@ First, we've got to set up a few prerequisites. It's a boring job but I promise 
 To start, download (and install, where applicable) all these:
 - [CTRMap for Generation V](using-ctrmap/using-ctrmap.md)
 - [The `arm-none-eabi` GCC toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-- [Latest RPM build of `PMC`](https://github.com/kingdom-of-ds-hacking/PMC/releases)
-- [Pokémon Black 2 and White 2 Development Headers](https://github.com/kingdom-of-ds-hacking/swan)
+- [Latest RPM build of `PMC`](https://github.com/ds-pokemon-hacking/PMC/releases)
+- [Pokémon Black 2 and White 2 Development Headers](https://github.com/ds-pokemon-hacking/swan)
 - [Latest NitroKernel DLL](https://github.com/HelloOO7/NitroKernel/releases)
 
 Before you get into code injection, [set up a CTRMap project](using-ctrmap.md#creating-a-project) and load it up. If everything went as planned, there should be a `Code Injection` section in your `Extras` tab. 
@@ -41,7 +41,7 @@ There are two quintessential things that you need in order to begin writing prop
 - A compiler with cross-compilation support for ARMv5T - you should already have this since the first chapter. 
 - An `ESDB` (short for "external symbol database"), the stepping stone for interfacing and hijacking game routines. 
 
-ESDBs should be provided with the [swan development headers](https://github.com/kingdom-of-ds-hacking/swan). If for some reason you need to generate your own, you can do so utilizing the Interactive Disassembler (IDA), provided you have your own database (IDB).
+ESDBs should be provided with the [swan development headers](https://github.com/ds-pokemon-hacking/swan). If for some reason you need to generate your own, you can do so utilizing the Interactive Disassembler (IDA), provided you have your own database (IDB).
 1) Export the symbols you need from IDA using `File > Produce file > Create MAP file...`
 2) Copy the contents of IDA's Segment Register table (`View > Open subviews > Segment registers`) into a text file.
 3) Open the result `.map` file in a text editor (i.e Notepad++, Visual Studio Code), and fix the segment starting addresses to their proper values instead of `00000000`. IDA's just sometimes moody like that.
