@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkkodsh_wiki_new=self.webpackChunkkodsh_wiki_new||[]).push([[7893],{62027:e=>{e.exports=JSON.parse('{"title":"Guides","slug":"/category/guides","permalink":"/docs/category/guides","navigation":{"next":{"title":"Editing the Town Map","permalink":"/docs/generation-iv/guides/hgss-town_map/"}}}')}}]);
