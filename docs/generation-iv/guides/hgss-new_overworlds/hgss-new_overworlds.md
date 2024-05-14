@@ -97,8 +97,13 @@ else if (bitmap.Height == 384) // npcs -- their dimensions are 32x384
 				this.bm = BTX0.Read(this.BTXFile);
 			}
 ```
+Next, we need to update this line in ``pngtobtx0.cs``:
+```c#
+if (Program.PaletteSize == 64U && Program.PaletteCount == 2U) // handle shiny palette if one exists first
+```
+to also include your ``new npcs`` folder. Simply add ``&& !args[0].Contains("new_npcs")`` to that line within the parentheses.
 
-This code will look for ``.png`` files in your new folder ``new_npcs`` and begin applying the ``.png`` over the ``.BTX0`` called ``a081_npcs`` (functionally a ``.BTX0`` file even without the file extension) in ``../rawdata`` once you build your ROM with HGE.
+All this code will look for ``.png`` files in your new folder ``new_npcs`` and begin applying the ``.png`` over the ``.BTX0`` called ``a081_npcs`` (functionally a ``.BTX0`` file even without the file extension) in ``../rawdata`` once you build your ROM with HGE.
 
 Now, we need to expand the table for overworlds to have a new entry for yours.
 
@@ -151,6 +156,26 @@ To fix this, we can add a Make option in ``narcs.mk`` to update ``a/0/8/1`` duri
 reset_overworlds:
     rm -rf build/a081
     rm build/narc/pokemonow.narc
+```
+Additionally, you will need to add the following in ``narcs.mk`` near ``OVERWORLDS_DIR := $(BUILD)/pokemonow``:
+
+```makefile
+OVERWORLDS_NEW_NPCS_SRCS := $(wildcard $(OVERWORLDS_DEPENDENCIES_DIR)/new_npcs/*.png)
+OVERWORLDS_NEW_NPCS_OBJS := $(patsubst $(OVERWORLDS_DEPENDENCIES_DIR)/new_npcs/%.png,$(OVERWORLDS_DIR)/4_%,$(OVERWORLDS_NEW_NPCS_SRCS))
+$(OVERWORLDS_DIR)/4_%:$(OVERWORLDS_DEPENDENCIES_DIR)/new_npcs/%.png
+	$(BTX) $< $@
+```
+It should end up looking like this:
+
+![](resources/narcsmk.png)
+
+Finally, add ``$(OVERWORLDS_NEW_NPCS_OBJS)`` to the ``$(OVERWORLDS_NARC): | overworld_extract $(OVERWORLDS_OBJS) $(OVERWORLDS_NEW_BERRIES_OBJS)`` line near ``remove binaries:`; i.e.:
+
+```makefile
+remove_binaries:
+	for n in $$(seq 297 $$(expr $$(ls $(OVERWORLDS_DIR) | wc -l) - 1)); do rm -f $(OVERWORLDS_DIR)/1_$$(printf "%04d" $$n); done
+
+$(OVERWORLDS_NARC): | overworld_extract $(OVERWORLDS_OBJS) $(OVERWORLDS_BERRIES_OBJS) $(OVERWORLDS_NEW_NPCS_OBJS) remove_binaries
 ```
 
 Now, all that's left to do is run ``make reset_overworlds`` before you compile your ROM with ``make``.
