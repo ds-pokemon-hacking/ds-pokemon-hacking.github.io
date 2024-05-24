@@ -20,7 +20,7 @@ we will edit in this guide is called DummyTextTrap (0xD0) in DSPRE. It has two p
   - [Acknowledgements](#acknowledgements)
   - [Prerequisites](#prerequisites)
   - [Part 1 - Repointing DummyTextTrap](#part-1---repointing-dummytexttrap)
-  - [Part 2 - Overlay 101 Hex Editing](#part-2---making-your-new-script-commands)
+  - [Part 2 - Making Your New Script Commands](#part-2---making-your-new-script-commands)
   - [Part 3 - An Example Script Command (in English HG)](#part-3---an-example-script-command-in-english-hg)
 
 ## Acknowledgements
@@ -105,7 +105,7 @@ case 0: // shop 0 expansion
         break;
 ```
 
-What this does is that it takes the pointer at address ``0x0210FA3C`` in the arm9, which points to the shops used by the ``SpMartScreen 0`` command, and changes to it point to the new array I made called ``NewMarts``, with entry number ``arg0``.
+What this does is that it takes the pointer at address ``0x0210FA3C`` in the arm9, which points to the shops used by the ``SpMartScreen 0`` command, and changes it to point to the new array I made called ``NewMarts``, with entry number ``arg0``.
 
 So, if I typed ``DummyTextTrap 0 3`` in DSPRE, it would cause ``SpMartScreen 0`` to now point to entry 3 in my array called ``NewMarts``.
 
