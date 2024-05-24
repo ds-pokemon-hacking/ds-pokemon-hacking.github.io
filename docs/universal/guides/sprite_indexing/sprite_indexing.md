@@ -1,20 +1,23 @@
 # Sprite Indexing
-> Author(s): [turtleisaac](https://github.com/turtleisaac)
+> Author(s): [turtleisaac](https://github.com/turtleisaac), icecream//CD Player
 
 This document aims to introduce the concept of indexing a sprite.
+
+If your image is already indexed adequately, such as if you are editing an existing image exported from the ROM and you just want to change the colors, you may skip ahead to [Palette Editing](#Palette-Editing).
 
 ## Indexing
 Indexing is a process that converts an image from having a specific color assigned to each individual pixel to having a centralized palette where the RGB(A) values are stored.
 
 By doing this, each pixel is assigned a specific index within the palette instead of an individual color. This allows image files to take up less space.
 
+Most sprites are either 4bpp (4 bits per pixel) or 8bpp (8 bits per pixel). The former has a maximum palette size of 16 colors, while the latter has a maximum palette size of 256 colors. The process of indexing both types of images is generally the same. If your sprite has 30 colors when it should be 16, or 285 colors when it should be 256, you will need to cull away any unnecessary colors before you try to index it.
+
 ![Indexed Image Example](resources/indexed_image_example.png)
 
 ## Special Considerations for the Nintendo DS
-* The Pokémon DS games (and most others) use NCGR files for storing images, and NCLR files for storing palettes. The NCLR file that a NCGR pulls its palette information from is determined by the code of the game, so when viewing or replacing NCGR files in a tool like Tinke, you must first select the proper NCLR for that image for the correct palette to be displayed
-* Sprites within these games lack an alpha channel
-  * If the game is programmed to display the image with any form of transparency, it will use the color at index 0 of the palette to determine what part of the sprite should be made transparent when displaying it
-* Most sprites are 8bpp (8 bits per pixel), meaning they have a maximum palette size of 256 colors
+* The Pokémon DS games (and most others) use NCGR files for storing images, and NCLR files for storing palettes. The NCLR file that a NCGR pulls its palette information from is determined by the code of the game, so when viewing or replacing NCGR files in a tool like Tinke, you must first select the proper NCLR for that image for the correct palette to be displayed.
+* Sprites within these games lack an alpha channel.
+  * If the game is programmed to display the image with any form of transparency, it will use the color at index 0 of the palette to determine what part of the sprite should be made transparent when displaying it.
 
 [//]: # (## Formatting Requirements for Specific Sprites)
 
@@ -31,9 +34,6 @@ This guide aims to serve as general instructions for indexing a sprite using GIM
 #### Instructions
 1. **To begin, if you don't have it already, you'll want to download [GIMP](https://www.gimp.org/downloads/).**
 2. From here, open an image of your choice in GIMP. If this image has an alpha channel, it technically can be removed, but that image most likely wouldn't be ideal for inserting in the first place and really shouldn't be used.
-3. Depending on the constraints of what kind of image you are replacing, the number of colors available for your indexed image may vary. In most cases, you are either limited to 256 colors or 16 colors. This guide will assume you are indexing an image that can only have 16 colors, but the same process will work for a 256 color image.
-
-**NOTE:** if your image is already indexed adequately, such as if you are editing an existing image exported from the ROM and you just want to change the colors, you may skip ahead to [Palette Editing](#Palette-Editing).
 
 #### Indexing
 4. In the toolbar, you'll want to go to `Image -> Mode -> Indexed...`
@@ -82,4 +82,27 @@ This guide aims to serve as general instructions for indexing a sprite using GIM
     ![img10](resources/gimp_img_10.png)
 13. Now, you can insert the exported image into the game files, as per the instructions of any other guide you may be following or tool you may be using.
 
-> TODO: Aseprite, Photoshop, GraphicsGale, Paint.NET
+### GraphicsGale
+This will go into detail about indexing images in GraphicsGale, a freeware image editor for Windows.
+
+First, open your image in the program, either by selecting it from the Open file dropdown or by dragging it into the program. Next, you'll want to go `All Frames` -> `Color Depth`, and select either `4bpp` (if your sprite uses 16 colors) or `8bpp` (if your sprite uses 256 colors). The algorithm should also be set to `Type A` since it's the only one that can reduce images to 16 colors.
+
+![](resources/gale_1.png)
+
+![](resources/gale_2.png)
+
+Press OK, and the palette located to the right should now be limited to the colors in the image.
+
+![](resources/gale_3.png)
+
+If the background color was not automatically set to the first color, you will need to perform an extra step to index it correctly. First, select the entire image (either by using the selection box tool or pressing Control+A) and copy it, either by going `Edit` -> `Copy` or pressing Control+C. Next, select the background color in the palette section and drag it all the way to the left. For demonstration purposes, the background color is this very out-of-place bright green.
+
+![](resources/gale_4.png)
+
+This should mangle up your image, which is what we want, since it was working off the previous (incorrect) palette. Now you can paste the image you just copied, either by going `Edit` -> `Paste` or hitting Control+V, so the image will now be using the correct palette.
+
+Now you can save your image. Go `File` -> `Save as` and name it whatever you need to. **Make sure `With Alpha channel` is unchecked**!
+
+![](resources/gale_5.png)
+
+> TODO: Aseprite, Photoshop, Paint.NET

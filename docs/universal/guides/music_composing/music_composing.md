@@ -1,4 +1,4 @@
-# Pokémon DS Music Composing guide
+# Music Composing guide
 > (by recordreader/thisisausername/icecream, with massive help from the VGM Resources community)
 
 NOTES: 
@@ -38,28 +38,28 @@ Now what most of you are probably here for. This is your sequence file, which co
 
 ndspy's API has a full list of the commands available in SSEQ, but just looking at official SSEQs through Nitro Studio 2 Deluxe's plaintext editor will tell you a lot of what you need to know as well. I'm not going to go through every single one because I don't understand them all that's not really the point of this guide, so I'll go over some of the ones you'll be using the most often:
 
-- The Modulation commands
+- The Modulation commands\
 Also known as low frequency oscillator, or "LFO", commands, these control when and how individual tracks respond to modulation. Most of these range from 0 to 127 unless otherwise noted. These are the following:
 	- `mod_depth`: The main one, and the one that determines whether or not you'll even notice the others. By default, this is set to 0. This is how much the sound is affected: for instance, setting it to 32 means it will affect a fourth of the sound, setting it to 64 means it will affect half the sound, and setting it to 127 means it will affect the entirety of the sound.
 	- `mod_speed`: This controls how fast the modulation occurs. By default, this is set to 16.
 	- `mod_type`: This controls the way the sound will modulate. By default, this is set to 0. While it can be any value from 0 to 127, only values of 0, 1, and 2 are meaningful. Type 0 modulates pitch, Type 1 modulates volume, and Type 2 modulates panorama.
 	- `mod_range`: This controls how far out the modulation reaches in either direction. By default, this is set to 1.
   
-- Portamento commands
+- Portamento commands\
 Use these to configure how and when notes glide between each other.
-	- `porta_on` / `porta_off`: Simple toggles that control when it is active or not. These do not have any parameters.
-	- `porta_time`: The length of the glide.
+	- `porta_on` / `porta_off`: Toggles that control when it is active or not. These do not have any parameters.
+	- `porta_time`: How long the note will glide for.
 	- `porta`: The key to glide from. If none is specified, it will glide from the one that was last pressed.
 
-- Expression
+- Expression\
 Known internally as volume2, this is a secondary volume control generally used for sweeping, like with a saxophone. You can get away with using normal volume exclusively, and those on the GBA had no choice, but I find that to be messy and reserve volume for when I need to vary the overall volume of the track and don't want to mess with velocity.
 
-- Pitch bend
+- Pitch bend\
 Bends the sound up or down. Programmatically, pitchbends range from values of -128 to 127, although when composing it's better to let the converter approximate.
 
-- Bend range
+- Bend range\
 How far in semitones the pitchbends reach. In most cases, it is set to 12, which means pitchbends reach a full octave in both directions.
-- Attack, Decay, Sustain, Release
+- Attack, Decay, Sustain, Release\
 These commands will override the ADSR of any instrument playing on the specified track. They work exactly as they would in the bank.
 
 Another thing to go over is the timebase of SSEQ, which is 48, and the fact that SSEQ has no concept of time signature. This means that every SSEQ you create will have a quarter note be 48 ticks long, whose actual length in time is determined by the tempo (not precisely according to the tempo however because any sequenced music system using a clock can use only a handful of exact tempos and has to approximate the rest). If you attempt to convert a MIDI with an alternate time signature or a different timebase, the data will be retimed and approximated, which *generally* works okay as long as your converter isn't shit (**cough** stop using MIDI2SSEQ **cough**), but introduces needless variability between the data in the MIDI and the data in the SSEQ. This can be problematic if you for instance have something like a 36th note in your MIDI. You can't have those in an SSEQ exactly because 48 doesn't divide into 9 like 36 does. You either have to live with a slightly mistimed note, or stretch the track so that it can be used as a 24th note in 3/4 time.
@@ -162,6 +162,7 @@ Right click it and hit add, and select your first .SWAV file.
 ![](img/select_wave.png)
 
 Now you can collapse the wave archive icon and see what's inside it like the others.
+
 ![](img/wave_archive_list.png)
 
 Repeat this for as many as you have. You can add them in any order you wish; just be sure to remember what order they're in and what number they're assigned to. Once you're done, **make sure you hit File -> Save before you close the window; otherwise, your changes will not save**.
