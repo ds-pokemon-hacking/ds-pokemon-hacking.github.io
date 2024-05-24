@@ -32,10 +32,10 @@ BluRose: All the help in teaching me this and making this possible in HGE.
 ---
 
 ## Prerequisites
-- Cloned HGE repository -- refer to the setup guide found here: (<https://github.com/BluRosie/hg-engine>)
-- BTXEditor2 (<https://projectpokemon.org/home/forums/topic/8962-btx-editor-20/>)
+- Cloned HGE repository -- refer to the setup guide found here: (https://github.com/BluRosie/hg-engine)
+- BTXEditor2 (https://projectpokemon.org/home/forums/topic/8962-btx-editor-20/)
 - Sprite editing software, e.g. Aseprite
-- DSPRE (<https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor>)
+- DSPRE (https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor)
 
 ---
 
