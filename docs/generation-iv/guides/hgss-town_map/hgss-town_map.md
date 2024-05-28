@@ -310,7 +310,7 @@ struct GearMapTownSelectionOverlay
     /* 0xF */ u8 orangeDimY; // in image
 }; // size = 0x10
 ```
-Note that I have yet to document what the flags do.  The ``GearMapTownSelectionOverlay`` is better documented as well [on this page]((../../resources/hgss-town_map_spots/hgss-town_map_spots.md)).
+Note that I have yet to document what the flags do.  The ``GearMapTownSelectionOverlay`` is better documented as well [on this page](../../resources/hgss-town_map_spots/hgss-town_map_spots.md).
 
 The table split up by entry:
 ```

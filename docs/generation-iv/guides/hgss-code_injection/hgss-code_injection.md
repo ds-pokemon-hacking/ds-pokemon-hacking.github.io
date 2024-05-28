@@ -9,7 +9,7 @@ tags:
 > Author(s): [BluRose](https://github.com/BluRosie).
 > Research: [BluRose](https://github.com/BluRosie), Touched, and [Skeli](https://github.com/Skeli789/) for the original GBA scripts.
 
-This is an overall code injection guide and explanation behind the code injection framework that powers hg-engine.
+This is an overall code injection guide and explanation behind the code injection framework for HeartGold and SoulSilver.  The template repository can be easily adapted to the rest of the Gen 4 games as long as there is a synthetic overlay definition.
 
 Assembly will not be covered here.  It is recommended you understand assembly code and just basic coding in general before reading this.  There are plenty of tutorials out there for this.  One focused on the NDS that somewhat assumes any programming knowledge (which you'd need to know to inject code you've written to begin with) is Mikelan's overview which can be downloaded [here](resources/asm1.pdf).
 
@@ -21,7 +21,6 @@ Assembly will not be covered here.  It is recommended you understand assembly co
   - [Shortcomings of the Manual Process](#shortcomings-of-the-manual-process)
   - [Implementation Details](#implementation-details)
   - [Code Injection Template](#code-injection-template)
-  - [hg-engine](#hg-engine)
 
 ## Manual Process
 The Nintendo DS has 4 MB of EWRAM.  Unlike the GBA, the ROM is not directly mapped and readable in memory.  Files must be dumped into that 4 MB of memory in order to be accessed.  This includes all code that is run--the processor CPU's don't have direct access to the ROM in code execution space.
@@ -81,7 +80,7 @@ Manual insertion of this is tedious.
 The manual insertion process also mandates that you keep track of things in your synthetic overlay as it fills up--which is where that marker comes in as a reminder when the user is scrolling through their code binaries and forgets what each bit of otherwise-meaningless hexadecimal is.
 Sharing this with other people places this smack-dab in the middle of their synthetic overlays and cuts down on continuous free space that they may want to use for other things.  It will require reverse engineering to move this elsewhere, if they even remember the change in the game code that redirected execution out to this point.
 
-The idea with code injection frameworks is to cut down on the manual hex editing and allow code to be shared for insertion at any point in synthetic overlays--wherever there is free memory at any given point.
+The idea with code injection frameworks is to cut down on the manual hex editing and allow code to be shared for insertion at any point in code expansion areas--wherever there is free memory at any given point.
 
 ## Implementation Details
 When assembling and compiling code, an object file is produced.  This can then be linked to specific addresses to create a linked object of a number of direct compiled objects that are all together.  We can view these addresses, parse the symbol output with Python, and correlate it with our own custom format (also parsed by Python) that will fully automate the overlay process for us--all we have to edit is the code.
@@ -147,12 +146,12 @@ The direct output of `nm linked_object.o` gives the addresses of all the functio
 
 We use Python to parse this output from `nm` and create a "symbol table" of sorts that shows where code we put in the ROM will eventually be loaded into the EWRAM.  We can finally use all of this to write the hooks directly.
 
-In this example, the `PocketCompaction` function is seen at `023D88CF` in the EWRAM and so the code below is written to `0x785A0` of the arm9 binary (as specified by `080785A0` in the hook entry):
+In this example, the `PocketCompaction` function is seen at `023D88CF` in the EWRAM, so the code below is written to `0x785A0` of the arm9 binary (as specified by `080785A0` in the hook entry):
 
 ```arm
 ldr r2, =0x023D88CF // PocketCompaction's offset in memory
 bx r2
-.pool
+.pool // gets expanded to CF 88 3D 02 as it stores the ldr value above
 ```
 
 Which automatically puts `00 4A 10 47 CF 88 3D 02` at `0x785A0` of the arm9 binary.  This highjacks the code execution directly to our version of `PocketCompaction`, effectively *replacing the function entirely with whatever code we write*.
@@ -212,7 +211,7 @@ It is also possible to use functions and data from the ROM itself.  The code inj
 DaycareMon_GetBoxMon = 0x020292E4 | 1;
 ```
 
-The `0x020292E4` is the base offset of the function.  The `| 1` is due to the function being in thumb (as most functions from the ROM are).
+The `0x020292E4` is the base offset of the function.  The `| 1` is due to the function being in thumb mode (as most functions from the ROM are), a reduced instruction set of ARM that permits much smaller code generation.
 
 To then call this in our code, we have to add a declaration of the function (its structures, `BoxPokemon` and `DaycareMon` will have to be copied as well):
 
@@ -226,7 +225,7 @@ When we do this alone, the linker assumes the function is ARM and resolves the a
 BoxPokemon * __attribute__((long_call)) DaycareMon_GetBoxMon(DaycareMon *dcmon);
 ```
 
-This tricks the compiler to elicit code that will not cull the thumb bit from the function address and properly jump to it.  hg-engine (covered later) has this defined as the macro `LONG_CALL`, which would allow this declaration to look like this:
+This tricks the compiler to elicit code that will not cull the thumb bit from the function address and properly jump to it.  You can define this as a macro, i.e. `LONG_CALL`, which would allow this declaration to look like this:
 
 ```c
 BoxPokemon * LONG_CALL DaycareMon_GetBoxMon(DaycareMon *dcmon);
@@ -240,10 +239,3 @@ For those who don't want to fully overhaul the battle system of their hacks, the
 Its `Makefile` has an example of a NARC being edited with files that are present in the repository.  [These](https://github.com/BluRosie/hg-transparent-textbox/blob/main/Makefile#L87) [lines](https://github.com/BluRosie/hg-transparent-textbox/blob/main/Makefile#L97-L106) (there are two links there, lines 87 and 97-106) can be deleted in the event that you don't want to use the transparent textboxes that are implemented by the repository.  This will then also involve deleting the code that is present to handle the transparent textboxes--clearing out the `src` directory and the `asm/other_hooks.s`, `repoints`, `bytereplacement`, and `hooks` files will leave the repository blank for your populating.
 
 From there, adding new files in `src` will automatically compile them and link everything for insertion.  Same goes for assembly source files in `asm`.  [`asm/thumb_help.s`](https://github.com/BluRosie/hg-transparent-textbox/blob/main/asm/thumb_help.s) is a file that implements some functions that the C compiler sometimes assumes exists and uses as functions.
-
-## hg-engine
-[hg-engine](https://github.com/BluRosie/hg-engine/) is an engine overhaul for Pokémon Heartgold primarily focused on adding all of the existing Pokémon and updating the battle engine accordingly.  Any code changes can be tacked on to hg-engine as well--multiple projects add their code changes on top and use things accordingly.
-
-hg-engine adds separate overlays that are linked to existing ones--one for the overworld, one for battles, another for the PokéDex overlay, and a few for individual massive functions.  These are all separated into their own folders: `src/field`, `src/battle`, and `src/pokedex`, and `src/individual`, respectively.  All of these are linked against both `rom.ld` and the functions that are in the base `src` directory, which is now treated as an arm9 extension overlay.  These are then linked with their respective folders in `asm` as well (except for `individual` functions).
-
-hg-engine also comes with the benefit of community support.  Feel free to join the KoDSH Discord or the DS Modding Community Discord to get support with any given problem--be it setting up the repository for editing, adding new Mega Pokémon, adding your own forms, whatever you may need.
