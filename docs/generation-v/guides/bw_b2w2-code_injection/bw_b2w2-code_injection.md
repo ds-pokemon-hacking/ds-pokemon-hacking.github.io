@@ -20,13 +20,13 @@ So, you think you've got what it takes to have a crack at Generation V code inje
 
 First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there on out. 
 To start, download (and install, where applicable) all these:
-- [CTRMap for Generation V](using-ctrmap/using-ctrmap.md)
+- [CTRMap for Generation V](../bw_b2w2-using_ctrmap/bw_b2w2-using_ctrmap.md)
 - [The `arm-none-eabi` GCC toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 - [Latest RPM build of `PMC`](https://github.com/ds-pokemon-hacking/PMC/releases)
 - [Pokémon Black 2 and White 2 Development Headers](https://github.com/ds-pokemon-hacking/swan)
 - [Latest NitroKernel DLL](https://github.com/HelloOO7/NitroKernel/releases)
 
-Before you get into code injection, [set up a CTRMap project](using-ctrmap.md#creating-a-project) and load it up. If everything went as planned, there should be a `Code Injection` section in your `Extras` tab. 
+Before you get into code injection, [set up a CTRMap project](../bw_b2w2-using_ctrmap/bw_b2w2-using_ctrmap.md#creating-a-project) and load it up. If everything went as planned, there should be a `Code Injection` section in your `Extras` tab. 
 
 This is where it gets interesting:
 1) Click the `Install/Update PMC` button and select your `PMC.rpm` file. You should do this every time `libRPM` is updated, as the DLLs that CTRMap produces need the latest version of PMC to be recognized.

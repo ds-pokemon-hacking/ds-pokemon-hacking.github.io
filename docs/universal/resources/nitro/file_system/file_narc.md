@@ -32,7 +32,7 @@ struct ContainerFileNARC
 ```
 | Field Name      | Description                                                                             | Data Type    |
 |-----------------|-----------------------------------------------------------------------------------------|--------------|
-| fileHeader      | Header of this file. `fileHeader.signature = "NARC"`.                       | [NitroFileHeader](../nitro_overview.md#nitro-file-header) |
+| fileHeader      | Header of this file. `fileHeader.signature = "NARC"`.                       | [NitroFileHeader](../nitro.md#nitro-file-header) |
 | sectionDataFATB | File allocation table. Stores offsets to all entries.                       | [ContainerSectionFATB](section_fatb.md#section-container) |
 | sectionDataFNTB | File name table. Can store names of all entries.                            | [ContainerSectionFNTB](section_fntb.md#section-container) |
 | sectionDataFIMG | File image. The data of all entries.                                        | [ContainerSectionFIMG](section_fimg.md#section-container) |

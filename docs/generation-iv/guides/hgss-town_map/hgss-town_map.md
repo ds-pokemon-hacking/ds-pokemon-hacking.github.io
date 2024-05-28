@@ -144,7 +144,7 @@ struct GearMapTownOverlay
     /* 0xD */ u8 padding;
 }; // entry size = 0xE
 ```
-More in-depth structure description and the fields appear on [this other page](../../resources/interface/hgss-town_map_spots.md).
+More in-depth structure description and the fields appear on [this other page](../../resources/hgss-town_map_spots/hgss-town_map_spots.md).
 
 So let's look at this table, split up by entry (0xE in size):
 ```
@@ -310,7 +310,7 @@ struct GearMapTownSelectionOverlay
     /* 0xF */ u8 orangeDimY; // in image
 }; // size = 0x10
 ```
-Note that I have yet to document what the flags do.  The ``GearMapTownSelectionOverlay`` is better documented as well [on this page](../../structures/town_map/town_map_spots.md).
+Note that I have yet to document what the flags do.  The ``GearMapTownSelectionOverlay`` is better documented as well [on this page]((../../resources/hgss-town_map_spots/hgss-town_map_spots.md)).
 
 The table split up by entry:
 ```

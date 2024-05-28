@@ -30,7 +30,7 @@ struct ContainerFileNCGR
 ```
 | Field Name      | Description                                                                             | Data Type    |
 |-----------------|-----------------------------------------------------------------------------------------|--------------|
-| fileHeader      | Header of this file. `fileHeader.signature = "RGCN"`.                       | [NitroFileHeader](../nitro_overview.md#nitro-file-header) |
+| fileHeader      | Header of this file. `fileHeader.signature = "RGCN"`.                       | [NitroFileHeader](../nitro.md#nitro-file-header) |
 | sectionDataCHAR | Image data.                                                                 | [ContainerSectionCHAR](section_char.md#section-container) |
 | sectionDataCPOS | Dimension related. Does only exist if `fileHeader.numberSections == 2`.     | [ContainerSectionCPOS](section_cpos.md#section-container) |
 

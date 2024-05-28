@@ -30,7 +30,7 @@ struct ContainerFileNCLR
 ```
 | Field Name      | Description                                                                             | Data Type    |
 |-----------------|-----------------------------------------------------------------------------------------|--------------|
-| fileHeader      | Header of this file. `fileHeader.signature = "RLCN"`.                       | [NitroFileHeader](../nitro_overview.md#nitro-file-header) |
+| fileHeader      | Header of this file. `fileHeader.signature = "RLCN"`.                       | [NitroFileHeader](../nitro.md#nitro-file-header) |
 | palette         | Palette color data.                                                         | [ContainerSectionPLTT](section_pltt.md#section-container) |
 | countMap        | Palette count limiter. Does only exist if `fileHeader.numberSections == 2`. | [ContainerSectionPCMP](section_pcmp.md#section-container) |
 
