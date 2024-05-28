@@ -20,6 +20,10 @@ Assembly will not be covered here.  It is recommended you understand assembly co
   - [Manual Process](#manual-process)
   - [Shortcomings of the Manual Process](#shortcomings-of-the-manual-process)
   - [Implementation Details](#implementation-details)
+    - [`hooks`](#hooks)
+    - [`bytereplacement`](#bytereplacement)
+    - [`routinepointers`](#routinepointers)
+    - [`repoints`](#repoints)
   - [Code Injection Template](#code-injection-template)
 
 ## Manual Process
@@ -87,6 +91,7 @@ When assembling and compiling code, an object file is produced.  This can then b
 
 This does not eliminate the reverse engineering step required to *find* exactly where to branch out of the game code to our code.  There is no tutorial for that--you just have to get into the weeds of the assembly directly and figure out what each piece of code is doing.  This is where the GDB Debugger in Desmume coupled with IDA Pro or Ghidra is useful--you can see exactly what is executing and when, trace it to identify what you need to do.
 
+### `hooks`
 The method chosen to decide how to highjack the game's execution is by writing hooks in the binary automatically based on a text file we create and parse.  The hook code is designed to be generic:
 
 ```arm
@@ -162,6 +167,7 @@ You do not need to replace an entire function at its start.  You can branch out 
 
 Further convenience is afforded in these files that Python parses with `bytereplacement`, `routinepointers`, and `repoints`.
 
+### `bytereplacement`
 `bytereplacement` writes a stream of bytes to an offset specified in the code binary of the ROM (with the same `08`/`02` file offset/memory offset handling):
 ```
 # pokewalker species limiters
@@ -177,14 +183,16 @@ Further convenience is afforded in these files that Python parses with `byterepl
 Here, overlay 112 has a number of memory offsets overwritten with `FF 7F 00 00`.  All of these files take lines that start with `#` as comments that can be discarded (outside of `#ifdef` conditional inclusion).
 Overlay 12 has `08` directly written to file offset `0x12852`.
 
+### `routinepointers`
 `routinepointers` will place a pointer to a function at an offset specified in the code binary of the ROM (with the same `08`/`02` file offset/memory offset handling).  This automatically accounts for thumb if it is compiled as such--the offset written will have 1 added to it if necessary.
 
 ```
 0012 BGCallback_Waza_Extend 08037084
 ```
 
-This places a pointer to the code symbol `BGCallback_Waza_Extend` at file offset `0x37084` of overlay 12.
+This places a pointer to the code symbol `BGCallback_Waza_Extend` at file offset `0x37084` of overlay 12.  This is automatically adjusted for thumb mode if necessary.
 
+### `repoints`
 And `repoints` will place a pointer to any data you specify in the code in the code binary of the ROM (with the same `08`/`02` file offset/memory offset handling):
 
 ```
@@ -228,6 +236,8 @@ BoxPokemon * __attribute__((long_call)) DaycareMon_GetBoxMon(DaycareMon *dcmon);
 This tricks the compiler to elicit code that will not cull the thumb bit from the function address and properly jump to it.  You can define this as a macro, i.e. `LONG_CALL`, which would allow this declaration to look like this:
 
 ```c
+#define LONG_CALL __attribute__((long_call))
+...
 BoxPokemon * LONG_CALL DaycareMon_GetBoxMon(DaycareMon *dcmon);
 ```
 
