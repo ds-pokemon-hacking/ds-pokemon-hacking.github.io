@@ -37,34 +37,21 @@ Before starting I recomend creating a ``CodeInjection`` folder to store all code
 
 ### File structure
 1. Create an Empty C++ Project inside of the ``CodeInjection`` folder, for this guide it will be called PW2Code
-2. Create a folder named "SWAN" at ``CodeInjection/PW2Code`` 
-3. Clone the [SWAN repositiory](https://github.com/ds-pokemon-hacking/swan) in the ``CodeInjection/PW2Code/SWAN`` folder
-4. Create a folder named "NK" at ``CodeInjection/PW2Code`` 
-5. Clone the [NitroKernel repositiory](https://github.com/HelloOO7/NitroKernel) in the ``CodeInjection/PW2Code/NK`` folder
-6. Create ``CodeInjection/PW2Code/Patches`` (here will go all your code)
+2. Create a folder named "ExternalDependencies" at ``CodeInjection/PW2Code`` 
+3. Clone the [SWAN repositiory](https://github.com/ds-pokemon-hacking/swan) in the ``CodeInjection/PW2Code/ExternalDependencies`` folder
+4. Clone the [NitroKernel repositiory](https://github.com/HelloOO7/NitroKernel) in the ``CodeInjection/PW2Code/ExternalDependencies`` folder
+5. Clone the [ExtLib repositiory](https://github.com/HelloOO7/ExtLib) in the ``CodeInjection/PW2Code/ExternalDependencies`` folder
+6. Clone the [libRPM repositiory](https://github.com/HelloOO7/libRPM) in the ``CodeInjection/PW2Code/ExternalDependencies`` folder
+7. Create ``CodeInjection/PW2Code/Patches`` (here will go all your code)
 
 File structure should look like this:
 - CodeInjection
   - PW2Code
-    - SWAN
-	  - swan
-        - battle
-        - data
-        - field
-        - gfl
-        - math
-        - nds
-        - ns
-        - pml
-        - save
-        - system
-        - swan_cpp_enum_ops.h
-        - swantypes.h
-	- NK
-	  - NitroKernel
-	    - .vscode
-		- include
-		- src
+    - ExternalDependencies
+      - ExtLib
+      - libRPM
+      - NitroKernel
+      - swan
     - Patches
     - PW2Code.sln
     - PW2Code.vcxproj
@@ -80,7 +67,7 @@ File structure should look like this:
 4. In the "Solution Explorer" view, "Right-Click" the project and select ``Properties``
 5. Go to ``Configuration Properties -> VC++ Directories -> Include Directories`` and select ``<Edit...>``
 ![](resources/vs_include_paths_edit.png)
-6. In the "Include Directories" window, paste the path to the ``swan`` and ``NitroKernel/include`` folders or use the ``...`` button to look them up    
+6. In the "Include Directories" window, paste ``$(ProjectDir)ExternalDependencies/swan``, ``$(ProjectDir)ExternalDependencies/NitroKernel/include``, ``$(ProjectDir)ExternalDependencies/ExtLib`` and ``$(ProjectDir)ExternalDependencies/libRPM/include`` or use the ``...`` button to look them up    
 ![](resources/vs_add_include_path.png)
 7. Click ``Ok`` and remember to click ``Accept`` in the ``Properties`` window to save the changes
 
@@ -217,15 +204,16 @@ C_DECL_END
 ```
 
 ### Compiling a patch
-These instructions assume you followed the previous steps, your SWAN headers are in the ``CodeInjection/PW2Code/Headers`` folder and your code in the ``CodeInjection/PW2Code/Patches`` folder.
+These instructions assume you followed the previous steps, your SWAN headers and other External Dependencies are in the ``CodeInjection/PW2Code/ExternalDependencies`` folder and your code in the ``CodeInjection/PW2Code/Patches`` folder.
 
 1. Open a cmd terminal in the PW2Code folder (in the "File Explorer" window go the the PW2Code folder, click the path input box, type "cmd" and clik "Enter")   
 ![](resources/open_cmd.png)
 2. Paste the following command in the terminal:    
-``arm-none-eabi-g++ Patches/DoubleItems.cpp -I SWAN/swan -I NK/NitroKernel/include -o DoubleItems.elf -r -mthumb -march=armv5t -Os``   
+``arm-none-eabi-g++ Patches/DoubleItems.cpp -I ExternalDependencies/swan -I ExternalDependencies/NitroKernel/include -o DoubleItems.elf -r -mthumb -march=armv5t -Os``   
 General structure of the command for a C++ patch:    
 ``arm-none-eabi-g++ [patch path] -I [include directory path] -o [output path] -r -mthumb -march=armv5t -Os``   
 
+In this particular example we only use ``-I`` to include the SWAN and NK directories since they are the only ones we use, you can use it to include as many External Include Directories as you need.      
 I recommend that you set the output file to be in a specific folder for the ELF files, to keep stuff organized.
 
 ### Injecting a patch
