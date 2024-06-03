@@ -10,7 +10,7 @@ tags:
 
 This guide will take you thought the steps to get a working Code Injection environment to make your own patches and/or compile patches from other people in Gen V games (White 2 recommended).
 
-This is a practical guide so it doesn't stop to explain the reason behind the steps, it is NOT a replacement for the [Code Injection guide](https://ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-code_injection/), but it should help getting started in a practical way. It should also do the trick if you only want to compile a patch, even if you can't code yourself.
+This is a practical guide so it doesn't stop to explain the reason behind the steps, it is NOT a replacement for the [Code Injection guide](../bw_b2w2-code_injection), but it should help getting started in a practical way. It should also do the trick if you only want to compile a patch, even if you can't code yourself.
 
 Disclaimers:
 - The guide uses Windows 10 and [Visual Studio](https://visualstudio.microsoft.com/es/), you can use other operating systems and IDEs as long as the tools are compatible, but most steps in this guide will not be valid for you and you will have to find out how to do them in your set up
@@ -37,30 +37,34 @@ Before starting I recomend creating a ``CodeInjection`` folder to store all code
 
 ### File structure
 1. Create an Empty C++ Project inside of the ``CodeInjection`` folder, for this guide it will be called PW2Code
-2. Download the [SWAN headers](https://github.com/ds-pokemon-hacking/swan) and save all the files and folder in ``CodeInjection/PW2Code/Headers``
-3. Create ``CodeInjection/PW2Code/Patches`` (here will go all your code)
-4. Go to https://github.com/HelloOO7/NitroKernel and download the code as a ZIP file
-5. Extract the files and rename the ``include`` folder to ``kernel``
-6. move the ``kenel`` folder to ``CodeInjection/PW2Code/Headers``
+2. Create a folder named "SWAN" at ``CodeInjection/PW2Code`` 
+3. Clone the [SWAN repositiory](https://github.com/ds-pokemon-hacking/swan) in the ``CodeInjection/PW2Code/SWAN`` folder
+4. Create a folder named "NK" at ``CodeInjection/PW2Code`` 
+5. Clone the [NitroKernel repositiory](https://github.com/HelloOO7/NitroKernel) in the ``CodeInjection/PW2Code/NK`` folder
+6. Create ``CodeInjection/PW2Code/Patches`` (here will go all your code)
 
 File structure should look like this:
 - CodeInjection
   - PW2Code
-    - Headers
-      - battle
-      - data
-      - ext_lib
-      - field
-      - gfl
-      - kernel
-      - math
-      - nds
-      - ns
-      - pml
-      - save
-      - system
-      - swan_cpp_enum_ops.h
-      - swantypes.h
+    - SWAN
+	  - swan
+        - battle
+        - data
+        - field
+        - gfl
+        - math
+        - nds
+        - ns
+        - pml
+        - save
+        - system
+        - swan_cpp_enum_ops.h
+        - swantypes.h
+	- NK
+	  - NitroKernel
+	    - .vscode
+		- include
+		- src
     - Patches
     - PW2Code.sln
     - PW2Code.vcxproj
@@ -71,21 +75,19 @@ File structure should look like this:
 1. Open the project with Visual Studio
 2. In the "Solution Explorer" view, click the ``Show All Files`` button (shows all the files in the project folder)
 ![](resources/vs_show_all_files.png)
-3. In the "Solution Explorer" view, select the Headers folder, "Right-Click" it and select the ``Include In Project`` option
+3. In the "Solution Explorer" view, select all the folders, "Right-Click" it and select the ``Include In Project`` option
 ![](resources/vs_include_in_project.png)
 4. In the "Solution Explorer" view, "Right-Click" the project and select ``Properties``
 5. Go to ``Configuration Properties -> VC++ Directories -> Include Directories`` and select ``<Edit...>``
 ![](resources/vs_include_paths_edit.png)
-6. In the "Include Directories" window, paste the path to the Headers folder or use the ``...`` button to look it up
+6. In the "Include Directories" window, paste the path to the ``swan`` and ``NitroKernel/include`` folders or use the ``...`` button to look them up    
 ![](resources/vs_add_include_path.png)
 7. Click ``Ok`` and remember to click ``Accept`` in the ``Properties`` window to save the changes
-8. Before going to the next section go to the ``k_Print.h`` file in Visual Studio and add ``#include <cstdarg>`` before ``#include "k_DllExport.h"`` (this fixes issues when using the print functions later)
-![](resources/print_fix.png)
 
 Now whenever you create a CPP file in the Patches folder you will be able to include any SWAN header and use its definitions.
 
 ### CTRMap set up
-For more in-depth CTRMap installation instructions check this [guide](https://ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-using_ctrmap/#setup).
+For more in-depth CTRMap installation instructions check this [guide](../bw_b2w2-using_ctrmap/#setup).
 
 1. Download [CTRMap-Community Edition](https://github.com/ds-pokemon-hacking/CTRMap-CE/releases)
 2. Download the [CTRMapV plug-in](https://github.com/ds-pokemon-hacking/CTRMapV/releases)
@@ -159,7 +161,7 @@ You will see many errors, now we have to define any struct, function or global v
 We don't have to declare functions or struct pointers that don't get used as a struct, defining them is enough (this is called forward declaration).
 
 1. Always remove ``__fastcall``, it is not necesary and we avoid a compiler warning
-2. We need to tell CTRMap that this function is overriding another one so we use a "tag" before the function name, in this case "THUMB_BRANCH" -> ``THUMB_BRANCH_BagSave_AddItemCore`` (for more info on the relocation type tags check the [Code Injection guide](https://ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-code_injection/#preparing-our-code-for-injection) )
+2. We need to tell CTRMap that this function is overriding another one so we use a "tag" before the function name, in this case "THUMB_BRANCH" -> ``THUMB_BRANCH_BagSave_AddItemCore`` (for more info on the relocation type tags check the [Code Injection guide](../bw_b2w2-code_injection/#preparing-our-code-for-injection) )
 3. General ``typedef`` like ``u16`` are in the ``swantypes.h`` file so we include it -> ``#include "swantypes.h"``
 4. The ``HeapID`` definition is in the ``gfl/core/gfl_heap.h`` file so we include it -> ``#include "gfl/core/gfl_heap.h"``
 5. ``BagSaveData`` is only used as a pointer so we can use forward declaration -> ``struct BagSaveData;``
@@ -171,16 +173,19 @@ We don't have to declare functions or struct pointers that don't get used as a s
 ![](resources/ida_struct_search.png)
 7. The function uses a function called "BagSave_GetItemHandleAddCheck" we can double click it in IDA to get de declaration -> ``BagItem * BagSave_GetItemHandleAddCheck(BagSaveData *bag, u16 item_idx, u16 quantity, HeapID heapId);``
 8. To make the changes we want we can analyze the function and see that the quantity to add is added to the bagItem::Count, so to double the items given we can multiply the quantity by 2 -> ``bagItem->Count += quantity * 2;``
-9. Finally we want to print a console message (this is very usefull since we can't use breakpoints):
-- 9.1. We include the print header -> ``#include "kernel/kPrint.h"``
-- 9.2. We make a print call at the end of the function to notify us of what happened -> ``k::Printf("Added %d of the following item -> %d\n", bagItem->ItemID, bagItem->Count);``
+9. Finally we want to print a console message (this is very useful since we can't use breakpoints):
+- 9.1. We include the print header -> ``#include "kPrint.h"``
+- 9.2. For kPrint to compile, we need to include the cstdarg header before -> ``#include <cstdarg>``
+- 9.3. We make a print call at the end of the function to notify us of what happened -> ``k::Printf("Added %d of the following item -> %d\n", bagItem->ItemID, bagItem->Count);``
 
 Now the patch is done and we should have the following code without any visible errors:
 
 ```
 #include "swantypes.h"
 #include "gfl/core/gfl_heap.h"
-#include "kernel/kPrint.h"
+
+#include <cstdarg>
+#include "kPrint.h"
 
 struct BagSaveData;
 struct BagItem
@@ -212,22 +217,21 @@ C_DECL_END
 ```
 
 ### Compiling a patch
-This instructions asume you followed the previous steps, your SWAN headers are in the ``CodeInjection/PW2Code/Headers`` folder and your code in the ``CodeInjection/PW2Code/Patches`` folder.
+These instructions assume you followed the previous steps, your SWAN headers are in the ``CodeInjection/PW2Code/Headers`` folder and your code in the ``CodeInjection/PW2Code/Patches`` folder.
 
 1. Open a cmd terminal in the PW2Code folder (in the "File Explorer" window go the the PW2Code folder, click the path input box, type "cmd" and clik "Enter")   
 ![](resources/open_cmd.png)
 2. Paste the following command in the terminal:    
-``arm-none-eabi-g++ -r -mthumb -I Headers -march=armv5t -Os Patches/DoubleItems.cpp -o DoubleItems.elf``   
-"-I" is the include path of the headers     
-"-Os" is the patch file     
-"-o" is the output file
+``arm-none-eabi-g++ Patches/DoubleItems.cpp -I SWAN/swan -I NK/NitroKernel/include -o DoubleItems.elf -r -mthumb -march=armv5t -Os``   
+General structure of the command for a C++ patch:    
+``arm-none-eabi-g++ [patch path] -I [include directory path] -o [output path] -r -mthumb -march=armv5t -Os``   
 
-I recomend that you set the output file to be in a specific folder for the elf files, to keep stuff organized.
+I recommend that you set the output file to be in a specific folder for the ELF files, to keep stuff organized.
 
 ### Injecting a patch
-You can use the ESDB in the SWAN headers but I recomend making your own using this [guide](https://ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-code_injection/#building-code-injection-patches). 
+You can use the ESDB in the SWAN headers but I recomend making your own using this [guide](../bw_b2w2-code_injection/#building-code-injection-patches). 
 
-Once you have the correct ESDB follow this steps:
+Once you have the correct ESDB follow these steps:
 
 1. Open your CTRMapProject and go to the "Extras" tab
 2. Click the ``Convert ELF to DLL`` button and select the correct ESDB, then the ELF file you just compiled and create the DLL
