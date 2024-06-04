@@ -162,8 +162,7 @@ We don't have to declare functions or struct pointers that don't get used as a s
 8. To make the changes we want we can analyze the function and see that the quantity to add is added to the bagItem::Count, so to double the items given we can multiply the quantity by 2 -> ``bagItem->Count += quantity * 2;``
 9. Finally we want to print a console message (this is very useful since we can't use breakpoints):
 - 9.1. We include the print header -> ``#include "kPrint.h"``
-- 9.2. For kPrint to compile, we need to include the cstdarg header before -> ``#include <cstdarg>``
-- 9.3. We make a print call at the end of the function to notify us of what happened -> ``k::Printf("Added %d of the following item -> %d\n", bagItem->ItemID, bagItem->Count);``
+- 9.2. We make a print call at the end of the function to notify us of what happened -> ``k::Printf("Added %d of the following item -> %d\n", bagItem->ItemID, bagItem->Count);``
 
 Now the patch is done and we should have the following code without any visible errors:
 
