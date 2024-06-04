@@ -107,7 +107,7 @@ In this guide we will make a Code Injection patch for White 2 that doubles the a
 ### External Tools
 This are the tools you will need to get started making your Code Injection patches:
  - [ARM GNU Toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
- - IDA Pro (you can also use Ghydra)
+ - IDA Pro (you can also use Ghidra)
  - White 2 IDBs (you can get them in the [Kingdom of DS Hacking Discord](https://discord.gg/zAtqJDW2jC) )
  - [DeSmuMe](https://github.com/TASEmulators/desmume/releases), make sure that the console is enabled at ``Tools -> Console -> Enabled``
  
@@ -123,7 +123,7 @@ This research process will vary depending on what you are trying to implement, k
 Now that we have located the function we want to change we can create a CPP file called ``DoubleItems.cpp`` in out ``Patches`` folder in Visual Studio.
 ![](resources/vs_create_cpp_file.png)
 
-Make sure all your functions are in between *C_DECL_BEGIN* and *C_DECL_END*, you can add *C_DECL_BEGIN* at the begining of your files and *C_DECL_END* at the end and forget about it (you will need to include swantypes.h).
+Make sure all your functions are defined and declared inside of the scope of ``extern "C" { <declarations> }``
 
 We can start by pasting the pseudo-code from IDA to the CPP file:
 
@@ -152,13 +152,13 @@ We don't have to declare functions or struct pointers that don't get used as a s
 3. General ``typedef`` like ``u16`` are in the ``swantypes.h`` file so we include it -> ``#include "swantypes.h"``
 4. The ``HeapID`` definition is in the ``gfl/core/gfl_heap.h`` file so we include it -> ``#include "gfl/core/gfl_heap.h"``
 5. ``BagSaveData`` is only used as a pointer so we can use forward declaration -> ``struct BagSaveData;``
-6. Eventhough ``BagItem`` is also a pointer we do use it as a struct so we need to declare it and define it:
+6. Even though ``BagItem`` is also a pointer we do use it as a struct so we need to declare it and define it:
 - 6.1. Go to IDA and open the IDB in use (``Bag.idb`` in this case)
 - 6.2. Go to the ``Local Types`` tab (if you don't see it use ``View -> Open Subviews -> Local types``)
 - 6.3. Press "Ctrl + F" and type "BagItem" and click on the slot with the same name once
 - 6.4. Press "Ctrl + E", copy the C struct and paste it in the CPP	
 ![](resources/ida_struct_search.png)
-7. The function uses a function called "BagSave_GetItemHandleAddCheck" we can double click it in IDA to get de declaration -> ``BagItem * BagSave_GetItemHandleAddCheck(BagSaveData *bag, u16 item_idx, u16 quantity, HeapID heapId);``
+7. The function uses a function called "BagSave_GetItemHandleAddCheck" we can double click it in IDA to get the declaration -> ``BagItem * BagSave_GetItemHandleAddCheck(BagSaveData *bag, u16 item_idx, u16 quantity, HeapID heapId);``
 8. To make the changes we want we can analyze the function and see that the quantity to add is added to the bagItem::Count, so to double the items given we can multiply the quantity by 2 -> ``bagItem->Count += quantity * 2;``
 9. Finally we want to print a console message (this is very useful since we can't use breakpoints):
 - 9.1. We include the print header -> ``#include "kPrint.h"``
@@ -181,7 +181,8 @@ struct BagItem
     u16 Count;
 };
 
-C_DECL_BEGIN
+extern "C" 
+{
 
 BagItem* BagSave_GetItemHandleAddCheck(BagSaveData* bag, u16 item_idx, u16 quantity, HeapID heapId);
 BagItem* THUMB_BRANCH_BagSave_AddItemCore(BagSaveData* bag, u16 item_idx, u16 quantity, HeapID heapId)
@@ -200,7 +201,7 @@ BagItem* THUMB_BRANCH_BagSave_AddItemCore(BagSaveData* bag, u16 item_idx, u16 qu
     return bagItem;
 }
 
-C_DECL_END
+}
 ```
 
 ### Compiling a patch
