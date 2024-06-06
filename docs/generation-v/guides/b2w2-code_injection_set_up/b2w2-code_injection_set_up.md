@@ -107,7 +107,7 @@ In this guide we will make a Code Injection patch for White 2 that doubles the a
 ### External Tools
 This are the tools you will need to get started making your Code Injection patches:
  - [ARM GNU Toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
- - IDA Pro (you can also use Ghidra)
+ - IDA Pro (any disassembler works, but most of the research and documentation has been done in IDA and thus stored in IDB files which you will have to convert if you are using a different program)
  - White 2 IDBs (you can get them in the [Kingdom of DS Hacking Discord](https://discord.gg/zAtqJDW2jC) )
  - [DeSmuMe](https://github.com/TASEmulators/desmume/releases), make sure that the console is enabled at ``Tools -> Console -> Enabled``
  
@@ -127,7 +127,7 @@ Make sure all your functions are defined and declared inside of the scope of ``e
 
 We can start by pasting the pseudo-code from IDA to the CPP file:
 
-```
+```cpp
 BagItem *__fastcall BagSave_AddItemCore(BagSaveData *bag, u16 item_idx, u16 quantity, HeapID heapId)
 {
   BagItem *bagItem; // r0
@@ -166,7 +166,7 @@ We don't have to declare functions or struct pointers that don't get used as a s
 
 Now the patch is done and we should have the following code without any visible errors:
 
-```
+```cpp
 #include "swantypes.h"
 #include "gfl/core/gfl_heap.h"
 
@@ -213,7 +213,9 @@ These instructions assume you followed the previous steps, your SWAN headers and
 General structure of the command for a C++ patch:    
 ``arm-none-eabi-g++ [patch path] -I [include directory path] -o [output path] -r -mthumb -march=armv5t -Os``   
 
-In this particular example we only use ``-I`` to include the SWAN and NK directories since they are the only ones we use, you can use it to include as many External Include Directories as you need.      
+``-I`` is used to provide Additional Include Directories, which are used to search included files outside of the local folder. Since our External Dependencies include files relative to their respective local folder (``#include "swantypes.h"``) using ``-I`` allows this files to compile without changing the source to include from our local folder (``#include "../ExternalDependencies/swan/swantypes.h"``).     
+In this particular example we only use ``-I`` to include the SWAN and NK directories since they are the only ones we use, you can use it to include as many External Include Directories as you need.
+
 I recommend that you set the output file to be in a specific folder for the ELF files, to keep stuff organized.
 
 ### Injecting a patch
