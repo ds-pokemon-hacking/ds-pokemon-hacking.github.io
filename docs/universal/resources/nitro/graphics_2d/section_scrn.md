@@ -30,7 +30,7 @@ struct ContainerSectionSCRN
 ```
 | Field Name     | Description                                                                             | Data Type    |
 |----------------|-----------------------------------------------------------------------------------------|--------------|
-| sectionHeader  | Header of this section. `sectionHeader.signature = "NRCS"`.   | [NitroSectionHeader](../nitro_overview.md#nitro-section-header) |
+| sectionHeader  | Header of this section. `sectionHeader.signature = "NRCS"`.   | [NitroSectionHeader](../nitro.md#nitro-section-header) |
 | sectionData    | Content of this section.                                                                | [ContainerSCRN](#scrn-container) |
 
 ### SCRN Container

@@ -39,7 +39,7 @@ struct ContainerSectionABNK
 ```
 | Field Name     | Description                                                                             | Data Type    |
 |----------------|-----------------------------------------------------------------------------------------|--------------|
-| sectionHeader  | Header of this section. `sectionHeader.signature = "KNBA"`.   | [NitroSectionHeader](../nitro_overview.md#nitro-section-header) |
+| sectionHeader  | Header of this section. `sectionHeader.signature = "KNBA"`.   | [NitroSectionHeader](../nitro.md#nitro-section-header) |
 | sectionData    | Content of this section.                                                                | [ContainerABNK](#abnk-container) |
 
 ### ABNK Container

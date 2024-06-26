@@ -28,7 +28,7 @@ struct ContainerFileNSCR
 ```
 | Field Name      | Description                                                                             | Data Type    |
 |-----------------|-----------------------------------------------------------------------------------------|--------------|
-| fileHeader      | Header of this file. `fileHeader.signature = "RCSN"`.                       | [NitroFileHeader](../nitro_overview.md#nitro-file-header) |
+| fileHeader      | Header of this file. `fileHeader.signature = "RCSN"`.                       | [NitroFileHeader](../nitro.md#nitro-file-header) |
 | sectionDataSCRN | Image data.                                                                 | [ContainerSectionSCRN](section_scrn.md#section-container) |
 
 ---

@@ -30,7 +30,7 @@ struct ContainerSectionFATB
 ```
 | Field Name     | Description                                                                             | Data Type    |
 |----------------|-----------------------------------------------------------------------------------------|--------------|
-| sectionHeader  | Header of this section. `sectionHeader.signature = "BTAF"`.   | [NitroSectionHeader](../nitro_overview.md#nitro-section-header) |
+| sectionHeader  | Header of this section. `sectionHeader.signature = "BTAF"`.   | [NitroSectionHeader](../nitro.md#nitro-section-header) |
 | sectionData    | Content of this section.                                                                | [ContainerFATB](#fatb-container) |
 
 ### FATB Container

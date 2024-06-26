@@ -45,7 +45,7 @@ This file is [a011_572.RLCN](resources/a011_572.RLCN).
 ``a011`` originally just has 571 files.  We add a 572nd file for our purposes.  You can either unpack/repack using narchive (included in the b2w2-fairy repository) or Extract directory using Tinke, add the file, and Change by directory using Tinke again.
 
 ### Hall of Fame Palette - ``/a/2/1/3``
-Here we add a new palette to ``/a/2/1/3`` to make Fairy Pokémon show up in the Hall of Fame with a pink nameplate.  This is currently bugged and unfinished, but once the code is written it will be fixed in the Git repo.
+Here we add a new palette to ``/a/2/1/3`` to make Fairy Pokémon show up in the Hall of Fame with a pink nameplate.
 
 The file to replace with once extracted:  [a213_9.RLCN](resources/a213_9.RLCN)
 
@@ -58,7 +58,7 @@ All you *need* to do is follow the instructions there, abridged here (currently 
 - Double click on the `applyfairytype.bat` batch file
   - A script will run that applies all the Fairy type code changes to copied overlay files and recompresses them in the base folder for ROM insertion
 - Open `base.nds` in Tinke
-- "Change file" all of overlays 167, 168, 207, 255, 265, the overlay table (y9.bin), and the arm9
+- "Change file" all of overlays 167, 168, 207, 255, 265, 296, 298, the overlay table (y9.bin), and the arm9
 - Save your ROM as some other named file
 
 <details>

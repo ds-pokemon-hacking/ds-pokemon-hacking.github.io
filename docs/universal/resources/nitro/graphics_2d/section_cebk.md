@@ -34,7 +34,7 @@ struct ContainerSectionCEBK
 ```
 | Field Name     | Description                                                                             | Data Type    |
 |----------------|-----------------------------------------------------------------------------------------|--------------|
-| sectionHeader  | Header of this section. `sectionHeader.signature = "KBEC"`.   | [NitroSectionHeader](../nitro_overview.md#nitro-section-header) |
+| sectionHeader  | Header of this section. `sectionHeader.signature = "KBEC"`.   | [NitroSectionHeader](../nitro.md#nitro-section-header) |
 | sectionData    | Content of this section.                                                                | [ContainerCEBK](#cebk-container) |
 | paddingDWORD   | Padding for DWORD alignment, if [LABL-section](section_labl.md) follows.                | uint8_t[]    |
 

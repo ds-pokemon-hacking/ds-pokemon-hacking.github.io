@@ -32,7 +32,7 @@ struct ContainerFileNANR
 ```
 | Field Name      | Description                                                                             | Data Type    |
 |-----------------|-----------------------------------------------------------------------------------------|--------------|
-| fileHeader      | Header of this file. `fileHeader.signature = "RNAN"`.                       | [NitroFileHeader](../nitro_overview.md#nitro-file-header) |
+| fileHeader      | Header of this file. `fileHeader.signature = "RNAN"`.                       | [NitroFileHeader](../nitro.md#nitro-file-header) |
 | sectionDataABNK | Cell animation data.                                                        | [ContainerSectionABNK](section_abnk.md#section-container) |
 | sectionDataLABL | Animation-name table.                                                            | [ContainerSectionLABL](section_labl.md#section-container) |
 | sectionDataUEXT | Cluster flag.                                                               | [ContainerSectionUEXT](section_uext.md#section-container) |

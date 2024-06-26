@@ -29,7 +29,7 @@ struct ContainerSectionCPOS
 ```
 | Field Name     | Description                                                                             | Data Type    |
 |----------------|-----------------------------------------------------------------------------------------|--------------|
-| sectionHeader  | Header of this section. `sectionHeader.signature = "SOPC"`.   | [NitroSectionHeader](../nitro_overview.md#nitro-section-header) |
+| sectionHeader  | Header of this section. `sectionHeader.signature = "SOPC"`.   | [NitroSectionHeader](../nitro.md#nitro-section-header) |
 | sectionData    | Content of this section.                                                                | [ContainerCPOS](#cpos-container) |
 
 ### CPOS Container
