@@ -18,11 +18,7 @@ WARNING: HGE will continue to add more overworlds and more overworld graphics --
   - [Table of Contents](#table-of-contents)
   - [Acknowledgements](#acknowledgements)
   - [Prerequisites](#prerequisites)
-  - [Part 1 - .BTX0 Files And How to Extract Them](#part-1---btx0-files-and-how-to-extract-them)
-  - [Part 2 - Editing The Sprite In A .BTX0 File](#part-2---editing-the-sprite-in-a-btx0-file)
-  - [Part 3 - Editing pngtobtx0.cs To Work With Your New Sprite](#part-3---editing-pngtobtx0cs-to-work-with-your-new-sprite)
-  - [Part 4 - Expanding The Overworld Table](#part-4---expanding-the-overworld-table)
-  - [Part 5 - Compiling](#part-5---compiling)
+  - [BTX0 File Overview](#btx0-file-overview)
 
 ---
 
@@ -33,93 +29,44 @@ BluRose: All the help in teaching me this and making this possible in HGE.
 
 ## Prerequisites
 - Cloned HGE repository -- refer to the setup guide found here: (https://github.com/BluRosie/hg-engine)
-- BTXEditor2 (https://projectpokemon.org/home/forums/topic/8962-btx-editor-20/)
-- Sprite editing software, e.g. Aseprite
+- Sprite editing software, e.g. Aseprite and something to [index the sprite with](../../../universal/guides/sprite_indexing/sprite_indexing.md)
 - DSPRE (https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor)
 
 ---
 
-## Part 1 - .BTX0 Files And How to Extract Them
+## BTX0 File Overview
 
-``.BTX0`` files contain the various frames of overworlds. An example of one, as displayed in Tinke 0.9.2, is shown below:
+HGE recently added the ability to construct all of the `BTX0` files directly from files in a manner that matches 1:1 with the vanilla overworlds.
 
-![](resources/tinke-BTX0_view.png)
+As a result, all of the vanilla NPC's and files are dumped to HGE's [`data/graphics/overworlds`](https://github.com/BluRosie/hg-engine/tree/main/data/graphics/overworlds) folder.  This allows for easy editing and expansion.
 
-We will need to extract a ``.BTX0`` file of an existing overworld (for the purposes of this guide, we will use the ``.BTX0`` for Eusine) because the program ``pngtobtx0`` will read the contents of a vanilla ``.BTX0`` file, then add your PNG over top of it without replacing the original sprite in the game.
-
-To extract a ``.BTX0`` file, use Tinke 0.9.2 and navigate to ``a/0/8/1``. Tinke will show you a preview of the sprite in the ``.BTX0`` if you click the file, then press View or hit spacebar on your keyboard. Once you have found one that matches your intentions, press Extract and save it where you would like.
-
----
-
-## Part 2 - Editing The Sprite In A .BTX0 File
-
-Once you have your ``.BTX0``, open it in BTXEditor2 ([Prerequisites](#prerequisites)).
-
-![](resources/btxeditor2-Eusine.png)
-
-Click Export and save the ``.png`` where you would like.
-
-You are now free to edit it in your sprite editing software of choice.
+The `BTX0` file format specifies a number of frames that pull from an overall texture at the end of the file.
+There are also palettes specified for these images to take, making the `BTX0` be a sort of all-in-one container for animated palettes that combines NCGR, NCLR, and somewhat flipbook animation files.
+We dump these to editable formats, specifically a JSON for metadata, a png for the entire texture, and a series of JASC-PAL files as stipulated in the metadata.
+The PNG is 4bpp (16 colors) and is enforced as such.  Most sprites are fine with one JASC-PAL file, and there is one that is prefixed with the same number as the png and JSON files.  Following Pokémon have two palettes (and a few others do as well)--an additional one for the shiny palette.
+The image must be indexed to both palettes--this is to say that the order of the colors must be the same.  **The best program in my opinion to reconcile palette data with the image and converting images to the proper format is [Irfanview](https://www.irfanview.com/).**
 
 ---
 
-## Part 3 - Editing pngtobtx0.cs To Work With Your New Sprite
+## Practically Editing Files for the BTX0
 
-The next step is to move your ``.BTX0`` to the ``../rawdata`` folder. Rename it to something like ``a081_npcs`` for clarity as so:
-
-![](resources/rawdata-file_view.png)
-
-It's important to remove the ``.BTX0`` file extension -- don't worry, no data will be lost.
-
-After you have done so, create a folder called ``new npcs`` in ``../data/graphics/overworlds``. Place your ``.png`` in there and rename it to ``0000.png``. If you add more sprites, name them ``0001.png``, ``0002.png``, and so on.
-
-Now, we must edit ``pngtobtx0.cs``, which is in ``../tools/source`` to tell it to properly convert your ``.png`` to a ``.BTX0``. Copy the following code into ``pngtobtx0.cs`` after the section of code that begins with ``if (bitmap.Width > 32) // if a big mon``:
-
-```c#
-else if (bitmap.Height == 384) // npcs -- their dimensions are 32x384
-			{
-			    if (pngFile.Contains("new_npcs/"))
-			    {
-			    	pngFile = pngFile.Substring("new_npcs/".Length, pngFile.Length - "new_npcs/".Length);
-			    }
-
-				try
-				{
-					this.BTXFile = File.ReadAllBytes("rawdata/a081_npcs");
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine(e.Message);
-
-					return;
-				}
-
-				this.bm = BTX0.Read(this.BTXFile);
-			}
-```
-Next, we need to update this line in ``pngtobtx0.cs``:
-```c#
-if (Program.PaletteSize == 64U && Program.PaletteCount == 2U) // handle shiny palette if one exists first
-```
-to also include your ``new npcs`` folder. Simply add ``&& !args[0].Contains("new_npcs")`` to that line within the parentheses.
-
-All this code will look for ``.png`` files in your new folder ``new_npcs`` and begin applying the ``.png`` over the ``.BTX0`` called ``a081_npcs`` (functionally a ``.BTX0`` file even without the file extension) in ``../rawdata`` once you build your ROM with HGE.
-
-Now, we need to expand the table for overworlds to have a new entry for yours.
+The easiest way to edit a BTX0 for a new overworld is to replace its image and export the palette over the JASC-PAL that is has already, leaving the name and such similar.  The JSON that stores the metadata need not be edited at all and can be copied to a new entry just fine, copying it and renaming to a different number (as well as the PNG texture and the palette file associated with the JSON).
 
 ---
 
-## Part 4 - Expanding The Overworld Table
+## Expanding The Overworld Table
 
 At the top of ``../src/field/overworld_table.c`` with the definitions for shadows, include the following code:
 
 ```c
 #define NEW_NPC_START 7000
-#define NEW_NPC_GFX_START 1458
+#define NEW_NPC_GFX_START 2000 // exact number may depend--it is the number of the first overworld gfx that is not used in the overworld table
 #define NEW_NPC_ENTRY(num) {.tag = NEW_NPC_START + num, .gfx = NEW_NPC_GFX_START + num, .callback_params = 0}
 ```
 
 You can choose what ``NEW_NPC_START`` is defined as, but choose an arbitrarily large number that HGE will likely not reach. This ensures that your overworld entry will not be shifted later in your project, which would make for an extremely tedious process of updating your overworlds in DSPRE.
+
+Notably, it should not be higher than 8192.  For most purposes, a solid 7000 will suffice.
 
 As mentioned at the beginning of this guide, you will have to change ``NEW_NPC_GFX_START`` as HGE adds more overworld sprites. At the time of writing this guide, 1457 is the last used GFX, which belongs to the three segment form of Dudunsparce. Make sure you pay attention to what the last number used by HGE is as you merge!
 
@@ -145,7 +92,7 @@ You have now expanded the overworld table to fit yours!
 
 ---
 
-## Part 5 - Compiling
+## Compiling
 
 If you were to compile now, you would successfully have a new entry in the overworld table in DSPRE, but your sprite would not show up. This is due to HGE not rebuilding ``a/0/8/1`` without being told to do so.
 
