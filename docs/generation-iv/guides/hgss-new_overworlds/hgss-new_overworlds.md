@@ -31,20 +31,20 @@ BluRose: All the help in teaching me this and making this possible in HGE.
 ---
 
 ## Prerequisites
-- Cloned HGE repository -- refer to the setup guide found here: (https://github.com/BluRosie/hg-engine)
+- Cloned HGE repository -- refer to the [setup guide](https://github.com/BluRosie/hg-engine)
 - Sprite editing software, e.g. Aseprite and something to [index the sprite with](../../../universal/guides/sprite_indexing/sprite_indexing.md), most easily [Irfanview](https://www.irfanview.com/)
-- DSPRE (https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor)
+- [DSPRE](https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor)
 
 ---
 
 ## BTX0 File Overview
 
-HG-Engine (HGE) recently added the ability to construct all of the `BTX0` files directly from files in a manner that matches 1:1 with the vanilla overworlds.
+HG-Engine (HGE) recently added the ability to construct all of the BTX0 files directly from files in a manner that matches 1:1 with the vanilla overworlds.
 
 As a result, all of the vanilla NPC's and files are dumped to HGE's [`data/graphics/overworlds`](https://github.com/BluRosie/hg-engine/tree/main/data/graphics/overworlds) folder.  This allows for easy editing and expansion.
 
-The `BTX0` file format specifies a number of frames that pull from an overall texture at the end of the file.
-There are also palettes specified for these images to take, making the `BTX0` be a sort of all-in-one container for animated palettes that combines NCGR, NCLR, and somewhat flipbook animation files.
+The BTX0 file format specifies a number of frames that pull from an overall texture at the end of the file.
+There are also palettes specified for these images to take, making the BTX0 be a sort of all-in-one container for animated palettes that combines NCGR, NCLR, and somewhat flipbook animation files.
 We dump these to editable formats, specifically a JSON for metadata, a png for the entire texture, and a series of JASC-PAL files as stipulated in the metadata.
 The PNG is 4bpp (16 colors) and is enforced as such.  Most sprites are fine with one JASC-PAL file, and there is one that is prefixed with the same number as the png and JSON files.  Following Pokémon have two palettes (and a few others do as well)--an additional one for the shiny palette.
 The image must be indexed to both palettes--this is to say that the order of the colors must be the same.  **The best program in my opinion to reconcile palette data with the image and converting images to the proper format is [Irfanview](https://www.irfanview.com/).**
@@ -61,7 +61,7 @@ You do not necessarily need to edit the JSON ever--I do not necessarily think th
 
 ## Expanding The Overworld Table
 
-At the top of ``../src/field/overworld_table.c`` with the definitions for shadows, include the following code:
+At the top of ``src/field/overworld_table.c`` with the definitions for shadows, include the following code:
 
 ```c
 #define NEW_NPC_START 7000
@@ -130,6 +130,51 @@ $(OVERWORLDS_DIR)/2_%.btx0:$(OVERWORLDS_DEPENDENCIES_DIR)/berries/%.png $(OVERWO
 It should end up looking like this:
 
 ![](resources/narcsmk.png)
+
+Or a diffed view, showing edited/added lines:
+
+<details>
+<summary>Click to open!</summary>
+<br></br>
+
+```diff
+OVERWORLDS_DIR := $(BUILD)/pokemonow
+OVERWORLDS_NARC := $(BUILD_NARC)/pokemonow.narc
+OVERWORLDS_TARGET := $(FILESYS)/a/0/8/1
+OVERWORLDS_DEPENDENCIES_DIR := data/graphics/overworlds
+
+OVERWORLDS_SRCS := $(wildcard $(OVERWORLDS_DEPENDENCIES_DIR)/*.png) $(wildcard $(OVERWORLDS_DEPENDENCIES_DIR)/*.bin) $(wildcard $(OVERWORLDS_DEPENDENCIES_DIR)/*.json) $(wildcard $(OVERWORLDS_DEPENDENCIES_DIR)/*.pal)
+OVERWORLDS_OBJS := $(patsubst $(OVERWORLDS_DEPENDENCIES_DIR)/%.png,$(OVERWORLDS_DIR)/1_%.btx0,$(OVERWORLDS_SRCS)) $(patsubst $(OVERWORLDS_DEPENDENCIES_DIR)/%.bin,$(OVERWORLDS_DIR)/1_%.bin,$(OVERWORLDS_SRCS))
++
++OVERWORLDS_BERRIES_SRCS := $(wildcard $(OVERWORLDS_DEPENDENCIES_DIR)/berries/*.png) $(wildcard $(OVERWORLDS_DEPENDENCIES_DIR)/berries/*.json) $(wildcard $(OVERWORLDS_DEPENDENCIES_DIR)/berries/*.pal)
++OVERWORLDS_BERRIES_OBJS := $(patsubst $(OVERWORLDS_DEPENDENCIES_DIR)/berries/%.png,$(OVERWORLDS_DIR)/2_%.btx0,$(OVERWORLDS_BERRIES_SRCS))
+
+# add your own overworld sources here
+-ALL_OVERWORLDS_SRCS := $(OVERWORLDS_SRCS)
+-ALL_OVERWORLDS_OBJS := $(OVERWORLDS_OBJS)
++ALL_OVERWORLDS_SRCS := $(OVERWORLDS_SRCS) $(OVERWORLDS_BERRIES_SRCS)
++ALL_OVERWORLDS_OBJS := $(OVERWORLDS_OBJS) $(OVERWORLDS_BERRIES_OBJS)
+
+$(OVERWORLDS_DIR)/1_%.btx0:$(OVERWORLDS_DEPENDENCIES_DIR)/%.png $(OVERWORLDS_DEPENDENCIES_DIR)/%.json $(OVERWORLDS_DEPENDENCIES_DIR)/%*.pal
+	$(BTX) $< $@
+
+$(OVERWORLDS_DIR)/1_%.bin:$(OVERWORLDS_DEPENDENCIES_DIR)/%.bin
+	cp -f $< $@
+
++$(OVERWORLDS_DIR)/2_%.btx0:$(OVERWORLDS_DEPENDENCIES_DIR)/berries/%.png $(OVERWORLDS_DEPENDENCIES_DIR)/berries/%.json $(OVERWORLDS_DEPENDENCIES_DIR)/berries/%*.pal
++	$(BTX) $< $@
+
+$(OVERWORLDS_NARC): $(ALL_OVERWORLDS_SRCS) $(ALL_OVERWORLDS_OBJS)
+	$(NARCHIVE) create $@ $(OVERWORLDS_DIR) -nf
+
+NARC_FILES += $(OVERWORLDS_NARC)
+```
+
+</details>
+
+And a quick snapshot of 6 individual overworlds and their files in the `data/graphics/overworlds` folder:
+
+![](resources/berries_sub_folder.png)
 
 All you should have to do is run `make` after inserting the new overworlds.  You're done!
 
