@@ -480,4 +480,4 @@ This is reflected in the NPC `frames` as well.  Particularly relevant is the fem
 
 Here we see that there are 32 frames defined, but only 24 squares to pull from.  Many are just duplicated, pulling from the same space in the texture.
 
-If you have any questions, feel free to join the DS Modding Community Discord server and ask there.
+If you have any questions, feel free to join the [DS Modding Community Discord server](https://discord.gg/8fvsJMNAMV) and ask there, preferably in an hg-engine related channel.
