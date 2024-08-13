@@ -21,6 +21,7 @@ WARNING: HGE will continue to add more overworlds and more overworld graphics --
   - [BTX0 File Overview](#btx0-file-overview)
   - [Practically Editing Files for the BTX0](#practically-editing-files-for-the-btx0)
   - [Expanding the Overworld Table](#expanding-the-overworld-table)
+  - [Advanced Editing](#advanced-editing)
   
 
 ---
@@ -179,3 +180,304 @@ And a quick snapshot of 6 individual overworlds and their files in the `data/gra
 All you should have to do is run `make` after inserting the new overworlds.  You're done!
 
 You can also apply this to porting overworlds from DPPt if you'd like.
+
+---
+
+## Advanced Editing
+
+The JSON metadata file specifies a number of things that are built into the BTX0.
+
+The first section is the `frames` section.  This defines how the continuous texture should be split up to be referenced by the code as parts of an animation.
+For all intents and purposes, these should always maintain their current order.  The code accesses the frames in the order they are defined, so they must remain the same.
+
+Each frame is located under the overall `frames` section by its own name.  We can take a look at Hitmonlee's follower BTX0 to see what is going on:
+
+![](https://raw.githubusercontent.com/BluRosie/hg-engine/main/data/graphics/overworlds/0404.png)
+
+<details>
+<summary>Click to open!</summary>
+<br></br>
+
+```json
+{
+	"frames": {
+		"tsure_poke.1": {
+			"frame": 0,
+			"coordTrans": 0,
+			"color0": 1,
+			"format": 3,
+			"height": 32,
+			"width": 32,
+			"flipY": 0,
+			"flipX": 0,
+			"repeatY": 0,
+			"repeatX": 0,
+			"unkBlockUnk0": 613,
+			"unkBlockUnk1": 259,
+			"unk0": 0,
+			"unk1": 1,
+			"unk2": 128
+		},
+...
+```
+</details>
+
+Here we see the beginning of [`0404.json`](https://github.com/BluRosie/hg-engine/blob/main/data/graphics/overworlds/0404.json).
+This shows the start of the `frames` section as well as the entire first frame defined, `tsure_poke.1`.  The text names for both each frame and the palettes (covered later) are limited to 16 characters of ASCII text.
+
+To run through each of the properties:
+- `frame` defines which index frame this entry refers to.  This is actually used in conjunction with the `width` and the `height` to determine the offset within the texture at which this frame starts referring to.
+- `coordTrans` defines whether the coordinate system should be transformed to some other type.  This should always be 0 for our overworlds.  See [relevant Tinke code](https://github.com/pleonex/tinke/blob/master/Plugins/3DModels/3DModels/BTX0.cs#L852) for more information.
+- `color0` determines whether or not the first color in the palette is transparent.  A value of `1` will treat the first color as transparent, `0` otherwise.
+- `format` needs to be `3` to signify that the texture format is 4bpp, limited to 16 colors.  See [relevant Tinke code](https://github.com/pleonex/tinke/blob/master/Plugins/3DModels/3DModels/BTX0.cs#L840) for more information.
+- `height` is the individual frame height restricted to a power of 2.  The converter is set up such that the height and width should be the same.
+- `width` is the individual frame width restricted to a power of 2.  The converter is set up such that the height and width should be the same.
+- `flipY` is whether or not the texture on being mapped to too large a surface will flip in the vertical direction or not.  This is irrelevant for overworlds, and is 0.
+- `flipX` is whether or not the texture on being mapped to too large a surface will flip in the horizontal direction or not.  This is irrelevant for overworlds, and is 0.
+- `repeatY` is whether or not the texture on being mapped to too large a surface will repeat across the vertical direction or not.  This is irrelevant for overworlds, and is 0.
+- `repeatX` is whether or not the texture on being mapped to too large a surface will repeat across the horizontal direction or not.  This is irrelevant for overworlds, and is 0.
+- and all of the `unk` parameters vary seemingly randomly between overworlds and their individual values don't seem to matter too much.
+
+This then repeats for as many frames as are defined.
+
+Then the `palettes` section begins.  These are similar to the `frames`:  we have some more metadata fields that are defined here.
+
+Pasting the one from a follower:
+
+<details>
+<summary>Click to open!</summary>
+<br></br>
+
+```json
+	"palettes": {
+		"tsure_poke0": {
+			"offset": 0,
+			"unk0": 85,
+			"unk1": 2,
+			"fileName": "tsure_poke0.pal"
+		},
+		"tsure_poke1": {
+			"offset": 1,
+			"unk0": 336,
+			"unk1": 258,
+			"fileName": "tsure_poke1.pal"
+		}
+	}
+}
+```
+
+</details>
+
+This is the end of the Hitmonlee overworld JSON that we started with.  Here, each palette has its own JSON entry that has its name in ASCII characters (limit 16 per palette), here `tsure_poke0` and `tsure_poke1`.
+- The `offset` is the offset in the palette section that the palette data should be inserted.  This is multiplied by the size of each palette (0x20) to get each palette's offset within the data.
+- The `unk` blocks are similarly random values that don't seem to affect the loading of the BTX0.
+- The `fileName` is the palette file (JASC-PAL format as usable/output by nitrogfx) that is used for the palette data, similar to the png for texture data.  The current JSON's number is prepended with a dash to the `fileName` field to get the palette that is accessed:  `tsure_poke0` from `0404.json` will access [`0404-tsure_poke0.pal`](https://github.com/BluRosie/hg-engine/blob/main/data/graphics/overworlds/0404-tsure_poke0.pal) and convert it to the format for insertion into the BTX0 (BGR555 per color).
+
+Palettes are interesting in that the `offset` field is sometimes duplicated between separate palette entries.  This is not relevant for NPC's or follower Pokémon, but the [apricorn trees in 0251.json](https://github.com/BluRosie/hg-engine/blob/main/data/graphics/overworlds/0251.json) feature a few edge cases here:
+
+![](https://raw.githubusercontent.com/BluRosie/hg-engine/main/data/graphics/overworlds/0251.png)
+
+<details>
+<summary>Click to open!</summary>
+<br></br>
+
+```json
+	"palettes": {
+		"bonguri.1_pl": {
+			"offset": 0,
+			"unk0": 94,
+			"unk1": 2,
+			"fileName": "bonguri.1_pl.pal"
+		},
+		"bonguri.2_pl": {
+			"offset": 0,
+			"unk0": 834,
+			"unk1": 773,
+			"fileName": "bonguri.1_pl.pal"
+		},
+		"bonguri.3_pl": {
+			"offset": 0,
+			"unk0": 321,
+			"unk1": 260,
+			"fileName": "bonguri.1_pl.pal"
+		},
+		"bonguri.4_pl": {
+			"offset": 0,
+			"unk0": 832,
+			"unk1": 516,
+			"fileName": "bonguri.1_pl.pal"
+		},
+		"bonguri.5_pl": {
+			"offset": 0,
+			"unk0": 1601,
+			"unk1": 1287,
+			"fileName": "bonguri.1_pl.pal"
+		},
+		"bonguri.6_pl": {
+			"offset": 0,
+			"unk0": 576,
+			"unk1": 1030,
+			"fileName": "bonguri.1_pl.pal"
+		},
+		"bonguri.7_pl": {
+			"offset": 0,
+			"unk0": 1344,
+			"unk1": 1543,
+			"fileName": "bonguri.1_pl.pal"
+		}
+	}
+}
+```
+
+</details>
+
+Every single `offset` is `0`.  Every `fileName` is the same.  This is to reflect that every palette actually pulls from the same file and refers to the same palette, essentially.
+
+This is reflected in the NPC `frames` as well.  Particularly relevant is the female protagonist, [`0070.json`](https://github.com/BluRosie/hg-engine/blob/main/data/graphics/overworlds/0070.json):
+
+
+![](https://raw.githubusercontent.com/BluRosie/hg-engine/main/data/graphics/overworlds/0070.png)
+
+<details>
+<summary>Click to open!</summary>
+<br></br>
+
+```json
+{
+	"frames": {
+		"heroine.1": {
+			"frame": 0,
+...
+		},
+		"heroine.10": {
+			"frame": 1,
+...
+		},
+		"heroine.11": {
+			"frame": 2,
+...
+		},
+		"heroine.12": {
+			"frame": 3,
+...
+		},
+		"heroine.13": {
+			"frame": 4,
+...
+		},
+		"heroine.14": {
+			"frame": 5,
+...
+		},
+		"heroine.15": {
+			"frame": 4,
+...
+		},
+		"heroine.16": {
+			"frame": 6,
+...
+		},
+		"heroine.17": {
+			"frame": 7,
+...
+		},
+		"heroine.18": {
+			"frame": 8,
+...
+		},
+		"heroine.19": {
+			"frame": 7,
+...
+		},
+		"heroine.2": {
+			"frame": 9,
+...
+		},
+		"heroine.20": {
+			"frame": 10,
+...
+		},
+		"heroine.21": {
+			"frame": 11,
+...
+		},
+		"heroine.22": {
+			"frame": 12,
+...
+		},
+		"heroine.23": {
+			"frame": 11,
+...
+		},
+		"heroine.24": {
+			"frame": 13,
+...
+		},
+		"heroine.25": {
+			"frame": 14,
+...
+		},
+		"heroine.26": {
+			"frame": 15,
+...
+		},
+		"heroine.27": {
+			"frame": 14,
+...
+		},
+		"heroine.28": {
+			"frame": 16,
+...
+		},
+		"heroine.29": {
+			"frame": 17,
+...
+		},
+		"heroine.3": {
+			"frame": 0,
+...
+		},
+		"heroine.30": {
+			"frame": 18,
+...
+		},
+		"heroine.31": {
+			"frame": 17,
+...
+		},
+		"heroine.32": {
+			"frame": 19,
+...
+		},
+		"heroine.4": {
+			"frame": 20,
+...
+		},
+		"heroine.5": {
+			"frame": 21,
+...
+		},
+		"heroine.6": {
+			"frame": 22,
+...
+		},
+		"heroine.7": {
+			"frame": 21,
+...
+		},
+		"heroine.8": {
+			"frame": 23,
+...
+		},
+		"heroine.9": {
+			"frame": 2,
+...
+		}
+	},
+```
+
+</details>
+
+Here we see that there are 32 frames defined, but only 24 squares to pull from.  Many are just duplicated, pulling from the same space in the texture.
+
+If you have any questions, feel free to join the DS Modding Community Discord server and ask there.
