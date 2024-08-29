@@ -16,15 +16,15 @@ This is a guide on how to implement reusable TMs in Platinum and HGSS. The US ve
 
 The tools required are an hex editor and Tinke 0.9.2, or instead CrystalTile2 if you're using HGSS.
 
---- 
+---
 ## Table of Contents
-* [Extracting the files](#section)
-  * [Platinum](#subsection-1)
-  * [HGSS](#subsection-2)
-* [Hex Editing](#section-2)
-  * [Making TMs infinte](#subsection-1)
-  * [Removing the TM item count](#subsection-2)
-* [Reinserting the files](#section-3)
+* [Extracting the files](#extracting-the-files)
+  * [Platinum](#platinum)
+  * [HGSS](#hgss)
+* [Hex Editing](#hex-editing)
+  * [Making TMs infinte](#making-tms-infinite)
+  * [Removing the TM item count](#removing-the-tm-item-count)
+* [Reinserting the files](#reinserting-the-files)
 
 ## Extracting the files
 First you need to extract the relative files in order to perform the hex editing
@@ -50,7 +50,7 @@ Load the files you extracted in a hex editor, then change the bytes according to
 ### Making TMs infinite
 
 * For Platinum, at offset `0x865EB` in the arm9.bin change `D1` to `E0`
-* For HGSS, at `0x825A7` in the arm9.bin change `D1` to `E0` 
+* For HGSS, at `0x825A7` in the arm9.bin change `D1` to `E0`
 
 ### Removing the TM item count
 
@@ -62,5 +62,3 @@ Load the files you extracted in a hex editor, then change the bytes according to
 * For Platinum just open your ROM in Tinke again, search the files you previously extracted, select them and click the *Change File* button to replace them with the ones you hex edited. Then save the ROM.
 
 * For HGSS, in the NDS filesystem information window, you can select the files you previously extracted, right click and this time click *Compression* and select your own hex edited files. If you're using the arm9 from DSPRE project folder, you only need to click *Import* instead. After you're done you can use `File>Build ROM...` to save your ROM.
-
-

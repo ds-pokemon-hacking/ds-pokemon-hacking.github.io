@@ -15,16 +15,14 @@ Assembly will not be covered here.  It is recommended you understand assembly co
 
 ---
 ## Table of Contents
-- [Code Injection](#code-injection)
-  - [Table of Contents](#table-of-contents)
-  - [Manual Process](#manual-process)
-  - [Shortcomings of the Manual Process](#shortcomings-of-the-manual-process)
-  - [Implementation Details](#implementation-details)
-    - [`hooks`](#hooks)
-    - [`bytereplacement`](#bytereplacement)
-    - [`routinepointers`](#routinepointers)
-    - [`repoints`](#repoints)
-  - [Code Injection Template](#code-injection-template)
+- [Manual Process](#manual-process)
+- [Shortcomings of the Manual Process](#shortcomings-of-the-manual-process)
+- [Implementation Details](#implementation-details)
+  - [`hooks`](#hooks)
+  - [`bytereplacement`](#bytereplacement)
+  - [`routinepointers`](#routinepointers)
+  - [`repoints`](#repoints)
+- [Code Injection Template](#code-injection-template)
 
 ## Manual Process
 The Nintendo DS has 4 MB of EWRAM.  Unlike the GBA, the ROM is not directly mapped and readable in memory.  Files must be dumped into that 4 MB of memory in order to be accessed.  This includes all code that is run--the processor CPU's don't have direct access to the ROM in code execution space.
@@ -45,7 +43,7 @@ An example of this in action is in the code edits by [AdAstraGL](https://twitter
 0010   80 21 49 00 48 43 11 1C 70 47 C0 46 FF FF FF FF   €!I.HC..pGÀFÿÿÿÿ
 
 2) Paste this at offset 0x2E17A of an uncompressed overlay12.
-77 F1 D1 FA 
+77 F1 D1 FA
 ```
 
 From the synthetic overlay, the code is dumped to 0x023C8000 in the EWRAM (as implemented by Mikelan).  This places the data we just wrote at `0x023C8000 + 0x14FF0 = 0x023DCFF0` in the EWRAM.
@@ -65,12 +63,12 @@ This jumps directly to the code that we just inserted at `0x023DCFF0`--the secon
 From there, the code at `0x023DD000` (as dumped by REBot in KoDSH):
 
 ```arm
-movs r1, #0x80   ; +0 = 80 21 
-lsls r1, r1, #1  ; +2 = 49 00 
-muls r0, r1, r0  ; +4 = 48 43 
-adds r1, r2, #0  ; +6 = 11 1c 
-bx   lr          ; +8 = 70 47 
-mov  r8, r8      ; +10 = c0 46 
+movs r1, #0x80   ; +0 = 80 21
+lsls r1, r1, #1  ; +2 = 49 00
+muls r0, r1, r0  ; +4 = 48 43
+adds r1, r2, #0  ; +6 = 11 1c
+bx   lr          ; +8 = 70 47
+mov  r8, r8      ; +10 = c0 46
 ```
 
 As AdAstra explains in the tutorial, this allows for a coarser control that isn't just a multiplier on the original speed of the HP bar (when it's depleting).  As it introduces more instructions in place of the older set, there is a need for space elsewhere to insert this bit of code.

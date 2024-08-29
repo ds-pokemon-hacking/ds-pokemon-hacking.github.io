@@ -15,8 +15,6 @@ we will edit in this guide is called DummyTextTrap (0xD0) in DSPRE. It has two p
 ---
 
 ## Table of Contents
-  - [Creating New Script Commands in HeartGold Engine](#creating-new-script-commands-in-heartgold-engine)
-  - [Table of Contents](#table-of-contents)
   - [Acknowledgements](#acknowledgements)
   - [Prerequisites](#prerequisites)
   - [Part 1 - Repointing DummyTextTrap](#part-1---repointing-dummytexttrap)

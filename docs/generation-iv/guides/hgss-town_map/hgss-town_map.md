@@ -15,8 +15,6 @@ In this guide, I look to turn Johto & a little of Kanto into Hoenn.  While the i
 ---
 
 ## Table of Contents
-<!-- - [Editing the Town Map](#editing-the-town-map)
-  - [Table of Contents](#table-of-contents)
   - [Prerequisites](#prerequisites)
   - [Part 1 - Graphics](#part-1---graphics)
     - [Protagonist Portraits](#protagonist-portraits)
@@ -26,7 +24,7 @@ In this guide, I look to turn Johto & a little of Kanto into Hoenn.  While the i
     - [Red/Gray Map Chunks, Flight Spots](#redgray-map-chunks-flight-spots)
     - [Orange Selection Blocks](#orange-selection-blocks)
     - [ARM9 Exact Flight Positions](#arm9-exact-flight-positions)
-  - [TODO](#todo) -->
+  - [TODO](#todo)
 
 ## Prerequisites
 - Comfortability with hex editing (and I mean comfortability, this gets pretty intense) and interpreting data
@@ -148,33 +146,33 @@ More in-depth structure description and the fields appear on [this other page](.
 
 So let's look at this table, split up by entry (0xE in size):
 ```
-31 00 31 00 00 00 20 0B 00 14 11 33 11 00 
-32 00 32 00 01 01 1F 07 05 14 22 44 11 00 
-33 00 33 00 02 02 20 02 0A 14 22 44 11 00 
-34 00 34 00 03 03 28 03 0F 14 22 44 11 00 
-35 00 35 00 04 04 2C 07 14 14 11 33 11 00 
-36 00 36 00 05 05 28 09 19 14 22 44 11 00 
-37 00 37 00 06 06 25 07 1E 14 22 44 11 00 
-38 00 38 00 07 07 25 0C 23 14 22 44 11 00 
-39 00 39 00 08 08 20 0F 00 18 11 33 11 00 
-3A 00 3A 00 09 FF 1C 06 00 00 11 00 00 00 
-3B 00 3B 00 0A 09 28 06 05 18 22 44 11 00 
-3C 00 3C 00 0B 0A 15 0C 0B 19 11 11 00 00 
-43 00 43 00 0C 0B 10 0C 0F 18 12 34 11 00 
-49 00 49 00 0D 0C 0E 07 14 18 22 43 10 00 
-4A 00 4A 00 0E 0D 0C 0E 19 18 12 34 11 00 
-4B 00 4B 00 0F 0E 05 0A 1E 18 21 43 11 00 
-4C 00 4C 00 10 0F 09 0A 23 18 23 45 11 00 
-4D 00 4D 00 11 10 08 07 00 1C 22 44 11 00 
-4E 00 4E 00 12 11 0B 04 05 1C 22 44 11 00 
-57 00 57 00 13 12 10 05 0A 1C 11 33 11 00 
-59 00 59 00 15 13 14 04 0F 1C 22 44 11 00 
-58 00 58 00 14 FF 0F 01 00 00 23 00 00 00 
-5A 00 5A 00 16 FF 19 08 00 00 11 00 00 00 
-AE 00 AE 00 1E FF 02 08 00 00 22 00 00 00 
-10 01 9B 01 1B FF 06 06 00 00 22 00 00 00 
-60 00 18 01 23 FF 0A 06 00 00 22 00 00 00 
-7C 00 1E 00 21 FF 1C 07 00 00 21 00 00 00  
+31 00 31 00 00 00 20 0B 00 14 11 33 11 00
+32 00 32 00 01 01 1F 07 05 14 22 44 11 00
+33 00 33 00 02 02 20 02 0A 14 22 44 11 00
+34 00 34 00 03 03 28 03 0F 14 22 44 11 00
+35 00 35 00 04 04 2C 07 14 14 11 33 11 00
+36 00 36 00 05 05 28 09 19 14 22 44 11 00
+37 00 37 00 06 06 25 07 1E 14 22 44 11 00
+38 00 38 00 07 07 25 0C 23 14 22 44 11 00
+39 00 39 00 08 08 20 0F 00 18 11 33 11 00
+3A 00 3A 00 09 FF 1C 06 00 00 11 00 00 00
+3B 00 3B 00 0A 09 28 06 05 18 22 44 11 00
+3C 00 3C 00 0B 0A 15 0C 0B 19 11 11 00 00
+43 00 43 00 0C 0B 10 0C 0F 18 12 34 11 00
+49 00 49 00 0D 0C 0E 07 14 18 22 43 10 00
+4A 00 4A 00 0E 0D 0C 0E 19 18 12 34 11 00
+4B 00 4B 00 0F 0E 05 0A 1E 18 21 43 11 00
+4C 00 4C 00 10 0F 09 0A 23 18 23 45 11 00
+4D 00 4D 00 11 10 08 07 00 1C 22 44 11 00
+4E 00 4E 00 12 11 0B 04 05 1C 22 44 11 00
+57 00 57 00 13 12 10 05 0A 1C 11 33 11 00
+59 00 59 00 15 13 14 04 0F 1C 22 44 11 00
+58 00 58 00 14 FF 0F 01 00 00 23 00 00 00
+5A 00 5A 00 16 FF 19 08 00 00 11 00 00 00
+AE 00 AE 00 1E FF 02 08 00 00 22 00 00 00
+10 01 9B 01 1B FF 06 06 00 00 22 00 00 00
+60 00 18 01 23 FF 0A 06 00 00 22 00 00 00
+7C 00 1E 00 21 FF 1C 07 00 00 21 00 00 00
 ```
 We can see that there are clearly patterns.
 
@@ -209,9 +207,9 @@ Further breaking it down and labeling the names based on the map headers:
 [0x19]  60 00      18 01       23      FF      0A    06    00     00     22       00       00         00       // national park / gate is pokeathlon dome
 [0x1A]  7C 00      1E 00       21      FF      1C    07    00     00     21       00       00         00       // victory road / gate is route 26
 ```
-Every city gets an ``entry2`` field filled out.  All the entries get an ``entry1`` field.  I do not know much about these--I just use the existing ones in an effort not to renovate anything that doesn't need renovated.  
+Every city gets an ``entry2`` field filled out.  All the entries get an ``entry1`` field.  I do not know much about these--I just use the existing ones in an effort not to renovate anything that doesn't need renovated.
 
-How do we interpret the ``redX``, ``redY``, ``grayX``, and ``grayY`` fields? 
+How do we interpret the ``redX``, ``redY``, ``grayX``, and ``grayY`` fields?
 
 Tiles form tilesets (NCGR) and are 8x8 pixels, with the idea being that the tilemap (NSCR) then "maps" the tiles to the overall image that Tinke lets you view.  The coordinate fields are all coordinates in the overall image that is dumped:
 
@@ -406,15 +404,15 @@ This table is (somewhat) sporadically labeled, instead of being super in-depth.
 [0x42]  16 00      2A     0E     21   40     53         00       00 00 00 00  1C           2E           01          02
 [0x43]  17 00      27     0F     13   0C     54         00       00 00 00 00  19           2F           03          01
 [0x44]  18 00      23     0A     12   04     55         00       00 00 00 00  17           28           02          01
-[0x45]  19 00      23     0B     41   C0     56         00       00 00 00 00  17           29           01          04          // 
+[0x45]  19 00      23     0B     41   C0     56         00       00 00 00 00  17           29           01          04          //
 [0x46]  1A 00      23     0F     12   04     57         00       00 00 00 00  17           2D           02          01
 [0x47]  5B 00      25     10     21   40     58         00       00 00 00 00  16           2D           01          02
 [0x48]  5C 00      21     11     14   08     59         00       00 00 00 00  12           2E           04          01
-[0x49]  5D 00      20     0E     31   C0     5A         00       00 00 00 00  11           2D           01          03          // 
+[0x49]  5D 00      20     0E     31   C0     5A         00       00 00 00 00  11           2D           01          03          //
 [0x4A]  1B 00      1D     0A     12   04     5B         00       00 00 00 00  15           28           02          01
 [0x4B]  1C 00      29     04     11   00     5D         00       00 00 00 00  18           2A           01          01
 [0x4C]  1D 00      29     03     14   0C     5E         00       00 00 00 00  18           29           04          01
-[0x4D]  1E 00      1C     0B     41   C0     5F         00       00 00 00 00  14           29           01          04          // 
+[0x4D]  1E 00      1C     0B     41   C0     5F         00       00 00 00 00  14           29           01          04          //
 [0x4E]  1F 00      16     0E     16   0F     60         00       00 00 00 00  0E           2C           06          01
 [0x4F]  20 00      1A     0A     12   04     61         00       00 00 00 00  12           28           02          01
 [0x50]  21 00      12     0E     13   0C     62         00       00 00 00 00  0B           2E           03          01
@@ -496,35 +494,35 @@ struct FlyRespawnPosition
 Here's an annotated hex dump, skipping the table dump from before:
 ```
         flySpot flags mapHeader  x   y   fieldId fieldCoordX fieldCoordY fieldId2 fieldCoordX2 fieldCoordY2
-[0x00]  0B      03    3F 00      06  08  3C 00   B7 02       8D 01       3C 00    B7 02        8D 01 
-[0x01]  0C      03    45 00      08  0D  43 00   34 02       88 01       43 00    34 02        88 01 
-[0x02]  0D      03    9E 00      08  0D  49 00   F1 01       10 01       49 00    F1 01        10 01 
-[0x03]  0E      03    A6 00      08  0D  4A 00   9A 01       CD 01       4A 00    9A 01        CD 01 
-[0x04]  0F      03    EC 00      08  0D  4B 00   BB 00       72 01       4B 00    BB 00        72 01 
-[0x05]  10      03    B9 00      08  0D  4C 00   60 01       71 01       4C 00    60 01        71 01 
-[0x06]  11      03    E2 00      08  0D  4D 00   10 01       02 01       4D 00    10 01        02 01 
-[0x07]  12      03    51 00      08  0D  4E 00   8D 01       B8 00       4E 00    8D 01        B8 00 
-[0x08]  13      03    F6 00      08  0D  57 00   16 02       B8 00       57 00    16 02        B8 00 
-[0x09]  14      02    58 00      08  0D  58 00   18 02       5A 00       58 00    18 02        5A 00 
-[0x0A]  15      03    25 01      08  0D  59 00   A2 02       B1 00       59 00    A2 02        B1 00 
-[0x0B]  16      03    02 02      08  0D  5A 00   34 03       0A 01       5A 00    34 03        0A 01 
-[0x0C]  00      02    31 00      08  0D  31 00   09 04       6C 01       31 00    09 04        6C 01 
-[0x0D]  01      03    F5 01      08  0D  32 00   08 04       07 01       32 00    08 04        07 01 
-[0x0E]  02      03    DB 01      08  0D  33 00   18 04       6B 00       33 00    18 04        6B 00 
-[0x0F]  03      03    AC 01      08  0D  34 00   1D 05       84 00       34 00    1D 05        84 00 
-[0x10]  04      03    B2 01      08  0D  35 00   8A 05       EB 00       35 00    8A 05        EB 00 
-[0x11]  05      03    66 01      08  0D  36 00   11 05       27 01       36 00    11 05        27 01 
-[0x12]  06      03    89 01      08  0D  37 00   CF 04       EE 00       37 00    CF 04        EE 00 
-[0x13]  07      03    E2 01      08  0D  38 00   B9 04       B8 01       38 00    B9 04        B8 01 
-[0x14]  08      02    FC 01      08  0D  39 00   0F 04       F7 01       39 00    0F 04        F7 01 
-[0x15]  09      03    2C 01      06  15  3A 00   90 03       C9 00       3A 00    90 03        C9 00 
-[0x16]  0A      03    97 01      08  0D  3B 00   0E 05       F3 00       3B 00    0E 05        F3 00 
-[0x17]  1E      03    16 02      08  0D  AE 00   52 00       2F 01       AE 00    52 00        2F 01 
-[0x18]  1F      03    10 02      08  0D  9B 01   08 00       0F 00       5E 00    ED 00        0B 01 
-[0x19]  23      00    18 01      08  0D  18 01   2A 00       17 00       27 00    6A 01        0B 01 
-[0x1A]  21      00    2B 01      08  0D  1E 00   8D 03       29 01       1E 00    8D 03        29 01 
-[0x1B]  1B      01    A9 00      08  0D  24 00   D4 01       A3 01       24 00    D4 01        A3 01 
-[0x1C]  24      01    FF 01      08  0D  0B 00   8F 04       6B 00       0B 00    8F 04        6B 00 
+[0x00]  0B      03    3F 00      06  08  3C 00   B7 02       8D 01       3C 00    B7 02        8D 01
+[0x01]  0C      03    45 00      08  0D  43 00   34 02       88 01       43 00    34 02        88 01
+[0x02]  0D      03    9E 00      08  0D  49 00   F1 01       10 01       49 00    F1 01        10 01
+[0x03]  0E      03    A6 00      08  0D  4A 00   9A 01       CD 01       4A 00    9A 01        CD 01
+[0x04]  0F      03    EC 00      08  0D  4B 00   BB 00       72 01       4B 00    BB 00        72 01
+[0x05]  10      03    B9 00      08  0D  4C 00   60 01       71 01       4C 00    60 01        71 01
+[0x06]  11      03    E2 00      08  0D  4D 00   10 01       02 01       4D 00    10 01        02 01
+[0x07]  12      03    51 00      08  0D  4E 00   8D 01       B8 00       4E 00    8D 01        B8 00
+[0x08]  13      03    F6 00      08  0D  57 00   16 02       B8 00       57 00    16 02        B8 00
+[0x09]  14      02    58 00      08  0D  58 00   18 02       5A 00       58 00    18 02        5A 00
+[0x0A]  15      03    25 01      08  0D  59 00   A2 02       B1 00       59 00    A2 02        B1 00
+[0x0B]  16      03    02 02      08  0D  5A 00   34 03       0A 01       5A 00    34 03        0A 01
+[0x0C]  00      02    31 00      08  0D  31 00   09 04       6C 01       31 00    09 04        6C 01
+[0x0D]  01      03    F5 01      08  0D  32 00   08 04       07 01       32 00    08 04        07 01
+[0x0E]  02      03    DB 01      08  0D  33 00   18 04       6B 00       33 00    18 04        6B 00
+[0x0F]  03      03    AC 01      08  0D  34 00   1D 05       84 00       34 00    1D 05        84 00
+[0x10]  04      03    B2 01      08  0D  35 00   8A 05       EB 00       35 00    8A 05        EB 00
+[0x11]  05      03    66 01      08  0D  36 00   11 05       27 01       36 00    11 05        27 01
+[0x12]  06      03    89 01      08  0D  37 00   CF 04       EE 00       37 00    CF 04        EE 00
+[0x13]  07      03    E2 01      08  0D  38 00   B9 04       B8 01       38 00    B9 04        B8 01
+[0x14]  08      02    FC 01      08  0D  39 00   0F 04       F7 01       39 00    0F 04        F7 01
+[0x15]  09      03    2C 01      06  15  3A 00   90 03       C9 00       3A 00    90 03        C9 00
+[0x16]  0A      03    97 01      08  0D  3B 00   0E 05       F3 00       3B 00    0E 05        F3 00
+[0x17]  1E      03    16 02      08  0D  AE 00   52 00       2F 01       AE 00    52 00        2F 01
+[0x18]  1F      03    10 02      08  0D  9B 01   08 00       0F 00       5E 00    ED 00        0B 01
+[0x19]  23      00    18 01      08  0D  18 01   2A 00       17 00       27 00    6A 01        0B 01
+[0x1A]  21      00    2B 01      08  0D  1E 00   8D 03       29 01       1E 00    8D 03        29 01
+[0x1B]  1B      01    A9 00      08  0D  24 00   D4 01       A3 01       24 00    D4 01        A3 01
+[0x1C]  24      01    FF 01      08  0D  0B 00   8F 04       6B 00       0B 00    8F 04        6B 00
 [0x1D]  25      01    D2 01      08  0D  12 00   92 05       A4 00       12 00    92 05        A4 00
 ```
 

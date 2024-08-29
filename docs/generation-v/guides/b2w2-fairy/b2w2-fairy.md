@@ -13,8 +13,6 @@ This is a tutorial that details how to insert the Fairy type in Black 2 and Whit
 
 ---
 ## Table of Contents
-- [Fairy Type in B2W2](#fairy-type-in-b2w2)
-  - [Table of Contents](#table-of-contents)
   - [Graphics](#graphics)
     - [Type Icons - ``/a/0/8/2``, ``/a/1/2/5``](#type-icons---a082-a125)
     - [Move Selection Palette - ``/a/0/1/1``](#move-selection-palette---a011)

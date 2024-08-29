@@ -21,8 +21,6 @@ Before starting I recomend creating a ``CodeInjection`` folder to store all code
 
 ---
 ## Table of Contents
-- [Code Injection set up](#code-injection-set-up)
-  - [Table of Contents](#table-of-contents)
   - [Environment set up](#environment-set-up)
     - [File structure](#file-structure)
     - [VS Project set up](#vs-project-set-up)
@@ -37,7 +35,7 @@ Before starting I recomend creating a ``CodeInjection`` folder to store all code
 
 ### File structure
 1. Create an Empty C++ Project inside of the ``CodeInjection`` folder, for this guide it will be called PW2Code
-2. Create a folder named "ExternalDependencies" at ``CodeInjection/PW2Code`` 
+2. Create a folder named "ExternalDependencies" at ``CodeInjection/PW2Code``
 3. Clone the [SWAN repositiory](https://github.com/ds-pokemon-hacking/swan) in the ``CodeInjection/PW2Code/ExternalDependencies`` folder
 4. Clone the [NitroKernel repositiory](https://github.com/HelloOO7/NitroKernel) in the ``CodeInjection/PW2Code/ExternalDependencies`` folder
 5. Clone the [ExtLib repositiory](https://github.com/HelloOO7/ExtLib) in the ``CodeInjection/PW2Code/ExternalDependencies`` folder
@@ -57,7 +55,7 @@ File structure should look like this:
     - PW2Code.vcxproj
     - PW2Code.vcxproj.filters
     - PW2Code.vcxproj.user
-	
+
 ### VS Project set up
 1. Open the project with Visual Studio
 2. In the "Solution Explorer" view, click the ``Show All Files`` button (shows all the files in the project folder)
@@ -67,7 +65,7 @@ File structure should look like this:
 4. In the "Solution Explorer" view, "Right-Click" the project and select ``Properties``
 5. Go to ``Configuration Properties -> VC++ Directories -> Include Directories`` and select ``<Edit...>``
 ![](resources/vs_include_paths_edit.png)
-6. In the "Include Directories" window, paste ``$(ProjectDir)ExternalDependencies/swan``, ``$(ProjectDir)ExternalDependencies/NitroKernel/include``, ``$(ProjectDir)ExternalDependencies/ExtLib`` and ``$(ProjectDir)ExternalDependencies/libRPM/include`` or use the ``...`` button to look them up    
+6. In the "Include Directories" window, paste ``$(ProjectDir)ExternalDependencies/swan``, ``$(ProjectDir)ExternalDependencies/NitroKernel/include``, ``$(ProjectDir)ExternalDependencies/ExtLib`` and ``$(ProjectDir)ExternalDependencies/libRPM/include`` or use the ``...`` button to look them up
 ![](resources/vs_add_include_path.png)
 7. Click ``Ok`` and remember to click ``Accept`` in the ``Properties`` window to save the changes
 
@@ -110,7 +108,7 @@ This are the tools you will need to get started making your Code Injection patch
  - IDA Pro (any disassembler works, but most of the research and documentation has been done in IDA and thus stored in IDB files which you will have to convert if you are using a different program)
  - White 2 IDBs (you can get them in the [Kingdom of DS Hacking Discord](https://discord.gg/zAtqJDW2jC) )
  - [DeSmuMe](https://github.com/TASEmulators/desmume/releases), make sure that the console is enabled at ``Tools -> Console -> Enabled``
- 
+
 ### IDB research
 We want to duplicate the amount of items the player gets so we want to look in the IDBs for the function that Adds an Item.
 
@@ -156,7 +154,7 @@ We don't have to declare functions or struct pointers that don't get used as a s
 - 6.1. Go to IDA and open the IDB in use (``Bag.idb`` in this case)
 - 6.2. Go to the ``Local Types`` tab (if you don't see it use ``View -> Open Subviews -> Local types``)
 - 6.3. Press "Ctrl + F" and type "BagItem" and click on the slot with the same name once
-- 6.4. Press "Ctrl + E", copy the C struct and paste it in the CPP	
+- 6.4. Press "Ctrl + E", copy the C struct and paste it in the CPP
 ![](resources/ida_struct_search.png)
 7. The function uses a function called "BagSave_GetItemHandleAddCheck" we can double click it in IDA to get the declaration -> ``BagItem * BagSave_GetItemHandleAddCheck(BagSaveData *bag, u16 item_idx, u16 quantity, HeapID heapId);``
 8. To make the changes we want we can analyze the function and see that the quantity to add is added to the bagItem::Count, so to double the items given we can multiply the quantity by 2 -> ``bagItem->Count += quantity * 2;``
@@ -180,7 +178,7 @@ struct BagItem
     u16 Count;
 };
 
-extern "C" 
+extern "C"
 {
 
 BagItem* BagSave_GetItemHandleAddCheck(BagSaveData* bag, u16 item_idx, u16 quantity, HeapID heapId);
@@ -206,20 +204,20 @@ BagItem* THUMB_BRANCH_BagSave_AddItemCore(BagSaveData* bag, u16 item_idx, u16 qu
 ### Compiling a patch
 These instructions assume you followed the previous steps, your SWAN headers and other External Dependencies are in the ``CodeInjection/PW2Code/ExternalDependencies`` folder and your code in the ``CodeInjection/PW2Code/Patches`` folder.
 
-1. Open a cmd terminal in the PW2Code folder (in the "File Explorer" window go the the PW2Code folder, click the path input box, type "cmd" and clik "Enter")   
+1. Open a cmd terminal in the PW2Code folder (in the "File Explorer" window go the the PW2Code folder, click the path input box, type "cmd" and clik "Enter")
 ![](resources/open_cmd.png)
-2. Paste the following command in the terminal:    
-``arm-none-eabi-g++ Patches/DoubleItems.cpp -I ExternalDependencies/swan -I ExternalDependencies/NitroKernel/include -o DoubleItems.elf -r -mthumb -march=armv5t -Os``   
-General structure of the command for a C++ patch:    
-``arm-none-eabi-g++ [patch path] -I [include directory path] -o [output path] -r -mthumb -march=armv5t -Os``   
+2. Paste the following command in the terminal:
+``arm-none-eabi-g++ Patches/DoubleItems.cpp -I ExternalDependencies/swan -I ExternalDependencies/NitroKernel/include -o DoubleItems.elf -r -mthumb -march=armv5t -Os``
+General structure of the command for a C++ patch:
+``arm-none-eabi-g++ [patch path] -I [include directory path] -o [output path] -r -mthumb -march=armv5t -Os``
 
-``-I`` is used to provide Additional Include Directories, which are used to search included files outside of the local folder. Since our External Dependencies include files relative to their respective local folder (``#include "swantypes.h"``) using ``-I`` allows this files to compile without changing the source to include from our local folder (``#include "../ExternalDependencies/swan/swantypes.h"``).     
+``-I`` is used to provide Additional Include Directories, which are used to search included files outside of the local folder. Since our External Dependencies include files relative to their respective local folder (``#include "swantypes.h"``) using ``-I`` allows this files to compile without changing the source to include from our local folder (``#include "../ExternalDependencies/swan/swantypes.h"``).
 In this particular example we only use ``-I`` to include the SWAN and NK directories since they are the only ones we use, you can use it to include as many External Include Directories as you need.
 
 I recommend that you set the output file to be in a specific folder for the ELF files, to keep stuff organized.
 
 ### Injecting a patch
-You can use the ESDB in the SWAN headers but I recomend making your own using this [guide](../bw_b2w2-code_injection/#building-code-injection-patches). 
+You can use the ESDB in the SWAN headers but I recomend making your own using this [guide](../bw_b2w2-code_injection/#building-code-injection-patches).
 
 Once you have the correct ESDB follow these steps:
 
@@ -230,5 +228,5 @@ Once you have the correct ESDB follow these steps:
 
 The patch has been applied to the ROM, and if you play the game you should receive double the items whenever you are given them, also a message should be displayed in the console.
 
-For example, if you buy 5 pokeball you should get 10 in your bag. 
+For example, if you buy 5 pokeball you should get 10 in your bag.
 ![](resources/gameplay.png)

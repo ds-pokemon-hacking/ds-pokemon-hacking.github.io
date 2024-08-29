@@ -17,22 +17,22 @@ The necessary tools are Tinke 0.9.2 and BTX Editor 2.0.
 
 In addition for the Sprite Properties section you will need DSPRE and an Hex Editor like HxD as well.
 
---- 
-<!-- ## Table of Contents
-* [Extracting the Sprite](#section)
-* [Making your own Sprite](#section-2)
-* [Replacing](#section-3)
-  * [Unused Sprites](#subsection)
-* [Changing the Sprite Properties](#section-4)
-  * [Platinum](#subsection-2)
-  * [HGSS](#subsection-3) -->
+---
+ ## Table of Contents
+* [Extracting the Sprite](#extracting-the-sprite)
+* [Making your own Sprite](#making-your-own-sprite)
+* [Replacing the Sprite](#replacing-the-sprite)
+  * [Unused Sprites](#unused-sprites)
+* [Changing the Sprite Properties](#changing-the-sprite-properties)
+  * [Platinum](#platinum)
+  * [HGSS](#hgss)
 
 ## Extracting the Sprite
 Overworld sprites are contained in BTX files, start by opening your ROM with Tinke and then navigating to the following filepath depending on your game:
 * **DPPt**: mmodel/mmodel.narc
 * **HGSS**: a/0/8/1
 
-Once you've navigated to this directory in Tinke, select the narc file and click unpack to see see all the BTX files. 
+Once you've navigated to this directory in Tinke, select the narc file and click unpack to see see all the BTX files.
 You can select one and click the "View" button to see the spritesheet. Select the one you want to replace and click Extract, so that you will obtain the BTX file.
 
 ![](resources/tinke.PNG)
@@ -77,7 +77,7 @@ Heroine:
 Before proceeding you should be familiar with Sprite Indexing, as all the sprites must have at most 16 color, with the background color being indexed to the first slot of the palette.
 See [Sprite Indexing](ds-pokemon-hacking.github.io/tree/main/src/universal/guides/sprite_indexing) for more information.
 
-First you want to load the png spritesheet you previously extracted in the graphic editing software of your choice, to either make edits to it or use it as a base for your spritesheet. 
+First you want to load the png spritesheet you previously extracted in the graphic editing software of your choice, to either make edits to it or use it as a base for your spritesheet.
 You may also want to enable some kind of grid visualization in order to view the proper position of each frame. In Aseprite you can do so by clicking View>Grid>Grid Settings.
 
 If you're making your own sprite from scratch, remember that all the frames you draw must be in the same position as the ones in the original sprite, otherwise the movement in game will look wrong; for example the following image is not a correct spritesheet since the three walking frames aren't in the same position as the original one:
@@ -97,8 +97,8 @@ Adding new overworld sprites would require ASM but luckily there are a number of
 ![](resources/unusedsprites.png)
 
 ## Changing the Sprite Properties
-If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all if it has a different size. 
-Unless your sprite is only made of one frame and has the same size the original one, you will need to fix this by hex editing each sprite properties. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created by DSPRE, which will be named *YourROMName*_DSPRE_Contents/overlay. 
+If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all if it has a different size.
+Unless your sprite is only made of one frame and has the same size the original one, you will need to fix this by hex editing each sprite properties. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created by DSPRE, which will be named *YourROMName*_DSPRE_Contents/overlay.
 
 All the offsets listed are based on the US version of the ROM and it has not been tested on other versions.
 
@@ -123,7 +123,7 @@ With this information we can go to the second table at 0x2CA08, which is structu
 ![](resources/pt_owtable2.PNG)
 
 Each row is an entry, the bytes in the red columns are the ID numbers of each sprites and the bytes in green are the sprite properties. You can scroll down until you see the ID number from the 1st table in the red columns. The bytes you want to edit are right before the ID number, in my case it will be which is a standard 32x32 16 frames NPC.
- 
+
 The bytes you want to replace for this are going to be depending on which Sprite Property you want to have:
 
 | Byte Sequence  | Corresponding Property | Example |
@@ -139,7 +139,7 @@ If the two frames are different you can set the OW movement to *20-Running Up, D
 Fortunately in HGSS there is only one table, it's at offset `0x21BA8` in Overlay 1.
 The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the *Configure Overlay 1 as uncompressed* patch from DSPRE's toolbox.
 I will be replacing the glitched bulbasaur sprite with a standard 32x32 NPC, so first I need to find the correspondent ID number.
-The table will look like this: 
+The table will look like this:
 
 ![](resources/hgss_owtable.PNG)
 

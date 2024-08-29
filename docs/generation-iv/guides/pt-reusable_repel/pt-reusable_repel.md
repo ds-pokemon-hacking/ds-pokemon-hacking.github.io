@@ -19,12 +19,12 @@ You'll need to use [DSPRE](https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor/r
 
 This **only works on the US Version of the game**. Attempting to replace the same bytes on a different language game will not work.
 
---- 
+---
 ## Table of Contents
-* [DSPRE](#section)
-  * [Scripting](#subsection)
-  * [Text](#subsection-1)
-* [Hex Editing](#section-2)
+* [DSPRE](#dspre)
+  * [Scripting](#scripting)
+  * [Text](#text)
+* [Hex Editing](#hex-editing)
 
 ## DSPRE
 If you don't have one already, create a new project by loading your ROM in DSPRE. Then go to the *Scripting* tab.
@@ -34,11 +34,11 @@ If you don't have one already, create a new project by loading your ROM in DSPRE
 Go to `Script 33` replace it with the following:
 <details>
 <summary>Script 33</summary>
- 
+
 ```
 Script 33:
 	PlayFanfare 1500
-	LockAll 
+	LockAll
   CheckPlayerHasItem 79 1 0x800C
 	CompareVarValue 0x800C 1
 	JumpIf EQUAL Function#177
@@ -49,10 +49,10 @@ Script 33:
 	CompareVarValue 0x800C 1
 	JumpIf EQUAL Function#177
 	Message 79
-	WaitAB 
-	CloseMessage 
-	ReleaseAll 
-End 
+	WaitAB
+	CloseMessage
+	ReleaseAll
+End
 ```
 
 </details>
@@ -61,19 +61,19 @@ Next go to the *Functions* tab and add the following functions. If the functions
 
 <details>
 <summary>Functions</summary>
-  
+
 ```
 Function 177:
   Message 75
 	YesNoBox 0x800C
 	CompareVarValue 0x800C 0
 	JumpIf EQUAL Function#178
-	CloseMessage 
-	ReleaseAll 
+	CloseMessage
+	ReleaseAll
 End
- 
+
 Function 178:
-  CloseMessage 
+  CloseMessage
 	MultiStandardText 1 1 0 1 0x800C
 	CheckPlayerHasItem 79 1 0x8000
 	CompareVarValue 0x8000 1
@@ -84,59 +84,59 @@ Function 178:
 	CheckPlayerHasItem 77 1 0x8000
 	CompareVarValue 0x8000 1
 	CallIf EQUAL Function#181
-	ShowMulti 
+	ShowMulti
 	CompareVarValue 0x800C 0
 	JumpIf EQUAL Function#182
 	CompareVarValue 0x800C 1
 	JumpIf EQUAL Function#183
 	CompareVarValue 0x800C 2
 	JumpIf EQUAL Function#184
-	ReleaseAll 
+	ReleaseAll
 End
- 
+
 Function 179:
     AddMultiOption 30 0
 Return
- 
+
 Function 180:
     AddMultiOption 31 1
 Return
- 
+
 Function 181:
     AddMultiOption 32 2
 Return
- 
+
 Function 182:
   AdrsValueSet 0x023DFF28 100
-	DummyTakeTrap 
+	DummyTakeTrap
   TakeItem 79 1 0x8000
 	TextPlayerName 0
 	TextItem 1 79
 	Message 72
-	WaitButton 
+	WaitButton
 	CloseMessage
 Return
- 
+
 Function 183:
     AdrsValueSet 0x023DFF28 150
-	DummyTakeTrap 
+	DummyTakeTrap
     TakeItem 76 1 0x8000
 	TextPlayerName 0
 	TextItem 1 76
 	Message 72
-	WaitButton 
+	WaitButton
 	CloseMessage
 Return
- 
+
 Function 184:
   AdrsValueSet 0x023DFF28 250
-	DummyTakeTrap 
+	DummyTakeTrap
   TakeItem 77 1 0x8000
 	TextPlayerName 0
 	TextItem 1 77
 	Message 72
-	WaitButton 
-	CloseMessage 
+	WaitButton
+	CloseMessage
 Return
 ```
 
@@ -178,7 +178,7 @@ The custom command works by setting the repel counter at the byte written at 15F
 
 The repel counter is a dynamic offset located at (Address at 0x02101D40) + (0x8087). This is only valid for the US version, hence my code won't work on other regions without writing a new custom command.
 
-When the repel counter runs out, the game will automatically execute Script 33 in Script File 211. 
+When the repel counter runs out, the game will automatically execute Script 33 in Script File 211.
 
 After the scripting and hex edits performed, now Script 33 will:
 1) Check if the player has any repel item in their bag
@@ -188,7 +188,7 @@ After the scripting and hex edits performed, now Script 33 will:
 5) Use the `AdrsValueSet` command to write a byte at the offset 0x023DFF28, containing the number of steps of the selected repel
 6) Trough the `DummyTakeTrap`, the repel counter is increased by the previously set value
 
-The `DummyTakeTrap` command is otherwise unused, so it's been replaced with a custom one in order to access the dynamic offset of the repel counter, and set the counter to the new value. 
+The `DummyTakeTrap` command is otherwise unused, so it's been replaced with a custom one in order to access the dynamic offset of the repel counter, and set the counter to the new value.
 The custom command is necessary as there is no way to access the dynamic offset using only vanilla scripting commands.
 This is the raw assembly code:
 

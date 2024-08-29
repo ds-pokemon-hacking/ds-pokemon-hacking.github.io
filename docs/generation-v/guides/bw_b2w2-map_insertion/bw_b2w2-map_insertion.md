@@ -13,13 +13,11 @@ tags:
 
 
 This is a tutorial on how to insert your own maps in Generation V games, as well as change the Area Data textures.
-It is assumed you have already made your map in PDSMS (or Blender) and have all the files already converted. 
+It is assumed you have already made your map in PDSMS (or Blender) and have all the files already converted.
 If you're unsure how to do so, check Jay's video on (creating your first map with PDSMS)[https://www.youtube.com/watch?v=Xnj8cWDRbaA].
 
---- 
+---
 ## Table of Contents
-- [Map Insertion (Generation V)](#map-insertion-generation-v)
-  - [Table of Contents](#table-of-contents)
   - [Replacing Maps](#replacing-maps)
   - [Finding the map file](#finding-the-map-file)
   - [Inserting the Map](#inserting-the-map)
@@ -67,7 +65,7 @@ After you're done, click the save button and save the new map container narc. Fo
 ### Using SwissArmyKnife
 If you've never used [SwissArmyKnife](https://github.com/PlatinumMaster/SwissArmyKnife/releases), before launching the program you will have to go to the SwissArmyKnife folder and create a new folder called *BaseROMs*, and in there put a fresh copy of the ROM you're editing. By default, it must be named *Black*/*White*/*Black 2*/*White 2*. However, you can edit the `BaseROMs.yml` in the `SwissArmyKnife` folder, and change the path as needed.
 
-Now, you can launch SwissArmyKnife and create a new project. 
+Now, you can launch SwissArmyKnife and create a new project.
 
 Go to the *Map Editor* tab and from the *Container Index* menu select the Map File number you previously found. Then it's just a matter of importing the relevant files:
 
@@ -81,7 +79,7 @@ After you're done, save the ROM.
 
 Now your map is inserted into the game, but it will still have its old textures used, meaning if you're using different textures than the map you're replacing, they will have a lot of white spots, so you have to replace the old texture set used with your own that you exported from PDSMS.
 
-Open your ROM in Tinke, then go to `/a/0/1/4` and unpack it. You will see a list of files named *4_number.BTX0*, go to the file with the same number as the *Area* value in CTRMap Header, select it and click *Change File*, and replace it with your own NSBTX. 
+Open your ROM in Tinke, then go to `/a/0/1/4` and unpack it. You will see a list of files named *4_number.BTX0*, go to the file with the same number as the *Area* value in CTRMap Header, select it and click *Change File*, and replace it with your own NSBTX.
 
 Keep in mind that if the map you replaced has different textures based on seasons, the next 3 files in the narc will be used as well. So for example if your Area Data number listed in CTRMap is 182, you will have to replace files 182, 183, 184 and 185 as well.
 

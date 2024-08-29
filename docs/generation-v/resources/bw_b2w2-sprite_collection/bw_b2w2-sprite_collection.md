@@ -14,8 +14,6 @@ flowchart RL;
 This file functionally replaces the NCER, if the render target is provided by the 3D engine of the DS. It uses the NCGR (must contain a line buffer, no tiles!) as texture to create multiple sprites. It is used for battle sprites (Trainer and Pokemon) and in the game intro (professor juniper).
 
 ## Table of Contents
-- [Sprite Collection](#sprite-collection)
-  - [Table of Contents](#table-of-contents)
   - [Data Structure](#data-structure)
     - [Sprite Container](#sprite-container)
     - [Sprite Pair](#sprite-pair)

@@ -15,7 +15,6 @@ WARNING: HGE will continue to add more overworlds and more overworld graphics --
 ---
 
 ## Table of Contents
-  - [Table of Contents](#table-of-contents)
   - [Acknowledgements](#acknowledgements)
   - [Prerequisites](#prerequisites)
   - [Part 1 - .BTX0 Files And How to Extract Them](#part-1---btx0-files-and-how-to-extract-them)

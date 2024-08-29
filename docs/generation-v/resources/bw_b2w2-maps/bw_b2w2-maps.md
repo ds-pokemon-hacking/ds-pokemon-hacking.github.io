@@ -14,8 +14,6 @@ tags:
 The term "map" is used for areas of the game world. The player can navigate through them and interact with other objects placed on the map. Usually one map has a size of 32 by 32 tiles and a maximum of four of them are loaded simultaneously. The maps are usually selected by the currently active "matrix" in `/a/0/0/9` but there are cases where the game chooses an other map, depending on the in-game season.
 
 ## Table of Contents
-- [Maps](#maps)
-  - [Table of Contents](#table-of-contents)
   - [Data Location](#data-location)
   - [Data Structure](#data-structure)
     - [Container Structure](#container-structure)
@@ -44,7 +42,7 @@ The term "map" is used for areas of the game world. The player can navigate thro
 The NARC containing these files can be found in the following game paths:
 * Black and White: `/a/0/0/8`
 * Black 2 and White 2: `/a/0/0/8`
---- 
+---
 
 ## Data Structure
 
@@ -59,7 +57,7 @@ struct ContainerMap
     uint32_t offsetPermissions[numberSections - 2];
     uint32_t offsetBuildingTable;
     uint32_t length;
-    
+
     // data
     struct NSBMD dataModel;
     struct SectionPermission dataPermissions[numberSections - 2];
@@ -88,7 +86,7 @@ struct SectionPermission
     // header
     uint16_t width;
     uint16_t height;
-    
+
     // data
     struct Tile tile[width * height];
     struct CornerTerrain corner[numberCorners];
@@ -174,7 +172,7 @@ struct SectionBuildingTable
 {
     // header
     uint32_t numberBuildings;
-    
+
     // data
     struct BuildingProperties building[numberBuildings];
 };
@@ -233,11 +231,11 @@ The 3-dimensional shape of a tile.
 TODO: Add tables or code.
 
 #### Terrain Distance Values
-If we extend the tile to an infinite plane, we can draw a line which is perpendicular to the plane and connect it to the origin (0, 0, 0) of the map. The length of this line is the distance. The distence is selected using indices. 
+If we extend the tile to an infinite plane, we can draw a line which is perpendicular to the plane and connect it to the origin (0, 0, 0) of the map. The length of this line is the distance. The distence is selected using indices.
 
 <details>
 <summary>Distance table - Black and White</summary>
- 
+
 ```c
 /**
  * Table created by Gonhex
@@ -341,12 +339,12 @@ If we extend the tile to an infinite plane, we can draw a line which is perpendi
 /* 0x051- */ 0x0009AB44, 0xFFF3DECA, 0xFFF6A6A0, 0x0009645A, 0xFFF954EC, 0x0012602B, 0xFFF4733F, 0xFFF33FD5, 0xFFF244BF, 0xFFF5F853, 0x000F0B84, 0x0007098F, 0x00113967, 0x000E25F7, 0xFFFD53A5, 0x000964CF,
 /* 0x052- */ 0xFFFC87BF, 0x0006A422
 ```
- 
+
 </details>
 
 <details>
 <summary>Distance table - Black 2 and White 2</summary>
- 
+
 ```c
 /**
  * Table created by Gonhex
@@ -448,7 +446,7 @@ If we extend the tile to an infinite plane, we can draw a line which is perpendi
 /*             0x---0      0x---1      0x---2      0x---3      0x---4 */
 /* 0x050- */ 0x00014050, 0x000C7E7A, 0x0003E11A, 0xFFFD8A2C, 0x0006A422
 ```
- 
+
 </details>
 
 #### Environment Behavior Values
@@ -458,7 +456,7 @@ Some sort of command table which can introduce different effects depending on it
 
 <details>
 <summary>Behavior descriptions.</summary>
- 
+
 | Value    | Description                                                                                                     |
 |----------|-----------------------------------------------------------------------------------------------------------------|
 | ...      |                                                                                                                 |
@@ -572,11 +570,11 @@ TODO: Document missing values.
 #### Environment Flag Values
 **WARNING:** SDSME and PDSMS mistakenly call them "COLLISION & SHADOW", which can lead to confusion.
 
-Sets the properties of a tile using binary flags. Multiple flags can be combined. Footprints are displayed for a short time after a character left the field. Gras is animated when the character enters a field and remains in the last frame until the character leaves. 
+Sets the properties of a tile using binary flags. Multiple flags can be combined. Footprints are displayed for a short time after a character left the field. Gras is animated when the character enters a field and remains in the last frame until the character leaves.
 
 <details>
 <summary>Flag descriptions</summary>
- 
+
 | Bitmask  | Description                                                                                                     |
 |----------|-----------------------------------------------------------------------------------------------------------------|
 | `0x0001` | Interactable field. Usually used for collisions but depending on the behavior-value it can also result in jumping over, talk to behind, interact with furniture, ... |
