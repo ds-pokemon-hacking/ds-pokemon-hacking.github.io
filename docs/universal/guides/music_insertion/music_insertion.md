@@ -12,11 +12,22 @@ Before we begin, here are some things to keep in mind:
 - This guide runs under the assumption that you are in possession of the full versions of each piece of software used for this process. Some of the lesser versions of products function slightly differently, so do keep that in mind.
 - Perhaps most importantly, this does not go into great detail on how to actually write the music you want to insert, mostly since that topic is a lot more nuanced and overlaps with some more complicated topics. This guide focuses mainly on the often unintuitive procedure of getting sequence data from a DAW into a ROM. The rest will be saved for a dedicated composing guide.
 
+## Table of Contents
+- [Obtaining DS sound assets](#obtaining-ds-sound-assets)
+- [Composing](#composing)
+  - [Digital Audio Workstation (DAW) recommendations](#digital-audio-workstation-daw-recommendations)
+  - [Importing MIDIs](#importing-midis)
+  - [Loop markers](#loop-markers)
+- [The FL Studio Section](#the-fl-studio-section)
+  - [Post processing](#post-processing)
+- [Adding Music to the ROM](#adding-music-to-the-rom)
+
+
 ## Obtaining DS sound assets
 
-This is not a compulsory part of making DS music, but it does help a lot for reference (especially if you are arranging a track). Nitro Studio 2 Deluxe is the currently best software for this for reasons I will explain in the composing guide. Also this goes without saying but this assumes you have the ROM image for the game you want to manipulate the music of. 
+This is not a compulsory part of making DS music, but it does help a lot for reference (especially if you are arranging a track). Nitro Studio 2 Deluxe is the currently best software for this for reasons I will explain in the composing guide. Also this goes without saying but this assumes you have the ROM image for the game you want to manipulate the music of.
 
-First you will need the game's .SDAT. You may extract it from the ROM however you wish, but I recommend TinkeDSi (**NOT** og Tinke!!!) as it is the most versatile and least buggy (for putting the .SDAT back in, it is also the only option if you are not using SwissArmyKnife or CTRMap, as nothing else, not even ndspy, will preserve the DSi header in Gen 5 games). When you run the executable, it will ask you to open a ROM. Once you do, look for the .SDAT, then click "Extract". Save it to a location you can remember. 
+First you will need the game's .SDAT. You may extract it from the ROM however you wish, but I recommend TinkeDSi (**NOT** og Tinke!!!) as it is the most versatile and least buggy (for putting the .SDAT back in, it is also the only option if you are not using SwissArmyKnife or CTRMap, as nothing else, not even ndspy, will preserve the DSi header in Gen 5 games). When you run the executable, it will ask you to open a ROM. Once you do, look for the .SDAT, then click "Extract". Save it to a location you can remember.
 The location and name of the .SDAT varies on the game:
 - In Diamond/Pearl, it is data/sound/sound_data.sdat.
 - In Platinum, it is data/sound/pl_sound_data.sdat.
@@ -40,7 +51,7 @@ One major issue that a lot of DAWs have is with changing note resolution (it goe
 
 Ultimately, the best and most efficient choices for DS music come down to the two with the best MIDI support: Cubase and REAPER, so this guide will largely assume you are using one or the other. Which one to choose is up to you: Cubase is overall the better program, but REAPER is much cheaper if you aren't using it for business purposes.
 
-Generally the first thing you want to do before you even start composing is change the note resolution. If you are working with an existing MIDI with an idiosyncratic resolution, pray that the automatic retiming upon import works wonders. In REAPER, open your Preferences, and then under Media, hit MIDI. `Ticks per quarter note for new MIDI items` is the number you want to change. 
+Generally the first thing you want to do before you even start composing is change the note resolution. If you are working with an existing MIDI with an idiosyncratic resolution, pray that the automatic retiming upon import works wonders. In REAPER, open your Preferences, and then under Media, hit MIDI. `Ticks per quarter note for new MIDI items` is the number you want to change.
 
 ### Importing MIDIs
 

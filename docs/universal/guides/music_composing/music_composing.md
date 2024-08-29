@@ -1,7 +1,7 @@
 # Music Composing guide
 > (by recordreader/thisisausername/icecream, with massive help from the VGM Resources community)
 
-NOTES: 
+NOTES:
 - If I ever say just "Nitro Studio", assume I am talking about 2 Deluxe as really that's the only version you should be using, unless stated otherwise.
 - If I ever refer to a specific key on the keyboard, note that I'm talking strictly about notes in the C-1 to G9 keyrange, since that is what SMFT labels them as.
 - In these contexts, I use wave and sample interchangeably. In case there's any confusion, this is why.
@@ -15,6 +15,22 @@ So for probably the foreseeable future, DS Pokémon ROM hacks will be stuck larg
 At a basic level, music on the DS consists of three things: a sequence (SSEQ), a bank definition (SBNK), and a wave archive (SWAR). SWAR files contain audio data that is assigned to a bank. SBNK files define how these wave files are mapped across the keyrange, and how they sound when played, and when they play. SSEQ files are lists of commands processed in a fixed order at a (mostly) user defined rate, using program numbers defined by the bank. All of these are contained within a data (SDAT) file, which allows for a maximum of 65536 slots for each of these things.
 
 An important range to remember when dealing with MIDI music is 0-127. Those numbers designate the list of keys, the values all CC data can be set to, and the slots all of your programs are assigned to.
+
+## Table of Contents
+- [SWAR](#swar)
+- [SBNK](#sbnk)
+- [SSEQ](#sseq)
+- [General Guidelines](#general-guidelines)
+- [Continuous Controller (CC) list](#continuous-controller-cc-list)
+- [Simple control curves](#simple-control-curves)
+- [Custom banks (Generation 4)](#custom-banks-generation-4)
+  - [Creating wave archives](#creating-wave-archives)
+  - [Creating new banks](#creating-new-banks)
+  - [Creating new programs](#creating-new-programs)
+- [Custom banks (Generation 5)](#custom-banks-generation-5)
+  - [Creating drumsets](#creating-drumsets)
+  - [Creating programmable sound generation (PSG) instruments](#creating-programmable-sound-generation-psg-instruments)
+  - [Creating noise instruments](#creating-noise-instruments)
 
 ### SWAR
 
@@ -44,7 +60,7 @@ Also known as low frequency oscillator, or "LFO", commands, these control when a
 	- `mod_speed`: This controls how fast the modulation occurs. By default, this is set to 16.
 	- `mod_type`: This controls the way the sound will modulate. By default, this is set to 0. While it can be any value from 0 to 127, only values of 0, 1, and 2 are meaningful. Type 0 modulates pitch, Type 1 modulates volume, and Type 2 modulates panorama.
 	- `mod_range`: This controls how far out the modulation reaches in either direction. By default, this is set to 1.
-  
+
 - Portamento commands\
 Use these to configure how and when notes glide between each other.
 	- `porta_on` / `porta_off`: Toggles that control when it is active or not. These do not have any parameters.
@@ -308,7 +324,7 @@ Save and exit, and now you have a bank that you can assign to any track as you p
 
 At this point some of you might be asking "but what if I want to use my *own* wave samples?". The good news is that if you just want waves that are formatted exactly like those on the DS, like you will want in most cases, then that is readily doable within Nitro Studio. And by that, I mean use of the IMA-ADPCM codec, which is used for virtually everything aside from a few cries owing to its small size. Inserting loop data is also fairly trivial as you can use anything that can insert cues or markers in audio files, like Awave Studio, and when you import it into Nitro Studio the wave file will loop.
 
-The bad news is that, if you want or need something that *isn't* IMA-ADPCM, your only options are either ndspy or manually hex editing an audio file into an .SWAV container. Both options require raw audio data, meaning the file you process must be stripped of information like sample rate and loop offsets; unlike with the forbidden, you cannot directly process a .WAV or .AIF file into an .SWAV. How to get the raw data depends greatly on your original audio file, but a Microsoft .WAV file needs its first 0x2C bytes trimmed off, while an AIF file needs its first 0x58 bytes trimmed off. Do keep in mind that, if you are importing PCM8 audio, it **must be signed**; raw PCM8 audio from a Microsoft WAV file is **unsigned**. Comparatively, AIF audio is signed. 
+The bad news is that, if you want or need something that *isn't* IMA-ADPCM, your only options are either ndspy or manually hex editing an audio file into an .SWAV container. Both options require raw audio data, meaning the file you process must be stripped of information like sample rate and loop offsets; unlike with the forbidden, you cannot directly process a .WAV or .AIF file into an .SWAV. How to get the raw data depends greatly on your original audio file, but a Microsoft .WAV file needs its first 0x2C bytes trimmed off, while an AIF file needs its first 0x58 bytes trimmed off. Do keep in mind that, if you are importing PCM8 audio, it **must be signed**; raw PCM8 audio from a Microsoft WAV file is **unsigned**. Comparatively, AIF audio is signed.
 
 I'm not going to discuss making them with ndspy since I feel that is better served with some type of script, so here we're going to use a hex editor. First we need the header, which for .SWAV comprises the first 0x24 bytes. Start with the "SWAV" file magic, then the byte order mark (BOM), which for NDS is almost always little endian (FF FE 00 01). Leave the next four bytes blank for now; I'll explain why in a bit. After that, put the bytes "10 00 01 00"; these specify the size of the "SWAV" section and how many there are, which are almost always 0x10 and 0x1 respectively.
 

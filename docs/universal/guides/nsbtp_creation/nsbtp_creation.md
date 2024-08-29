@@ -5,7 +5,7 @@ tags:
   - Guide (Pearl)
   - Guide (Platinum)
   - Guide (HeartGold)
-  - Guide (SoulSilver)  
+  - Guide (SoulSilver)
   - Guide (Black)
   - Guide (White)
   - Guide (Black 2)
@@ -14,6 +14,17 @@ tags:
 
 # Making Flipbooks using Texture Pattern Animations
 > Author(s): [Brom](https://github.com/BromBromBromley).
+
+## Table of Contents
+- [What is a texture flipbook?](#what-is-a-texture-flipbook)
+- [What is an NSBTP?](#what-is-an-nsbtp)
+- [What is an ITP?](#what-is-an-itp)
+- [What do we need to make one?](#what-do-we-need-to-make-one)
+- [Creating the ITP file](#creating-the-itp-file)
+  - [What are the parts of the ITP file?](#what-are-the-parts-of-the-itp-file)
+  - [Making the basic skeleton of the ITP](#making-the-basic-skeleton-of-the-itp)
+  - [Filling in the "body" section of the ITP](#filling-in-the-body-section-of-the-itp)
+  - [Getting an NSBTP from our ITP](#getting-an-nsbtp-from-our-itp)
 
 ## What is a texture flipbook?
 
@@ -81,7 +92,7 @@ First up is the `tex_pattern_info` section.
     compress_material="on" material_size="1 1"
 />
 ```
-Here, we set how many frames our animation should have (`frame_size`), what frame our animation should start on (`tool_start_frame`), and what frame our animation should end on (`tool_end_frame`). For this guide, we won't be touching the `compress_material` or `material_size` fields. 
+Here, we set how many frames our animation should have (`frame_size`), what frame our animation should start on (`tool_start_frame`), and what frame our animation should end on (`tool_end_frame`). For this guide, we won't be touching the `compress_material` or `material_size` fields.
 
 With this section here, we have an 16 frame long animation that starts at frame 1 and ends on frame 16.
 
