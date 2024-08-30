@@ -12,8 +12,6 @@ tags:
 The area data describes the current state of the overworld. It selects all the optical elements. The area is selected by the zone data in `/a/0/1/2` but can also depend on the season.
 
 ## Table of Contents
-- [Area Data](#area-data)
-  - [Table of Contents](#table-of-contents)
   - [Data Location](#data-location)
   - [Data Structure](#data-structure)
     - [Container](#container)
@@ -25,7 +23,7 @@ The area data describes the current state of the overworld. It selects all the o
 ## Data Location
 The file (not a NARC!) can be found in the following game path:
 * Black 2 and White 2: `/a/0/1/3`
---- 
+---
 
 ## Data Structure
 
@@ -95,12 +93,12 @@ bool isSeasonsEnabled(uint32_t zoneAreaID)
 uint32_t getAreaID(uint32_t zoneAreaID)
 {
     uint32_t areaID = zoneAreaID;
-    
+
     if (isSeasonsEnabled(zoneAreaID))
     {
         areaID += getSeason();
     }
-    
+
     return areaID;
 }
 ```

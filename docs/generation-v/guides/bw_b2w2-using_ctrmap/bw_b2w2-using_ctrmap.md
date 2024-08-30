@@ -17,24 +17,39 @@ CTRMap supports the following game versions:
 - `IRBO` | Pokémon Black (USA)
 - `IRDO` | Pokémon White 2 (USA)
 - `IREO` | Pokémon Black 2 (USA)
-  
+
 Please note: If the game you are trying to modify is not listed here, CTRMap is not guaranteed to work properly with it. Furthermore, ROMs modified with other tools may not work correctly (as there is no guarantee that they were modified correctly).
+
+## Table of Contents
+- [Setup](#setup)
+  - [Requirements](#requirements)
+  - [Installing CTRMap & CTRMapV](#installing-ctrmap--ctrmapv)
+  - [Adding Games](#adding-games)
+  - [Creating a Project](#creating-a-project)
+  - [Opening a Project](#opening-a-project)
+- [Using the Tool](#using-the-tool)
+- [World Editor](#world-editor)
+  - [Default Controls](#default-controls)
+  - [Sub-Editors](#sub-editors)
+  - [Zone Loader](#zone-loader)
+  - [Event Editor](#event-editor)
+  - [Extras](#extras)
 
 ## Setup
 ### Requirements
 To use CTRMap, you will need the following:
 - A computer running Microsoft Windows, or Linux. ***macOS (any version) is not supported.***
 - [Java 1.8+](https://www.java.com/en/download/).
-  
+
 ### Installing CTRMap & CTRMapV
 In order to use CTRMap for Generation V, you will need to follow the steps below.
 
-- Download and install Java 1.8+ if you have not already. 
+- Download and install Java 1.8+ if you have not already.
     - If you are on Windows, you can get it from [java.com](https://www.java.com/en/download/).
     - If you are on Linux, the exact instructions depend on your distribution.
 
 - Go to the [CTRMap-CE release page](https://github.com/ds-pokemon-hacking/CTRMap-CE/releases), and download the latest release. You do this by expanding the `Assets` drop down, and clicking on `CTRMap.jar`. Ensure that, when you are downloading the tool, **you download the `CTRMap.jar`, and not the source code**.
-   
+
 ![](img/image.png)
 
 - Go to the [CTRMapV release page](https://github.com/ds-pokemon-hacking/CTRMapV/releases), and download the latest release. You do this by expanding the `Assets` drop down, and clicking on `CTRMapV.jar`. Ensure that, when you are downloading the tool, **you download the `CTRMapV.jar`, and not the source code**.
@@ -48,7 +63,7 @@ In order to use CTRMap for Generation V, you will need to follow the steps below
 ![](img/image-3.png)
 
 - Click `Install plug-in`. You will then be prompted with a file select window titled `Select a plug-in JAR file`. Browse to where you saved `CTRMapV.jar`, click on it, then click `OK`.
-   
+
 ![](img/image-5.png)
 
 - If all goes well, you will see `CTRMapV.jar` in the plugins window, as shown below.
@@ -67,18 +82,18 @@ With CTRMap open, click the `Games` tab. This will show you a list of the games 
 If you already have an extracted ROM, click `Add Game directory`. Otherwise, if you have a dumped ROM, click `Add ROM`.
 
 #### Specifying a Game Directory
-Clicking `Add Game directory` will bring up the following dialog. Simply click `Browse` and point it to the extracted ROM data you wish to use. 
+Clicking `Add Game directory` will bring up the following dialog. Simply click `Browse` and point it to the extracted ROM data you wish to use.
 
 ![](img/image-9.png)
 
 Once you are done, click `Confirm`.
 
 #### Specifying a ROM
-Clicking `Add ROM` will bring up the following dialog. Simply click `Browse` on the `Source ROM path` option, and point it to the ROM you wish to use. 
+Clicking `Add ROM` will bring up the following dialog. Simply click `Browse` on the `Source ROM path` option, and point it to the ROM you wish to use.
 
 ![](img/image-7.png)
 
-After doing so, the `Extracted game data root path` will be autopopulated. If you want to change it, you can click `Browse` and specify a new path. 
+After doing so, the `Extracted game data root path` will be autopopulated. If you want to change it, you can click `Browse` and specify a new path.
 
 ![](img/image-8.png)
 
@@ -145,11 +160,11 @@ The toolbar at the top under the tab represents the editors which you can utiliz
 ---
 
 #### Proxy Editor
-The Proxy Editor allows for modifcation of the proxy field objects, which are interactable script objects. 
+The Proxy Editor allows for modifcation of the proxy field objects, which are interactable script objects.
 
 ![](img/image-15.png)
 
-The dropdown on the sidebar allows you to select a given proxy object to modify. 
+The dropdown on the sidebar allows you to select a given proxy object to modify.
 - To add a new proxy, click the `+` button.
 - To remove the selected proxy, click the `-` button.
 - To save your changes to the proxy, click the `Save` button.
@@ -161,15 +176,15 @@ As shown in the screenshot, you can modify:
 ---
 
 #### NPC Editor
-The NPC Editor allows for modifcation of the NPCs on the map. 
+The NPC Editor allows for modifcation of the NPCs on the map.
 
 ![](img/image-16.png)
 
-The dropdown on the sidebar allows you to select a given proxy object to modify. 
+The dropdown on the sidebar allows you to select a given proxy object to modify.
 - To add a new NPC, click the `+` button.
 - To remove the selected NPC, click the `-` button.
 - To save your changes to the NPC, click the `Save` button.
-  
+
 As shown in the screenshot, you can modify:
 - `Model No.`: The sprite associated with the NPC.
 - `Spawn flag`: The flag which will be used to determine if the NPC is visible.
@@ -188,14 +203,14 @@ The Warp Editor allows for modification of the warp field objects, which allow a
 
 ![](img/image-17.png)
 
-The dropdown on the sidebar allows you to select a given warp object to modify. 
+The dropdown on the sidebar allows you to select a given warp object to modify.
 - To add a new warp, click the `+` button.
 - To remove the selected warp, click the `-` button.
 - To save your changes to the warp, click the `Save` button.
 
 As shown in the screenshot, you can modify:
 - `X`/`Y`/`Z`: The grid coordinates (either by typing, or dragging the object in perspective mode).
-- `Dimensions`: The width and height of the warp area. 
+- `Dimensions`: The width and height of the warp area.
 - `Contact direction`: The direction which the player can enter the warp from.
 - `Transition type`: The transition which plays when the warp is activated.
 - `Target zone`: The zone which the player is teleported to when going through the warp.
@@ -208,17 +223,17 @@ The Trigger Editor allows for modification of the trigger field objects, which c
 
 ![](img/image-18.png)
 
-The dropdown on the sidebar allows you to select a given proxy object to modify. 
+The dropdown on the sidebar allows you to select a given proxy object to modify.
 - To add a new trigger, click the `+` button.
 - To remove the selected trigger, click the `-` button.
 - To save your changes to the trigger, click the `Save` button.
-  
+
 As shown in the screenshot, you can modify:
 - `Script`: The script in the container which is assigned to the trigger.
 - `Spawn flag`: The Work which will be used to determine if the trigger is enabled.
 - `Ref. value`: The value which needs to be in the Work for the trigger to be enabled.
 - `X`/`Y`/`Z`: The grid coordinates (either by typing, or dragging the object in perspective mode).
-- `Dimensions`: The width and height of the trigger area. 
+- `Dimensions`: The width and height of the trigger area.
 - `Type`: The trigger type.
 - `U12`: Unknown.
 
@@ -229,7 +244,7 @@ The Building Editor allows for modification of the building field objects, which
 
 ![](img/image-19.png)
 
-The dropdown on the sidebar allows you to select a given building object to modify. 
+The dropdown on the sidebar allows you to select a given building object to modify.
 - To add a new building, click the `+` button.
 - To remove the selected building, click the `-` button.
 - To save your changes to the building, click the `Save` button.
@@ -272,7 +287,7 @@ To edit the currently assigned resource bundle, click `Edit resource bundle`, an
 
 ![](img/image-26.png)
 
-Here, you can modify the properties of each resource entry, as well preview its assigned animations. 
+Here, you can modify the properties of each resource entry, as well preview its assigned animations.
 
 To select a resource entry to edit, click an element of the list on the left.
 
@@ -290,7 +305,7 @@ You can modify the following properties:
   - `2 sets, 1 animation per set`
   - `2 sets, 2 animations per set`
   - `4 sets, 1 animation per set`
-  
+
 To import a model, click `Open in CS`. This will open CreativeStudio, where you can modify the model as you see fit. When you finish, close CreativeStudio; you will be prompted to convert the model back into the NNS Resource format.
 
 To import an animation and set it up correctly:
@@ -298,7 +313,7 @@ To import an animation and set it up correctly:
   - Skeletal Animations: Same steps as above, the only differences are that you have to set the animation controllers to *Dynamic* instead, and you will import a `.nsbta` file.
 
 ##### Exporting Resource Assets
-Select the building you want to export from the list on the left side of the editor, then click the *Open in CS* button right below. 
+Select the building you want to export from the list on the left side of the editor, then click the *Open in CS* button right below.
 This will launch CTRMap CreativeStudio, where you can export the model in a number of different formats, using the *Export* options from the top bar.
 
 About the different file types you can get, it's worth mentioning:
@@ -342,7 +357,7 @@ You can also specify the `Interval`, which is how many frames it should take to 
 ---
 
 #### Rail Tool
-This tool allows you to mess around with the 3D collision system, known as RailSystem. 
+This tool allows you to mess around with the 3D collision system, known as RailSystem.
 
 <p align="center">
   <img src="img/image-28.png"></img>
@@ -357,7 +372,7 @@ This tool allows you to create and modify dynamic cameras. However, the tool cur
 
 ![](img/image-33.png)
 
-The dropdown on the sidebar allows you to select a given dynamic camera configuration to modify. 
+The dropdown on the sidebar allows you to select a given dynamic camera configuration to modify.
 - To add a new camera configuration, click the `+` button.
 - To remove the selected camera configuration, click the `-` button.
 - To save your changes to the camera configuration, click the `Save` button.
@@ -374,7 +389,7 @@ As shown in the screenshot, you are able to modify:
 - Go to the `Zone Loader` and make sure the `Dynamic camera` checkbox is clicked.
 - Add an entry (`+`), and make sure it is selected in the dropdown.
 - Then, make sure the entry is enabled, so that the camera will work.
-- Now, specify the `X` and `Z` coordinates. This is where you want the camera to start (aka `Coordinates 1`). 
+- Now, specify the `X` and `Z` coordinates. This is where you want the camera to start (aka `Coordinates 1`).
 - Specify the transition type (`Vertical` means forward and backwards movement, `Horizontal` means left and right movement).
 - Set the capabilities you want. There are three scenarios: `Main`, `Entry`, and `Exit`. `Entry` happens when you first enter the dynamic camera zone, `Main` while you are in the zone, and `Exit` when you exit the zone.
 - Now, specify the parameters.

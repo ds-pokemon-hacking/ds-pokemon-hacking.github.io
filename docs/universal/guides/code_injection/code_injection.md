@@ -5,7 +5,7 @@ tags:
   - Guide (Pearl)
   - Guide (Platinum)
   - Guide (HeartGold)
-  - Guide (SoulSilver)  
+  - Guide (SoulSilver)
   - Guide (Black)
   - Guide (White)
   - Guide (Black 2)
@@ -17,8 +17,15 @@ tags:
 
 This guide aims to serve as a technical introduction to code injection in the DS Pokemon games, as well as common processes for it. It is strongly recommended that you read this page before continuing onto generation-specific code injection, as it will attempt to familiarize you with how it generally works.
 
+## Table of Contents
+- [Assembly Injection](#assembly-injection)
+- [C/C++ Injection](#cc-injection)
+  - [How does C Injection work?](#how-does-c-injection-work)
+- [Insertion Process](#insertion-process)
+  - [Fixing our Assembly](#fixing-our-assembly)
+
 ## Assembly Injection
-Assembly injection is the process of compiling an assembly routine, and hooking it into the executable part of a ROM. 
+Assembly injection is the process of compiling an assembly routine, and hooking it into the executable part of a ROM.
 
 ## C/C++ Injection
 C/C++ injection is almost the exact same idea, except you use a high-level language (mostly C or C++, though you can go wild with Rust if that's what your heart desires) to create the code which emits assembly. That's because compilers/translators of these languages use Assembly as an intermediate between the source code stage and the binary stage. In other words, C/C++ code creates assembly code, which is then assembled. Assembly knowledge is, for the most part, not necessary.
@@ -93,9 +100,9 @@ This code is functionally equivalent to the code we wrote, but might be harder t
 
 ## Insertion Process
 ### Fixing our Assembly
-Similar to the above, assembling Assembly consists of taking our code and translating it into a format that our processor can understand. The Executable and Linkable Format, or ELF, allows us to simplify this process. 
+Similar to the above, assembling Assembly consists of taking our code and translating it into a format that our processor can understand. The Executable and Linkable Format, or ELF, allows us to simplify this process.
 
-Simply put, our processor does not read assembly -- only machine code -- and as such, we need to give it a set of bytes that it *can* read. But, before we can give it bytes to read, we need to make sure *all* of our instructions are correct. With simple arithmetic instructions such as addition and subtraction, this is light-work -- no further verification needs to be done. However, with function calls, *how* will the assembly know where we are telling it to go? 
+Simply put, our processor does not read assembly -- only machine code -- and as such, we need to give it a set of bytes that it *can* read. But, before we can give it bytes to read, we need to make sure *all* of our instructions are correct. With simple arithmetic instructions such as addition and subtraction, this is light-work -- no further verification needs to be done. However, with function calls, *how* will the assembly know where we are telling it to go?
 
 This is easily solved by converting our assembly into an ELF file. With an ELF, we can perform a process known as linking. Linking is one of the most important parts of the entire compilation process, and for good reason; with our Assembly in ELF format, we can define the addresses of functions we are calling, determine the order of multiple files being linked together, and create relocatable objects, all of which solve our earlier problems. So, let's go into detail about linking.
 
@@ -110,7 +117,7 @@ Take this segment of our Assembly from above, for example.
         movw    r0, #3000
         bl      AddMoney
 ```
-`bl`, which performs a function call in this case, will force the program to jump to the function `AddMoney`. But, *where* is `AddMoney`? We as humans know that it is at the address `30`, as I had mentioned previously. But, what about the computer? 
+`bl`, which performs a function call in this case, will force the program to jump to the function `AddMoney`. But, *where* is `AddMoney`? We as humans know that it is at the address `30`, as I had mentioned previously. But, what about the computer?
 
 With a translation table similar to below (note: this is likely not valid syntax, I am just making this up):
 ```
@@ -133,5 +140,3 @@ That being said, how do we perform linking with code injection?
 - In the case of Generation V, the input source code is first linked using the default toolchain, then later post-processed using a provided symbol mapping database during conversion to the RPM executable format. This means that before the final step, the ELF isn't bound to a fixed binary layout, providing simpler targeting of different games/revisions. Programs that only provide support functionality (file format libraries, codecs) are game-independent and can be loaded on-demand as DLLs.
 
 After linking, we will usually end up with an ELF file that we can use to create our final binary.
-
-

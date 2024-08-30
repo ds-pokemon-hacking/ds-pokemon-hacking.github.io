@@ -10,15 +10,33 @@ tags:
 
 ## Disclaimers
 - **This tutorial assumes that you have some C++/ARMv5T assembly knowledge, and know how to use a compiler or build system. It is strongly recommended to check out the [universal code injection guide](universal/guides/code_injection/code_injection.md), and brush up on C/C++/Assembly before attempting this.**
-  - Our guide is designed to help you utilize these languages to modify game behavior. If for any reason you are uncomfortable with programming, then stop here and take some time to learn one of the languages. In this scenario, C/C++ would be the easiest, as it is the lowest level language that we have bindings for. 
+  - Our guide is designed to help you utilize these languages to modify game behavior. If for any reason you are uncomfortable with programming, then stop here and take some time to learn one of the languages. In this scenario, C/C++ would be the easiest, as it is the lowest level language that we have bindings for.
   - It is okay to not understand how things work at first glance. If something is not explicitly spelled out for you, you should take your time to try and understand it; it will only benefit you in the long run.
-- **This guide assumes that you are using a American Pokémon Black 2 [IREO] or Pokémon White 2 [IRDO] ROM.** These are the ROM variants which are officially supported by CTRMap and PMC. It is possible to port these to other regions or games in Generation V, given the correct files are provided (as we will talk about below). 
+- **This guide assumes that you are using a American Pokémon Black 2 [IREO] or Pokémon White 2 [IRDO] ROM.** These are the ROM variants which are officially supported by CTRMap and PMC. It is possible to port these to other regions or games in Generation V, given the correct files are provided (as we will talk about below).
 - **Please take your time reading this guide before jumping into code injection. It will not go anywhere.**
+
+## Table of Contents
+- [Setting Up The Environment](#setting-up-the-environment)
+- [Building code injection patches](#building-code-injection-patches)
+  - [Symbol maps](#symbol-maps)
+  - [Programming (C/C++)](#programming-cc)
+  - [Programming (Assembly)](#programming-assembly)
+  - [Preparing our Code for Injection](#preparing-our-code-for-injection)
+  - [Compliling](#compiling)
+  - [Assembling](#assembling)
+  - [Linking](#linking)
+  - [Patch Priority](#patch-priority)
+  - [Changing ESDBs mid-stream](#changing-esdbs-mid-stream)
+  - [Dynamic Loading](#dynamic-loading)
+  - [Debug Prints](#debug-prints)
+  - [Multithreading](#multithreading)
+  - [RPM version support](#rpm-version-support)
+  - [Troubleshooting](#troubleshooting)
 
 ## Setting Up The Environment ##
 So, you think you've got what it takes to have a crack at Generation V code injection? Then press onward!
 
-First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there on out. 
+First, we've got to set up a few prerequisites. It's a boring job but I promise it'll be smooth sailing from there on out.
 To start, download (and install, where applicable) all these:
 - [CTRMap for Generation V](../bw_b2w2-using_ctrmap/bw_b2w2-using_ctrmap.md)
 - [The `arm-none-eabi` GCC toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
@@ -26,7 +44,7 @@ To start, download (and install, where applicable) all these:
 - [Pokémon Black 2 and White 2 Development Headers](https://github.com/ds-pokemon-hacking/swan)
 - [Latest NitroKernel DLL](https://github.com/HelloOO7/NitroKernel/releases)
 
-Before you get into code injection, [set up a CTRMap project](../bw_b2w2-using_ctrmap/bw_b2w2-using_ctrmap.md#creating-a-project) and load it up. If everything went as planned, there should be a `Code Injection` section in your `Extras` tab. 
+Before you get into code injection, [set up a CTRMap project](../bw_b2w2-using_ctrmap/bw_b2w2-using_ctrmap.md#creating-a-project) and load it up. If everything went as planned, there should be a `Code Injection` section in your `Extras` tab.
 
 This is where it gets interesting:
 1) Click the `Install/Update PMC` button and select your `PMC.rpm` file. You should do this every time `libRPM` is updated, as the DLLs that CTRMap produces need the latest version of PMC to be recognized.
@@ -37,9 +55,9 @@ This is where it gets interesting:
 ## Building code injection patches ##
 ### Symbol maps
 
-There are two quintessential things that you need in order to begin writing proper code injection modules. 
-- A compiler with cross-compilation support for ARMv5T - you should already have this since the first chapter. 
-- An `ESDB` (short for "external symbol database"), the stepping stone for interfacing and hijacking game routines. 
+There are two quintessential things that you need in order to begin writing proper code injection modules.
+- A compiler with cross-compilation support for ARMv5T - you should already have this since the first chapter.
+- An `ESDB` (short for "external symbol database"), the stepping stone for interfacing and hijacking game routines.
 
 ESDBs should be provided with the [swan development headers](https://github.com/ds-pokemon-hacking/swan). If for some reason you need to generate your own, you can do so utilizing the Interactive Disassembler (IDA), provided you have your own database (IDB).
 1) Export the symbols you need from IDA using `File > Produce file > Create MAP file...`
@@ -73,15 +91,15 @@ If you hate C/C++ for some reason, you can also use assembly. It serves the purp
 [The ARMv5T manual is your best friend](https://developer.arm.com/documentation/ddi0100/latest/). It will not tell you how to write assembly functions, but it will teach you how each operation works.
 
 ### Preparing our Code for Injection
-Historically, there were many ways of injecting code into existing executables, but they all essentially get down to one thing: hooks, or branches. 
-  
-Branches are, simply put, a processor directive that changes the program counter - a register containing a pointer to the currently executed instruction - to another value. Each ISA and CPU architecture has its own way of performing these, but in most cases only two things are required: a source and destination address. 
+Historically, there were many ways of injecting code into existing executables, but they all essentially get down to one thing: hooks, or branches.
 
-In the early days of computing where programs had a fixed load address and memory space (also known as static loading), all branches were fully deterministic at compile time. This approach is still actually supported on modern CPUs through virtual memory addressing (in fact, some ancient Microsoft Windows programs rely on it to this day) and even though it's a thing of the past in desktop programming, it is still widely used in low-power embedded software, as is the case with standard Nintendo DS development. 
+Branches are, simply put, a processor directive that changes the program counter - a register containing a pointer to the currently executed instruction - to another value. Each ISA and CPU architecture has its own way of performing these, but in most cases only two things are required: a source and destination address.
 
-However, since code injection is a highly volatile process with very little headroom, we've decided to borrow the more flexible approach of dynamic loading, which includes a lot of fun quirks that you can use to your own advantage. 
+In the early days of computing where programs had a fixed load address and memory space (also known as static loading), all branches were fully deterministic at compile time. This approach is still actually supported on modern CPUs through virtual memory addressing (in fact, some ancient Microsoft Windows programs rely on it to this day) and even though it's a thing of the past in desktop programming, it is still widely used in low-power embedded software, as is the case with standard Nintendo DS development.
 
-As per the definition of branches, any program jump requires a source and destination address, but since those may not be fully known at compile-time, they are often stored into a [relocation table](https://en.wikipedia.org/wiki/Relocation_(computing)) that is used to correct the branch instructions within the program once the executable is fixed in memory. 
+However, since code injection is a highly volatile process with very little headroom, we've decided to borrow the more flexible approach of dynamic loading, which includes a lot of fun quirks that you can use to your own advantage.
+
+As per the definition of branches, any program jump requires a source and destination address, but since those may not be fully known at compile-time, they are often stored into a [relocation table](https://en.wikipedia.org/wiki/Relocation_(computing)) that is used to correct the branch instructions within the program once the executable is fixed in memory.
 
 Inasmuch as the DS has next to no memory protection, we can easily use these to perform the relocation process even outside of our program - such as the game code! All you've gotta do is adjust the relocation table accordingly, for which there are a grand total of two options:
 
@@ -97,8 +115,8 @@ To have the RPM converter automatically convert your function into a relocation,
 
 I know that might be a lot to take in at first, so let's take this apart piece by piece.
 
-- First of all, there's the function names. If a function is to be overriden with another, these should match the names in the ESDB, meaning they require explicit C linkage if used in C++. The relocation will then take place at the address of the function as specified in the ESDB, optionally offset by a constant addend. 
-- Additionally, if you don't feel like using the name database or are aiming for some memory wizardry, you can directly input the memory address of the relocation. However, as a side effect of the static loading method used on the Nintendo DS, you also have to specify a "segment" (in a similar way as the ESDB segment header does) of the address, which ensures that the relocation won't be inadvertently applied to an undesirable module, such as an overlay that shares the memory area with another. 
+- First of all, there's the function names. If a function is to be overriden with another, these should match the names in the ESDB, meaning they require explicit C linkage if used in C++. The relocation will then take place at the address of the function as specified in the ESDB, optionally offset by a constant addend.
+- Additionally, if you don't feel like using the name database or are aiming for some memory wizardry, you can directly input the memory address of the relocation. However, as a side effect of the static loading method used on the Nintendo DS, you also have to specify a "segment" (in a similar way as the ESDB segment header does) of the address, which ensures that the relocation won't be inadvertently applied to an undesirable module, such as an overlay that shares the memory area with another.
 - Last, but certainly not least, there is the `RELOCATION_TYPE` parameter. Its value specifies what data or CPU instruction should be written to the destination address. This is especially important on the ARM architecture, as it distinguishes between two instruction sets (ARM and Thumb) which use two separate methods of encoding. As a result, you've got quite a lot of options, but be wary - they are not at all interchangeable! The specific procedures are described in detail [here](https://github.com/HelloOO7/libRPM/blob/master/include/RPM_Control.h), but for starters, here's a quick reference that should hopefully guide you towards a correct choice:
     - `THUMB_BRANCH` writes a one-way branch using the 16-bit Thumb instruction encoding. In most cases, this will be converted into a `PUSH, BL, PUSH` because of Thumb short branch restrictions, meaning you'll have to use another method for functions that use the stack for parameters (basically any with more than 4\*4 bytes of arguments).
     - `THUMB_BRANCH_SAFESTACK` does exactly that. While it takes up more space (which generally isn't a problem as the overriden function isn't going to be a little one just based off its argument count), this relocation type preserves all stack parameters.
@@ -128,10 +146,10 @@ set(CMAKE_CXX_FLAGS "--specs=nosys.specs")
 If you're using dynamic linking for parts of your code, be sure to load the dependencies (and properly release them!) using `k::dll::LoadLibrary` (resp. `k::dll::ReleaseLibrary`) from NitroKernel. If you need to do this in initialization, create a `DllMain` function using libRPM's `RPM_DLLMAIN_DECLARE` and `RPM_DLLMAIN_DEFINE` macros, then write your loading code to run on module load/unload.
 
 ### Assembling
-If you do not feel like writing C or C++, or you want to do a relatively simple patch, then you are also able to use assembly! 
+If you do not feel like writing C or C++, or you want to do a relatively simple patch, then you are also able to use assembly!
 C and C++ compile into assembly, which is then assembled into an executable and linkable format (ELF) file. Assembly is just assembled into the ELF format directly. So, you can very easily use tools such as the GNU assembler.
 
-To use assembly, just follow the same conventions above for naming functions/symbols. 
+To use assembly, just follow the same conventions above for naming functions/symbols.
 
 Then, assemble and link your file. Assuming you are using the GNU assembler, you just need to use the following options when assembling:
 - `-march=armv5t` - target the ARMv5T architecture.
@@ -142,7 +160,7 @@ It can then be linked with compiled C/C++ code, by using standard linking proced
 
 ### Linking
 
-Once you have your final ELF binary, you need to fix the linkage of the game functions (as mentioned in the general code injection guide). 
+Once you have your final ELF binary, you need to fix the linkage of the game functions (as mentioned in the general code injection guide).
 
 Fortunately, linking with CTRMap is probably the simplest part of the entire process. In fact, it's so trivial that we'll skip over it in just one (1) step:
 1) Click the `Convert ELF to DLL` button in CTRMap's Extras panel and follow the instructions.
@@ -152,7 +170,7 @@ Just in case you didn't hear me, that's:
 2) Then select the ELF file you compiled and a destination DLL file.
 3) Copy the result DLL into your `patches` or `lib` folder.
 4) You're done! Save your ROM, cross your fingers and start it up!
-   
+
 ### Patch priority
 Should you need to change the priority of loading a DLL patch to higher than 4 (default), hold the `Alt` key while clicking `Convert ELF to DLL` and you'll be prompted to choose the priority after conversion.
 ### Changing ESDBs mid-stream

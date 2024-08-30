@@ -9,7 +9,7 @@ tags:
 ---
 
 # Cell Editing for Sprites
-> Author(s): [Jay-San](#), [Sunnhild](#) (reformatting for the wiki).  
+> Author(s): [Jay-San](#), [Sunnhild](#) (reformatting for the wiki).
 
 Editing trainer sprites without patterns *(Aka: An apology letter from Jay-san about Tutorial Episode 2)*
 
@@ -26,19 +26,17 @@ Editing trainer sprites without patterns *(Aka: An apology letter from Jay-san a
 	</div>
 </details>
 
---- 
+---
 
 ## 📌 Table of Contents
-- [Cell Editing for Sprites](#cell-editing-for-sprites)
-	- [📌 Table of Contents](#-table-of-contents)
-	- [📋 Introduction](#-introduction)
-	- [💾 Getting Tinke 0.9.2](#-getting-tinke-092)
-	- [🛠️ Editing Your Sprite](#️-editing-your-sprite)
+- [📋 Introduction](#-introduction)
+- [💾 Getting Tinke 0.9.2](#-getting-tinke-092)
+- [🛠️ Editing Your Sprite](#️-editing-your-sprite)
 
 ## 📋 Introduction
 Hello! You are seeing this as you’ve most likely seen my video on editing the RGCN trainer sprites with the colored pattern I shared. While this method technically still works, I came up with it before I was more experienced in ROM hacking and admittedly is just a little inefficient. It turns out that **ONLY** if you use a certain version of Tinke, you can edit an NCER “cell” file that is a complete image instead of having to split the sprite into pieces. Which will hopefully be far simpler to edit sprites with.
 
-## 💾 Getting Tinke 0.9.2 
+## 💾 Getting Tinke 0.9.2
 
 **⚠️ (IMPORTANT: This method will not work on Tinke 0.9.0 or older versions. Be sure to get the version below if you don’t have it already.)**
 
@@ -69,9 +67,9 @@ Hello! You are seeing this as you’ve most likely seen my video on editing the 
 		2. Locate the zip file you downloaded from the link above.
 		3. Right click it and select Properties.
 		4. If you see an “Unblock” checkbox like the one circled below, uncheck it and click OK.
-			
+
 				[![Unblock Tinke in properties](resources/unblock_tinke_properties.png)](resources/unblock_tinke_properties.png)
-			
+
 		5. Then extract your zip file again to make a new Tinke Folder, and try to open Tinke to see if the error is fixed.
 
 		<blockquote>
@@ -81,10 +79,10 @@ Hello! You are seeing this as you’ve most likely seen my video on editing the 
 		</blockquote>
 	</div>
 </details>
-	
+
 1. Then a window will open where you can browse to the ROM you want to edit and open it.
 
-2. Browse the ROM files and expand the narc that holds the sprite you are looking for. 
+2. Browse the ROM files and expand the narc that holds the sprite you are looking for.
 
 	> 💡 If you want any help locating certain sprites in your nds pokemon ROM, check out this narc list we wrote [HERE](https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU). <!-- TODO add list of known sprite location ressource -->
 
@@ -115,12 +113,12 @@ Hello! You are seeing this as you’ve most likely seen my video on editing the 
 	<div>
 		If you want, you can export each of the frames of this sprite as png images by scrolling to each of them in the “Bank” picklist and clicking <strong>Export</strong> for each one. Then you could use them as references when making your own edited frames that you want to insert in the next step. However if you already have the edited frames you want, you can skip this step.
 		[![Export frames in Tinke](resources/export_frames_tinke.png)](resources/export_frames_tinke.png)
-		
+
 		When you export a frame it will look like the example below. Where the frame is a tiny box in the center of a large transparent image. You want to make sure background is displaying like my example below, by following [step 7](#7).
-		
-		The area covered by the background is your drawable area, but you still want to make sure your edited frame keeps the same large transparent border around it like my example in the next step. 
-		
-		[![Exported frame](resources/exported_frame_tinke.png)](resources/exported_frame_tinke.png) 
+
+		The area covered by the background is your drawable area, but you still want to make sure your edited frame keeps the same large transparent border around it like my example in the next step.
+
+		[![Exported frame](resources/exported_frame_tinke.png)](resources/exported_frame_tinke.png)
 	</div>
 	</details>
 
@@ -128,7 +126,7 @@ Hello! You are seeing this as you’ve most likely seen my video on editing the 
 
 	[![Edited frame](resources/edited_frame.png)](resources/edited_frame.png)
 
-8. Once all your frames are ready, you want to scroll the “Bank” picklist to the first frame you want to replace. Normally people just start with the first frame. However if there are any colors that are not being shown on the first frame, you want to switch to a frame that displays all the colors your sprite uses. 
+8. Once all your frames are ready, you want to scroll the “Bank” picklist to the first frame you want to replace. Normally people just start with the first frame. However if there are any colors that are not being shown on the first frame, you want to switch to a frame that displays all the colors your sprite uses.
 
 	> 💡 For example if your character has a yellow emblem on their shirt that’s not showing until after they throw the pokeball and their chest turns towards the camera. So you’d want to pick any later frame that shows the colors used by that emblem, if those colors aren’t shown on the earlier frames already.
 
@@ -157,7 +155,7 @@ Hello! You are seeing this as you’ve most likely seen my video on editing the 
 		Now after importing your first frame it’s possible that it looks mostly ok but has a glitched spot like mine below. Worry not, this seems to happen a lot.
 
 		[![Glitched imported image](resources/glitched_image_import.png)](resources/glitched_image_import.png)
-		
+
 		The fix should be to:
     	1. Change the **Palette Import Option** to “Swap to Original Palette”.
 		2. Import your frame again.
@@ -188,7 +186,7 @@ Hello! You are seeing this as you’ve most likely seen my video on editing the 
 
 2.  Be sure to look each of the new frames over closely to make sure none of them have any parts that are transparent that shouldn’t be. If you find some missing colors you will want to first try the <a href="#fix-2">fix</a> above, if you haven’t already. Then **reinsert** all your frames again.
 
-3.  If all frames look good, then it’s time to **pack** the narc! 
+3.  If all frames look good, then it’s time to **pack** the narc!
 
 	> 💡 if you are not sure how to do this, check out this document [HERE](https://docs.google.com/document/d/1nyuRlun9Gm_5lWodBVLZgOwTgU26k8oyfscnPZZSfV8/edit?usp=sharing).<!-- TODO add how to pack a NARC in ressource -->
 

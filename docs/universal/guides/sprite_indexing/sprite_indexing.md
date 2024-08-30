@@ -5,6 +5,13 @@ This document aims to introduce the concept of indexing a sprite.
 
 If your image is already indexed adequately, such as if you are editing an existing image exported from the ROM and you just want to change the colors, you may skip ahead to [Palette Editing](#Palette-Editing).
 
+## Table of Contents
+- [Indexing](#indexing)
+- [Special Considerations for the Nintendo DS](#special-considerations-for-the-nintendo-ds)
+- [Guides for Specific Tools](#guides-for-specific-tools)
+  - [GIMP](#gimp)
+  - [GraphicsGale](#graphicsgale)
+
 ## Indexing
 Indexing is a process that converts an image from having a specific color assigned to each individual pixel to having a centralized palette where the RGB(A) values are stored.
 

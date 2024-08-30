@@ -12,19 +12,19 @@ tags:
 
 This is a tutorial on how to change the HP Bar speed in gen 4 games. You'll need an Hex Editor and either Tinke 0.9.2 (Platinum) or CrystalTile2 (HGSS).
 
---- 
+---
 ## Table of Contents
-* [Cy's Hex Macros](#section)
-* [Hex Editing](#section-2)
-  * [Extracting the files](#subsection)
-  * [Changing the Speed](#subsection-1)
-  * [Reinserting the files](#subsection-2)
+* [Cy's Hex Macros](#cys-hex-macros)
+* [Hex Editing](#hex-editing)
+    * [Extracting the files](#extracting-the-files)
+    * [Changing the Speed](#changing-the-speed)
+    * [Reinserting the files](#reinserting-the-files)
 
 ## Cy's Hex Macros
 
 For Platinum, if 2x speed is enough for your needs, you can use [Cy's Hex Macros](https://github.com/dev-cyw/Cy-s-Hex-Macros/releases/tag/v1.2).
 
-Run the program and select the arm9.bin in your DSPRE's extracted folder, then click the appropriate button. 
+Run the program and select the arm9.bin in your DSPRE's extracted folder, then click the appropriate button.
 When you load your project in DSPRE in order to export the ROM, remember to **not** re-extract it.
 
 
@@ -49,19 +49,19 @@ Open the overlay in a hex editor, then go to the following offset:
 
 Then, replace the bytes at this offset with the following sequence, depending on the speed you want to have:
 
-<details> 
+<details>
  <summary>HGSS</summary>
  <div>
   | Byte Sequence  | Speed |
-  | ------------- | ------------- |  
+  | ------------- | ------------- |
   | 80 01 | x0.25 |
-  | C0 01 | x0.5  | 
-  | 40 02 | x2  | 
-  | 80 02 | x4  | 
-  | C0 02 | x8  | 
+  | C0 01 | x0.5  |
+  | 40 02 | x2  |
+  | 80 02 | x4  |
+  | C0 02 | x8  |
   </div>
 If you want a speed that is not listed above:
-<details> 
+<details>
  <summary>HGSS - Custom Speed</summary>
  <div>
  1) You'll need to use either [Shell-storm online assembler and disassembler](https://shell-storm.org/online/Online-Assembler-and-Disassembler/) or an assembler like [Armips](https://github.com/Kingcom/armips)
@@ -69,21 +69,21 @@ If you want a speed that is not listed above:
  3) Paste the assembled bytes in the overlay
  </div>
 </details>
- 
+
 </details>
 
-<details> 
+<details>
  <summary>Platinum</summary>
- 
+
  <div>
 | Byte Sequence  | Speed |
-| ------------- | ------------- |  
+| ------------- | ------------- |
 | 88 1E | x2 |
-| C8 1E | x3  | 
-| 08 1F | x4  | 
-| 48 1F | x5  | 
-| 88 1F | x6  | 
-| C8 1F | x7  | 
+| C8 1E | x3  |
+| 08 1F | x4  |
+| 48 1F | x5  |
+| 88 1F | x6  |
+| C8 1F | x7  |
 </div>
 </details>
 
@@ -93,28 +93,28 @@ If you want to fine-tune the speed Animation:
   <summary>How to fine-tune the speed Animation (HGSS only):</summary>
   <div>
   1) If you haven't already, you need to expand the arm9 using DSPRE's toolbox
-  
+
   2) Paste this at 0x14FF0 of your synthetic overlay file:
   ```
-  2D 2D 48 50 20 42 41 52 20 53 50 45 45 44 2D 2D 
+  2D 2D 48 50 20 42 41 52 20 53 50 45 45 44 2D 2D
   80 21 49 00 48 43 11 1C 70 47 C0 46 FF FF FF FF
   ```
   * The first byte of the second row (default is `0x80`) represents the speed "fine control".
-  
+
   * `80 21 49 00` means the speed is 128\*2 = 256. [x1]
   * `A0 21 49 00` means the speed is 160\*2 = 320. [x1.25]
   * `C0 21 49 00` means the speed is 192\*2 = 384. [x1.5]
   * ...up to `FF 21 49 00`, which means the speed is 255\*2 = 510. [x1.9921]
-  
-  * The third byte of the second row (default is `0x49`) acts as a cumulative multiplier, or "coarse control". 
+
+  * The third byte of the second row (default is `0x49`) acts as a cumulative multiplier, or "coarse control".
 
   * Increasing that value will allow you to set the speed even higher.
-  
+
   * `60 21 89 00` means the speed is 96\*4 = 384. [x1.5]
   * `80 21 89 00` means the speed is 128\*4 = 512. [x2]
   * `EC 21 89 00` means the speed is 236\*4 = 944. [x3.6875]
   * ...up to `FF 21 89 00`, which means the speed is 255\*4 = 1020. [x3.9843]
-  
+
   3) Paste `77 F1 D1 FA` at `0x2E17A` offset of uncompressed overlay12.
   </div>
 </details>
