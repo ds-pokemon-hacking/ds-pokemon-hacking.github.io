@@ -28,6 +28,7 @@ create some new space for additional data or code.
 * [Required Tools](#required-tools)
 * [Code Insertion](#code-insertion)
   * [Bugfix: Alternate Form Stat Recalculation](#bugfix-alternate-form-stat-recalculation)
+* [Implementation Caveats](#implementation-caveats)
 * [Code Breakdown](#code-breakdown)
 
 ## Required Tools
@@ -124,6 +125,42 @@ open in your hex editor:
 
 1. Navigate to `0x079532`. You should see the bytes `C0 46 C0 46 C0 46`.
 2. Replace these bytes with `30 1C FA F7 40 FE`.
+
+## Implementation Caveats
+
+As with its similar implementation in Heart Gold, the usual caveats when modifying
+trainer Pokemon apply.
+
+1. When setting a given Pokemon in a trainer's team to use Ability 2, all Pokemon
+in later team slots will *also* use Ability 2 until one of them is explicitly
+flagged to use Ability 1.
+2. When setting a given Pokemon to be forced Male or Female, that Pokemon will
+implicitly be flagged to have Ability 2 *unless* the Pokemon's species is
+configured to be Male-only or Female-only (e.g., Nidoking, Miltank). This also
+applies to Pokemon species which are genderless (e.g., Mewtwo, Magneton): any
+such Pokemon having a flag to set it to Male or Female would give it Ability 2,
+if applicable.
+
+As an illustration of these caveats, consider the following enemy trainer teams
+with no modifications to the species data structures:
+
+```text
+Lucario   - no flags set        <- has Steadfast (Ability 1)
+Breloom   - Ability 2 flag set  <- has Poison Heal (Ability 2)
+Kingdra   - no flags set        <- has Sniper (Ability 2)
+Swampert  - no flags set        <- has Torrent (only valid Ability)
+Machamp   - Ability 1 flag set  <- has Guts (Ability 1)
+Magnezone - Male flag set       <- has Sturdy (Ability 2)
+```
+
+```text
+Scizor     - Ability 2 flag set  <- has Technician (Ability 2)
+Rotom-Heat - no flags set        <- has Levitate (only valid Ability)
+Tauros     - no flags set        <- has Anger Point (Ability 2)
+Miltank    - Female flag set     <- has Thick Fat (Ability 1)
+Flygon     - Male flag set       <- has Levitate (only valid Ability)
+Gliscor    - no flags set        <- has Sand Veil (Ability 2)
+```
 
 ## Code Breakdown
 
