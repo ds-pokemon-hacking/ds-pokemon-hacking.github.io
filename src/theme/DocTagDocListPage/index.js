@@ -9,7 +9,7 @@ import {
 } from '@docusaurus/theme-common';
 import Translate, {translate} from '@docusaurus/Translate';
 import SearchMetadata from '@theme/SearchMetadata';
-import Unlisted from '@theme/Unlisted';
+import Unlisted from '@theme/ContentVisibility/Unlisted';
 import Heading from '@theme/Heading';
 // Very simple pluralization: probably good enough for now
 function useNDocsTaggedPlural() {
