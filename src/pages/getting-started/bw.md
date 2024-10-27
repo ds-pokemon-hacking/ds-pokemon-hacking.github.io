@@ -12,10 +12,10 @@ To start, you first need to obtain a dump of the game.<br/>
 
 For this, you will need: 
 - A Pokémon Black Version or Pokémon White Version cartridge.
-- A modified Nintendo DS/DSi/3DS.
+- A modified Nintendo DSi/3DS.
 - [GodMode9i](https://github.com/DS-Homebrew/GodMode9i).
 
-1. Launch `GodMode9i` on your DS.
+1. Launch `GodMode9i` on your console.
 2. Ensure the game cartridge is inserted.
 3. Select the `NDS GAMECARD` option in `GodMode9i`.
 4. Press `A` (yes) to dump the ROM.
