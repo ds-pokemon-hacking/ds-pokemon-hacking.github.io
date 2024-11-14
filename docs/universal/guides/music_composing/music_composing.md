@@ -31,6 +31,9 @@ An important range to remember when dealing with MIDI music is 0-127. Those numb
   - [Creating drumsets](#creating-drumsets)
   - [Creating programmable sound generation (PSG) instruments](#creating-programmable-sound-generation-psg-instruments)
   - [Creating noise instruments](#creating-noise-instruments)
+- [Custom samples](#custom-samples)
+- [Notes: About .STRM](#notes-about-strm)
+- [Adding new sequences](#adding-new-sequences)
 
 ### SWAR
 
@@ -52,7 +55,7 @@ In practice, percussive and melodic programs on the DS are more or less the same
 
 Now what most of you are probably here for. This is your sequence file, which contains instructions for how and when the system should actually produce sound, i.e. the actual music, meaning this where stuff like notes, panorama, volume, and expression will go. To create one usually involves exporting a MIDI from a DAW and feeding it through a converter that interprets MIDI controller events as commands the DS can actually process. I say "usually" as you can technically make an SSEQ entirely in plaintext or using the python library ndspy, but I have no envy for the people that choose to go through that shit for being too lazy to learn even the most basic tenets of music production.
 
-ndspy's API has a full list of the commands available in SSEQ, but just looking at official SSEQs through Nitro Studio 2 Deluxe's plaintext editor will tell you a lot of what you need to know as well. I'm not going to go through every single one because I don't understand them all that's not really the point of this guide, so I'll go over some of the ones you'll be using the most often:
+ndspy's API has a full list of the commands available in SSEQ, but just looking at official SSEQs through Nitro Studio 2 Deluxe's plaintext editor will tell you a lot of what you need to know as well. I'm not going to go through every single one because ~~I don't understand them all~~ that's not really the point of this guide, so I'll go over some of the ones you'll be using the most often:
 
 - The Modulation commands\
 Also known as low frequency oscillator, or "LFO", commands, these control when and how individual tracks respond to modulation. Most of these range from 0 to 127 unless otherwise noted. These are the following:
@@ -89,6 +92,8 @@ But enough prattle. How do you actually write music for DS games? The process is
 As I said in the insertion guide, each DAW has a varying level of compatibility with writing MIDI music. It's not *impossible* with most DAWs, but it does necessitate more work if the one you're using is not designed for it. And obviously there's no right or wrong answer to this question, since everyone has their own M.O.; asking it is usually a sign that you don't have one.
 
 Another thing to note is that the DS has an absolute maximum voice limit of 16, sound effects included. As such, you will rarely get the full 16 and will have to work towards a limit of 13 or 14 voices (that is assuming your player even supports 16 voices, but that's a discussion being saved for the very end). This also means that you likely will not use all 16 channels (and you probably should not, lest your MIDI be wasteful). Similarly, because of this, even though you can use Channel 10 melodically, in practice you shouldn't, as you can get a full sounding MIDI while touching 12 channels at most, and you likely will not be utilizing all 16 channels to even justify using Channel 10 in the first place anyway.
+
+I also strongly advise using time signature changes whenever applicable, as the converter uses them to decide how to partition patterns. For instance, if you are writing a track in 3/4 time, but your exported MIDI has 4/4 time, then the converter will create patterns every 4 beats instead of every 3 beats, which won't be entirely logical because the track's parts don't necessarily divide evenly into that. This also applies if you have multiple time signature changes in your track, as you can ensure that a part in 6/4 time for instance gets partitioned differently from a part in 4/4. In my experience this can shave off a couple kilobytes off your final SSEQ, and in a place in which you already have a very small pool of memory to work with, every byte counts.
 
 ## Continuous Controller (CC) list
 
