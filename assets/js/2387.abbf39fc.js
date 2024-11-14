@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkodsh_wiki_new=self.webpackChunkkodsh_wiki_new||[]).push([[2387],{82387:(e,k,s)=>{s.d(k,{createGitGraphServices:()=>i.b});var i=s(82785);s(19369)}}]);
