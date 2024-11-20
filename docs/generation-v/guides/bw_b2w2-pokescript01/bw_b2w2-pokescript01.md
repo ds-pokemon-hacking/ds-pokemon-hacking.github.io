@@ -144,10 +144,10 @@ to keep track of what script ID it will be.
 You may notice how the functions in the script file are labeled `main_1()`, 
 `main_2()`, and so on. This lines up with script ID 1, script ID 2, and so on. 
 You don't need to name your functions this way, but it's good to label the 
-first public function as main_1() and the second public function as main_2() 
+first public function as `main_1()` and the second public function as `main_2()` 
 or making a comment of the ID that matches with the function. If you make 
-the game use script ID 2 for an NPC, it doesn't matter if it's named main_2() 
-or RunMyReallyCoolScript(), as long as it is the second 
+the game use script ID 2 for an NPC, it doesn't matter if it's named `main_2()` 
+or `RunMyReallyCoolScript()`, as long as it is the second 
 `public static void` function in the script file, that's what will be used.
 
 :::
@@ -157,7 +157,7 @@ implies, it makes all the NPCs on the map stop moving and resume moving respecti
 For most events, you'll probably want these so the NPC you're talking to doesn't
 just walk away from you while you're talking to them accidentally.
 
-After this, we have `Sound.SEPlay(1351)`. With Sound.SEPlay() we can play any
+After this, we have `Sound.SEPlay(1351)`. With `Sound.SEPlay()` we can play any
 sound effect that we want! In this case, sound effect 1351 is SE_MESSAGE.
 
 :::tip
@@ -228,29 +228,29 @@ Wow, look! They can talk now!
 
 To break this down, let's look at this bit by bit, too.
 
-- Message.Actor() makes a textbox that comes from an NPC you directly had
+- `Message.Actor()` makes a textbox that comes from an NPC you directly had
 to interact with to start the script. If you want it to come from someone
-else, you'll have to use Message.ActorEx(). Using the non-ex version is
+else, you'll have to use `Message.ActorEx()`. Using the non-ex version is
 handy though because you don't need to specify who's talking, but in
 some cases you might need to.
 
-- The first argument of Message.Actor() is the container of messages that
+- The first argument of `Message.Actor()` is the container of messages that
 the dialogue box will use. But, when you use 1024 as the container, the
 game knows just to use the default one for scripts on the map (which you
 can see in the Zone Loader tab.) Generally, you can just keep this at
 1024 without worrying too much about it.
 
-- The second argument of Message.Actor() is the message that will be used
+- The second argument of `Message.Actor()` is the message that will be used
 for the text box. In this case, the message we wrote in message 131
 from Aspertia City's message container will be shown.
 
-- The third argument of Message.Actor() is the position of the text box.
+- The third argument of `Message.Actor()` is the position of the text box.
 Since we selected 0, it will automatically place the text box.
 Try comparing talking to your NPC from above them compared to
 below them! If we select 1, the text box will always show on
 top and if we select 2, the text box will always show on the bottom.
 
-- The fourth and final argument of Message.Actor() is the message box type.
+- The fourth and final argument of `Message.Actor()` is the message box type.
 If you use 0, it'll just be the standard talking frame, but if you set
 it to 1, it'll become spiky. There is a thought bubble box if you select
 option 2, but the text box arrow partly breaks it.
@@ -258,14 +258,14 @@ option 2, but the text box arrow partly breaks it.
 Yikes! That's a lot of parameters to remember, right? Fret not! There's
 a document with all the commands in the game right [here](https://docs.google.com/spreadsheets/d/1zvLQFVdv6kbEgP9TY9yfV6ChK0qsz79E6PvF5lohnGk/edit#gid=0)!
 
-Anyway, to continue, we have Input.LastKeyWait(). This command paired
-with something like Message.CloseAll() are great when you're at the
+Anyway, to continue, we have `Input.LastKeyWait()`. This command paired
+with something like `Message.CloseAll()` are great when you're at the
 end of a script and you're OK with the player immediately walking
 away after the NPC is done talking. Without this, if your message
 didn't have a `\c` character to show the next message cursor, the
 text box would close as soon as the text was done printing! How rude!
 
-Our last new addition is Message.CloseAll(). This closes text boxes
+Our last new addition is `Message.CloseAll()`. This closes text boxes
 of any type. Right now, we've only seen Actor-type text boxes, but
 if you look at the [script command doc](https://docs.google.com/spreadsheets/d/1zvLQFVdv6kbEgP9TY9yfV6ChK0qsz79E6PvF5lohnGk/edit?usp=sharing), you might see other box
 types such as the place sign or info boxes. This command closes
@@ -280,4 +280,4 @@ You must use a close command every time you use a message command. If you don't,
 Congrats! Now that you've done this, you can make an NPC that
 can talk to you! ...What do you mean you want to do more than that?
 
-Well, luckily for you, there's another part! ...Coming soon, so sit tight!
+Well, luckily for you, there's another part! ...Coming soon, so sit tight! In the meantime, though, feel free to join the [DS Modding Community Discord server](https://discord.gg/YBtdN3aXfv) for support with scripting and more!
