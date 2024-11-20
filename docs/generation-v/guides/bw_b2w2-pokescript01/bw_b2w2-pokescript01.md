@@ -1,13 +1,15 @@
 ---
-title: Scripting (Generation V)
+title: 'Hands-on with PokéScript: Our First Script'
 tags:
   - Guide (Black)
   - Guide (White)
   - Guide (Black 2)
   - Guide (White 2)
+  - Hands-on with PokéScript
+  - Hands-on with...
 ---
 
-# Event Scripting (Generation V)
+# Hands-on with PokéScript:<br />Our First Script
 > Author(s): [Brom](https://github.com/brombrombromley)
 
 What do a static encounter with a Legendary Pokémon, a talk with a Gym Leader, and a guy talking about technology have in common? They all make use of scripting! Getting started with scripting may be a little scary at first, but with some guidance, it can actually start to be pretty fun. By the end of this guide, you will be able to have a basic NPC that you can talk to like in this video here:
@@ -112,7 +114,7 @@ the script file since they don't have a real name!
 
 For our new script, let's call the function for it `main_34()` and we'll
 make a code block like this:
-```
+```java
 public static void main_34() {
 	Actor.PauseAll();
 	Sound.SEPlay(1351);
@@ -200,13 +202,13 @@ Give your NPC something to say! Have some fun!
 Once you're done writing some dialogue, let's go back to our script function,
 `main_34()`. After the command that makes the NPC face the player, let's
 make them speak. Assuming your new dialogue message is message 131, we'll add
-```
+```java
 Message.Actor(1024, 131, 0, 0);
 Input.LastKeyWait();
 Message.CloseAll();
 ```
 so then your function should look like this:
-```
+```java
 public static void main_34() {
 	Actor.PauseAll();
 	Sound.SEPlay(1351);
@@ -224,31 +226,31 @@ Again, let's export another ROM and look at what we see.
 
 Wow, look! They can talk now!
 
-To break this down, let's look at this line by line, too.
+To break this down, let's look at this bit by bit, too.
 
-Message.Actor() makes a textbox that comes from an NPC you directly had
+- Message.Actor() makes a textbox that comes from an NPC you directly had
 to interact with to start the script. If you want it to come from someone
 else, you'll have to use Message.ActorEx(). Using the non-ex version is
 handy though because you don't need to specify who's talking, but in
 some cases you might need to.
 
-The first argument of Message.Actor() is the container of messages that
+- The first argument of Message.Actor() is the container of messages that
 the dialogue box will use. But, when you use 1024 as the container, the
 game knows just to use the default one for scripts on the map (which you
 can see in the Zone Loader tab.) Generally, you can just keep this at
 1024 without worrying too much about it.
 
-The second argument of Message.Actor() is the message that will be used
+- The second argument of Message.Actor() is the message that will be used
 for the text box. In this case, the message we wrote in message 131
 from Aspertia City's message container will be shown.
 
-The third argument of Message.Actor() is the position of the text box.
+- The third argument of Message.Actor() is the position of the text box.
 Since we selected 0, it will automatically place the text box.
 Try comparing talking to your NPC from above them compared to
 below them! If we select 1, the text box will always show on
 top and if we select 2, the text box will always show on the bottom.
 
-The fourth and final argument of Message.Actor() is the message box type.
+- The fourth and final argument of Message.Actor() is the message box type.
 If you use 0, it'll just be the standard talking frame, but if you set
 it to 1, it'll become spiky. There is a thought bubble box if you select
 option 2, but the text box arrow partly breaks it.
