@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.6.2">
 <title data-rh="true">Hands-on with PokéScript: Our First Script | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-pokescript01/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Hands-on with PokéScript: Our First Script | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Author(s): Brom"><meta data-rh="true" property="og:description" content="Author(s): Brom"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-pokescript01/"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-pokescript01/" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-pokescript01/" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.a9d91878.css">
-<script src="/assets/js/runtime~main.d191867f.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.31127fb0.js" defer="defer"></script>
 <script src="/assets/js/main.018d9663.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -93,16 +93,16 @@ to keep track of what script ID it will be.</p>
 <div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p>You may notice how the functions in the script file are labeled <code>main_1()</code>,
 <code>main_2()</code>, and so on. This lines up with script ID 1, script ID 2, and so on.
 You don&#x27;t need to name your functions this way, but it&#x27;s good to label the
-first public function as main_1() and the second public function as main_2()
+first public function as <code>main_1()</code> and the second public function as <code>main_2()</code>
 or making a comment of the ID that matches with the function. If you make
-the game use script ID 2 for an NPC, it doesn&#x27;t matter if it&#x27;s named main_2()
-or RunMyReallyCoolScript(), as long as it is the second
+the game use script ID 2 for an NPC, it doesn&#x27;t matter if it&#x27;s named <code>main_2()</code>
+or <code>RunMyReallyCoolScript()</code>, as long as it is the second
 <code>public static void</code> function in the script file, that&#x27;s what will be used.</p></div></div>
 <p>Next, we&#x27;ll look at <code>Actor.PauseAll()</code> and <code>Actor.UnpauseAll()</code>. As the name
 implies, it makes all the NPCs on the map stop moving and resume moving respectively.
 For most events, you&#x27;ll probably want these so the NPC you&#x27;re talking to doesn&#x27;t
 just walk away from you while you&#x27;re talking to them accidentally.</p>
-<p>After this, we have <code>Sound.SEPlay(1351)</code>. With Sound.SEPlay() we can play any
+<p>After this, we have <code>Sound.SEPlay(1351)</code>. With <code>Sound.SEPlay()</code> we can play any
 sound effect that we want! In this case, sound effect 1351 is SE_MESSAGE.</p>
 <div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p>You can look at the other sound effects <a href="https://docs.google.com/spreadsheets/d/17YDObYDZWu4hioMmH4tQqln4a4Dzz_vXj5jfKWwvUDI/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer">here</a> or even better,
 a tool like <a href="https://github.com/Lonk12/NitroStudio2Deluxe/releases/download/v0.2.2.2/Nitro.Studio.2.Deluxe.Zipped.zip" target="_blank" rel="noopener noreferrer">Nitro Studio 2 Deluxe</a> can be used if you want to hear the
@@ -134,33 +134,33 @@ make them speak. Assuming your new dialogue message is message 131, we&#x27;ll a
 <p>To break this down, let&#x27;s look at this bit by bit, too.</p>
 <ul>
 <li>
-<p>Message.Actor() makes a textbox that comes from an NPC you directly had
+<p><code>Message.Actor()</code> makes a textbox that comes from an NPC you directly had
 to interact with to start the script. If you want it to come from someone
-else, you&#x27;ll have to use Message.ActorEx(). Using the non-ex version is
+else, you&#x27;ll have to use <code>Message.ActorEx()</code>. Using the non-ex version is
 handy though because you don&#x27;t need to specify who&#x27;s talking, but in
 some cases you might need to.</p>
 </li>
 <li>
-<p>The first argument of Message.Actor() is the container of messages that
+<p>The first argument of <code>Message.Actor()</code> is the container of messages that
 the dialogue box will use. But, when you use 1024 as the container, the
 game knows just to use the default one for scripts on the map (which you
 can see in the Zone Loader tab.) Generally, you can just keep this at
 1024 without worrying too much about it.</p>
 </li>
 <li>
-<p>The second argument of Message.Actor() is the message that will be used
+<p>The second argument of <code>Message.Actor()</code> is the message that will be used
 for the text box. In this case, the message we wrote in message 131
 from Aspertia City&#x27;s message container will be shown.</p>
 </li>
 <li>
-<p>The third argument of Message.Actor() is the position of the text box.
+<p>The third argument of <code>Message.Actor()</code> is the position of the text box.
 Since we selected 0, it will automatically place the text box.
 Try comparing talking to your NPC from above them compared to
 below them! If we select 1, the text box will always show on
 top and if we select 2, the text box will always show on the bottom.</p>
 </li>
 <li>
-<p>The fourth and final argument of Message.Actor() is the message box type.
+<p>The fourth and final argument of <code>Message.Actor()</code> is the message box type.
 If you use 0, it&#x27;ll just be the standard talking frame, but if you set
 it to 1, it&#x27;ll become spiky. There is a thought bubble box if you select
 option 2, but the text box arrow partly breaks it.</p>
@@ -168,13 +168,13 @@ option 2, but the text box arrow partly breaks it.</p>
 </ul>
 <p>Yikes! That&#x27;s a lot of parameters to remember, right? Fret not! There&#x27;s
 a document with all the commands in the game right <a href="https://docs.google.com/spreadsheets/d/1zvLQFVdv6kbEgP9TY9yfV6ChK0qsz79E6PvF5lohnGk/edit#gid=0" target="_blank" rel="noopener noreferrer">here</a>!</p>
-<p>Anyway, to continue, we have Input.LastKeyWait(). This command paired
-with something like Message.CloseAll() are great when you&#x27;re at the
+<p>Anyway, to continue, we have <code>Input.LastKeyWait()</code>. This command paired
+with something like <code>Message.CloseAll()</code> are great when you&#x27;re at the
 end of a script and you&#x27;re OK with the player immediately walking
 away after the NPC is done talking. Without this, if your message
 didn&#x27;t have a <code>\c</code> character to show the next message cursor, the
 text box would close as soon as the text was done printing! How rude!</p>
-<p>Our last new addition is Message.CloseAll(). This closes text boxes
+<p>Our last new addition is <code>Message.CloseAll()</code>. This closes text boxes
 of any type. Right now, we&#x27;ve only seen Actor-type text boxes, but
 if you look at the <a href="https://docs.google.com/spreadsheets/d/1zvLQFVdv6kbEgP9TY9yfV6ChK0qsz79E6PvF5lohnGk/edit?usp=sharing" target="_blank" rel="noopener noreferrer">script command doc</a>, you might see other box
 types such as the place sign or info boxes. This command closes
@@ -182,6 +182,6 @@ these message boxes, too.</p>
 <div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><p>You must use a close command every time you use a message command. If you don&#x27;t, the message box can stick on the screen even after the event and potentially make the game perform weird behaviors otherwise.</p></div></div>
 <p>Congrats! Now that you&#x27;ve done this, you can make an NPC that
 can talk to you! ...What do you mean you want to do more than that?</p>
-<p>Well, luckily for you, there&#x27;s another part! ...Coming soon, so sit tight!</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-pokescript01/bw_b2w2-pokescript01.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_VsjB"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/generation-v/guides/bw_b2w2-map_insertion/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Map Insertion (Generation V)</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/generation-v/guides/bw_b2w2-using_ctrmap/"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Using CTRMap</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#loading-into-our-map" class="table-of-contents__link toc-highlight">Loading into our map</a></li><li><a href="#making-our-new-npc" class="table-of-contents__link toc-highlight">Making our new NPC</a></li><li><a href="#making-our-new-script" class="table-of-contents__link toc-highlight">Making our new script</a></li><li><a href="#giving-our-npc-something-to-say" class="table-of-contents__link toc-highlight">Giving our NPC something to say</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2024 DS Pokémon Hacking. Built with Docusaurus.</div></div></div></footer></div>
+<p>Well, luckily for you, there&#x27;s another part! ...Coming soon, so sit tight! In the meantime, though, feel free to join the <a href="https://discord.gg/YBtdN3aXfv" target="_blank" rel="noopener noreferrer">DS Modding Community Discord server</a> for support with scripting and more!</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/docs/generation-v/guides/bw_b2w2-pokescript01/bw_b2w2-pokescript01.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_VsjB"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/generation-v/guides/bw_b2w2-map_insertion/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Map Insertion (Generation V)</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/generation-v/guides/bw_b2w2-using_ctrmap/"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Using CTRMap</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#loading-into-our-map" class="table-of-contents__link toc-highlight">Loading into our map</a></li><li><a href="#making-our-new-npc" class="table-of-contents__link toc-highlight">Making our new NPC</a></li><li><a href="#making-our-new-script" class="table-of-contents__link toc-highlight">Making our new script</a></li><li><a href="#giving-our-npc-something-to-say" class="table-of-contents__link toc-highlight">Giving our NPC something to say</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2024 DS Pokémon Hacking. Built with Docusaurus.</div></div></div></footer></div>
 </body>
 </html>
