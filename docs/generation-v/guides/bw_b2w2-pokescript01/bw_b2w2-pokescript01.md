@@ -15,7 +15,7 @@ tags:
 What do a static encounter with a Legendary Pokémon, a talk with a Gym Leader, and a guy talking about technology have in common? They all make use of scripting! With this tutorial series, we will be learning how to script using PokéScript, a language made specifically for scripting in CTRMap by [Hello007](https://github.com/HelloOO7) and [PlatinumMaster](https://github.com/PlatinumMaster). Getting started with scripting may be a little scary at first, but with some guidance, it can actually start to be pretty fun. By the end of this guide, you will be able to have a basic NPC that you can talk to like in this video here:
 
 <video controls>
-  <source src="/video/generation-v/guides/bw_b2w2-pokescript/script_demo01.mp4" type="video/mp4"/>
+  <source src="/video/generation-v/guides/bw_b2w2-pokescript01/script_demo01.mp4" type="video/mp4"/>
 </video>
 
 
