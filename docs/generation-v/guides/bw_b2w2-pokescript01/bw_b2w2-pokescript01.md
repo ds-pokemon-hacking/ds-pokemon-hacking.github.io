@@ -12,10 +12,10 @@ tags:
 # Hands-on with PokéScript:<br />Our First Script
 > Author(s): [Brom](https://github.com/brombrombromley)
 
-What do a static encounter with a Legendary Pokémon, a talk with a Gym Leader, and a guy talking about technology have in common? They all make use of scripting! Getting started with scripting may be a little scary at first, but with some guidance, it can actually start to be pretty fun. By the end of this guide, you will be able to have a basic NPC that you can talk to like in this video here:
+What do a static encounter with a Legendary Pokémon, a talk with a Gym Leader, and a guy talking about technology have in common? They all make use of scripting! With this tutorial series, we will be learning how to script using PokéScript, a language made specifically for scripting in CTRMap by [Hello007](https://github.com/HelloOO7) and [PlatinumMaster](https://github.com/PlatinumMaster). Getting started with scripting may be a little scary at first, but with some guidance, it can actually start to be pretty fun. By the end of this guide, you will be able to have a basic NPC that you can talk to like in this video here:
 
 <video controls>
-  <source src="/video/generation-v/guides/bw_b2w2-pokescript/script_demo01.mp4" type="video/mp4"/>
+  <source src="/video/generation-v/guides/bw_b2w2-pokescript01/script_demo01.mp4" type="video/mp4"/>
 </video>
 
 
@@ -51,7 +51,7 @@ create a new NPC. You can click and drag the NPC to place it where
 you'd like on the map, but you can also type in the coordinates
 manually in the location box.
 
-For now, let's put an NPC at X 50, Y 16, Z 763 and having the NPC
+For now, let's put an NPC at `(x: 50, y: 16, z: 763)` and having the NPC
 face to the right by setting the orientation to “East.” With the “Model No.” field, we can change the graphic used by our NPC as well. Feel free to set it to whatever you'd like!
 
 :::note
@@ -280,4 +280,4 @@ You must use a close command every time you use a message command. If you don't,
 Congrats! Now that you've done this, you can make an NPC that
 can talk to you! ...What do you mean you want to do more than that?
 
-Well, luckily for you, there's another part! ...Coming soon, so sit tight! In the meantime, though, feel free to join the [DS Modding Community Discord server](https://discord.gg/YBtdN3aXfv) for support with scripting and more!
+Well, luckily for you, [there's another part](/generation-v/guides/bw_b2w2-pokescript02/bw_b2w2-pokescript02.md)! If you need any additional support join the [DS Modding Community Discord server](https://discord.gg/YBtdN3aXfv) to get help with scripting and more!
