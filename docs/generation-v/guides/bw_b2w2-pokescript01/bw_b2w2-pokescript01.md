@@ -280,4 +280,4 @@ You must use a close command every time you use a message command. If you don't,
 Congrats! Now that you've done this, you can make an NPC that
 can talk to you! ...What do you mean you want to do more than that?
 
-Well, luckily for you, there's another part! ...Coming soon, so sit tight! In the meantime, though, feel free to join the [DS Modding Community Discord server](https://discord.gg/YBtdN3aXfv) for support with scripting and more!
+Well, luckily for you, [there's another part](/generation-v/guides/bw_b2w2-pokescript02/bw_b2w2-pokescript02.md)! If you need any additional support join the [DS Modding Community Discord server](https://discord.gg/YBtdN3aXfv) to get help with scripting and more!
