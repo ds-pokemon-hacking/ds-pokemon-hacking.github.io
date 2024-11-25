@@ -31,13 +31,13 @@ If you remember from the last part, if you don't reload a map after adding a new
 
 :::
 
-After getting the save file loaded, let's get back into our CTRMap project and head to Zone 430 using the Zone Loader. Now that we're in Zone 430, let's add another NPC just like how we did in the [first part](/generation-v/guides/bw_b2w2-pokescript01/bw_b2w2-pokescript01.md) and place it at X 12, Z 4 and have it face to the west like so. 
+After getting the save file loaded, let's get back into our CTRMap project and head to Zone 430 using the Zone Loader. Now that we're in Zone 430, let's add another NPC just like how we did in the [first part](/generation-v/guides/bw_b2w2-pokescript01/bw_b2w2-pokescript01.md) and place it at `(x: 12, z: 4)` and have it face to the west like so. 
 
 ![We have placed our Janitor NPC in front of the fridge in the kitchen](resources/in_rival_house01.png)
 
 :::note
 
-In this case, I have set the `Model No.` field to 69 (😳) to be a Janitor in order to match the Trainer party we will be using later in this guide.
+In this case, I have set the `Model No.` field to 69 to be a Janitor in order to match the Trainer party we will be using later in this guide.
 
 :::
 
@@ -269,7 +269,7 @@ You may have noticed that with this save, you don't have any Pokémon. Let's cha
 
 For this, normally we'd need to import the `PokeParty` package from `pokemon.PokeParty`, but since this map already has this imported, we don't have to worry about it like we did for our List Menus and Yes/No Windows!
 
-To add a Pokémon to the player's party, we'll use `PokePart.AddPkm()`. If we wanted to give the player a Level 15 Magikarp for example, we would write:
+To add a Pokémon to the player's party, we'll use `PokeParty.AddPkm()`. If we wanted to give the player a Level 15 Magikarp for example, we would write:
 ```java
 PokeParty.AddPkm(129, 0, 15);
 ```

@@ -51,7 +51,7 @@ create a new NPC. You can click and drag the NPC to place it where
 you'd like on the map, but you can also type in the coordinates
 manually in the location box.
 
-For now, let's put an NPC at X 50, Y 16, Z 763 and having the NPC
+For now, let's put an NPC at `(x: 50, y: 16, z: 763)` and having the NPC
 face to the right by setting the orientation to “East.” With the “Model No.” field, we can change the graphic used by our NPC as well. Feel free to set it to whatever you'd like!
 
 :::note
