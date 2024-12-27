@@ -8,7 +8,7 @@ tags:
 ---
 
 # Using CTRMap
-> Author(s): [PlatinumMaster](https://github.com/PlatinumMaster), [SpagoAsparago](https://github.com/SpagoAsparago)
+> Author(s): [PlatinumMaster](https://github.com/PlatinumMaster), [SpagoAsparago](https://github.com/SpagoAsparago), [Brom](https://github.com/brombrombromley)
 
 CTRMap is an experimental level and script editor with strong emphasis on graphical interface and interactivity. It has the goal of facilitating the modification of Generation V games, allowing for modifications to scripts, text, field object properties, dynamic camera placements, and more!
 
@@ -160,7 +160,7 @@ The toolbar at the top under the tab represents the editors which you can utiliz
 ---
 
 #### Proxy Editor
-The Proxy Editor allows for modifcation of the proxy field objects, which are interactable script objects.
+The Proxy Editor lets you change things like the location or script used by a proxy object. Proxy objects are good for things like invisible items, signs, or adding extra environmental descriptions to something in the field.
 
 ![](img/image-15.png)
 
@@ -176,7 +176,7 @@ As shown in the screenshot, you can modify:
 ---
 
 #### NPC Editor
-The NPC Editor allows for modifcation of the NPCs on the map.
+The NPC Editor lets you edit things such as the placement or direction of an NPC along with things like which graphic or script is used by an NPC.
 
 ![](img/image-16.png)
 
@@ -191,8 +191,8 @@ As shown in the screenshot, you can modify:
 - `Script`: The script in the container which is assigned to the NPC.
 - `X`/`Y`/`Z`: The grid coordinates (either by typing, or dragging the object in perspective mode).
 - `Orientation`: The default facing of the NPC.
-- `MoveCode`: ???
-- `Behavior`: The movement which the NPC does.
+- `MoveCode`: The default movement of the NPC.
+- `Behavior`: The behavior that the NPC will use such as being a Trainer that battles on sight.
 - `Area Width/Height`: The region which the NPC is allowed to perform its behavior.
 - `User Parameters`: Parameters which can be passed into scripts for later usage (for example, line of sight, the level of wild Foongus, etc).
 
@@ -247,13 +247,15 @@ The Building Editor allows for modification of the building field objects, which
 The dropdown on the sidebar allows you to select a given building object to modify.
 - To add a new building, click the `+` button.
 - To remove the selected building, click the `-` button.
-- To save your changes to the building, click the `Save` button.
+- To save your changes to the building, click the `Save` button. 
 
-In addition to specifying the `Location` and `Rotation`, you are able to change the model which the building shows up as by clicking on the list of buildings. The list of buildings comes from the currently assigned resource bundle (specified by the zone header).
+**Do keep in mind that for maps that get used in multiple locations such as house interiors, updating things like the location or data of building objects will update it in all the copied maps as well.**
+
+In addition to specifying the `Location` and `Rotation`, you are able to change the model which the building shows up as by clicking on the list of buildings. The list of buildings comes from the currently assigned resource bundle (specified by the zone's `Area resources` as seen in the `Zone Loader` tab.)
 
 ![](img/image-21.png)
 
-Since there are two sets of resource bundles (exterior resources, and interior resources), a checkbox can be found in the `Zone Loader` to toggle between the two sets.
+Interior and exterior building resources are separated into two different sets, but by using the checkbox in the `Zone Loader`, the sets can be toggled between easily.
 
 ![](img/image-20.png)
 
@@ -310,7 +312,7 @@ To import a model, click `Open in CS`. This will open CreativeStudio, where you 
 
 To import an animation and set it up correctly:
   - Material Animations: Make sure your animation controller is set to *Ambient Generic*, and `1 set, 4 animations`. Select the first **X** in the list, then click the blue arrow pointing downwards button, and select the `.nsbta` file you previously exported/created.
-  - Skeletal Animations: Same steps as above, the only differences are that you have to set the animation controllers to *Dynamic* instead, and you will import a `.nsbta` file.
+  - Skeletal Animations: Same steps as above, the only differences are that you have to set the animation controllers to *Dynamic* instead, and you will import a `.nsbca` file.
 
 ##### Exporting Resource Assets
 Select the building you want to export from the list on the left side of the editor, then click the *Open in CS* button right below.
@@ -321,7 +323,7 @@ About the different file types you can get, it's worth mentioning:
 * Nitro-SYSTEM Binary Model (`.nsbmd`)
 * WaveFront OBJ (`.obj`)
 
-If you're planning to import the building in a gen 4 game, both DSPRE and PDSMS building editors only acccept NSBMD files. For gen 5 games, both OBJ and DAE work but the latter is recommended.
+If you're planning to import the building in a Gen 4 game, both DSPRE and PDSMS building editors only acccept NSBMD files. For Gen 5 games, COLLADA (`.dae`) files are preferred due to keeping vertex color, bone data, and bone animations, but if none of those are needed, `.obj` models are accepted, too. 
 
 ##### Exporting Animations
 If the building you want to export has an animation, you can export it by selecting the animation on the menu on the right side of the editor after having selected the building, then click the *Open in CS* button right below it. This will open CreativeStudio, where you can then export it to whatever format you see fit.
@@ -334,19 +336,19 @@ In CreativeStudio, select the animation in the dropdown menu (it will be either 
 ![](img/animscs.PNG)
 
 ##### Saving Changes
-Click `Commit changes > Resource bundle` to save the changes you have made to your resource bundle, and `Commit changes > Static texture pack` to save the changes to the texture banks. From there, you should be able to use it.
+Click `Commit changes > Resource bundle` to save the changes you have made to your resource bundle, and `Commit changes > Static texture pack` to save the changes to the area's building texture pack. From there, you should be able to use it.
 
 ---
 
 #### Scripting Assistant Tool
-This helps to faciliate some PokeScript scripting.
+This tool is intended to help with PokéScript scripting, but at the moment, it only has the `EVCamera.MoveTo` helper.
 
 ![](img/image-27.png)
 
 ##### EVCamera.MoveTo Helper
-This will help you generate script command invocations for camera movement.
+This will help you generate script command calls for camera movement.
 
-When in MissionControl mode, move your player to a given location. When you click `Copy`, CTRMap will autogenerate a script command for you, which moves the camera to the location you specified with the angle you are facing. A sample command may look like this:
+When in MissionControl mode, move your player to a given location. When you click `Copy`, CTRMap will create a script command for you, which moves the in-game camera to approximately what is shown in the viewport window. A sample command may look like this:
 
 ```Java
 EVCamera.MoveTo(2.365234f, 0.0f, 237.0f, 3447.1162f, 4.0f, 10389.169f, 40);
@@ -363,12 +365,12 @@ This tool allows you to mess around with the 3D collision system, known as RailS
   <img src="img/image-28.png"></img>
 </p>
 
-At the moment, it does not save changes, as the tool is too volatile for daily usage.
+At the moment, it does not save changes, as the tool is too fragile for normal usage.
 
 ---
 
 #### Dynamic Camera Tool
-This tool allows you to create and modify dynamic cameras. However, the tool currently restricts you to editing zone with the cameras already built in.
+This tool allows you to create and modify dynamic cameras, similar to those on Route 4 or like the BDHCAM modification in the Gen 4 games. However, out of the box, the tool currently restricts you to editing zone with the cameras already built in.
 
 ![](img/image-33.png)
 
@@ -411,23 +413,42 @@ As shown in the screenshot, you are able to modify:
 
 This allows you to see the current scene geometry hierachies, as interpreted by CTRMap. This is *not* a accurate representation of what the game's geometry is.
 
-![](img/image-28.png)
+![](img/image-29.png)
 
 ---
 
 ### Zone Loader
 
-Allows you to edit zone properties (such as text and scripts).
+Allows you to edit zone properties (such as text and scripts.)
 
 ![](img/image-30.png)
+
+- `Area` - Chooses what area resource to load for the zone. This determines things like what textures, lighting data, and texture animations for zones that use this area resource. It should be noted, however, that all maps using an area resource will be changed if the area resources are modified.
+- `Matrix` - Chooses what map matrix is used for the zone. The matrix used is especially important to keep in mind for areas with repeated maps such as Pokémon Centers or house interiors since every area using that matrix will be changed if one of the maps in the matrix changes.
+- `Scripts` - Chooses what script container gets used for the map. This is useful to keep in mind when using other tools such as PlatinumMaster's [SwissArmyKnife (SAK)](https://github.com/PlatinumMaster/SwissArmyKnife).
+- `Level Scripts` - Although CTRMap writes the level scripts to this file like vanilla, the game doesn't seem to actually use this data. Instead, the game uses the data at the end of the Zone Entities file. While there is no dedicated editor yet, these can be edited by hex editing the Zone Entities file.
+- `Text` - Chooses what text data to load for the zone. The index used here will also be the message bank opened by default after loading a zone when going to the `Event Editor`.
+- `Encounters` - Chooses what encounter data file gets used for the zone.
+- `Entities` - Chooses the file to use for the data of NPCs, triggers, and proxies along with the data for level/init scripts.
+- `Cam boundaries` - Chooses the camera boundary file used for a zone. The effects of this can more easily be seen with interior maps when the camera stops moving once the player reaches a certain position. Right now, there is not a dedicated editor for this, but these can be hex edited as well.
+- `NPC Info cache` - Chooses the cache of NPC graphic data to preload for the zone. To not preload any NPC graphic data, this can be set to 24.
+- `Battle BG` - As the name implies, this determines what battle background gets used when a battle occurs in this zone.
+- `BGM` - The music sequence ID to use for this map. This ID can be found in the SDAT file with the rest of the sound data.
+- `Fly landing point` - Determines the spawn point for this map. When flying to a map or being placed in the map after the new game sequence, for example, these coordinates are used to place the player.
 ---
 
 ### Event Editor
 
 ![](img/image-31.png)
 
+- `Open in IDE` - Allows for editing a script using PokéScript. When the `Attempt to decompile` box is checked, if there isn't already a PokéScript project for the zone, it will try to convert the game's original scripts into PokéScript. Do note that this can potentially break existing scripts even if no further changes are made to the script after decompiling it. This is good to use, though, as a rough starting point for a script.
+- `Replace script file` - Allows for replacing the binary script file with another binary script file.
+- `Texts` - This section allows for editing text data with it defaulting to a zone's text bank after loading a zone.
+
 ---
 
 ### Extras
 
 ![](img/image-32.png)
+
+For more help on the `Code injection` section, take a look at the [code injection guide](/docs/generation-v/guides/bw_b2w2-code_injection/).
