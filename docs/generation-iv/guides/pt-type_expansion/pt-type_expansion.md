@@ -17,7 +17,7 @@ I want to preface this guide by saying that even just replacing existing types i
 
 This guide was only possible thanks to the work of Mikelan98 and BagBoy, who created the original Fairy type implementation for Platinum, which served as a starting point for this guide. I also want to thank everyone who worked on pokeplatinum, I am heavily relying on their work for this guide.
 
-Before you start: In addition to this guide I have created a  a folder with a couple of helpful files which is available [here](https://loremipsum.org/). Throughout this guide I will refer to these files as the "resources folder". The resources folder contains:
+Before you start: In addition to this guide I have created a  a folder with a couple of helpful files which is available [here](https://drive.google.com/file/d/10Ozf26GwUvjnUmsjasIDODuxoTa6RLNk/view?usp=sharing). Throughout this guide I will refer to these files as the "resources folder". The resources folder contains:
 - A readme file which you should read before starting
 - The `type_expansion_PLAT.asm` armips script
 - All python scripts mentioned in this guide
@@ -47,6 +47,7 @@ This version replaces the existing Mystery type with the Fairy type. It is a sim
 - [Nitro Paint](https://github.com/Garhoogin/NitroPaint/releases)
 - [HxD](https://mh-nexus.de/en/downloads.php?product=HxD) (or any other hex editor)
 - [Python](https://www.python.org/downloads/) - Or install from the Microsoft Store (optional, for the type chart and palette helper scripts)
+- The resources folder belonging to this guide which can be found [here](https://drive.google.com/file/d/10Ozf26GwUvjnUmsjasIDODuxoTa6RLNk/view?usp=sharing)
 
 ### Making space for the new type chart
 **Before you start, make a backup of your ROM!** <br />
