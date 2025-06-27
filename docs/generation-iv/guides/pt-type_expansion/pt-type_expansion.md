@@ -15,22 +15,35 @@ This **only works on the US Version of the game**.
 This guide is split into two versions: A **lite version** that replaces the existing Mystery type (also known as ??? type) with the Fairy type, and an **advanced version** that sets up an environment that allows you to add multiple new types, including Fairy, without replacing any existing type.
 I want to preface this guide by saying that even just replacing existing types is a very complex process, and it is not recommended for beginners. It requires a lot of knowledge about hex editing, spriting and the inner workings of the game. You will need to be comfortable using a hex editor, adding and modifying sprites, working with Nitro Paint as well as using DSPRE. The advanced version requires a basic understanding of armips and ASM code, but you won't need to write any ASM code yourself. If you are not comfortable with these things, I recommend you start with the lite version of this guide.
 
+This guide was only possible thanks to the work of Mikelan98 and BagBoy, who created the original Fairy type implementation for Platinum, which served as a starting point for this guide. I also want to thank everyone who worked on pokeplatinum, I am heavily relying on their work for this guide.
+
+Before you start: In addition to this guide I have created a  a folder with a couple of helpful files which is available [here](https://loremipsum.org/). Throughout this guide I will refer to these files as the "resources folder". The resources folder contains:
+- A readme file which you should read before starting
+- The `type_expansion_PLAT.asm` armips script
+- All python scripts mentioned in this guide
+- Images / Sprite resources used in this guide
+
 ---
 ## Table of Contents
 - [Type Expansion](#type-expansion)
   - [Table of Contents](#table-of-contents)
   - [Lite Version](#lite-version)
+    - [Tools used:](#tools-used)
     - [Making space for the new type chart](#making-space-for-the-new-type-chart)
     - [Editing the type chart](#editing-the-type-chart)
     - [Assigning new types to moves and Pokémon](#assigning-new-types-to-moves-and-pokémon)
     - [Adding sprites](#adding-sprites)    
   - [Advanced Version](#advanced-version)
-
+    - [Prerequisites](#prerequisites)
+    - [Setting up the armips script](#setting-up-the-armips-script)
+    - [Adding new types](#adding-new-types)
+    - [Assigning new types to moves and Pokémon](#assigning-new-types-2)
+  - [Not (yet) covered in this guide](#not-yet-covered-in-this-guide) 
 ## Lite Version
-This version replaces the existing Mystery type with the Fairy type. It is a simpler version of the advanced version, but it still requires some knowledge of hex editing and spriting as well as a basic understanding of DSPRE. In addition to this guide a folder with a couple of helpful files is available [here](https://loremipsum.org/).
+This version replaces the existing Mystery type with the Fairy type. It is a simpler version of the advanced version, but it still requires some knowledge of hex editing and spriting as well as a basic understanding of DSPRE.
 
 ### Tools used:
-- [DSPRE](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor/releases) - Depending on when you read this, you may need to use the canary version.
+- [DSPRE](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor/releases)
 - [Nitro Paint](https://github.com/Garhoogin/NitroPaint/releases)
 - [HxD](https://mh-nexus.de/en/downloads.php?product=HxD) (or any other hex editor)
 - [Python](https://www.python.org/downloads/) - Or install from the Microsoft Store (optional, for the type chart and palette helper scripts)
@@ -92,35 +105,40 @@ At the end there is a set of three spacer bytes (`0xFE 0xFE 0x00`) followed by t
 To add a new type or change an existing type we can insert new triplets into this table, modify the existing triplets or remove existing triplets. If you want to add a new type, you will need to add a new triplet for each type it is effective against, as well as triplets for each type that resists it or is immune to it. Make sure to add the triplets before the spacer bytes. Also keep in mind that duplicate triplets will be ignored, only the first match will be used.
 
 Before we can edit the type chart, we will also need the list of the type's IDs:
-| Type Name | Type ID |
-|:---------:|:-------:|
-| Normal    | 0x00    |
-| Fighting  | 0x01    |
-| Flying    | 0x02    |
-| Poison    | 0x03    |
-| Ground    | 0x04    |
-| Rock      | 0x05    |
-| Bug       | 0x06    |
-| Ghost     | 0x07    |
-| Steel     | 0x08    |
-| Mystery   | 0x09    |
-| Fire      | 0x0A    |
-| Water     | 0x0B    |
-| Grass     | 0x0C    |
-| Electric  | 0x0D    |
-| Psychic   | 0x0E    |
-| Ice       | 0x0F    |
-| Dragon    | 0x10    |
-| Dark      | 0x11    |
+<a id="type-ids"></a>
+| Type Name | Type ID | Type ID (Decimal) |
+|:---------:|:-------:|:-----------------:|
+| Normal    | 0x00    |  0                |
+| Fighting  | 0x01    |  1                |
+| Flying    | 0x02    |  2                |
+| Poison    | 0x03    |  3                |
+| Ground    | 0x04    |  4                |
+| Rock      | 0x05    |  5                |
+| Bug       | 0x06    |  6                |
+| Ghost     | 0x07    |  7                |
+| Steel     | 0x08    |  8                |
+| Mystery   | 0x09    |  9                |
+| Fire      | 0x0A    | 10                |
+| Water     | 0x0B    | 11                |
+| Grass     | 0x0C    | 12                |
+| Electric  | 0x0D    | 13                |
+| Psychic   | 0x0E    | 14                |
+| Ice       | 0x0F    | 15                |
+| Dragon    | 0x10    | 16                |
+| Dark      | 0x11    | 17                |
 
 Simply modifying the type chart is actually sufficient to have a functional fairy type in the game, however, it will still display as the mystery type in battle, in the menu and in the Pokédex.
 We also need to assign the type to the desired moves and Pokémon.
 
-### Assigning new types to moves and Pokémon
-To do this we can simply use DSPRE. Open your ROM in DSPRE and go to *Other Editors* > *Pokémon Editor*. Select the Pokémon you want to assign the new type and select it from the *Types* dropdown.
-You can also assign the new type to moves in the *Move Editor* in the same way. Make sure to save your changes after assigning the new type to the desired Pokémon and moves.
+#### Using the `type_chart_helper.py` script
+If you want to use the `type_chart_helper.py` script, you will need to have Python installed on your computer. You can download it from [here](https://www.python.org/downloads/). Alternatively, you can install it from the Microsoft Store, which is the easiest way to get it on Windows. At the top of the file you will find the settings for the script. You will need to provide the path to your overlay 16 file, the path may be something like `platinum_DSPRE_contents/unpacked/overlay/overlay_0016.bin`. There is also a `mode` setting which can be set to either `bin-to-csv` or `csv-to-bin`. The first mode will convert the binary type chart to a CSV file, while the second mode will convert a CSV file to a binary type chart and write it to your overlay. The script will create a new file called `type_chart.csv` in the same folder as the script. If you plan on adding new types, you can also add them to the enum at the top of the file. The resources folder contains a template CSV file for the modern type chart with the Fairy type replacing the Mystery type calles `modern_type_chart.csv`. You can use this as a starting point for your own type chart or just copy it as is. The folder also contains a copy of the vanilla type chart called `vanilla_type_chart.csv` which you can use to revert your changes if needed.
 
-For the sake of this guide, I am assigning Clefairy the Fairy type and also changed the type of Charm and Moonlight. In game this will look like this:
+
+### Assigning new types to moves and Pokémon
+To do this we can simply use DSPRE. Open your ROM in DSPRE and go to *Other Editors* > *Pokémon Editor*. Select the Pokémon you want to assign the new type to and select it from the *Types* dropdown.
+You can also assign the new type to moves in the *Move Editor* in the same way. Make sure to save your changes after assigning the new type to the desired Pokémon and moves. In our case the Fairy type replaces the Mystery type, so that's the type we need to select. You can also edit text archive 624 to change the name of the type to Fairy. This is not strictly necessary however.
+
+For the sake of this guide, I am assigning Clefairy the Fairy type and also changing the type of Charm and Moonlight. In game this will look like this:
 
 import battle_no_sprite from './resources/battle_no_sprite.png';
 import summary_no_sprite from './resources/summary_no_sprite.png';
@@ -140,10 +158,10 @@ I recommend you make a temporary workspace folder that you can use to store some
 Let's take care of the easiest one first: the type icon. Open your ROM in DSPRE and select *Tools* > *NARC Utility* > *Unpack to Folder*. (You can also use the button in the bar at the top.)
 When promted, select `platinum_DSPRE_contents/data/battle/graphic/pl_batt_obj.narc` as the NARC file and unpack it to your workspace folder. This will create a new folder called `pl_battle_obj` in your workspace folder. When asked if you want to rename the files, select "Yes". This will make it easier to find the files later on.
 
-The type icons consist of four files: a palette file (0074.rlcn), the icon itself (for mystery type this is 0236.rgcn) and a cell resource as well as an animation which we will refrain from touching.
+The type icons consist of four files: a palette file (`0074.rlcn`), the icon itself (for mystery type this is `0236.rgcn`) and a cell resource as well as an animation which we will refrain from touching.
 You can drag both the palette file and the icon file into Nitro Paint to open them. The palette file contains the colors used by the icon, while the icon file contains the actual sprite.
 If you want to make your own icon, some basic knowledge of Nitro Paint and Aseprite are required. If you only care about the Fairy type, you can use the icon I made for this guide, which is included in the resources folder as `fairy_icon.png` as well as `fairy_icon.rgcn`.
-You could just replace the existing mystery type icon with the fairy type icon, but I recommend you create a new file for it instead. Have a look inside the `pl_battle_obj` folder again. The last file should be `0342.rnan`. Take your `.rgcn` file and name it something like `0343.rgcn` (i.e. make sure the number is higher than the last file). The use DSPRE to pack the folder back into a NARC file. Select the `pl_battle_obj` folder and pack it into `pl_batt_obj.narc`. After that replace the original `pl_batt_obj.narc` in your ROM with the newly created one.
+You could just replace the existing mystery type icon with the fairy type icon, but I recommend you create a new file for it instead. Have a look inside the `pl_battle_obj` folder again. The last file should be `0342.rnan`. Take your `.rgcn` file and name it something like `0343.rgcn` (i.e. make sure the number is higher than the last file). Then use DSPRE to pack the folder back into a NARC file. Select the `pl_battle_obj` folder and pack it into `pl_batt_obj.narc`. After that replace the original `pl_batt_obj.narc` in your ROM with the newly created one.
 
 Next we will need to tell the game to use the new type icon instead of the mystery type icon. To do this, we will need to modify the pointer to the type icon in battle. The game uses a table to determine which type icon to use for each type. This table is located at the offset `0xF0AF0` in the `arm9.bin` file of your ROM.
 
@@ -167,19 +185,25 @@ CD 75 FF 7F 7C 66 17 52 18 56 1B 5E 35 41 F2 38 B2 34 DD 6E C6 18 00 00 8C 31 5C
 ### Pokédex Type Icon
 The last thing we need to do is add the type icon to the Pokédex. This is the most annoying one to do since all the icons are stored as different animations that pull from a large cell graphic. The Pokédex icons are located in the `/data/resource/eng/zukan/zukan.narc` file. Unpack this file to your workspace folder using DSPRE's NARC utility just like we did with the other type icon. To save you some pain the resource folder contains the required files for Fairy Type. If that's all you want to do, you can [skip](#packing-zukan-narc) the next section and just drag the provided files into the zukan folder, don't forget to pack the NARC again. If you want to learn how to add your own type icons, read on.
 
-You'll need the palette file (0013.rlcn) and the cell graphic (0090.rgcn) again, but this time we will also need the animation file (0089.rnan) and the cell resource (0088.recn).
-Drag them all into Nitro Paint to open them. The cell graphic contains the actual sprite, the animation file contains the animation data and the cell resource contains the cell data that tells the game how to display the sprite. The .rgcn can be a bit hard to process visually, because frustratingly GF decided to throw in another unrelated and exceptionally large sprite at the end of the file.
+You'll need the palette file `0013.rlcn` and the cell graphic `0090.rgcn` again, but this time we will also need the animation file `0089.rnan` and the cell resource `0088.recn`.
+Drag them all into Nitro Paint to open them. The cell graphic contains the actual sprite, the animation file contains the animation data and the cell resource contains the cell data that tells the game how to display the sprite. The .rgcn can be a bit hard to process visually, because frustratingly GF decided to throw in another unrelated and exceptionally large sprite at the end of the file. You'll also notice that the sorting of the cells is completely arbitrary, which will cause a ton of issues later since we will need to sort the cells by internal type ID. To save you having to painstakingly reorder the cells, the included `.rnan` file is already sorted. If you are planning to add your own type icons I suggest working with the provided files as a template. The template is already completely set up to work with the Fairy type, so the rest of this section explains the process on how you can recreate this on your own.
 
-We will need to add a new cell for the Fairy type icon. To do this, click on the "New Cell" cell button and save. This will create a new cell with the at the end of the list. Next have a look at the .rgcn file. I recommend setting the width to 4 since it makes it easier to see the individual sprites. Click "Resize" and add 3 extra rows for a total size of 4 by 74. This will give us enough space to add the new type icon without overwriting any existing data. After that save the file.
+We will need to add a new cell for the Fairy type icon. To do this, click on the "New Cell" cell button and save. This will create a new cell with the at the end of the list. Next have a look at the `.rgcn` file. I recommend setting the width to 4 since it makes it easier to see the individual sprites. Click "Resize" and add 3 extra rows for a total size of 4 by 74. This will give us enough space to add the new type icon without overwriting any existing data. After that save the file.
 
 Next we will need to add the actual sprite. You can either create your own sprite or use the one I made for this guide, which is included in the resources folder as `fairy_icon_pokedex.png`.
-In the Cell Editor, select the new cell you created and click "Generate Cell". You will be promted to select a sprite file. Select the `fairy_icon_pokedex.png` file and click "Open". In the generate cell dialog, make sure to select the **correct palette** (the one you created for the type icon). The provided icon uses **palette 3. Do not tick write palette** as this will overwrite the palette used by the other type icons. Click "Complete" to create the cell. You should now see the new type icon in the cell editor. Make sure to save the cell resource after generating the cell.
+In the Cell Editor, select the new cell you created and click "Generate Cell". You will be promted to select a sprite file. Select the `fairy_icon_pokedex.png` file and click "Open". In the generate cell dialog, make sure to select the **correct palette** (the one you used for the type icon). The provided icon uses **palette 3. Do not tick write palette** as this will overwrite the palette used by the other type icons. Click "Complete" to create the cell. You should now see the new type icon in the cell editor. Make sure to save the cell resource after generating the cell.
 
-Finally we'll need to add the new cell to the animation. Open the animation file in Nitro Paint. It should contain 17 existing animations, one for each type and one for the unrelated Pokédex sprite at the end. Select the last sequence and click on the "New Sequence" button to append a new sequence. Click "Frames" then right-click and set the "Cell Index" to the index of the new cell you created (fairy should be 18). The new icon should now be visible in the animation editor. Make sure to save the animation file after adding the new sequence.
+Next we'll need to add the new cell to the animation. Open the animation file in Nitro Paint. It should contain 17 existing animations, one for each type and one for the unrelated Pokédex sprite at the end. Click on the "New Sequence" button to append a new sequence. We now have enough space for all the icons. Next we will need to sort them according to the internal type ID. We will see exactly why later. Sequence 0 should be the yellow rectangle, having it be the first sequence is convenient for mapping the type IDs to the sequences later. The remaining sequences should be ordered according to the internal type ID, which is the same as the type ID used in the type chart (see [this](#type-ids) table). You can therefore double check that you have the right order by subtracting 1 from the sequence number and comparing it to the type ID. For example, sequence 1 should be the Normal type, which has the type ID 0 and so on. Since we are replacing the Mystery type with the Fairy type, sequence 10 should be the Fairy type icon.
 
-import nitro_paint_steps from './resources/nitro_paint_steps.png';
+import nitro_paint_1 from './resources/nitro_paint_1.png';
+import nitro_paint_2 from './resources/nitro_paint_2.png';
+import nitro_paint_3 from './resources/nitro_paint_3.png';
 
-<img src={nitro_paint_steps} alt="Steps in Nitro Paint" width={1000} />
+<div className="image-container">
+  <img src={nitro_paint_1} alt="Steps in Nitro Paint" width={1000} />
+  <img src={nitro_paint_2} alt="Steps in Nitro Paint" width={1000} />
+  <img src={nitro_paint_3} alt="Steps in Nitro Paint" width={300} />
+</div>
 
 <a id="packing-zukan-narc"></a>
 
@@ -187,9 +211,18 @@ Use DSPRE's NARC utility to pack the `zukan` folder back into a NARC file. Selec
 
 ### Modifying the game's code to show the Pokédex icon
 
-Unfortunately, the game shows the ghost type icon instead of the mystery type icon in the Pokédex. Since there is neither a mystery type icon nor any code to load it, we will need to modify the game's code to show our new fairy type icon. For this I'd like to refer you to Mikelan and BagBoy's original guide, which contains a detailed explanation of how to do this. You can find it [here](https://pokehacking.com/tutorials/fairypt/). Have a look at their "Pokedex Display Subroutine Code" and follow the Hex edit described there. If you are planning on going the **advanced** route, **do no not apply** the code changes described in the guide, as they will conflict with the advanced version of this guide.
+Since we completely resorted the sequences in the animation file, we will need to modify the game's code to make sure it uses the correct sequence for each type. In vanilla Platinum, the game uses a function that reads from a table to determine which sequence to use for each type. The function is located at offset `0xE400` in the `overlay_0021.bin`. Open this file in your hex editor and navigate to this offset. You should see a series of bytes that look like this:
+```
+11 28 38 D8 01 18 79 44 ...
+```
 
-This is how everything should look like in the end:
+Replace it (Ctrl + B in HxD) with the following bytes:
+```
+01 30 70 47 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+```
+
+Instead of doing some complex mapping of the type IDs to the sequences, we simply add 1 to the type ID and use that as the sequence number. This is the reason we sorted the sequences to begin with.
+We also need to tell the game where to find the yellow rectangle sprite (used in the backround of the Pokédex). Navigate to offset `0xE514`. You should see `11 21` replace with `00 21`.
 
 import battle_fairy from './resources/battle_fairy.png';
 import summary_fairy from './resources/summary_fairy.png';
@@ -219,7 +252,7 @@ The advanced version of this guide is meant for those who want to add **multiple
 - You'll need to make all the graphic assets for your new types. This includes the type icon, the Pokédex icon and the move selection palette. You can use the resources provided in the lite version of this guide as a starting point, but you will need to create your own assets for any other types you want to use.
 - When inserting your sprites, make sure to take note of their indices in the respective NARC file / Cell Resource. You will need to use these indices in the armips script later on.
 ### Setting up the armips script
-The armips script is used to modify the game's code to support the new types. It will also handle the repointing of the the move effect subscript table altough you will need to actually paste it at the defined offset yourself. The script is included in the resources folder as `type_expansion.armips`. Open it in an editor of your choice and have a look at it. You will need to make some changes to it before you can use it.
+The armips script is used to modify the game's code to support the new types. You don't need to do any of the hex edits from the lite version as the script will do it for you. While it will also handle the repointing of the the move effect subscript table altough you will need to actually paste it at the defined offset yourself. The script is included in the resources folder as `type_expansion_PLAT.asm`. Open it in an editor of your choice and have a look at it. You will need to make some changes to it before you can use it.
 - First edit the *GameFolder* variable to point to the folder where your unpacked ROM is located. This folder will usually be called something like `platinum_DSPRE_contents`.
 - Next edit the *MoveEffectSubscriptOffset* variable to point to the offset where you want to paste the move effect subscript table. This should be the same offset you used when moving the table in the lite version of this guide. If you followed the guide, this should be `0x1000`.
 - You will also need to specify the length of the move effect subscript table in the *SubscriptLength* variable. This should be `0x244` (the length of the table in bytes). By default, this is set to `0x250` to make it a bit easier to identify the table in the hex editor, but you can change it to `0x244` if you prefer.
@@ -234,6 +267,17 @@ The main part of the the script is the *Tables* section at the bottom of the fil
 - The *MoveSelectionPaletteTable* contains the addresses of the palettes used by the move selection box in battle.
 - Finally, you can define the actual palettes used by the *MoveSelectionPaletteTable*. Make sure to define the addresses of any new palettes up top in the *AdressDefinitions* section. You can **and should(!)** use the `palette_helper.py` script to convert your palette from JASC-Pal format to the format used in the game. This way you can use Aseprite to create your palettes and then convert them to the format used in the game. 
 ### Assigning new types to moves and Pokémon
+<a id="assigning-new-types-2"></a>
 Unlike before we need to to a bit of extra work so that DSPRE actually knows about the new types. Open up Text Archive 624 in DSPRE. Append a new line to the end of the file with the name of your new type. For example, if you want to add the Fairy and Sound type, you would add a new line with the name "FAIRY" and one named "SOUND". The message number in this file is actually what DSPRE uses to determine the type ID, so make sure to add them in the correct order or everything will break. Also make sure not to remove any lines from this file, unless there are no Pokémon or moves that use the type you are removing. If you don't do this, DSPRE will crash the next time you try to open the Pokémon or Move Editor.
+
+## Not (yet) covered in this guide
+As of right now, this guide does not yet cover:
+- Adding the new types to the Move Tester Pokétch app
+- Adding the new types to the TV related menus
+- Adding new types to hidden power (vanilla did not actually implement hidden power fairy so this is not strictly necessary)
+- Adding new types to natural gift
+- Adding new type boosting items (e.g. Pixie Plate, Sound Plate, etc.)
+- Adding new Arceus forms for the new types
+I may cover these topics in a future update to this guide, but they aren't a priority right now. I suspect that expanding Arceus forms will be particularly difficult, so I may not cover it at all.
 
 
