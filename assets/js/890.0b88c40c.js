@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkkodsh_wiki_new=self.webpackChunkkodsh_wiki_new||[]).push([[890],{10890:(e,k,s)=>{s.d(k,{createInfoServices:()=>i.v});var i=s(97021);s(19369)}}]);
