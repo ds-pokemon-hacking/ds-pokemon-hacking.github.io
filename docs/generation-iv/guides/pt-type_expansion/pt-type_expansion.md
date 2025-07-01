@@ -212,7 +212,7 @@ Use DSPRE's NARC utility to pack the `zukan` folder back into a NARC file. Selec
 
 ### Modifying the game's code to show the Pokédex icon
 
-Since we completely resorted the sequences in the animation file, we will need to modify the game's code to make sure it uses the correct sequence for each type. In vanilla Platinum, the game uses a function that reads from a table to determine which sequence to use for each type. The function is located at offset `0xE400` in the `overlay_0021.bin`. Open this file in your hex editor and navigate to this offset. You should see a series of bytes that look like this:
+Since we completely resorted the sequences in the animation file, we will need to modify the game's code to make sure it uses the correct sequence for each type. In vanilla Platinum, the game uses a function that reads from a table to determine which sequence to use for each type. The function is located at offset `0xE400` in `overlay_0021.bin`. Open this file in your hex editor and navigate to this offset. You should see a series of bytes that look like this:
 ```
 11 28 38 D8 01 18 79 44 ...
 ```
