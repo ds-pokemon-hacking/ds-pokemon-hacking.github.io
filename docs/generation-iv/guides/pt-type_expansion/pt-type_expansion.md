@@ -76,7 +76,7 @@ Paste the move effect subscript table into this file without changing the file's
 The table is now in its new location, however, we still need to tell the game where to find it. To do this, we will need to modify the pointer to the move effect subscript table.
 Our table is now located at `0x1000` in the synthetic overlay, which is loaded at address `0x023C8000` in memory. Because of this, our new pointer will be `0x023C9000 = 0x023C8000 + 0x1000`.
 The game uses little-endian format, so we will need to write this pointer in reverse order. In hex, this is `00 90 3C 02`.
-Navigate to the offset `0x204F8` in the `overlay_0016.bin` file. You should see `24 EE 26 02`. Select and replace these four bytes with `00 09 3C 02`. Don't forget to save the file after making this change.
+Navigate to the offset `0x204F8` in the `overlay_0016.bin` file. You should see `24 EE 26 02`. Select and replace these four bytes with `00 90 3C 02`. Don't forget to save the file after making this change.
 
 At this point I strongly advice you save your ROM in DSPRE and test it to make sure it actually still works. Get in a battle and use a move (preferably one that has an effect beyond just dealing damage) to make sure the game doesn't crash. If it does or you see weird graphical glitches, you probably made a mistake somewhere. If it doesn't, congratulations! You have successfully moved the move effect subscript table to a new location.
 
@@ -212,7 +212,7 @@ Use DSPRE's NARC utility to pack the `zukan` folder back into a NARC file. Selec
 
 ### Modifying the game's code to show the Pokédex icon
 
-Since we completely resorted the sequences in the animation file, we will need to modify the game's code to make sure it uses the correct sequence for each type. In vanilla Platinum, the game uses a function that reads from a table to determine which sequence to use for each type. The function is located at offset `0xE400` in the `overlay_0021.bin`. Open this file in your hex editor and navigate to this offset. You should see a series of bytes that look like this:
+Since we completely resorted the sequences in the animation file, we will need to modify the game's code to make sure it uses the correct sequence for each type. In vanilla Platinum, the game uses a function that reads from a table to determine which sequence to use for each type. The function is located at offset `0xE400` in `overlay_0021.bin`. Open this file in your hex editor and navigate to this offset. You should see a series of bytes that look like this:
 ```
 11 28 38 D8 01 18 79 44 ...
 ```
