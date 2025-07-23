@@ -15,27 +15,27 @@ const GenerationIVCatalog: DisplayItem[] = [
   {
     title: 'Pokémon Diamond',
     Svg: require('@site/static/img/boxart/1015.jpg').default,
-    tag: 'getting-started/dp'
+    tag: '/docs/generation-iv/guides/getting_started/'
   },
   {
     title: 'Pokémon Pearl',
     Svg: require('@site/static/img/boxart/1016.jpg').default,
-    tag: 'getting-started/dp'
+    tag: '/docs/generation-iv/guides/getting_started/'
   },
   {
     title: 'Pokémon Platinum',
     Svg: require('@site/static/img/boxart/3541.jpg').default,
-    tag: 'getting-started/pt'
+    tag: '/docs/generation-iv/guides/getting_started/'
   },
   {
     title: 'Pokémon HeartGold',
     Svg: require('@site/static/img/boxart/4787.jpg').default,
-    tag: 'getting-started/hgss'
+    tag: '/docs/generation-iv/guides/getting_started/'
   },
   {
     title: 'Pokémon SoulSilver',
     Svg: require('@site/static/img/boxart/4788.jpg').default,
-    tag: 'getting-started/hgss'
+    tag: '/docs/generation-iv/guides/getting_started/'
   },
 ];
 
@@ -43,22 +43,22 @@ const GenerationVCatalog: DisplayItem[] = [
   {
     title: 'Pokémon Black',
     Svg: require('@site/static/img/boxart/5586.jpg').default,
-    tag: 'getting-started/bw'
+    tag: '/docs/generation-v/guides/getting_started/'
   },
   {
     title: 'Pokémon White',
     Svg: require('@site/static/img/boxart/5585.jpg').default,
-    tag: 'getting-started/bw'
+    tag: '/docs/generation-v/guides/getting_started/'
   },
   {
     title: 'Pokémon Black 2',
     Svg: require('@site/static/img/boxart/6149.jpg').default,
-    tag: 'getting-started/b2w2'
+    tag: '/docs/generation-v/guides/getting_started/'
   },
   {
     title: 'Pokémon White 2',
     Svg: require('@site/static/img/boxart/6150.jpg').default,
-    tag: 'getting-started/b2w2'
+    tag: '/docs/generation-v/guides/getting_started/'
   },
 ];
 

@@ -1,6 +1,7 @@
 # Contribution Guide
 > Authors(s): [SpagoAsparago](https://github.com/SpagoAsparago), [PlatinumMaster](https://github.com/PlatinumMaster)
 --- 
+
 ## Creating a Fork
 1) If you don't have one already, you first need to create a [GitHub account](https://github.com/signup)
 2) Go to the [main repo](https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io) and click the Fork button in the top right. Check out [GitHub's official article](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) for more details.
@@ -17,9 +18,12 @@ Before you can run Docusaurus locally, you need to have the following installed 
 
 These are necessary to clone the repository, install dependencies, and start the local server.
 
+> Note on instructions: where `<` and `>` symbols are used to encapsulate some text, this means a user- or situation-specific value should be entered, the `<` and `>` symbols themselves should not be included.  
+> For example `<your account name>` should be `JoeBloggs123` or similar, not `<JoeBloggs123>`.
+
 ### Steps
 1) [Fork the repository](#creating-a-fork). 
-2) Open a terminal.
+2) Open a terminal (e.g. Command Line, Powershell...etc.).
 3) If you haven't configured Git on your machine, you need to do so before pulling from GitHub. Run the following commands in your terminal:  
     - Set your Git username:
       ```
@@ -30,7 +34,7 @@ These are necessary to clone the repository, install dependencies, and start the
       git config --global user.email "your-email@example.com"
       ```
 
-4) If you haven't connected your GitHub account with SSH, follow these steps:
+4) If you haven't connected your GitHub account with SSH, follow these steps to [generate a new SSH key & add it to GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent):
 
     - Run this command, substituting in the email address associated with your GitHub account. When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.
       ```
@@ -50,13 +54,18 @@ These are necessary to clone the repository, install dependencies, and start the
 
     - Go to your GitHub account settings, select "SSH and GPG keys" and click on "New SSH key". Paste your key into the "Key" field and click "Add SSH key".
 
-5) Now, you can clone the repository to your local machine. You can do this by running `git clone git@github.com:<your account name>/ds-pokemon-hacking.github.io.git` in your terminal.
+5) [Test the SSH connection is working correctly](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection)
 
-6) Clone the repository to your local machine. You can do this by running `git clone git@github.com:<your account name>/ds-pokemon-hacking.github.io.git` in your terminal.
+6) Now, you can clone the repository to your local machine. You can do this by running `git clone git@github.com:<your account name>/ds-pokemon-hacking.github.io.git` in your terminal.
 
 7) Navigate to the project directory with `cd ds-pokemon-hacking.github.io`.
 
 8) Install the necessary dependencies with `npm install`.
+
+      - If you encounter a `running scripts is disabled opn this system` message, you will need to change the execution policy in effect to allow signed scripts.
+      - For example by assigning the CurrentUser scope to the RemoteSigned policy
+      - For more details, see [here](https://learn.microsoft.com/en-gb/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5
+      )
 
 9) Once the dependencies are installed, you can start the local server with `npm run start`.
 
@@ -95,7 +104,7 @@ When you are finished, you need to commit your changes.
 To do so:
 1. Open your terminal, and change directory into your local copy of the repository with `cd <path/to/ds-pokemon-hacking.github.io>`.
 2. Run `git add .` to add all of the files.
-3. Run `git commit -m <Your commit message>` to log your changes.
+3. Run `git commit -m "<Your commit message>"` to log your changes.
 4. Run `git push origin main` to push your changes to remote.
 5. If all goes according to plan, your changes will be on your fork at `https://github.com/<your account name>/ds-pokemon-hacking.github.io`.
 
@@ -104,10 +113,10 @@ After you have pushed your changes to your forked repository, you can create a p
 **Make sure it builds and looks correct before submitting your pull request.**
 
 1. Navigate to the original repository.
-2. To the right of the Branch menu, click the New pull request button.
+2. From the "Pull Requests" tab at the top of the page, click the New pull request button.
 3. On the Compare page, click compare across forks.
 4. Confirm that the base fork is the repository you'd like to merge changes into. The head fork is your fork with the changes you'd like to merge.
-5. Type a title and description for your pull request.
+5. Click Create Pull Request again and type a title and description for your pull request.
 6. To create a pull request that is ready for review, click Create Pull Request. 
 7. Afterwards, it will be reviewed by one of the maintainers, and comments made if needed. 
 8. If no changes are needed, it will be merged in, and appear on the site within a few minutes!
