@@ -1,2 +1,2 @@
 # Pokémon HeartGold & SoulSilver
-The content of this page has moved, please refer to: [Getting Started (Gen4)](/docs/generation-iv/guides/getting_started/)
+The content of this page has moved, please refer to: [Getting Started (Generation IV)](/docs/generation-iv/guides/getting_started/)
