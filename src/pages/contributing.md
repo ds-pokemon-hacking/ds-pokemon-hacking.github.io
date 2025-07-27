@@ -62,10 +62,9 @@ These are necessary to clone the repository, install dependencies, and start the
 
 8) Install the necessary dependencies with `npm install`.
 
-      - If you encounter a `running scripts is disabled opn this system` message, you will need to change the execution policy in effect to allow signed scripts.
-      - For example by assigning the CurrentUser scope to the RemoteSigned policy
-      - For more details, see [here](https://learn.microsoft.com/en-gb/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5
-      )
+      - If you encounter a `running scripts is disabled on this system` message, you will need to change the execution policy in effect to allow signed scripts.
+      - For example by assigning the `CurrentUser` scope to the `RemoteSigned` policy
+      - For more details, see [here](https://learn.microsoft.com/en-gb/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5)
 
 9) Once the dependencies are installed, you can start the local server with `npm run start`.
 
