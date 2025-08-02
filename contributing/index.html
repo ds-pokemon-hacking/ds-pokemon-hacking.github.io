@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.8.1">
 <title data-rh="true">Contribution Guide | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/contributing"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="Contribution Guide | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Authors(s): SpagoAsparago, PlatinumMaster"><meta data-rh="true" property="og:description" content="Authors(s): SpagoAsparago, PlatinumMaster"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/contributing"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/contributing" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/contributing" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.65e503cb.css">
-<script src="/assets/js/runtime~main.a497823c.js" defer="defer"></script>
-<script src="/assets/js/main.041c4eba.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.215f4e42.js" defer="defer"></script>
+<script src="/assets/js/main.c1220910.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
@@ -32,13 +32,17 @@
 <li><a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer">Git</a>.</li>
 </ul>
 <p>These are necessary to clone the repository, install dependencies, and start the local server.</p>
+<blockquote>
+<p>Note on instructions: where <code>&lt;</code> and <code>&gt;</code> symbols are used to encapsulate some text, this means a user- or situation-specific value should be entered, the <code>&lt;</code> and <code>&gt;</code> symbols themselves should not be included.<br>
+<!-- -->For example <code>&lt;your account name&gt;</code> should be <code>JoeBloggs123</code> or similar, not <code>&lt;JoeBloggs123&gt;</code>.</p>
+</blockquote>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="steps">Steps<a href="#steps" class="hash-link" aria-label="Direct link to Steps" title="Direct link to Steps">​</a></h3>
 <ol>
 <li>
 <p><a href="#creating-a-fork">Fork the repository</a>.</p>
 </li>
 <li>
-<p>Open a terminal.</p>
+<p>Open a terminal (e.g. Command Line, Powershell...etc.).</p>
 </li>
 <li>
 <p>If you haven&#x27;t configured Git on your machine, you need to do so before pulling from GitHub. Run the following commands in your terminal:</p>
@@ -52,7 +56,7 @@
 </ul>
 </li>
 <li>
-<p>If you haven&#x27;t connected your GitHub account with SSH, follow these steps:</p>
+<p>If you haven&#x27;t connected your GitHub account with SSH, follow these steps to <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" target="_blank" rel="noopener noreferrer">generate a new SSH key &amp; add it to GitHub</a>:</p>
 <ul>
 <li>
 <p>Run this command, substituting in the email address associated with your GitHub account. When you&#x27;re prompted to &quot;Enter a file in which to save the key,&quot; press Enter. This accepts the default file location.</p>
@@ -75,16 +79,21 @@
 </ul>
 </li>
 <li>
-<p>Now, you can clone the repository to your local machine. You can do this by running <code>git clone git@github.com:&lt;your account name&gt;/ds-pokemon-hacking.github.io.git</code> in your terminal.</p>
+<p><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection" target="_blank" rel="noopener noreferrer">Test the SSH connection is working correctly</a></p>
 </li>
 <li>
-<p>Clone the repository to your local machine. You can do this by running <code>git clone git@github.com:&lt;your account name&gt;/ds-pokemon-hacking.github.io.git</code> in your terminal.</p>
+<p>Now, you can clone the repository to your local machine. You can do this by running <code>git clone git@github.com:&lt;your account name&gt;/ds-pokemon-hacking.github.io.git</code> in your terminal.</p>
 </li>
 <li>
 <p>Navigate to the project directory with <code>cd ds-pokemon-hacking.github.io</code>.</p>
 </li>
 <li>
 <p>Install the necessary dependencies with <code>npm install</code>.</p>
+<ul>
+<li>If you encounter a <code>running scripts is disabled on this system</code> message, you will need to change the execution policy in effect to allow signed scripts.</li>
+<li>For example by assigning the <code>CurrentUser</code> scope to the <code>RemoteSigned</code> policy</li>
+<li>For more details, see <a href="https://learn.microsoft.com/en-gb/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5" target="_blank" rel="noopener noreferrer">here</a></li>
+</ul>
 </li>
 <li>
 <p>Once the dependencies are installed, you can start the local server with <code>npm run start</code>.</p>
@@ -138,7 +147,7 @@
 <ol>
 <li>Open your terminal, and change directory into your local copy of the repository with <code>cd &lt;path/to/ds-pokemon-hacking.github.io&gt;</code>.</li>
 <li>Run <code>git add .</code> to add all of the files.</li>
-<li>Run <code>git commit -m &lt;Your commit message&gt;</code> to log your changes.</li>
+<li>Run <code>git commit -m &quot;&lt;Your commit message&gt;&quot;</code> to log your changes.</li>
 <li>Run <code>git push origin main</code> to push your changes to remote.</li>
 <li>If all goes according to plan, your changes will be on your fork at <code>https://github.com/&lt;your account name&gt;/ds-pokemon-hacking.github.io</code>.</li>
 </ol>
@@ -147,10 +156,10 @@
 <strong>Make sure it builds and looks correct before submitting your pull request.</strong></p>
 <ol>
 <li>Navigate to the original repository.</li>
-<li>To the right of the Branch menu, click the New pull request button.</li>
+<li>From the &quot;Pull Requests&quot; tab at the top of the page, click the New pull request button.</li>
 <li>On the Compare page, click compare across forks.</li>
 <li>Confirm that the base fork is the repository you&#x27;d like to merge changes into. The head fork is your fork with the changes you&#x27;d like to merge.</li>
-<li>Type a title and description for your pull request.</li>
+<li>Click Create Pull Request again and type a title and description for your pull request.</li>
 <li>To create a pull request that is ready for review, click Create Pull Request.</li>
 <li>Afterwards, it will be reviewed by one of the maintainers, and comments made if needed.</li>
 <li>If no changes are needed, it will be merged in, and appear on the site within a few minutes!</li>
