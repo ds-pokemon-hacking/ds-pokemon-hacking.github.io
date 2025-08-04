@@ -55,14 +55,18 @@ The following are some video tutorials that provide further context and instruct
 ![](resources/02_nsbta_pondwater.gif)  
 
 #### Global NSBTA in HGSS
-Specifically in HGSS, texture SRT animations that apply to map elements (not buildings), are determined by the order of animations in the global `.nsbta` file associated to the areadata in use, and the order of the materials in the map files and `.nsbtx`.  
+Specifically in HGSS, texture SRT animations that apply to map elements (not buildings), are determined by the order of animations in the global `.nsbta` file associated to the areadata in use, and the order of the materials in the map files (`.nsbmd`).  
 There are two global `.nsbta` in the vanilla HGSS, and it is also possible to assign an invalid global `.nsbta` (using an ID of `65535`) to remove all Texture SRT animations from that Header and associated maps.
 1. Global NSBTA 0 (typically used for most external map locations)
 2. Global NSBTA 1 (typically used for some, but not all, internal cave locations)
 
 > Typically urban interiors (houses, shops etc.) have the global `.nsbta` set to an invalid value to disable them.
 
-When creating custom maps (and therefore) custom `.nsbtx` files in PDSMS, it is important to align the materials order with the global `.nsbta` to be used. This can be achieved by ordering the materials in PDSMS's Materials Editor so that the top 'x' match the order and quantity in the global `.nsbta`. Importantly for HGSS, the names of the materials don't matter at all, only the position.
+When creating custom maps (and therefore) custom `.nsbmd` files in PDSMS, it is important to align the materials order with the global `.nsbta` to be used.  
+
+This can be achieved by ordering the materials in PDSMS's Materials Editor so that the top 'x' match the order and quantity in the global `.nsbta`. The `Always include in IMD` checkbox in the Materials Editor is uised to ensure that these specific materials are always present in the `.imd` (the file that is then used to define values in the `.nsbmd`), even if they materials are not used in the map. This, and the actual order of the materials is crucial for avoiding animation errors in HGSS.  
+
+Importantly for HGSS, the names of the materials don't matter at all, only the position.
 
 When using vanilla **Global NSBTA 0**, the following order of materials should be used:
 1. S-shaped top right to bottom left, then top left to bottom right movement
