@@ -1,5 +1,5 @@
 # Contribution Guide
-> Authors(s): [SpagoAsparago](https://github.com/SpagoAsparago), [PlatinumMaster](https://github.com/PlatinumMaster)
+> Author(s): [SpagoAsparago](https://github.com/SpagoAsparago), [PlatinumMaster](https://github.com/PlatinumMaster)
 --- 
 
 ## Creating a Fork
@@ -21,7 +21,7 @@ These are necessary to clone the repository, install dependencies, and start the
 > Note on instructions: where `<` and `>` symbols are used to encapsulate some text, this means a user- or situation-specific value should be entered, the `<` and `>` symbols themselves should not be included.  
 > For example `<your account name>` should be `JoeBloggs123` or similar, not `<JoeBloggs123>`.
 
-### Steps
+### First Time Setup Steps
 1) [Fork the repository](#creating-a-fork). 
 2) Open a terminal (e.g. Command Line, Powershell...etc.).
 3) If you haven't configured Git on your machine, you need to do so before pulling from GitHub. Run the following commands in your terminal:  
@@ -56,21 +56,55 @@ These are necessary to clone the repository, install dependencies, and start the
 
 5) [Test the SSH connection is working correctly](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection)
 
-6) Now, you can clone the repository to your local machine. You can do this by running `git clone git@github.com:<your account name>/ds-pokemon-hacking.github.io.git` in your terminal.
+6) [Specify a "remote upstream" repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork) for synchronising changes made in the main repo to yours.
 
-7) Navigate to the project directory with `cd ds-pokemon-hacking.github.io`.
+    - Run this command to confirm no **upstream** fetch and push remote repos exist (only **origin** fetch and pull).
+      ```
+      git remote -v
+      ```
 
-8) Install the necessary dependencies with `npm install`.
+    - Configure the upstream repository to the main DS Pokémon Hacking repository
+      ```
+      git remote add upstream https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io.git
+      ```
+
+    - Confirm this has been successfully applied (two new **upstream** entries are visible)
+      ```
+      git remote -v
+      ```
+
+7) Now, you can clone the repository to your local machine. You can do this by running `git clone git@github.com:<your account name>/ds-pokemon-hacking.github.io.git` in your terminal.
+
+8) Navigate to the project directory with `cd ds-pokemon-hacking.github.io`.
+
+9) Install the necessary dependencies with `npm install`.
 
       - If you encounter a `running scripts is disabled on this system` message, you will need to change the execution policy in effect to allow signed scripts.
       - For example by assigning the `CurrentUser` scope to the `RemoteSigned` policy
       - For more details, see [here](https://learn.microsoft.com/en-gb/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5)
 
-9) Once the dependencies are installed, you can start the local server with `npm run start`.
+10) Once the dependencies are installed, you can start the local server with `npm run start`.
 
-10) The local server should now be running. You can access it by opening your web browser and navigating to `http://localhost:3000`.
+11) The local server should now be running. You can access it by opening your web browser and navigating to `http://localhost:3000`.
 
 Remember, any changes you make to the files in the project directory will be reflected in the local server, allowing you to preview your changes in real time.
+
+### Continuing Making Local Changes
+If you want to restart the server to continue making changes in local after a break (when the local server was stopped) and seeing the live changes.  
+
+Follow steps 8 and 10 in the [First Time Setup Steps](#first-time-setup-steps) to restart the local server.
+
+### Synchronising from the Main Repo
+Once a PR has been merged or cancelled, if you wish to start a new set of changes, it is good practice to avoid potential problems with the following PR, to refresh the user remote repo from the main repo. This also removes some noise (commits in the PR that are already merged). To do this, the following steps can be completed:  
+1) [Synchronise the remote user repo (fork)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-branch-from-the-web-ui).
+      - Navigate to user remote repo (`https://github.com/<GitHub user name>/ds-pokemon-hacking.github.io`)
+      - This should show as at least one commit behind the main repo (and possibly also several in front)
+      - Select `Sync Fork` button
+      - If the user remote repo is one or more commits **in front** of the main repo: choose `Discard existing commits`
+      - If the user remote repo is only **behind** the main repo: choose `Update branch`
+      - GitHub should now read as: "This branch is up to date with `ds-pokemon-hacking/ds-pokemon-hacking.github.io:main`."
+2) Delete the existing local user repo folder from your machine: this allows a clean clone to be taken.
+3) Recreate the local user repo (cloned from the remote user repo) & build the local repo: As per steps 7-11 from the [First Time Setup Steps](#first-time-setup-steps).
 
 ## Creating a New Guide/Resource
 1) Open [guide.md](https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/blob/main/templates/guides/guides.md) if you're making a guide, or [resources.md](https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/blob/main/templates/resources/resources.md) if you're making a resource, click the *Code* button and copy its contents.

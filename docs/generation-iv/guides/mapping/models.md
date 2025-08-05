@@ -161,6 +161,7 @@ Option 3 (or similar per emulator) requires no ROM hacking at all, and impacts o
 
 ![](resources/gaps_in_map_geometry.png)
 ![](resources/melonds_reduce_poly_edge_render_gaps.gif)
+![](resources/melonds_reduce_poly_edge_render_gaps_settings.png)
 
 ### Import/Export
 #### Exporting Models
