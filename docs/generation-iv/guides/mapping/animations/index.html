@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.8.1">
 <title data-rh="true">Animations | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Animations | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Author(s): MrHam88."><meta data-rh="true" property="og:description" content="Author(s): MrHam88."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Guides","item":"https://ds-pokemon-hacking.github.io/docs/category/guides"},{"@type":"ListItem","position":2,"name":"Mapping Overview","item":"https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/"},{"@type":"ListItem","position":3,"name":"Animations","item":"https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations"}]}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.65e503cb.css">
-<script src="/assets/js/runtime~main.53ce209f.js" defer="defer"></script>
-<script src="/assets/js/main.9b735fb5.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.47b44361.js" defer="defer"></script>
+<script src="/assets/js/main.8eb93e4f.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
@@ -51,7 +51,7 @@
 </ul>
 <p><img decoding="async" loading="lazy" src="/assets/images/02_nsbta_pondwater-e362283b1db6437913d49d07aa140546.gif" width="602" height="446" class="img_ev3q"></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="global-nsbta-in-hgss">Global NSBTA in HGSS<a href="#global-nsbta-in-hgss" class="hash-link" aria-label="Direct link to Global NSBTA in HGSS" title="Direct link to Global NSBTA in HGSS">​</a></h4>
-<p>Specifically in HGSS, texture SRT animations that apply to map elements (not buildings), are determined by the order of animations in the global <code>.nsbta</code> file associated to the areadata in use, and the order of the materials in the map files and <code>.nsbtx</code>.<br>
+<p>Specifically in HGSS, texture SRT animations that apply to map elements (not buildings), are determined by the order of animations in the global <code>.nsbta</code> file associated to the areadata in use, and the order of the materials in the map files (<code>.nsbmd</code>).<br>
 <!-- -->There are two global <code>.nsbta</code> in the vanilla HGSS, and it is also possible to assign an invalid global <code>.nsbta</code> (using an ID of <code>65535</code>) to remove all Texture SRT animations from that Header and associated maps.</p>
 <ol>
 <li>Global NSBTA 0 (typically used for most external map locations)</li>
@@ -60,7 +60,9 @@
 <blockquote>
 <p>Typically urban interiors (houses, shops etc.) have the global <code>.nsbta</code> set to an invalid value to disable them.</p>
 </blockquote>
-<p>When creating custom maps (and therefore) custom <code>.nsbtx</code> files in PDSMS, it is important to align the materials order with the global <code>.nsbta</code> to be used. This can be achieved by ordering the materials in PDSMS&#x27;s Materials Editor so that the top &#x27;x&#x27; match the order and quantity in the global <code>.nsbta</code>. Importantly for HGSS, the names of the materials don&#x27;t matter at all, only the position.</p>
+<p>When creating custom maps (and therefore) custom <code>.nsbmd</code> files in PDSMS, it is important to align the materials order with the global <code>.nsbta</code> to be used.</p>
+<p>This can be achieved by ordering the materials in PDSMS&#x27;s Materials Editor so that the top &#x27;x&#x27; match the order and quantity in the global <code>.nsbta</code>. The <code>Always include in IMD</code> checkbox in the Materials Editor is uised to ensure that these specific materials are always present in the <code>.imd</code> (the file that is then used to define values in the <code>.nsbmd</code>), even if they materials are not used in the map. This, and the actual order of the materials is crucial for avoiding animation errors in HGSS.</p>
+<p>Importantly for HGSS, the names of the materials don&#x27;t matter at all, only the position.</p>
 <p>When using vanilla <strong>Global NSBTA 0</strong>, the following order of materials should be used:</p>
 <ol>
 <li>S-shaped top right to bottom left, then top left to bottom right movement</li>
