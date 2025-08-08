@@ -33,7 +33,29 @@ For this, you will need:
 If successful, your ROM should be dumped to your SD card under the path `sd:/gm9i/out`.
 
 ### Known Good ROMs
-The tools to modify the games are verified to work with the following dumps.<br/>If your dump is not on this list, it is not guaranteed to work correctly with our tools, as it may be missing features (such as DSi-enhanced features). If this is the case, redump your game. **We will not provide any dumps, as it enables piracy (which is not supported by us), so do not ask.**
+The tools to modify the games are verified to work with the following dumps.<br/>If your dump is not on this list, it is not guaranteed to work correctly with our tools, as it may be missing features (such as DSi-enhanced features). If this is the case, redump your game.  
+
+**We will not provide any dumps, as it enables piracy (which is not supported by us), so do not ask.**  
+
+There are multiple ways to confirm the filehash of your ROM. Two examples are:
+1. **Operating System Agnostic:** Use a site such as [Marc Robledo's Rom Patcher](https://www.marcrobledo.com/RomPatcher.js/)
+    - You may need to select to "Force calculate checksum".
+    - All three hash algorithms (MD5, SHA1, SHA256) will be returned.
+2. **Windows:** Use a command line interface, such as PowerShell (Windows 10) or Terminal (Windows 11):
+    - Open PowerShell (`Win` + `X`).
+    - Navigate to the directory where the ROM file is located* (a basic summary of navigating directories in command prompt is [here](https://www.lifewire.com/change-directories-in-command-prompt-5185508)).
+    - Use the following command, replacing "**ROM_name.nds**" with the exact name of your ROM dump:
+      - `certutil -hashfile ROM_name.nds`  
+      - The hash will be returned (along with the default hash algorithm: SHA1).
+      - A specified hash algorithm can be returned by adding this as a parameter to the command, for example: `certutil -hashfile ROM_name.nds SHA256`  
+3. **Mac:** Use a command line interface, such as Terminal
+    - Open a Terminal
+    - Navigate to the directory where the ROM file is located*
+    - Use the following command, replacing "**ROM_name.nds**" with the exact name of your ROM dump:
+      - `shasum -a 256 ROM_name.nds`
+      - The SHA256 hash will be returned
+
+> *It is possible to run these commands without navigating to the same directory as the ROM by replacing "**ROM_name.nds**" with the path to the ROM and the exact name of your ROM dump, e.g. `/path/to/ROM_name.nds`
 
 <details>
 <summary>Pokémon Black (Known Good ROMs)</summary>

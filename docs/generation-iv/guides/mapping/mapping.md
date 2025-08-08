@@ -165,7 +165,7 @@ The primary tools used for Generation IV mapping are detailed in the [Generation
 | Tool / Plugin Name | Notes |
 | :--------------- | :--------------------------------------------------------------- |
 | [Blender](https://www.blender.org/download/releases/4-2/) | Widely used free 3D modelling software. There are specific versions which are not recommended due to issues with .obj import/export functionality. Safe & recommended versions include versions `2.78`-`2.83`, and versions `4.2`. |
-| [Nintendo Nitro System (NNS) Blender plugin](https://github.com/jellees/nns-blender-plugin) | Used for creating correct .NSBCA animation files for geometry/skeletal animations with one 'bone' per object definition |
+| [Nintendo Nitro System (NNS) Blender plugin](https://www.mediafire.com/file/x8z2pgz96l04t2s/nns-blender-plugin-master_pokemon_buildings.zip/file) | Used for creating correct .NSBCA animation files for geometry/skeletal animations with one 'bone' per object definition (**buildings**) |
 | [Nintendo Nitro System (NNS) Blender plugin v0.2.1](https://github.com/jellees/nns-blender-plugin/releases/tag/v0.2.1) | Used for creating correct .NSBCA animation files for geometry/skeletal animations with multiple 'bones' per object definition |
 | Maya Blender plugin | Plugin that allows for the creation of NSBTP (Nitro System Binary Texture Pattern) files, used for "flipbook" animations |
 | [FreshLad's DS Blender plugin](https://discordapp.com/channels/446824489045721090/1361335146653028492/1361335146653028492) | QoL plugin to reduce steps/complexity when working with 3D models |
