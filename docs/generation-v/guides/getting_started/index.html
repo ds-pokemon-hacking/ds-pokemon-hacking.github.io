@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.8.1">
 <title data-rh="true">Getting Started | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/docs/generation-v/guides/getting_started/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Getting Started | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Pokémon Black, White, Black 2 &amp; White 2 Versions"><meta data-rh="true" property="og:description" content="Pokémon Black, White, Black 2 &amp; White 2 Versions"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/docs/generation-v/guides/getting_started/"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-v/guides/getting_started/" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-v/guides/getting_started/" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Guides","item":"https://ds-pokemon-hacking.github.io/docs/category/guides-1"},{"@type":"ListItem","position":2,"name":"Getting Started","item":"https://ds-pokemon-hacking.github.io/docs/generation-v/guides/getting_started/"}]}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.65e503cb.css">
-<script src="/assets/js/runtime~main.47b44361.js" defer="defer"></script>
-<script src="/assets/js/main.8eb93e4f.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.17164b26.js" defer="defer"></script>
+<script src="/assets/js/main.9b735fb5.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
@@ -37,7 +37,45 @@ Please check back here often for the most up to date recommendations.</p>
 </ol>
 <p>If successful, your ROM should be dumped to your SD card under the path <code>sd:/gm9i/out</code>.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="known-good-roms">Known Good ROMs<a href="#known-good-roms" class="hash-link" aria-label="Direct link to Known Good ROMs" title="Direct link to Known Good ROMs">​</a></h3>
-<p>The tools to modify the games are verified to work with the following dumps.<br>If your dump is not on this list, it is not guaranteed to work correctly with our tools, as it may be missing features (such as DSi-enhanced features). If this is the case, redump your game. <strong>We will not provide any dumps, as it enables piracy (which is not supported by us), so do not ask.</strong></p>
+<p>The tools to modify the games are verified to work with the following dumps.<br>If your dump is not on this list, it is not guaranteed to work correctly with our tools, as it may be missing features (such as DSi-enhanced features). If this is the case, redump your game.</p>
+<p><strong>We will not provide any dumps, as it enables piracy (which is not supported by us), so do not ask.</strong></p>
+<p>There are multiple ways to confirm the filehash of your ROM. Two examples are:</p>
+<ol>
+<li><strong>Operating System Agnostic:</strong> Use a site such as <a href="https://www.marcrobledo.com/RomPatcher.js/" target="_blank" rel="noopener noreferrer">Marc Robledo&#x27;s Rom Patcher</a>
+<ul>
+<li>You may need to select to &quot;Force calculate checksum&quot;.</li>
+<li>All three hash algorithms (MD5, SHA1, SHA256) will be returned.</li>
+</ul>
+</li>
+<li><strong>Windows:</strong> Use a command line interface, such as PowerShell (Windows 10) or Terminal (Windows 11):<!-- -->
+<ul>
+<li>Open PowerShell (<code>Win</code> + <code>X</code>).</li>
+<li>Navigate to the directory where the ROM file is located* (a basic summary of navigating directories in command prompt is <a href="https://www.lifewire.com/change-directories-in-command-prompt-5185508" target="_blank" rel="noopener noreferrer">here</a>).</li>
+<li>Use the following command, replacing &quot;<strong>ROM_name.nds</strong>&quot; with the exact name of your ROM dump:<!-- -->
+<ul>
+<li><code>certutil -hashfile ROM_name.nds</code></li>
+<li>The hash will be returned (along with the default hash algorithm: SHA1).</li>
+<li>A specified hash algorithm can be returned by adding this as a parameter to the command, for example: <code>certutil -hashfile ROM_name.nds SHA256</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Mac:</strong> Use a command line interface, such as Terminal<!-- -->
+<ul>
+<li>Open a Terminal</li>
+<li>Navigate to the directory where the ROM file is located*</li>
+<li>Use the following command, replacing &quot;<strong>ROM_name.nds</strong>&quot; with the exact name of your ROM dump:<!-- -->
+<ul>
+<li><code>shasum -a 256 ROM_name.nds</code></li>
+<li>The SHA256 hash will be returned</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>*It is possible to run these commands without navigating to the same directory as the ROM by replacing &quot;<strong>ROM_name.nds</strong>&quot; with the path to the ROM and the exact name of your ROM dump, e.g. <code>/path/to/ROM_name.nds</code></p>
+</blockquote>
 <details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Pokémon Black (Known Good ROMs)</summary><div><div class="collapsibleContent_i85q"><table><thead><tr><th>Game</th><th>MD5</th><th>SHA1</th><th>SHA256</th></tr></thead><tbody><tr><td>Black (France)</td><td>92484e56aa45fd2cef5c4d973f6e10b1</td><td>a559da54839663d8f8f3f03382e5665a61873d22</td><td>b3ff279306e490e788c147eb6b71da55b488ddb76e25e64bcde5e70053c18613</td></tr><tr><td>Black (Germany)</td><td>fb3f0e425ce80df2869c6cd8ba990b7c</td><td>f5688bd617be7e67a150732f42cfae6ae104b2cb</td><td>beba9a479ddfe9a903890a8d4c62fd8d910fedd95efd91ad4969e84006e32b29</td></tr><tr><td>Black (Italy)</td><td>736e1c5a73c41a742136400d6b929526</td><td>699f8c6a8390b5e30236b6c386bc3c4bd7bdc44e</td><td>b3816e811f1718be7d1ddf3d77cfbc680e45a1b77ee4aca264f4fde97f2fd1f6</td></tr><tr><td>Black (Japan)</td><td>0d4425cdd33437fa360eeade3ae4f292</td><td>4ce46933ab795fc8bfc94acb7a853206b0c20b60</td><td>d5bae786128a6915f125e76a8a4e80e90a0a365d2613f6c366cfbab0de4d9030</td></tr><tr><td>Black (Korea)</td><td>790dae8334466f48ca14457bd36fc129</td><td>ca64de49a4429346ca578c2b21c16c8bcf1cf497</td><td>043bb988078ad6b0ff10a9b4cc5b122df3c610f844f3e0ebfcae9f55004c7cb1</td></tr><tr><td>Black (Spain)</td><td>b6605ee47d3a64aa324b39ed4cea2afa</td><td>68b55b82f5a033f9e9666c232f429e31ed658e54</td><td>c825a59dcd6ef88298dbcddd25e5d091a0457de84d6dae2bb846b963b14974e9</td></tr><tr><td>Black (USA, Europe)</td><td>37bff1431eda9b3a525737c7f59a432d</td><td>26ad0b9967aa279c4a266ee69f52b9b2332399a5</td><td>b9979189d299a0231d01c8885c0d054b706976ffc75427ca59d84e0ce1493034</td></tr></tbody></table></div></div></details>
 <details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Pokémon White (Known Good ROMs)</summary><div><div class="collapsibleContent_i85q"><table><thead><tr><th>Game</th><th>MD5</th><th>SHA1</th><th>SHA256</th></tr></thead><tbody><tr><td>White (France)</td><td>675fc1dabf7a45e586d74ed989fdadf7</td><td>28f075915dd445cbfd902f1e1a94d5048b03a095</td><td>0a7d6e87d9878c2fb903bcca01ecc8f9a186d0eed14ddbc87912ae126faa0bdb</td></tr><tr><td>White (Germany)</td><td>f20ceede18e40f82ec1feed9c6427d7e</td><td>fb752b211351f8480e3e1949e11a1d7741f05f5a</td><td>2f295bdc0a1dfcd1fe54330aa77de8f7257ecd3a080e03fccc6e0e62edd0176c</td></tr><tr><td>White (Italy)</td><td>80821ad5ea8eab99dc5db8ab1e0fa0e0</td><td>2e33164d26236dd499f75d1de3123d85e822d502</td><td>cf21437f21690ad90179611cfc4cffeb128e4fb0f163e78aedefdeb83053dc98</td></tr><tr><td>White (Japan)</td><td>d95b0f3172e2f658a2ecbce0fec105bb</td><td>e392548c1a59e4cafd7ba7a502770369410b2358</td><td>4c1532045e17a62b9bd36a2e99d51260145f7cf95b59774885131eb95de52c14</td></tr><tr><td>White (Korea)</td><td>934dddea7a8bbac0a34c696aafa09a4f</td><td>560288596203f31d3f1de8fd2e205d0f4c65a9e5</td><td>259ec42af03849ca5c45aeaf0967b34c43c9f4c5514238639152a4785ad8ff41</td></tr><tr><td>White (Spain)</td><td>ee29a2fd2f90a51fe2d1b872cf2b99df</td><td>4cc963ca925409ff0f12f3c417d1cbe1094bf934</td><td>46c707e67e5216df0bbfe57f1a6131df898c86302773511591ab53fdf159e4bb</td></tr><tr><td>White (USA, Europe)</td><td>77c34ba77f8fa44e7caf04f695db0560</td><td>bc696a0dfb448c7b3a8a206f0f8214411a039208</td><td>b288bb061fd646894f5059f55cd0a1efb13b4f0cfd3d9e06e9e42a5bd9431ac6</td></tr></tbody></table></div></div></details>
 <details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Pokémon Black 2 (Known Good ROMs)</summary><div><div class="collapsibleContent_i85q"><table><thead><tr><th>Game</th><th>MD5</th><th>SHA1</th><th>SHA256</th></tr></thead><tbody><tr><td>Black 2 (France)</td><td>6f9fa0d59a1fa1808f0f6908fd0e10ab</td><td>971ccee9a738d5d172220a45dce1e9c40e49e563</td><td>693c009dc031e74d01e00385f7156386c457640ebf800e1a04629e1e07aa7d37</td></tr><tr><td>Black 2 (Germany)</td><td>a22a97726b00b5957a6066258e90851b</td><td>f43dd2e26f48163f11721bd1e3b2e6f9a73be636</td><td>afe5d5a679cdc8f98fa459647d4fb703b734ea8084b77f138db9cb276f8b80b9</td></tr><tr><td>Black 2 (Italy)</td><td>1d5dc87bf37697311d8a3ef53ae2682e</td><td>68ec308db75d470f3c1499cc04117fe68fb4e942</td><td>5bbdab894552cffc71a9699a0875cd51f0dc3f6fec936d6ea2f0bcb6805b3e87</td></tr><tr><td>Black 2 (Japan) (Rev 1)</td><td>ecc64d4b1d9d9d161d55ecb23db6fa64</td><td>c55fe4412427e63ef28186af53ec114c7fdd9a0a</td><td>d7a1568368305c0606f77ef834b4e3b959b8d95f1735585aa94e2a025abf7d98</td></tr><tr><td>Black 2 (Korea)</td><td>b1815ff19eafcc070bcb7d83d346fe6a</td><td>9815dd094eb86d46d2d20d2bb04b2ecfd73f8e35</td><td>d4c8f16b229ed104a19c03a2627240ea0d4565438c8f30fb77f65a77b8a2021a</td></tr><tr><td>Black 2 (Spain)</td><td>16c656be39bde44e37eafc7f915b2636</td><td>b69a30d5f0456ad1a3a1b52a945729f686b0299b</td><td>87ffdb8ee2aee97079e9852eab4ee7f50e389c05dbba337235c40eb7080a98bc</td></tr><tr><td>Black 2 (USA, Europe)</td><td>4c65a32989c78b8070751765592b0ea6</td><td>e51e6dfb8678a3d19dcd2a10691b96a569ca0abb</td><td>2e6b2415354aa41471bc7617068dce059a59931bf5c4348a264f8043f297683a</td></tr></tbody></table></div></div></details>

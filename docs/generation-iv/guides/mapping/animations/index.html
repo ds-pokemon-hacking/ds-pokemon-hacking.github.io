@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.8.1">
 <title data-rh="true">Animations | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Animations | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Author(s): MrHam88."><meta data-rh="true" property="og:description" content="Author(s): MrHam88."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Guides","item":"https://ds-pokemon-hacking.github.io/docs/category/guides"},{"@type":"ListItem","position":2,"name":"Mapping Overview","item":"https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/"},{"@type":"ListItem","position":3,"name":"Animations","item":"https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations"}]}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.65e503cb.css">
-<script src="/assets/js/runtime~main.47b44361.js" defer="defer"></script>
-<script src="/assets/js/main.8eb93e4f.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.17164b26.js" defer="defer"></script>
+<script src="/assets/js/main.9b735fb5.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
@@ -16,15 +16,14 @@
 <p>Author(s): <a href="https://github.com/DevHam88" target="_blank" rel="noopener noreferrer">MrHam88</a>.</p>
 </blockquote>
 <p>This page summarises the main types of animations present in Generation IV Nintendo DS Pokémon games that are relevant for ROM hacking mapping purposes.</p>
-<hr>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="animation-types">Animation Types<a href="#animation-types" class="hash-link" aria-label="Direct link to Animation Types" title="Direct link to Animation Types">​</a></h2>
 <p>As outlined in the summary page <a href="/docs/generation-iv/guides/mapping/#textures-materials--animations">here</a>, there are five types of possible animations that can be used in the Generation IV Nintendo DS Pokémon games. This page will provide more context and detail around the first three types:</p>
 <ul>
 <li>Geometry SRT</li>
 <li>Texture SRT</li>
 <li>Texture Patterns</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="geometry-scale-rotate-translate-srt">Geometry Scale Rotate Translate (SRT)<a href="#geometry-scale-rotate-translate-srt" class="hash-link" aria-label="Direct link to Geometry Scale Rotate Translate (SRT)" title="Direct link to Geometry Scale Rotate Translate (SRT)">​</a></h3>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="geometry-scale-rotate-translate-srt">Geometry Scale Rotate Translate (SRT)<a href="#geometry-scale-rotate-translate-srt" class="hash-link" aria-label="Direct link to Geometry Scale Rotate Translate (SRT)" title="Direct link to Geometry Scale Rotate Translate (SRT)">​</a></h2>
 <p>These are skeletal animations, where parts of 3D models are moving relative to others (a good example from HGSS are the windmills in New Bark Town). They are also used in other non-mapping animations (such as the Lugia/Ho-oh model on the start game screen of SoulSilver and HeartGold respectively).</p>
 <p>This animation data is held in <code>.nsbca</code> (<em>Nitro System Binary Character Animation</em>) files relevant to Buildings.</p>
 <p>These animations are intrinsically linked to the model (e.g. building) that they are animating. Best practice is to configure these using a 3D modelling tool such as Blender, which can be used for the model and the animation. It is worth noting that different versions of the <a href="/docs/generation-iv/guides/mapping/#tooling">NNS Blender plugin</a> are recommended for buildings (with one &#x27;bone&#x27; per object) as opposed to complex animations such as the start game screen legendary Pokémon (which may require multiple &#x27;bones&#x27; per object).</p>
@@ -35,23 +34,30 @@
 </ul>
 <p><img decoding="async" loading="lazy" src="/assets/images/01_nsbca_windmill-de0de118bc2a58119d9c20c457e2760c.gif" width="610" height="452" class="img_ev3q"><br>
 <img decoding="async" loading="lazy" src="/assets/images/hg_start_game_hoohconverter-0c1863474a3d97cdf7ecbdf166c0ea4a.gif" width="800" height="591" class="img_ev3q"></p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="texture-scale-rotate-translate-srt">Texture Scale Rotate Translate (SRT)<a href="#texture-scale-rotate-translate-srt" class="hash-link" aria-label="Direct link to Texture Scale Rotate Translate (SRT)" title="Direct link to Texture Scale Rotate Translate (SRT)">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="texture-scale-rotate-translate-srt">Texture Scale Rotate Translate (SRT)<a href="#texture-scale-rotate-translate-srt" class="hash-link" aria-label="Direct link to Texture Scale Rotate Translate (SRT)" title="Direct link to Texture Scale Rotate Translate (SRT)">​</a></h2>
 <p>These are UV map animations, where the UV map position is essentially moved across the faces/polygons it is applied to (a good example from HGSS are the river and pond surfaces).</p>
 <p>This animation data is held in <code>.nsbta</code> (<em>Nitro System Binary Texture Animation</em>) files relevant to maps (via <strong>global</strong> <code>.nsbta</code> files used in every areadata) and buildings (individual <code>.nsbta</code> files).</p>
 <p>These animations are linked to a &#x27;positioned&#x27; (HGSS) material in the map <code>.nsbtx</code> (for global <code>.nsbta</code>), or to a named material in the buildings. Custom <code>.nsbta</code> animations can be designed and created using 3D modelling tools such as Blender, and it is also possible to edit an existing <code>.nsbta</code> file using CTRMap (usually not a tool used in Generation IV mapping: see Generation V <a href="/docs/generation-v/guides/getting_started/">Getting Started</a> Wiki page for details).</p>
-<p>New global <code>.nsbta</code> can be added, replaced or deleted to the ROM using the Building Editor in PDSMS, on the &quot;Area Data Editor&quot; tab. They can also be assigned to specific Areadata here, or in DSPRE. To assign &quot;no animations&quot; to an areadata in DSPRE, use an ID of <code>65535</code>.</p>
-<blockquote>
-<p>HGSS uses global <code>.nsbta</code>, DPPt does not, and <code>.nsbta</code> are only used in these games for buildings.</p>
-</blockquote>
-<p><img decoding="async" loading="lazy" src="/assets/images/pdsms_dspre_nsbta_import-8a40b1f4da7b41297b8ddc841460be43.png" width="6348" height="1900" class="img_ev3q"></p>
 <p>The following are some video tutorials that provide further context and instructions on the correct use of Texture SRT animations:</p>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=uZdN3yjkzso" target="_blank" rel="noopener noreferrer">Making your own .nsbta through blender</a></li>
 <li><a href="https://discord.com/channels/446824489045721090/490610651002306561/1372676606442737756" target="_blank" rel="noopener noreferrer">Steps to edit an existing .nsbta using CTRMap</a></li>
 </ul>
 <p><img decoding="async" loading="lazy" src="/assets/images/02_nsbta_pondwater-e362283b1db6437913d49d07aa140546.gif" width="602" height="446" class="img_ev3q"></p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="global-nsbta-in-hgss">Global NSBTA in HGSS<a href="#global-nsbta-in-hgss" class="hash-link" aria-label="Direct link to Global NSBTA in HGSS" title="Direct link to Global NSBTA in HGSS">​</a></h4>
-<p>Specifically in HGSS, texture SRT animations that apply to map elements (not buildings), are determined by the order of animations in the global <code>.nsbta</code> file associated to the areadata in use, and the order of the materials in the map files (<code>.nsbmd</code>).<br>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="adding-replacing--deleting-nsbta-files">Adding, Replacing &amp; Deleting NSBTA Files<a href="#adding-replacing--deleting-nsbta-files" class="hash-link" aria-label="Direct link to Adding, Replacing &amp; Deleting NSBTA Files" title="Direct link to Adding, Replacing &amp; Deleting NSBTA Files">​</a></h3>
+<p>New global <code>.nsbta</code> can be added, replaced or deleted to the ROM using the Building Editor in PDSMS, on the &quot;Area Data Editor&quot; tab.<br>
+<!-- -->The Building Editor in PDSMS applies changes to the unpacked &quot;contents&quot; folder created by DSPRE. To apply these changes to the ROM, the ROM must be:</p>
+<ol>
+<li>Opened in DSPRE, ensuring that &quot;Yes&quot; is selected when the Data Detected dialog is displayed.</li>
+<li>Saved to a <code>.nds</code> file using the Save button in DSPRE.</li>
+</ol>
+<p>Global <code>.nsbta</code> can also be assigned to specific Areadata in PDSMS Buildings Editor, or in DSPRE (after the Global <code>.nsbta</code> has been applied to the ROM). To assign &quot;no animations&quot; to an areadata in DSPRE, use an ID of <code>65535</code>.</p>
+<blockquote>
+<p>HGSS uses global <code>.nsbta</code>, DPPt does not, and <code>.nsbta</code> are only used in these games for buildings.</p>
+</blockquote>
+<p><img decoding="async" loading="lazy" src="/assets/images/pdsms_dspre_nsbta_import-8a40b1f4da7b41297b8ddc841460be43.png" width="6348" height="1900" class="img_ev3q"></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="global-nsbta-in-hgss-vanilla">Global NSBTA in HGSS (Vanilla)<a href="#global-nsbta-in-hgss-vanilla" class="hash-link" aria-label="Direct link to Global NSBTA in HGSS (Vanilla)" title="Direct link to Global NSBTA in HGSS (Vanilla)">​</a></h3>
+<p>Specifically in HGSS, texture SRT animations that apply to map elements (not buildings), are determined by the <em>order</em> of animations in the global <code>.nsbta</code> file associated to the areadata in use, and the order of the materials in the map files (<code>.nsbmd</code>).<br>
 <!-- -->There are two global <code>.nsbta</code> in the vanilla HGSS, and it is also possible to assign an invalid global <code>.nsbta</code> (using an ID of <code>65535</code>) to remove all Texture SRT animations from that Header and associated maps.</p>
 <ol>
 <li>Global NSBTA 0 (typically used for most external map locations)</li>
@@ -60,9 +66,30 @@
 <blockquote>
 <p>Typically urban interiors (houses, shops etc.) have the global <code>.nsbta</code> set to an invalid value to disable them.</p>
 </blockquote>
-<p>When creating custom maps (and therefore) custom <code>.nsbmd</code> files in PDSMS, it is important to align the materials order with the global <code>.nsbta</code> to be used.</p>
-<p>This can be achieved by ordering the materials in PDSMS&#x27;s Materials Editor so that the top &#x27;x&#x27; match the order and quantity in the global <code>.nsbta</code>. The <code>Always include in IMD</code> checkbox in the Materials Editor is uised to ensure that these specific materials are always present in the <code>.imd</code> (the file that is then used to define values in the <code>.nsbmd</code>), even if they materials are not used in the map. This, and the actual order of the materials is crucial for avoiding animation errors in HGSS.</p>
-<p>Importantly for HGSS, the names of the materials don&#x27;t matter at all, only the position.</p>
+<p>When creating custom maps in PDSMS (and therefore custom <code>.nsbmd</code> files), it is important to align the materials array order with the global <code>.nsbta</code> to be used.</p>
+<p>Achieving this is split into two parts:</p>
+<ol>
+<li>Assigning the global <code>.nsbta</code> to the required Areadata (see <a href="#adding-replacing--deleting-nsbta-files">section</a> above)</li>
+<li>Ensuring that the Material Array in the custom map files is set correctly (see <a href="#aligning-material-array-to-global-nsbta">section</a> below)</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="global-nsbta-in-hgss-custom">Global NSBTA in HGSS (Custom)<a href="#global-nsbta-in-hgss-custom" class="hash-link" aria-label="Direct link to Global NSBTA in HGSS (Custom)" title="Direct link to Global NSBTA in HGSS (Custom)">​</a></h3>
+<p>It is possible to import other global <code>.nsbta</code> files to HGSS, which can then be aligned to Areadata. When using a custom global <code>.nsbta</code>, the order should match that in the <em>custom</em> <code>.nsbta</code> configuration.</p>
+<p>A frequently desired use-case for this is to use the Generation V animations in a HGSS ROM hack (usually one that is using Generation V textures).<br>
+<!-- -->The below image shows where to find the <code>.nsbta</code> used in Black 2 Version for overworld/route animations (<code>/a/0/6/8/8_0.BTA0</code>, ).</p>
+<p><img decoding="async" loading="lazy" src="/assets/images/BW_TextureSRT_NSBTA_Location-3c9e0f1403e3285039121211c0dee504.png" width="2012" height="1806" class="img_ev3q"></p>
+<p>Achieving this is split into four parts:</p>
+<ol>
+<li>Sourcing/creating a custom <code>.nsbta</code> file (see <a href="#texture-scale-rotate-translate-srt">tutorials</a> above)</li>
+<li>Importing a custom <code>.nsbta</code> file (see <a href="#adding-replacing--deleting-nsbta-files">importing section</a> above)</li>
+<li>Assigning the global <code>.nsbta</code> to the required Areadata (see <a href="#adding-replacing--deleting-nsbta-files">section</a> above)</li>
+<li>Ensuring that the Material Array in the custom map files is set correctly (see <a href="#aligning-material-array-to-global-nsbta">section</a> below)</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="aligning-material-array-to-global-nsbta">Aligning Material Array to Global NSBTA<a href="#aligning-material-array-to-global-nsbta" class="hash-link" aria-label="Direct link to Aligning Material Array to Global NSBTA" title="Direct link to Aligning Material Array to Global NSBTA">​</a></h3>
+<p>To ensure a custom map correctly animates based on the selected global <code>.nsbta</code> (whether that is a vanilla selection, or custom imported file), the following must be done.</p>
+<p>Ordering the materials in PDSMS&#x27;s Materials Editor so that the top &#x27;x&#x27; match the order and quantity in the global <code>.nsbta</code>.
+The <code>Always include in IMD</code> checkbox in the Materials Editor is selected for all the materials in theglobal <code>.nsbta</code> to ensure that these specific materials are always present in the <code>.imd</code> (the file that is then used to define values in the <code>.nsbmd</code>), even if they materials are not used in the map.</p>
+<p>Both steps are crucial for avoiding animation errors in HGSS.</p>
+<p>Importantly for HGSS, the <em>names</em> of the materials don&#x27;t matter at all, only the <em>positions</em>.</p>
 <p>When using vanilla <strong>Global NSBTA 0</strong>, the following order of materials should be used:</p>
 <ol>
 <li>S-shaped top right to bottom left, then top left to bottom right movement</li>
@@ -86,18 +113,35 @@
 <img decoding="async" loading="lazy" src="/assets/images/hgss_nsbta1_material_order-2852b74350d1b1ae79940d3d1135a10c.png" width="366" height="387" class="img_ev3q"><br>
 <img decoding="async" loading="lazy" src="/assets/images/hgss_nsbta0-8a75dc428970c2f7db55eb2eaef75c42.gif" width="366" height="204" class="img_ev3q">
 <img decoding="async" loading="lazy" src="/assets/images/hgss_nsbta1-f4814c30251845122c82cc98aab1a74b.gif" width="366" height="204" class="img_ev3q"></p>
-<p>When using a custom global <code>.nsbta</code>, the order should match that in the custom <code>.nsbta</code> configuration.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="texture-patterns">Texture Patterns<a href="#texture-patterns" class="hash-link" aria-label="Direct link to Texture Patterns" title="Direct link to Texture Patterns">​</a></h3>
+<p>When using <strong>NSBTA 8_0 from Black 2</strong> (as a Generation V example), the following order of materials should be used:</p>
+<ol>
+<li>ue_grass01</li>
+<li>kawa01a</li>
+<li>kawa01b</li>
+<li>kawa01b_1</li>
+<li>kawa01b_2</li>
+<li>shore01</li>
+<li>sea_zanami2</li>
+<li>sea_zanami</li>
+<li>sea_mizu1</li>
+<li>sea_mizu1_1</li>
+<li>sea_gake02</li>
+<li>sea_asase02</li>
+<li>mizu_sita2</li>
+<li>ike01</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="texture-patterns">Texture Patterns<a href="#texture-patterns" class="hash-link" aria-label="Direct link to Texture Patterns" title="Direct link to Texture Patterns">​</a></h2>
 <p>These are &quot;flipbook&quot; or sequence animations, where a series of image textures are displayed in sequence, where the relative time any given image texture is visible can vary (an example of this from HGSS are the red and white flowers placed on many grass areas).</p>
 <p>This animation data is held in <code>.nsbtp</code> (<em>Nitro System Binary Texture Pattern</em>) files relevant to Buildings, and a <code>.bin</code> file relevant to maps.</p>
 <p>The process for creating a texture pattern varies slightly where the intended use is for a map element/tile or a building. The below tutorials provide the methods for both.</p>
 <p><img decoding="async" loading="lazy" src="/assets/images/03_nsbtp_flowers-9a182e5e7ce4cef25180cd8532549d02.gif" width="800" height="597" class="img_ev3q"></p>
 <p>The following are some tutorials that provide further context and instructions on the correct use of Texture Pattern animations:</p>
 <ul>
-<li><a href="https://youtu.be/Rsweh-nSwuc?feature=shared" target="_blank" rel="noopener noreferrer">How to add animated tiles in Pokemon DS maps</a></li>
+<li><a href="https://youtu.be/Rsweh-nSwuc?feature=shared" target="_blank" rel="noopener noreferrer">How to add animated tiles in Pokemon DS maps</a>*</li>
 <li><a href="/docs/universal/guides/nsbtp_creation/">Making Flipbooks using Texture Pattern Animations</a></li>
 </ul>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="fixing-texture-pattern-palettes-when-using-custom-nsbtx">Fixing Texture Pattern Palettes when using Custom NSBTX<a href="#fixing-texture-pattern-palettes-when-using-custom-nsbtx" class="hash-link" aria-label="Direct link to Fixing Texture Pattern Palettes when using Custom NSBTX" title="Direct link to Fixing Texture Pattern Palettes when using Custom NSBTX">​</a></h4>
+<p>*<em>This video refers to Platinum (in terms of file locations). When hacking Platinum Version, the animation files that must be replaced/added to are located in <code>data/data/fldanime.narc</code> (as mentioned in the tutorial). When hacking HeartGold or SoulSilver Versions, the animation files that must be replaced/added to are located in <code>data/data/a/1/3/9</code> instead. Credit to xZERCx for documenting this.</em></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="fixing-texture-pattern-palettes-when-using-custom-nsbtx">Fixing Texture Pattern Palettes when using Custom NSBTX<a href="#fixing-texture-pattern-palettes-when-using-custom-nsbtx" class="hash-link" aria-label="Direct link to Fixing Texture Pattern Palettes when using Custom NSBTX" title="Direct link to Fixing Texture Pattern Palettes when using Custom NSBTX">​</a></h3>
 <p>Since texture pattern animations use a series of textures (not just the first one that&#x27;s used in a tile in PDSMS), the palette used by the full range of images in the pattern will likely have more colours. These means that if a custom <code>.nsbtx</code> is created with one of the named textures that uses pattern animations, the palette from the custom <code>.nsbta</code> will result in incorrect colours being displayed when the animation play.</p>
 <p>Therefore it is advisible to selectively take the palette from these specific materials from a vanilla <code>.nsbtx</code> file and replace the custom <code>.nsbtx</code> entries of the same name. This replacing of textures and/or palettes can be achieved using the PDSMS NSBTX Editor to open the <code>.nsbtx</code> and then import the &quot;good&quot; textures and palettes from an exported vanilla <code>.nsbtx</code>, delete the original and re-save the <code>.nsbtx</code> file.</p>
 <p>In HGSS there are nine Pattern Animations in the mapping bin file. These relate specifically to the following materials, if these are used on a custom map, they should be replaced with vanilla texture/palettes:</p>
@@ -112,6 +156,6 @@
 <li>dsea_on</li>
 <li>r_sea_rock</li>
 </ol>
-<p>Textures 1-7 are commonly found in the main overworld in HGSS, Textures 1, 4-5, 8-9 are used in some caves.</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_VsjB"></div></div></footer></article><nav class="pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/generation-iv/guides/mapping/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Mapping Overview</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/generation-iv/guides/mapping/models"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Models</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#animation-types" class="table-of-contents__link toc-highlight">Animation Types</a><ul><li><a href="#geometry-scale-rotate-translate-srt" class="table-of-contents__link toc-highlight">Geometry Scale Rotate Translate (SRT)</a></li><li><a href="#texture-scale-rotate-translate-srt" class="table-of-contents__link toc-highlight">Texture Scale Rotate Translate (SRT)</a></li><li><a href="#texture-patterns" class="table-of-contents__link toc-highlight">Texture Patterns</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 DS Pokémon Hacking. Built with Docusaurus.</div></div></div></footer></div>
+<p>Textures 1-7 are commonly found in the main overworld in HGSS, Textures 1, 4-5, 8-9 are used in some caves.</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/animations.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_VsjB"></div></div></footer></article><nav class="pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/generation-iv/guides/mapping/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Mapping Overview</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/generation-iv/guides/mapping/models"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Models</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#geometry-scale-rotate-translate-srt" class="table-of-contents__link toc-highlight">Geometry Scale Rotate Translate (SRT)</a></li><li><a href="#texture-scale-rotate-translate-srt" class="table-of-contents__link toc-highlight">Texture Scale Rotate Translate (SRT)</a><ul><li><a href="#adding-replacing--deleting-nsbta-files" class="table-of-contents__link toc-highlight">Adding, Replacing &amp; Deleting NSBTA Files</a></li><li><a href="#global-nsbta-in-hgss-vanilla" class="table-of-contents__link toc-highlight">Global NSBTA in HGSS (Vanilla)</a></li><li><a href="#global-nsbta-in-hgss-custom" class="table-of-contents__link toc-highlight">Global NSBTA in HGSS (Custom)</a></li><li><a href="#aligning-material-array-to-global-nsbta" class="table-of-contents__link toc-highlight">Aligning Material Array to Global NSBTA</a></li></ul></li><li><a href="#texture-patterns" class="table-of-contents__link toc-highlight">Texture Patterns</a><ul><li><a href="#fixing-texture-pattern-palettes-when-using-custom-nsbtx" class="table-of-contents__link toc-highlight">Fixing Texture Pattern Palettes when using Custom NSBTX</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 DS Pokémon Hacking. Built with Docusaurus.</div></div></div></footer></div>
 </body>
 </html>
