@@ -81,7 +81,8 @@ Navigate to the offset `0x204F8` in the `overlay_0016.bin` file. You should see 
 At this point I strongly advice you save your ROM in DSPRE and test it to make sure it actually still works. Get in a battle and use a move (preferably one that has an effect beyond just dealing damage) to make sure the game doesn't crash. If it does or you see weird graphical glitches, you probably made a mistake somewhere. If it doesn't, congratulations! You have successfully moved the move effect subscript table to a new location.
 
 ### Editing the type chart
-Now that we have made space for the new type chart, we can actually edit it. This section will guide you through the process of editing the type chart using a hex editor, explaining how the type chart works and how to add new types or change existing types along the way. If you know how to run a python script, you can use the file `type_chart_helper.py` which is included in the accompanying resources folder. It will generate the triplets for you by reading a csv as input. A template csv with mystery type replaced by fairy type and the modern steel type changes is included in the resources folder as well. If you decide to go this route, I recommend you read through this section anyway, as it will help you understand how the type chart works and how it is actually structured in the ROM.
+Now that we have made space for the new type chart, we can actually edit it. This section will guide you through the process of editing the type chart using a hex editor, explaining how the type chart works and how to add new types or change existing types along the way. If you know how to run a python script, you can use the file `type_chart_helper.py` which is included in the accompanying resources folder. It will generate the triplets for you by reading a csv as input. A template csv with mystery type replaced by fairy type and the modern steel type changes is included in the resources folder as well. You can also use the modern type chart provided [here](#the-modern-type-chart) and paste it at the correct offset.
+If you decide to go this route, I recommend you read through this section anyway, as it will help you understand how the type chart works and how it is actually structured in the ROM.
 
 The type chart is located at the offset `0x33B94` in `overlay_0016.bin`. Open this file in your hex editor and navigate to this offset. You should see a table that looks like this:
 ```
@@ -107,6 +108,8 @@ To add a new type or change an existing type we can insert new triplets into thi
 
 Before we can edit the type chart, we will also need the list of the type's IDs:
 <a id="type-ids"></a>
+<details>
+<summary>Type IDs</summary>
 | Type Name | Type ID | Type ID (Decimal) |
 |:---------:|:-------:|:-----------------:|
 | Normal    | 0x00    |  0                |
@@ -127,9 +130,19 @@ Before we can edit the type chart, we will also need the list of the type's IDs:
 | Ice       | 0x0F    | 15                |
 | Dragon    | 0x10    | 16                |
 | Dark      | 0x11    | 17                |
+</details>
 
 Simply modifying the type chart is actually sufficient to have a functional fairy type in the game, however, it will still display as the mystery type in battle, in the menu and in the Pokédex.
 We also need to assign the type to the desired moves and Pokémon.
+
+#### The modern type chart
+For your convenience, here is the modern type chart with the Fairy type replacing the Mystery type. You can use this as a reference when editing the type chart or simply copy and paste it as is.
+<details>
+<summary>Modern Type Chart (Fairy type replacing Mystery type)</summary>
+```
+00 05 05 00 08 05 0A 0A 05 0A 0B 05 0A 0C 14 0A 0F 14 0A 06 14 0A 05 05 0A 10 05 0A 08 14 0B 0A 14 0B 0B 05 0B 0C 05 0B 04 14 0B 05 14 0B 10 05 0D 0B 14 0D 0D 05 0D 0C 05 0D 04 00 0D 02 14 0D 10 05 0C 0A 05 0C 0B 14 0C 0C 05 0C 03 05 0C 04 14 0C 02 05 0C 06 05 0C 05 14 0C 10 05 0C 08 05 0F 0B 05 0F 0C 14 0F 0F 05 0F 04 14 0F 02 14 0F 10 14 0F 08 05 0F 0A 05 01 00 14 01 0F 14 01 03 05 01 02 05 01 0E 05 01 06 05 01 05 14 01 11 14 01 08 14 01 09 05 03 0C 14 03 03 05 03 04 05 03 05 05 03 07 05 03 08 00 03 09 14 04 0A 14 04 0D 14 04 0C 05 04 03 14 04 02 00 04 06 05 04 05 14 04 08 14 02 0D 05 02 0C 14 02 01 14 02 06 14 02 05 05 02 08 05 0E 01 14 0E 03 14 0E 0E 05 0E 11 00 0E 08 05 06 0A 05 06 0C 14 06 01 05 06 03 05 06 02 05 06 0E 14 06 07 05 06 11 14 06 08 05 06 09 05 05 0A 14 05 0F 14 05 01 05 05 04 05 05 02 14 05 06 14 05 08 05 07 00 00 07 0E 14 07 11 05 07 07 14 10 10 14 10 08 05 10 09 00 11 01 05 11 0E 14 11 07 14 11 11 05 11 09 05 08 0A 05 08 0B 05 08 0D 05 08 0F 14 08 05 14 08 08 05 08 09 14 09 10 14 09 01 14 09 11 14 09 03 05 09 08 05 09 0A 05 FE FE 00 00 07 00 01 07 00 FF FF 00
+```
+</details>
 
 #### Using the `type_chart_helper.py` script
 If you want to use the `type_chart_helper.py` script, you will need to have Python installed on your computer. You can download it from [here](https://www.python.org/downloads/). Alternatively, you can install it from the Microsoft Store, which is the easiest way to get it on Windows. At the top of the file you will find the settings for the script. You will need to provide the path to your overlay 16 file, the path may be something like `platinum_DSPRE_contents/unpacked/overlay/overlay_0016.bin`. There is also a `mode` setting which can be set to either `bin-to-csv` or `csv-to-bin`. The first mode will convert the binary type chart to a CSV file, while the second mode will convert a CSV file to a binary type chart and write it to your overlay. The script will create a new file called `type_chart.csv` in the same folder as the script. If you plan on adding new types, you can also add them to the enum at the top of the file. The resources folder contains a template CSV file for the modern type chart with the Fairy type replacing the Mystery type calles `modern_type_chart.csv`. You can use this as a starting point for your own type chart or just copy it as is. The folder also contains a copy of the vanilla type chart called `vanilla_type_chart.csv` which you can use to revert your changes if needed.
@@ -155,7 +168,9 @@ import dex_no_sprite from './resources/dex_no_sprite.png';
 In total we will need to add 3 things: A sprite for the type icon, a sprite for the type in the Pokédex and a palette used by the move selection in battle. The first two can be done using DSPRE and Nitro Paint, while the third one requires some hex editing.
 I recommend you make a temporary workspace folder that you can use to store some extracted files and sprites. 
 
-#### Type Icon
+<details>
+<summary>Type Icon</summary>
+
 Let's take care of the easiest one first: the type icon. Open your ROM in DSPRE and select *Tools* > *NARC Utility* > *Unpack to Folder*. (You can also use the button in the bar at the top.)
 When promted, select `platinum_DSPRE_contents/data/battle/graphic/pl_batt_obj.narc` as the NARC file and unpack it to your workspace folder. This will create a new folder called `pl_battle_obj` in your workspace folder. When asked if you want to rename the files, select "Yes". This will make it easier to find the files later on.
 
@@ -172,8 +187,12 @@ If you check it out in game, you will notice that the icon is using the wrong pa
 
 Open `platinum_DSPRE_contents/arm9.bin` in your hex editor and navigate to the offset `0xF0B55`. You should see the byte `02`. Change this to the palette index of your new type icon. In this case, we will use `01` for the Fairy type which is the correct palette for the icon included in the resources folder.
 Save the file and test it in game. The icon should now display correctly in battle and in the summary screen.
+</details>
 
-### Move Selection Palette
+
+<details>
+<summary>Move Selection Palette</summary>
+
 Let's take care of the move selection palette next. This palette is used in battle when selecting a move and is located at the offset `0x28C` in `overlay/overlay_0011.bin`. Open this file in your hex editor and navigate to the offset `0x28C`. You should see a series of bytes that look like this:
 ```
 cd 75 ff 7f 7a 5a 17 4e b5 45 72 3d 30 31 ed 28 cb 20 fb 66 c6 18 00 00 8c 31 5c 37 be 57 00 00
@@ -182,8 +201,11 @@ This is the palette used for the mystery type. This one is a bit more tricky to 
 ```
 CD 75 FF 7F 7C 66 17 52 18 56 1B 5E 35 41 F2 38 B2 34 DD 6E C6 18 00 00 8C 31 5C 37 BE 57 00 00
 ```
+</details>
 
-### Pokédex Type Icon
+<details>
+<summary>Pokédex Type Icon</summary>
+
 The last thing we need to do is add the type icon to the Pokédex. This is the most annoying one to do since all the icons are stored as different animations that pull from a large cell graphic. The Pokédex icons are located in the `/data/resource/eng/zukan/zukan.narc` file. Unpack this file to your workspace folder using DSPRE's NARC utility just like we did with the other type icon. To save you some pain the resource folder contains the required files for Fairy Type. If that's all you want to do, you can [skip](#packing-zukan-narc) the next section and just drag the provided files into the zukan folder, don't forget to pack the NARC again. If you want to learn how to add your own type icons, read on.
 
 You'll need the palette file `0013.rlcn` and the cell graphic `0090.rgcn` again, but this time we will also need the animation file `0089.rnan` and the cell resource `0088.recn`.
@@ -200,17 +222,20 @@ import nitro_paint_1 from './resources/nitro_paint_1.png';
 import nitro_paint_2 from './resources/nitro_paint_2.png';
 import nitro_paint_3 from './resources/nitro_paint_3.png';
 
+<details>
+<summary>Steps in Nitro Paint</summary>
 <div className="image-container">
   <img src={nitro_paint_1} alt="Steps in Nitro Paint" width={1000} />
   <img src={nitro_paint_2} alt="Steps in Nitro Paint" width={1000} />
   <img src={nitro_paint_3} alt="Steps in Nitro Paint" width={300} />
 </div>
+</details>
 
 <a id="packing-zukan-narc"></a>
 
 Use DSPRE's NARC utility to pack the `zukan` folder back into a NARC file. Select the `zukan` folder and pack it into `zukan.narc`. After that replace the original `zukan.narc` in your ROM with the newly created one.
 
-### Modifying the game's code to show the Pokédex icon
+#### Modifying the game's code to show the Pokédex icon
 
 Since we completely resorted the sequences in the animation file, we will need to modify the game's code to make sure it uses the correct sequence for each type. In vanilla Platinum, the game uses a function that reads from a table to determine which sequence to use for each type. The function is located at offset `0xE400` in `overlay_0021.bin`. Open this file in your hex editor and navigate to this offset. You should see a series of bytes that look like this:
 ```
@@ -223,7 +248,12 @@ Replace it (Ctrl + B in HxD) with the following bytes:
 ```
 
 Instead of doing some complex mapping of the type IDs to the sequences, we simply add 1 to the type ID and use that as the sequence number. This is the reason we sorted the sequences to begin with.
-We also need to tell the game where to find the yellow rectangle sprite (used in the backround of the Pokédex). Navigate to offset `0xE514`. You should see `11 21` replace with `00 21`.
+We also need to tell the game where to find the yellow rectangle sprite (used in the backround of the Pokédex). To do so navigate to following three offsets:
+- `0xE514` 
+- `0x1066C`
+- `0x1066C`
+
+At each of these offsets you should see `11 21`. Replace it with `00 21`.
 
 import battle_fairy from './resources/battle_fairy.png';
 import summary_fairy from './resources/summary_fairy.png';
@@ -234,7 +264,8 @@ import dex_fairy from './resources/dex_fairy.png';
   <img src={summary_fairy} alt="Clefairy with Fairy type in summary" width={300} style={{ verticalAlign: 'top' }} />
   <img src={dex_fairy} alt="Clefairy with Fairy type in Pokédex" width={300} style={{ verticalAlign: 'top' }} />
 </div>
-<br />
+</details>
+
 At this point you should have a fully functional Fairy type in your game. You can test it by using a Pokémon with the Fairy type in battle and checking the Pokédex to see if the new icon is displayed correctly. If everything works as expected, congratulations! You have successfully added the Fairy Type to Platinum.
 
 ## Advanced Version
