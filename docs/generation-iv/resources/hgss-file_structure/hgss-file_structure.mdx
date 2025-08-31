@@ -1,0 +1,301 @@
+---
+title: File Structure (HeartGold & SoulSilver)
+tags:
+  - Resource (HeartGold)
+  - Resource (SoulSilver)  
+---
+
+# File Structure (HeartGold & SoulSilver)
+> Author(s): [MrHam88](https://github.com/DevHam88)  
+> Source: [Unkown Author](https://docs.google.com/document/d/15YuxZpMmmuSDEcMa8chkjXWWgVPv-MlCELZK5lBx5EI/edit?pli=1&tab=t.0)
+
+This page provides a filterable and sortable table of the filestructure of Pokémon HeartGold & SoulSilver Versions.
+
+import FilterableSortableTable from '/src/components/FilterableSortableTable';
+
+<FilterableSortableTable defaultSort={{ column: 2, direction: 'desc' }} types={['string','number']}>
+
+| Area | Sub-Area | Path | Narc name | Description |
+| --- | --- | --- | --- | --- |
+| Pokemon Data |  | /a/0/0/2 | personal.narc |  |
+| Pokemon Data |  | /a/0/3/3 |  |  |
+| Pokemon Data |  | /a/0/0/3 | growtbl.narc | Growth Tables |
+| Pokemon Data |  | /a/0/3/4 | evo.narc | Evolution Data |
+| Pokemon Data |  | /a/2/2/9 | kowaza.narc | Egg Move Table |
+| Pokemon Data |  | /data/kowaza | kowaza.narc | Egg Move Table (copy?) |
+| Pokemon Data |  | /poketool/personal | pms.bin | Baby Table |
+| Pokemon Data |  | /fielddata/wazaoshie | waza_oshie.bin | Move Tutor Table |
+| Pokemon Data |  | /a/1/1/7 | height_o.narc | Height Order(?) |
+| Pokemon Data | Pokemon Graphics | /a/0/0/4 | pokegra.narc | Pokemon Sprites |
+| Pokemon Data | Pokemon Graphics | /a/1/1/4 | otherpoke.narc | Alt Forme Sprites |
+| Pokemon Data | Pokemon Graphics | /a/0/0/5 | height.narc | Friendly Pokmemon Y-Axis Offset |
+| Pokemon Data | Pokemon Graphics | /a/0/9/0 | poke_anm.narc | Pokemon Animation Sets |
+| Pokemon Data | Pokemon Graphics | /a/1/8/0 | poke_data.narc | Two-Frame Animations, Shadow, Battle Offsets |
+| Pokemon Data | Pokemon Graphics | /a/0/2/0 | poke_icon.narc | Pokemon Icons |
+| Pokemon Data | Pokemon Graphics | /a/0/6/9 | pokefoot.narc | Pokemon Footprint Icons |
+| Pokemon Data | Leftover Files | /a/1/1/1 | pokeanm.narc | Two-Frame Sprite Animations |
+| Pokemon Data | Leftover Files | /a/1/3/2 | poke_yofs.narc | Foe Pokemon Y-Axis Offsets |
+| Pokemon Data | Leftover Files | /a/1/3/5 | poke_shadow.narc | Foe Pokemon Shadow Size |
+| Pokemon Data | Leftover Files | /a/1/3/7 | poke_shadow_ofx.narc | Foe Pokemon Shadow X-Axis Offsets |
+| Pokemon Data | Leftover Files | /a/1/9/4 | dp_height.narc | Leftover height.narc from D/P |
+| Pokemon Data | Leftover Files | /a/1/9/5 | dp_height_o.narc | Leftover height_o.narc from D/P |
+| Pokemon Data | Leftover Files | /a/2/2/8 | dp_poke_icon.narc | Leftover DP Pokemon Icons |
+| Encounter Data |  | /a/0/3/7 | hg_enc_data.narc | HG Field Encounters |
+| Encounter Data |  | /a/1/3/6 | ss_enc_data.narc | SS Field Encounters |
+| Encounter Data |  | /a/2/5/3 | hg_hb_encdata.narc | HG Headbutt Encounters |
+| Encounter Data |  | /a/2/5/2 | ss_hb_encdata.narc | SS Headbutt Encounters |
+| Encounter Data |  | /a/2/3/0 | sz_enc_data.narc | Safari Zone Encounters |
+| Encounter Data |  | /a/1/0/2 | encdata_ex.narc | Leftover D/P/Pt Encounters |
+| Encounter Data | Bug Catching Contest | /data/mushi | mushi_encounter.bin | Bug Catching Contest Pokemon |
+| Encounter Data | Bug Catching Contest | /data/mushi | mushi_trainer.bin | Bug Catching Contest Trainers |
+| Maps | Assignment Data | /a/0/4/3 | area_build.narc | Assigns textures to models |
+| Maps | Assignment Data | /a/0/4/2 | area_data.narc | Assigns area_build and mapt_tex_set to maps |
+| Maps | Assignment Data | /a/0/4/7 | move_model_list.narc | (?) |
+| Maps | Building Models | /a/0/7/0 | areabm_texset.narc | Building Textures |
+| Maps | Building Models | /a/1/0/6 | bm_anime.narc | Animation Files |
+| Maps | Exteriors | /a/0/4/0 | bm_field.narc | Exterior Models |
+| Maps | Exteriors | /fielddata/build_model | bm_field.narc | Exterior Models (copy?) |
+| Maps | Exteriors | /a/1/0/7 | bm_field_anime_list.narc | (?) |
+| Maps | Exteriors | /fielddata/build_model | bm_field_matshp.dat | (?) |
+| Maps | Interiors | /a/1/4/8 | bm_room.narc | Interior Models |
+| Maps | Interiors | /fielddata/build_model | bm_room.narc | Interior Models (copy?) |
+| Maps | Interiors | /a/1/0/8 | bm_room_anime_list.narc | (?) |
+| Maps | Interiors | /fielddata/build_model | bm_room_matshp.dat | (?) |
+| Maps | Map Data | /a/0/6/5 | land_data.narc | Map Files |
+| Maps | Map Data | /a/0/4/1 | map_matrix.narc | Map Connections |
+| Maps | Map Data | /a/0/4/4 | map_tex_set.narc | Map Textures |
+| Maps | Map Data | /fielddata/maptable | mapname.bin | Internal Map Names |
+| Maps | Moving Models | /a/1/0/3 | fldeff.narc | Field Effects |
+| Maps | Moving Models | /a/1/3/9 | fldtanime.narc | Field Animations |
+| Maps | Moving Models | /data | fldtanime.narc | Field Animations (copy?) |
+| Maps | Moving Models | /a/0/8/1 | mmodel.narc | Overworld Characters |
+| Maps | Moving Models | /a/0/9/2 | move_model_list.narc | (?) |
+| Trainers |  | /a/0/9/9 | tr_ai_seq.narc | Trainer AI |
+| Trainers |  | /a/0/5/5 | trdat.narc | Trainer Data |
+| Trainers |  | /a/0/5/6 | trpoke.narc | Trainer Pokemon Data |
+| Trainers |  | /a/0/5/7 | trtbl.narc | Trainer Text Table |
+| Trainers |  | /a/1/3/1 | trtblofs.narc | Trainer Text Table Offsets |
+| Trainers | Trainer Graphics | /a/0/0/6 | trbgra.narc | Trainer Back Graphics |
+| Trainers | Trainer Graphics | /a/0/5/8 | trfgra.narc | Trainer Front Graphics |
+| Trainers | Battle Tower | /a/1/2/8 | btdtr | Leftover DP Battle Tower Trainer Data |
+| Trainers | Battle Tower | /a/1/2/9 | btdpm | Leftover DP Battle Tower Pokemon Data |
+| Trainers | Battle Tower | /a/2/0/2 | pl_btdtr | Battle Tower Trainer Data (Same As Platinum) |
+| Trainers | Battle Tower | /a/2/0/3 | pl_btdpm | Battle Tower Pokemon Data (Same As Platinum) |
+| Trainers | Battle Tower | /a/2/0/4 | pl_bsdpm | Battle Stage Pokemon Data (Same As Platinum) |
+| Items |  | /a/0/1/7 | item_data.narc | Item Data |
+| Items |  | /a/0/6/6 | nuts_data.narc | Berry Data |
+| Items | Item Graphics | /a/0/1/8 | item_icon.narc | Item Icons |
+| Moves |  | /a/0/1/1 | waza_tbl.narc | Move Table |
+| Moves |  | /a/0/1/0 | we.narc | Move Effects |
+| Moves |  | /a/0/6/1 | we_sub.narc |  |
+| Moves |  | /a/0/3/0 | be_seq.narc | Move Behaviours |
+| Moves |  | /a/0/0/1 | sub_seq.narc |  |
+| Moves |  | /a/0/0/0 | waza_seq.narc |  |
+| Moves | Move Graphics | /a/0/2/2 | wechar.narc | Move Tiles |
+| Moves | Move Graphics | /a/0/2/3 | wepltt.narc | Move Palettes |
+| Moves | Move Graphics | /a/0/2/4 | wecell.narc | Move Cells |
+| Moves | Move Graphics | /a/0/2/5 | wecellanm.narc | Move Animations |
+| Moves | Move Graphics | /a/0/2/9 | waza_particle.narc | Move Particle Data |
+| Scripts |  | /a/1/1/2 | fld_trade.narc | In-Game Trades |
+| Scripts |  | /a/0/1/2 | scr_seq.narc | Scripts |
+| Scripts |  | /a/0/1/3 | scr_msg.narc | (?) |
+| Scripts |  | /msgdata/scenario | scr_msg.narc | (?) (copy?) |
+| Scripts |  | /a/0/3/2 | zone_event.narc | Events |
+| Scripts |  | /a/0/2/7 | msg.narc | Text Files |
+| Pokedex |  | /a/1/0/5 | shinzukan.narc | Sinnoh Pokedex |
+| Pokedex |  | /a/1/3/8 | pokezukan.narc | Johto Pokedex |
+| Pokedex |  | /a/0/7/4 | zukan_data.narc | Pokedex Data |
+| Pokedex |  | /a/2/1/4 | zukan_data_gira.narc | Giratina Pokedex |
+| Pokedex |  | /a/1/3/3 | zukan_enc_x.narc | Pokedex Encounter Data |
+| Pokedex |  | /a/2/0/9 | zukan_enc.narc | Leftover Platinum Pokedex Encounter Data |
+| Pokedex | Pokedex Graphics | /a/0/6/8 | zukan.narc | Pokedex Graphics |
+| Pokegear | Pokegear Graphics | /a/1/4/2 |  | Beta Pokegear Graphics |
+| Pokegear | Pokegear Graphics | /a/1/4/3 |  | Pokegear Skin Graphics |
+| Pokegear | Pokegear Graphics | /a/1/4/5 |  | Pokegear Skin Graphics |
+| Pokegear | Pokegear Graphics | /a/1/4/4 |  | Map Graphics |
+| Pokegear | Pokegear Graphics | /a/0/3/6 |  | Map Cities Graphics |
+| Pokegear | Pokegear Graphics | /a/1/4/6 |  | Phone Graphics |
+| Pokegear | Pokegear Graphics | /a/1/4/7 |  | Radio Graphics |
+| Pokeathlon | Pokeathlon Graphics | /a/1/5/3 |  | Miscellaneous Pokeathlon Graphics |
+| Pokeathlon | Pokeathlon Graphics | /a/1/6/0 |  | Miscellaneous Pokeathlon Graphics |
+| Pokeathlon | Pokeathlon Graphics | /a/1/7/7 |  | Miscellaneous Pokeathlon Graphics |
+| Pokeathlon | Pokeathlon Graphics | /a/1/6/1 |  | Pokeathlon Board Graphics |
+| Pokeathlon | Pokeathlon Graphics | /a/2/1/9 |  | Pokeathlon Demo Graphics |
+| Pokeathlon | Pokeathlon Graphics | /a/2/4/1 |  | Pokeathlon Medal Graphics |
+| Pokeathlon | Games | /a/1/5/4 |  | Relay Run Graphics |
+| Pokeathlon | Games | /a/1/7/8 |  | Relay Run Graphics |
+| Pokeathlon | Games | /a/1/5/6 |  | Hurdle Dash Graphics |
+| Pokeathlon | Games | /a/1/6/7 |  | Circle Push Graphics |
+| Pokeathlon | Games | /a/1/6/8 |  | Lamp Jump Graphics |
+| Pokeathlon | Games | /a/2/1/7 |  | Snow Throw Graphics |
+| Pokeathlon | Games | /a/2/2/4 |  | Pennant Capture Graphics |
+| Pokeathlon | Games | /a/2/3/2 |  | Block Smash Graphics |
+| Pokeathlon | Games | /a/2/3/4 |  | Goal Roll Graphics |
+| Pokeathlon | Games | /a/2/3/5 |  | Disc Catch Graphics |
+| Pokeathlon | Games | /a/2/4/0 |  | Ring Drop Graphics |
+| Sequences |  | /a/2/6/2 | op_demo.narc | Opening Demo |
+| Sequences |  | /a/0/4/6 | titledemo.narc | Title Screen |
+| Sequences |  | /a/1/2/0 | intro.narc | Introduction Sequence |
+| Sequences |  | /a/2/6/3 | ending.narc | Ending Credits |
+| Sequences |  | /a/0/8/9 | demo_trade.narc | Trade Scene |
+| Sequences |  | /a/2/3/8 | ship_demo.narc | S.S. Anne |
+| Sequences |  | /a/2/3/3 | train_demo.narc | Magnet Train |
+| Egg |  |  | egg_data.narc |  |
+| Egg |  |  | egg_particle.narc |  |
+| Egg |  |  | shinka_demo_particle.narc |  |
+| GUI Graphics |  | /a/0/1/4 |  | Touchscreen Menu Graphics |
+| GUI Graphics |  | /a/0/1/5 |  | Bag Graphics |
+| GUI Graphics |  | /a/0/1/9 |  | PC Box Graphics |
+| GUI Graphics |  | /a/0/2/1 |  | Party Screen Graphics |
+| GUI Graphics |  | /a/0/3/1 |  | Character Naming Screen Graphics |
+| GUI Graphics |  | /a/0/3/8 |  | Saving/Frame Graphics |
+| GUI Graphics |  | /a/0/3/9 |  | Pokemon Summary Screen Graphics |
+| GUI Graphics |  | /a/0/4/9 |  | Trainer Card Graphics |
+| GUI Graphics |  | /a/0/5/1 |  | Berries And Beauty GUI |
+| GUI Graphics |  | /a/0/5/2 |  | Yes/No Prompt Graphics |
+| GUI Graphics |  | /a/0/5/4 |  | Controls Tutorial Graphics |
+| GUI Graphics |  | /a/0/6/0 |  | Party Screen GUI Graphics |
+| GUI Graphics |  | /a/0/7/1 |  | Battle Party Graphics |
+| GUI Graphics |  | /a/0/7/2 |  | Options Graphics |
+| GUI Graphics |  | /a/0/7/6 |  | Word Choice Graphics |
+| GUI Graphics |  | /a/0/7/7 |  | Bag Screen Graphics |
+| GUI Graphics |  | /a/0/7/9 |  | Mail Graphics |
+| GUI Graphics |  | /a/0/8/0 |  | Mail Graphics |
+| GUI Graphics |  | /a/0/8/3 |  | An Arrow |
+| GUI Graphics |  | /a/0/8/8 |  | WiFi Connection Graphics |
+| GUI Graphics |  | /a/1/0/4 |  | Win / Lose / Draw Graphics |
+| GUI Graphics |  | /a/1/0/9 |  | VS. Graphics |
+| GUI Graphics |  | /a/1/1/0 |  | Pokemon Summary Graphics |
+| GUI Graphics |  | /a/1/1/3 |  | Mystery Gift Graphics |
+| GUI Graphics |  | /a/1/1/5 |  | Egg Hatching Graphics |
+| GUI Graphics |  | /a/1/1/8 |  | Battle Frontier Graphics |
+| GUI Graphics |  | /a/1/2/3 |  | WiFi Earth Graphics |
+| GUI Graphics |  | /a/1/2/4 |  | Ranking Select Graphic |
+| GUI Graphics |  | /a/1/2/5 |  | Pal Park |
+| GUI Graphics |  | /a/1/2/6 |  | Completion Certificate Graphics |
+| GUI Graphics |  | /a/1/2/7 |  | Slot Machine Graphics |
+| GUI Graphics |  | /a/1/3/0 |  | Red Gyarados TV Graphics |
+| GUI Graphics |  | /a/1/5/0 |  | Location Splash Graphics |
+| GUI Graphics |  | /a/1/5/1 |  | Pokewalker Pokemon Selection Graphics |
+| GUI Graphics |  | /a/1/5/2 |  | Yes / No Prompt |
+| GUI Graphics |  | /a/1/6/2 |  | Pokemon Summary Graphics |
+| GUI Graphics |  | /a/1/6/3 |  | Location Dropdown Graphics |
+| GUI Graphics |  | /a/1/6/4 |  | Pointing Hand Graphics |
+| GUI Graphics |  | /a/1/6/6 |  | Safari Zone Map Graphics |
+| GUI Graphics |  | /a/1/7/1 |  | Photo Album Graphics |
+| GUI Graphics |  | /a/1/7/2 |  | Ruins Of Alph Puzzle Graphics |
+| GUI Graphics |  | /a/0/6/4 |  | Unidentified GUI Graphics |
+| GUI Graphics |  | /a/0/7/3 |  | Unidentified GUI Graphics |
+| GUI Graphics  |  | /a/0/7/8 |  | Unidentified GUI Graphics |
+| GUI Graphics |  | /a/0/8/5 |  | Unidentified GUI Graphics |
+| GUI Graphics |  | /a/0/9/1 |  | Unidentified GUI Graphics |
+| GUI Graphics  |  | /a/0/9/7 |  | Unidentified GUI Graphics |
+| Underground |  | /a/0/5/0 |  | Underground GUI Grapchics |
+| Underground |  | /a/0/6/2 |  | Underground GUI Graphics |
+| Underground |  | /a/0/2/8 |  | Underground Radar Graphics |
+| Underground |  | /a/0/5/3 |  | Underground Item Graphics |
+| Unsorted Files |  | /a/0/0/7 |  | Battle Backgrounds |
+| Unsorted Files |  | /a/0/0/8 |  | Battle HUD Graphics |
+| Unsorted Files |  | /a/0/1/6 |  | Lv./Trainer ID Graphics |
+| Unsorted Files |  | /a/0/2/6 |  | Fashion Accessory Sprites |
+| Unsorted Files |  | /a/0/4/5 |  | Dawn/Lucas Sprites |
+| Unsorted Files |  | /a/0/4/8 |  | Rock/Fire Graphics |
+| Unsorted Files |  | /a/0/6/3 |  | Weather Graphics |
+| Unsorted Files |  | /a/0/8/2 |  | Starter Selection Graphics |
+| Unsorted Files |  | /a/0/8/7 |  | Seal Graphics |
+| Unsorted Files |  | /a/0/9/3 |  | Field Move Character Sprites |
+| Unsorted Files |  | /a/0/9/4 |  | Diamond/Pearl/Platinum Effect Models |
+| Unsorted Files |  | /a/1/9/1 |  | VS. Recorder Graphics |
+| Unsorted Files |  | /a/1/9/2 |  | Pokemon Balloon Graphics (WiFi Plaza Mini-Game) |
+| Unsorted Files |  | /a/1/9/3 |  | Mime Jr. Graphics (WiFi Plaza Mini-Game) |
+| Unsorted Files |  | /a/1/9/6 |  | WiFi Lobby News Graphics |
+| Unsorted Files |  | /a/1/9/7 |  | E-mail Graphics |
+| Unsorted Files |  | /a/1/9/8 |  | WiFi Lobby Minigame Graphics |
+| Unsorted Files |  | /a/1/8/9 |  | Swalot Model (WiFi Plaza Mini-Game) |
+| Unsorted Files |  | /a/1/8/7 |  | Mime Jr. Model (WiFi Plaza Mini-Game) |
+| Unsorted Files |  | /a/1/8/6 |  | Various Overworld Character Sprites |
+| Unsorted Files |  | /a/1/8/3 |  | Battle Frontier Graphics |
+| Unsorted Files |  | /a/1/3/4 |  | Field Move Animations |
+| Unsorted Files |  | /a/1/7/4 |  | Miscellaneous Ruins Of Alph Graphics |
+| Unsorted Files |  | /a/1/7/6 |  | Jigglypuff Graphics |
+| Unsorted Files |  | /a/1/7/9 |  | Overworld Character Sprites |
+| Unsorted Files |  | /a/2/0/5 |  | Graphics (Budew, Cherubi, Ditto, Chingling, Mantyke, Other Things) |
+| Unsorted Files |  | /a/1/4/9 |  | Rapidash / Lugia Sprites, No Palettes |
+| Unsorted Files |  | /a/2/1/3 |  | Overworld Head-On Sprites |
+| Unsorted Files |  | /a/2/1/5 |  | Poffin Graphics |
+| Unsorted Files |  | /a/2/1/6 |  | Berry Pots Graphics |
+| Unsorted Files |  | /a/2/1/8 |  | Apriblender Graphics |
+| Unsorted Files |  | /a/2/0/8 |  | Footprint Graphics (WiFi Plaza Mini-Game) |
+| Unsorted Files |  | /a/2/2/3 |  | Miscellaneous Button Graphics |
+| Unsorted Files |  | /a/2/3/6 |  | Touchscreen Number Graphics |
+| Unsorted Files |  | /a/2/3/7 |  | Touchscreen Confirmation Menu Graphics |
+| Unsorted Files |  | /a/2/3/9 |  | Unown Report Graphics |
+| Unsorted Files |  | /a/2/4/2 |  | Apriblender Graphics |
+| Unsorted Files |  | /a/2/4/3 |  | Ho-Oh Model |
+| Unsorted Files |  | /a/2/4/4 |  | Lugia & Waterfall Models |
+| Unsorted Files |  | /a/2/4/5 |  | Arceus Event Images (Also A Lugia) |
+| Unsorted Files |  | /a/2/4/7 |  | Pokewalker Graphics |
+| Unsorted Files |  | /a/2/4/9 |  | Graphics, Munchlax, Lugia, Protagonist |
+| Unsorted Files |  | /a/2/5/0 |  | Mailbox Graphics |
+| Unsorted Files |  | /a/2/5/1 |  | Dowsing Machine Graphics |
+| Unsorted Files |  | /a/2/5/5 |  | Viridian Gym Arrow Models |
+| Unsorted Files |  | /a/2/5/7 |  | Pokemon Marking Graphics |
+| Unsorted Files |  | /a/2/5/9 |  | Miscellaneous Button Graphics |
+| Unsorted Files |  | /a/2/6/0 |  | Miscellaneous Button Graphics |
+| Unsorted Files |  | /a/2/6/1 |  | Photo Crosshair Graphic |
+| Unsorted Files |  | /a/2/6/4 |  | Voltorb Flip |
+| Unsorted Files |  | /a/0/9/5 |  | Ball Capsule Battle Particles |
+| Unsorted Files |  | /a/1/1/6 |  | Manaphy APS Files |
+| Unsorted Files |  | /a/1/5/7 |  | Unfinished Artwork (?) |
+| Unsorted Files |  | /a/1/5/8 |  | Unfinished Artwork (?) |
+| Unsorted Files |  | /a/1/5/9 |  | Unfinished Artwork (?) |
+| Unidentified Files |  | /a/0/0/9 |  | 16 PLTT Files &  16 Unknown Files (384 Bytes) |
+| Unidentified Files |  | /a/0/3/5 |  | 12 NCER files |
+| Unidentified Files |  | /a/0/5/9 |  | 5 APS Files |
+| Unidentified Files |  | /a/0/6/7 |  | Untranslated Graphics |
+| Unidentified Files |  | /a/0/7/5 |  | 2 Unknown Files (612, 494 Bytes) |
+| Unidentified Files |  | /a/0/8/4 |  | Berry Capsule Thingy |
+| Unidentified Files |  | /a/0/8/6 |  | 15 Unknown Files (4608, 96, 8064, 100x12 Bytes) |
+| Unidentified Files |  | /a/0/9/6 |  | 2 APS Files |
+| Unidentified Files |  | /a/0/9/8 |  | 19 Unknown Files (Various Sizes) |
+| Unidentified Files |  | /a/1/0/0 |  | Trade Room Graphics (?) |
+| Unidentified Files |  | /a/1/0/1 |  | Random Sprites (?) |
+| Unidentified Files |  | /a/1/1/9 |  | 2 APS Files |
+| Unidentified Files |  | /a/1/2/1 |  | 3 Bin Files |
+| Unidentified Files |  | /a/1/2/2 |  | Platinum Credits |
+| Unidentified Files |  | /a/1/4/0 |  | 2 Model Animations |
+| Unidentified Files |  | /a/1/4/1 |  | 566 Bin Files |
+| Unidentified Files |  | /a/1/5/5 |  | 1 Bin File, 1 Byte, 0x0 |
+| Unidentified Files |  | /a/1/6/5 |  | (?) Graphic |
+| Unidentified Files |  | /a/1/6/9 |  | 554 Bin Files |
+| Unidentified Files |  | /a/1/7/0 |  | 20 Bin Files |
+| Unidentified Files |  | /a/1/7/3 |  | Unused Battle Graphics (?) |
+| Unidentified Files |  | /a/1/7/5 |  | 90 Bin Files |
+| Unidentified Files |  | /a/1/8/1 |  | Test Graphics |
+| Unidentified Files |  | /a/1/8/2 |  | 11 Bin Files |
+| Unidentified Files |  | /a/1/8/4 |  | Graphcis (?) |
+| Unidentified Files |  | /a/1/8/5 |  | 1 Bin File (pl_cb_data) |
+| Unidentified Files |  | /a/1/8/8 |  | 7 APS Files |
+| Unidentified Files |  | /a/1/9/0 |  | Graphics (?) |
+| Unidentified Files |  | /a/1/9/9 |  | Balloons (?) |
+| Unidentified Files |  | /a/2/0/0 |  | 26 Bin Files |
+| Unidentified Files |  | /a/2/0/1 |  | WiFi Lobby Models (?)  |
+| Unidentified Files |  | /a/2/0/6 |  | 2 APS Files |
+| Unidentified Files |  | /a/2/0/7 |  | WiFi Lobby Graphics (?) |
+| Unidentified Files |  | /a/2/1/0 |  | 1 Bin File (ballslow_data) |
+| Unidentified Files |  | /a/2/1/1 |  | 2 APS Files |
+| Unidentified Files |  | /a/2/1/2 |  | 1 Bin File (pms_aikotoba) |
+| Unidentified Files |  | /a/2/2/0 |  | 236 Bin Files |
+| Unidentified Files |  | /a/2/2/1 |  | 1023 Bin Files |
+| Unidentified Files |  | /a/2/2/2 |  | 108 Bin Files |
+| Unidentified Files |  | /a/2/2/5 |  | 20 Bin Files |
+| Unidentified Files |  | /a/2/2/6 |  | 3 Bin Files |
+| Unidentified Files |  | /a/2/2/7 |  | 10 Bin Files |
+| Unidentified Files |  | /a/2/3/1 |  | 1 Bin File |
+| Unidentified Files |  | /a/2/4/6 |  | Tetris Block Models (?) |
+| Unidentified Files |  | /a/2/4/8 |  | 540 Compressed, 384 Byte Bin Files(Map Related?) |
+| Unidentified Files |  | /a/2/5/4 |  | 93 Bin Files |
+| Unidentified Files |  | /a/2/5/6 |  | 664 Compressed Bin Files |
+| Unidentified Files |  | /a/2/5/8 |  | 100 Bin Files |
+
+</FilterableSortableTable>
