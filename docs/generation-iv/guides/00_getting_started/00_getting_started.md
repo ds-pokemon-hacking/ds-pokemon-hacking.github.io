@@ -162,6 +162,6 @@ The following tools are recommended to use when modifying the game files.
 #### External Resources
 In addition to the resources available on this Wiki, there are a number of external resources related to the vanilla Generation IV Pokémon games, which are useful when ROM Hacking:
 - [Reverse Engineering DS Games Tutorial](https://www.starcubelabs.com/reverse-engineering-ds/)
-- [HGSS Decomposition](https://github.com/pret/pokeheartgold)
-- [Platinum Decomposition](https://github.com/pret/pokeplatinum)
+- [HGSS Decompilation](https://github.com/pret/pokeheartgold)
+- [Platinum Decompilation](https://github.com/pret/pokeplatinum)
 - [Generation IV Trainer Move Selection AI](https://gist.github.com/lhearachel/ff61af1f58c84c96592b0b8184dba096) full breakdown
