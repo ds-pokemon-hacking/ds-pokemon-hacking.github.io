@@ -153,3 +153,15 @@ The following tools are recommended to use when modifying the game files.
 | Texts Editing | Edit Dialogue and More (Location names, move names...etc.):<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> | <ul><li>[How to Edit Text](https://www.youtube.com/watch?v=qxSx2oQt4kE&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=8)</li></ul> |
 | Trainer Battle Editing | Trainer AI, Class, Items & Team Edits: <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li><li>[VSMaker2](https://github.com/Chvlkie/VSMaker2)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul> | <ul><li>[DSPRE Trainer Editing](https://www.youtube.com/watch?v=rU5he368oss&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=10)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul> |
 | Wild Encounters Editing | Edit Wild Encounter Tables <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor) (Headbutt Trees & Safari Zone for HGSS only)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul> | <ul><li>[DSPRE Encounters Editing](https://www.youtube.com/watch?v=-an8U5tpbNo&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=20)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul> |
+
+### Recommended Resources
+#### Wiki Resources
+- [HGSS File Structure](/docs/generation-iv/resources/hgss-file_structure/)
+- Platinum File Structure
+
+#### External Resources
+In addition to the resources available on this Wiki, there are a number of external resources related to the vanilla Generation IV Pokémon games, which are useful when ROM Hacking:
+- [Reverse Engineering DS Games Tutorial](https://www.starcubelabs.com/reverse-engineering-ds/)
+- [HGSS Decompilation](https://github.com/pret/pokeheartgold)
+- [Platinum Decompilation](https://github.com/pret/pokeplatinum)
+- [Generation IV Trainer Move Selection AI](https://gist.github.com/lhearachel/ff61af1f58c84c96592b0b8184dba096) full breakdown
