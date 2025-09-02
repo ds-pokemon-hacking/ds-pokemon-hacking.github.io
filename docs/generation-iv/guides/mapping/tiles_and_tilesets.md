@@ -15,6 +15,11 @@ tags:
 This page summarises the features and usage of tiles and tilesets in the **Pokémon DS Mapping Studio (PDSMS)** tool, and basic guidance on creation of custom tiles either by extraction from Generation IV or V Nintendo DS Pokémon games, or built from scratch. Both creation methods require the use of other third party tools for 3D modelling, such as Blender.
 
 --- 
+
+[← Return to Mapping Overview page](../mapping)
+
+---
+
 ## PDSMS Features
 PDSMS provides a variety of ways in which **tiles** can be manipulated within the program. The bulk of these features are accessible from the Tilset Editor window, which can be launched from the main horizontal toolbar.  
 
