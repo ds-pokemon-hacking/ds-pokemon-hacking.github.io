@@ -19,6 +19,11 @@ As outlined in the summary page [here](/docs/generation-iv/guides/mapping/#textu
  - Texture Patterns
 
 --- 
+
+[← Return to Mapping Overview page](../mapping)
+
+---
+
 ## Geometry Scale Rotate Translate (SRT)
 These are skeletal animations, where parts of 3D models are moving relative to others (a good example from HGSS are the windmills in New Bark Town). They are also used in other non-mapping animations (such as the Lugia/Ho-oh model on the start game screen of SoulSilver and HeartGold respectively).
 

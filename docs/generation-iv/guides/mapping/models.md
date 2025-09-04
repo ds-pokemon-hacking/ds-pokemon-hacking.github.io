@@ -14,6 +14,11 @@ tags:
 This page summarises how the Generation IV Nintendo DS Pokémon games use 3D models in the context of maps (and buildings), and provides guidance on some PDSMS features related to general models/meshes and geomtery.
 
 --- 
+
+[← Return to Mapping Overview page](../mapping)
+
+---
+
 ## Files
 
 3D models in these games use the `.nsbmd` (Nitro System Binary Model Data) file format, details of which can be found [here](https://wiki.vg-resource.com/Nitro_Files#1._NSBMD_Format).  
@@ -153,11 +158,11 @@ This issue is less obvious, but can be seen in many cases. Essentially, the play
 There are three relatively simple ways to mitigate or hide this issue if desired.
 1. When exporting the map to `.obj` in PDSMS, **increase the `Tile Upscaling`** factor from the default value of `1` to something very slightly larger (e.g. `1.01`). This is essentially increasing the sizes of all polygons on the map  very slightly, creating a situation where they are overlapping, preventing the gap from being visible.
 2. Use **'underplating'** to hide the effect, by placing large polygons of a similar (or same) coloured texture underneath the visible maps.
-3. Adjust the **emulator's rendering/video settings**. Some example settings for MelonDS are shown below. With the default MelonDS settings on the left, and some adjusted settings on the right. The exact "interal resolution" setting may vary between computers.
+3. Adjust the **emulator's rendering/video settings**. Some example settings for MelonDS are shown below. With `OpenGL` rendering on the left, and `Software` rendering on the right. The internal resolution setting may be tweaked to procdue better results, but total removal of the gaps under all circumstances requires switching to `Software` rendering.
 
 Option 1 is simple to do and usually does not result in adverse effects, but would require all maps (even vanilla ones) to be adjusted in such a way.  
 Option 2 requires more specific intention, is more difficult on maps with varied colouration and/or differences in height, and adds load to the game by requiring more polygons to be loaded for any given map. Option 2 is, however, used in various places in the vanilla games, such as many caves.  
-Option 3 (or similar per emulator) requires no ROM hacking at all, and impacts on vanilla ROM experience as well. It is *possible* that this will not render all materials correctly at all times, so may not be suitable as a permanent solution, and may have undesirable effects that have not been noted.
+Option 3 (or similar per emulator) requires no ROM hacking at all, and impacts on vanilla ROM experience as well. Using `Software` rendering is mimicing the Nintendo DS hardware's rendering capabiltiies most faithfully.
 
 ![](resources/gaps_in_map_geometry.png)
 ![](resources/melonds_reduce_poly_edge_render_gaps.gif)
