@@ -70,8 +70,8 @@ const PageNavigator: React.FC = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "space-between",
-        gap: "1rem",
+        flexWrap: "wrap",
+        gap: "0.5rem",
         margin: "1rem 0",
       }}
     >
@@ -84,6 +84,7 @@ const PageNavigator: React.FC = () => {
           background: "var(--ifm-color-primary)",
           color: "#fff",
           cursor: "pointer",
+          flexShrink: 0,
         }}
       >
         ← Back
@@ -94,7 +95,9 @@ const PageNavigator: React.FC = () => {
           value={selected}
           onChange={handleChange}
           style={{
-            flex: 1,
+            flex: "1 1 auto",
+            minWidth: "150px",
+            maxWidth: "100%",
             padding: "0.5rem",
             borderRadius: "8px",
             border: "1px solid var(--ifm-color-primary)",

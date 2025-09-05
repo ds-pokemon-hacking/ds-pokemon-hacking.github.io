@@ -138,21 +138,82 @@ There are multiple ways to confirm the filehash of your ROM. Two examples are:
 ### Recommended Tools
 The following tools are recommended to use when modifying the game files.
 
-
-| Objective | Tool(s) / Resource(s) | Tutorials |
-|:---------|:---------|:---------|
-| Audio/Music | Location & battle music editing (and Table Editor for HGSS): <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> Extracting and Inserting Sounds: <ul><li>[Nitro Studio 2 (Lonk Fork)](https://www.romhacking.net/utilities/1639/)</li></ul> Obtain Sound Font Data and Extract Midi: <ul><li>[VGMTrans](https://github.com/vgmtrans/vgmtrans)</li></ul> Known Commands for Music Sequencing: <ul><li>[SSEQ - SMFT - MIDI Commands](https://docs.google.com/spreadsheets/d/1c-tActLRWAYz_VongnSyGVPFlRi5IXgm/)</li></ul> Playback: <ul><li>[DS Sound Studio (PlatinumMaster Fork)](https://github.com/PlatinumMaster/DS-Sound-Studio/releases)</li></ul>| <ul><li>[Music Insertion Wiki](/docs/universal/guides/music_insertion/)</li></ul> |
-| Graphic Editing | Overworld Sprite Editing <ul><li>[BTX Editor 2](https://drive.google.com/drive/folders/1CeM3U9x7NnZO5rqe3xx1VQZqMWsq0qaX?usp=sharing)</li></ul> Indexing Sprites (to be accepted by ROMs): <ul><li> [Graphics Gale](https://drive.google.com/drive/folders/1kUp2eqzO0Kz-6pr05XWynUhNGYVUTzmp?usp=sharing)</li></ul> Edit Palette Colours: <ul><li> [Console Tool](https://drive.google.com/drive/folders/1Zse00msjpUmKg73ruGC8xHjDX0yC_3sK?usp=sharing)</li></ul> Battle Sprite Editing: <ul><li> [PokéDSPic](https://drive.google.com/drive/folders/1HDeyHShMBfz-Kz5UwelNSEzADlBYog-D?usp=drive_link)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul> Tileset Editing: <ul><li> [NitroPaint](https://github.com/Garhoogin/NitroPaint)</li><li>[Tilemap Studio](https://github.com/Rangi42/tilemap-studio)</li></ul> Sprite Drawing (with Indexing): <ul><li> [Aseprite (paid)](https://www.aseprite.org/)</li><li>[Aseprite (free)](https://github.com/aseprite/aseprite) (requires knowledge on compilation) </li></ul> | <ul><li>[Editing Overworld Sprites](https://youtu.be/kGw7wzpO1cw)</li><li>[Quick Colour Changes](https://www.youtube.com/watch?v=ESQjr7OB1pA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=19)</li><li>[Advanced Pokémon Edits](https://www.youtube.com/watch?v=Qqow_RBh3G8&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=6)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul> |
-| Mart/Shop Editing | Extensive PokéMart Editing (**HeartGold Version only**):<ul><li>[HG-Engine](https://github.com/BluRosie/hg-engine/blob/main/README.md)</li></ul> Universal Pokémon Shop Editor:<ul><li>[UPSE](https://github.com/upr-fvx/universal-pokemon-randomizer-fvx/releases/tag/vFVX1.3.0) (Progressive Mart edits, but badge-gating only applies to vanilla items)</li></ul>| <ul><li>[Customise PokéMarts](https://youtu.be/p9F7JW74QK4)</li></ul> |
-| [Mapping](/docs/generation-iv/guides/mapping/) | PDSMS (Pokemon DS Map Studio): Tile-based custom map creation/editing tool<ul><li>[Trifindo's current release](https://github.com/Trifindo/Pokemon-DS-Map-Studio)</li><li>[AdAstra's fork](https://github.com/AdAstra-LD/Pokemon-DS-Map-Studio) (additional QoL features)</li><li>[Trifindo's v1.19](https://github.com/Trifindo/Pokemon-DS-Map-Studio/releases/tag/1.19) (working Animation Editor)</li></ul> Texture Editing: <ul><li> [NitroPaint](https://github.com/Garhoogin/NitroPaint)</li></ul> Importing Maps to ROM: <ul><li> [DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> | <ul><li>[Making First Map](https://www.youtube.com/watch?v=Xnj8cWDRbaA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=21)</li><li>[Importing Custom Maps](https://www.youtube.com/watch?v=fcGjxI7oWsI&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=23)</li><li>[Mapping Overview Wiki Page](/docs/generation-iv/guides/mapping/)</li></ul> |
-| Pokédex (Regional) Editing | Add, remove, re-order, edit descriptions & habitats:<ul><li>[Raven DexEditor](https://discord.com/channels/446824489045721090/1332723042064793743/1332723042064793743)</li></ul> | |
-| Pokémon Data Editing | Learnsets, Abilities, Stats, Types, Evolution Methods:<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor) (good for one-by-one changes)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases) (good for batch changes)</li></ul>  | <ul><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul> |
-| ROM Tools | File Explorer:<ul><li>[Tinke v0.9.2](https://github.com/pleonex/tinke/releases)</li></ul> Patching Tools:<ul><li>[Delta Patcher](https://github.com/marco-calautti/DeltaPatcher)</li><li>[XDelta](https://www.romhacking.net/utilities/598/)</li></ul> | |
-| Save File Editing | Edit Pokémon, Bag Items etc.<ul><li>[PKHex](https://github.com/kwsch/PKHeX)</li><li>[PKMDS Save Editor](https://pkmds.app/) (web-based)</li></ul> | |
-| Script Editing | Edit Scripts and Level Scripts:<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> Script Commands Database (Gen4):<ul><li>[SCRCMD](https://docs.google.com/spreadsheets/u/0/d/1rcrCz9Y5HXdD9vVSmkACX19I9Jid4dzFTD0PXaIDg2w/htmlview#gid=1350726349)</li></ul> | <ul><li>[How to Write a Script](https://www.youtube.com/watch?v=FW0s6vUB9KA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=27)</li><li>[Scripting 101](https://youtu.be/N0IG1p1TUZQ?feature=shared)</li></ul> |
-| Texts Editing | Edit Dialogue and More (Location names, move names...etc.):<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> | <ul><li>[How to Edit Text](https://www.youtube.com/watch?v=qxSx2oQt4kE&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=8)</li></ul> |
-| Trainer Battle Editing | Trainer AI, Class, Items & Team Edits: <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li><li>[VSMaker2](https://github.com/Chvlkie/VSMaker2)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul> | <ul><li>[DSPRE Trainer Editing](https://www.youtube.com/watch?v=rU5he368oss&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=10)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul> |
-| Wild Encounters Editing | Edit Wild Encounter Tables <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor) (Headbutt Trees & Safari Zone for HGSS only)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul> | <ul><li>[DSPRE Encounters Editing](https://www.youtube.com/watch?v=-an8U5tpbNo&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=20)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul> |
+<table>
+  <thead>
+    <tr>
+        <th>Objective</th>
+        <th>Tool(s) / Resource(s)</th>
+        <th>Tutorials</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td>Audio/Music</td>
+        <td>Location & battle music editing (and Table Editor for HGSS): <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> Extracting and Inserting Sounds: <ul><li>[Nitro Studio 2 (Lonk Fork)](https://www.romhacking.net/utilities/1639/)</li></ul> Obtain Sound Font Data and Extract Midi: <ul><li>[VGMTrans](https://github.com/vgmtrans/vgmtrans)</li></ul> Known Commands for Music Sequencing: <ul><li>[SSEQ - SMFT - MIDI Commands](https://docs.google.com/spreadsheets/d/1c-tActLRWAYz_VongnSyGVPFlRi5IXgm/)</li></ul> Playback: <ul><li>[DS Sound Studio (PlatinumMaster Fork)](https://github.com/PlatinumMaster/DS-Sound-Studio/releases)</li></ul></td>
+        <td><ul><li>[Music Insertion Wiki](/docs/universal/guides/music_insertion/)</li></ul></td>
+    </tr>
+    <tr>
+        <td>Graphic Editing</td>
+        <td>Overworld Sprite Editing <ul><li>[BTX Editor 2](https://drive.google.com/drive/folders/1CeM3U9x7NnZO5rqe3xx1VQZqMWsq0qaX?usp=sharing)</li></ul> Indexing Sprites (to be accepted by ROMs): <ul><li> [Graphics Gale](https://drive.google.com/drive/folders/1kUp2eqzO0Kz-6pr05XWynUhNGYVUTzmp?usp=sharing)</li></ul> Edit Palette Colours: <ul><li> [Console Tool](https://drive.google.com/drive/folders/1Zse00msjpUmKg73ruGC8xHjDX0yC_3sK?usp=sharing)</li></ul> Battle Sprite Editing: <ul><li> [PokéDSPic](https://drive.google.com/drive/folders/1HDeyHShMBfz-Kz5UwelNSEzADlBYog-D?usp=drive_link)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul> Tileset Editing: <ul><li> [NitroPaint](https://github.com/Garhoogin/NitroPaint)</li><li>[Tilemap Studio](https://github.com/Rangi42/tilemap-studio)</li></ul> Sprite Drawing (with Indexing): <ul><li> [Aseprite (paid)](https://www.aseprite.org/)</li><li>[Aseprite (free)](https://github.com/aseprite/aseprite) (requires knowledge on compilation) </li></ul></td>
+        <td><ul><li>[Editing Overworld Sprites](https://youtu.be/kGw7wzpO1cw)</li><li>[Quick Colour Changes](https://www.youtube.com/watch?v=ESQjr7OB1pA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=19)</li><li>[Advanced Pokémon Edits](https://www.youtube.com/watch?v=Qqow_RBh3G8&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=6)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul></td>
+    </tr>
+    <tr>
+        <td>Mart/Shop Editing</td>
+        <td>Extensive PokéMart Editing (**HeartGold Version only**):<ul><li>[HG-Engine](https://github.com/BluRosie/hg-engine/blob/main/README.md)</li></ul> Universal Pokémon Shop Editor:<ul><li>[UPSE](https://github.com/upr-fvx/universal-pokemon-randomizer-fvx/releases/tag/vFVX1.3.0) (Progressive Mart edits, but badge-gating only applies to vanilla items)</li></ul></td>
+        <td><ul><li>[Customise PokéMarts](https://youtu.be/p9F7JW74QK4)</li></ul></td>
+    </tr>
+    <tr>
+        <td>[Mapping](/docs/generation-iv/guides/mapping/)</td>
+        <td>PDSMS (Pokemon DS Map Studio): Tile-based custom map creation/editing tool<ul><li>[Trifindo's current release](https://github.com/Trifindo/Pokemon-DS-Map-Studio)</li><li>[AdAstra's fork](https://github.com/AdAstra-LD/Pokemon-DS-Map-Studio) (additional QoL features)</li><li>[Trifindo's v1.19](https://github.com/Trifindo/Pokemon-DS-Map-Studio/releases/tag/1.19) (working Animation Editor)</li></ul> Texture Editing: <ul><li> [NitroPaint](https://github.com/Garhoogin/NitroPaint)</li></ul> Importing Maps to ROM: <ul><li> [DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul></td>
+        <td><ul><li>[Making First Map](https://www.youtube.com/watch?v=Xnj8cWDRbaA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=21)</li><li>[Importing Custom Maps](https://www.youtube.com/watch?v=fcGjxI7oWsI&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=23)</li><li>[Mapping Overview Wiki Page](/docs/generation-iv/guides/mapping/)</li></ul></td>
+    </tr>
+    <tr>
+        <td>Pokédex (Regional) Editing</td>
+        <td>Add, remove, re-order, edit descriptions & habitats:<ul><li>[Raven DexEditor](https://github.com/RavenDS/dex-editor/)</li></ul></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Pokémon Data Editing</td>
+        <td>Learnsets, Abilities, Stats, Types, Evolution Methods:<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor) (good for one-by-one changes)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases) (good for batch changes)</li></ul></td>
+        <td><ul><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul></td>
+    </tr>
+    <tr>
+        <td>ROM Tools</td>
+        <td>File Explorer:<ul><li>[Tinke v0.9.2](https://github.com/pleonex/tinke/releases)</li></ul> Patching Tools:<ul><li>[Delta Patcher](https://github.com/marco-calautti/DeltaPatcher)</li><li>[XDelta](https://www.romhacking.net/utilities/598/)</li></ul></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Save File Editing</td>
+        <td>Edit Pokémon, Bag Items etc.<ul><li>[PKHex](https://github.com/kwsch/PKHeX)</li><li>[PKMDS Save Editor](https://pkmds.app/) (web-based)</li></ul></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Script Editing</td>
+        <td>Edit Scripts and Level Scripts:<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> Script Commands Database (Gen4):<ul><li>[SCRCMD](https://docs.google.com/spreadsheets/u/0/d/1rcrCz9Y5HXdD9vVSmkACX19I9Jid4dzFTD0PXaIDg2w/htmlview#gid=1350726349)</li></ul></td>
+        <td><ul><li>[How to Write a Script](https://www.youtube.com/watch?v=FW0s6vUB9KA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=27)</li><li>[Scripting 101](https://youtu.be/N0IG1p1TUZQ?feature=shared)</li></ul></td>
+    </tr>
+    <tr>
+        <td>Texts Editing</td>
+        <td>Edit Dialogue and More (Location names, move names...etc.):<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul></td>
+        <td><ul><li>[How to Edit Text](https://www.youtube.com/watch?v=qxSx2oQt4kE&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=8)</li></ul></td>
+    </tr>
+    <tr>
+        <td>Trainer Battle Editing</td>
+        <td>Trainer AI, Class, Items & Team Edits: <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li><li>[VSMaker2](https://github.com/Chvlkie/VSMaker2)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul></td>
+        <td><ul><li>[DSPRE Trainer Editing](https://www.youtube.com/watch?v=rU5he368oss&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=10)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul></td>
+    </tr>
+    <tr>
+        <td>User Interface (UI) Editing</td>
+        <td>Palette changes (**Heartgold & SoulSilver Versions only**): <ul><li>[HGSS Menu Palette Editor](https://pokehacking.com/tools/hgssmenu/)</li></ul></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Wild Encounters Editing</td>
+        <td>Edit Wild Encounter Tables <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor) (Headbutt Trees & Safari Zone for HGSS only)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul></td>
+        <td><ul><li>[DSPRE Encounters Editing](https://www.youtube.com/watch?v=-an8U5tpbNo&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=20)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul></td>
+    </tr>
+  </tbody>
+</table>
 
 ### Recommended Resources
 #### Wiki Resources
