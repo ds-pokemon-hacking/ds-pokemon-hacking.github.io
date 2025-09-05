@@ -38,7 +38,7 @@ Since Platinum overlays aren't compressed, you can just use the *overlay_0016.bi
 
 * HGSS:
 HGSS overlays are compressed instead, so you can use CrystalTile2 to extract them already decompressed.
-After you've loaded your ROM, click the NDS icon in the top bar, it should open a window called *NDS filesystem information*. From there, select *overlay_0022.bin*, right click and select *Extract (U)*
+After you've loaded your ROM, click the NDS icon in the top bar, it should open a window called *NDS filesystem information*. From there, select *overlay_0012.bin*, right click and select *Extract (U)*
 
 ### Changing the Speed
 
