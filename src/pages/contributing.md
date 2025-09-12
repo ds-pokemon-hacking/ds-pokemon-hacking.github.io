@@ -56,7 +56,11 @@ These are necessary to clone the repository, install dependencies, and start the
 
 5) [Test the SSH connection is working correctly](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection)
 
-6) [Specify a "remote upstream" repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork) for synchronising changes made in the main repo to yours.
+6) Now, you can clone the repository to your local machine. You can do this by running `git clone git@github.com:<your account name>/ds-pokemon-hacking.github.io.git` in your terminal.
+
+7) Navigate to the project directory with `cd ds-pokemon-hacking.github.io`.
+
+8) [Specify a "remote upstream" repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork) for synchronising changes made in the main repo to yours.
 
     - Run this command to confirm no **upstream** fetch and push remote repos exist (only **origin** fetch and pull).
       ```
@@ -72,10 +76,6 @@ These are necessary to clone the repository, install dependencies, and start the
       ```
       git remote -v
       ```
-
-7) Now, you can clone the repository to your local machine. You can do this by running `git clone git@github.com:<your account name>/ds-pokemon-hacking.github.io.git` in your terminal.
-
-8) Navigate to the project directory with `cd ds-pokemon-hacking.github.io`.
 
 9) Install the necessary dependencies with `npm install`.
 
