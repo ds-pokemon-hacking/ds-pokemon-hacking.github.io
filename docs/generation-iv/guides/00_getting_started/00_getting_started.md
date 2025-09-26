@@ -185,7 +185,7 @@ The following tools are recommended to use when modifying the game files.
     <tr>
         <td>Save File Editing</td>
         <td>Edit Pokémon, Bag Items etc.<ul><li>[PKHex](https://github.com/kwsch/PKHeX)</li><li>[PKMDS Save Editor](https://pkmds.app/) (web-based)</li></ul></td>
-        <td></td>
+        <td><ul><li>[PKHex Tutorial](https://www.youtube.com/watch?v=Jw-AiIswbLQ&ab_channel=Drxx)</li></ul></td>
     </tr>
     <tr>
         <td>Script Editing</td>
@@ -204,7 +204,7 @@ The following tools are recommended to use when modifying the game files.
     </tr>
     <tr>
         <td>User Interface (UI) Editing</td>
-        <td>Palette changes (**Heartgold & SoulSilver Versions only**): <ul><li>[HGSS Menu Palette Editor](https://pokehacking.com/tools/hgssmenu/)</li></ul></td>
+        <td>Palette changes (**Heartgold & SoulSilver Versions only**): <ul><li>[HGSS Menu Palette Editor](https://pokehacking.com/tools/hgssmenu/)</li></ul> Town Map changes: <ul><li>[Raven Town Map Editor](https://github.com/RavenDS/town-map-editor)</li></ul></td>
         <td></td>
     </tr>
     <tr>
@@ -217,8 +217,7 @@ The following tools are recommended to use when modifying the game files.
 
 ### Recommended Resources
 #### Wiki Resources
-- [HGSS File Structure](/docs/generation-iv/resources/hgss-file_structure/)
-- Platinum File Structure
+- [HGSS & Platinum File Structure](/docs/generation-iv/resources/hgss-file_structure/)
 
 #### External Resources
 In addition to the resources available on this Wiki, there are a number of external resources related to the vanilla Generation IV Pokémon games, which are useful when ROM Hacking:

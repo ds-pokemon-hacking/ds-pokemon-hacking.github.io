@@ -18,14 +18,6 @@ tags:
 This is a tutorial on how to hex edit your files for the first time.
 
 --- 
-## Table of Contents
-* [Using a Hex Editor](#section)
-* [Offsets](#section-2)
-   * [Different Game Languages](#subsection)
-* [Searching the bytes](#section-3)
-  * [Little Endian](#subsection-2)
-* [Pasting bytes](#section-4)
-* [Compressed files](#section-5)
 
 ## Using a Hex Editor
 
@@ -35,6 +27,8 @@ For most of the regular stuff like wild encounters and trainers there are tools 
 If you haven't already you need to download a Hex Editor. There are plenty of different softwares that can do it, in this guide I will be using HxD.
 
 To start, open the file you want to edit with it. Worth mentioning that you can open in a hex editor any file regardless of its extension, keep this in mind since narc files or their contents once extracted might not have an extension.
+
+--- 
 
 ## Offsets
 
@@ -52,6 +46,8 @@ Generally all offsets will refer to the US version of the game in question, unle
 3) Open the equivalent file from the game version you want to edit
 4) Search those bytes (see the next section). You should find only one result, which will be the equivalent offset If not, you need to copy more bytes and search again.
 
+--- 
+
 ## Searching the bytes
 
 When you need to instead search for a sequence of bytes (that you already know), you can use HxD Search function or the shortcut `Ctrl+F`, selecting Hex Values and then pasting the bytes you are looking for. 
@@ -68,6 +64,8 @@ Also, in HxD you can see the decimal value of the bytes you currently have selec
 
 ![](resources/hexconversion.PNG)
 
+--- 
+
 ## Pasting Bytes
 
 Once you are at the right offset you can simply type the bytes you want to replace and save the file, or use the Ctrl+B shortcut, which will overwrite the amount of bytes you have currently copied at the offset location. In HxD the bytes you edited before saving the file will be displayed in red.
@@ -79,11 +77,29 @@ The game expects an exact amount of data, generally expanding the size of the fi
 
 Don't forget to save the file after you're done hex editing!
 
+--- 
+
 ## Compressed files
 All games including HGSS and onwards have their overlay and arm9 files compressed. This is always going to be mentioned in all the guides you can read here but it's worth to keep it in mind:
 
-* You can use CrystalTile2 to decompress and then reinsert (once edited) the arm9 and overlays
-* For gen 4 games, the arm9 in the PokEditor and DSPRE project folder is already uncompressed. For HGSS, you can uncompress Overlay 1 using DSPRE's toolbox. You can find all the compressed overlays in the project folder.
-* For gen 5 games, the arm9 in the CTRMap project folder is already uncompressed. If you insert a uncompressed overlay in the appropriate subfolder, you can pack and then export the ROM without recompressing it.
-* [blz](https://www.romhacking.net/utilities/826/) can be used to decompress and recompress arm9 and overlays. This is a **command line tool**, you don't double click on it. Put blz.exe and the file you need to compress/uncompress in the same folder, open the cmd from that folder and then run the appropriate command. You can see the available commands by running the `blz` command.
-* Overlays and arm9 extracted with Tinke are always compressed. If you decompressed it afterwards, you'll need to hex edit the overlay table to insert it with Tinke again.
+### Generation IV
+- The arm9 in the PokEditor and DSPRE project folder is already decompressed.
+- You can find all the compressed/decompressed overlays in the project folder.
+- There is no requirement to compress previously decompressed overlays.
+#### HGSS (specifically)
+- Overlay 1 can be decompressed using DSPRE's toolbox,
+- *Any* overlay can be decompressed using DSPRE's the Overlay Editor (accessible from the "Other Editors" menu once a Generation IV ROM has been opened).
+  - Ensure that any decompressed overlay is marked as decompressed before saving changes. The overlay will be highlighted in red if only one of the options is selected.
+
+![](resources/dspre_overlay_editor.png)
+
+### Generation V
+- The arm9 in the CTRMap project folder is already decompressed.
+- If you insert a decompressed overlay in the appropriate subfolder, you can pack and then export the ROM without recompressing it.
+### Universal (Generation IV & V)
+- CrystalTile2 can be used to decompress and then reinsert (once edited) the arm9 and overlays.
+- [blz](https://www.romhacking.net/utilities/826/) can be used to decompress and recompress arm9 and overlays.
+  - This is a **command line tool**, you don't double click on it.
+  - Put blz.exe and the file you need to compress/decompress in the same folder, open the cmd from that folder and then run the appropriate command.
+  - You can see the available commands by running the `blz` command.
+- Overlays and arm9 extracted with Tinke are always compressed. If you decompressed it afterwards, you'll need to hex edit the overlay table to insert it with Tinke again.
