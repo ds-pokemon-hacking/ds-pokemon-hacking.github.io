@@ -148,7 +148,7 @@ There are no "hard and fast" rules on maximum file sizes or quantity of polygons
   - A general 'rule of thumb' would be to aim for a polycount of **less than 1,000 polygons** per map file where possible, particularly for main overworld maps. It is not recommended to exceed 2,000 polygons total (maps, buildings, sprites) per map.  
   - There is a lot of contextual 'wiggle room', for example, the following may perform adequately: a single high-polygon count map surrounded by very low polygon count maps (or no maps even, consider somethng like a cave matrix that only has a single map within it).
 
-This GIF from **Shamanka27** demonstrates the map loading: the green square is the map the player is in and the yellow are the loaded maps from the maps surrounding that map, while the red dot is the relative position in the map the player is stood.
+This GIF from **Shamanka27** demonstrates the map loading: the green square is the map the player is in and the orange are the loaded maps from the maps surrounding that map, while the poké ball is the relative position in the map the player is stood.
 
 ![](resources/shamanka27_map_loading.gif)
 
