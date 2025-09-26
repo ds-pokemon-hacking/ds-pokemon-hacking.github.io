@@ -2,10 +2,10 @@
 <html lang="en" dir="ltr" class="mdx-wrapper mdx-page plugin-pages plugin-id-default" data-has-hydrated="false">
 <head>
 <meta charset="UTF-8">
-<meta name="generator" content="Docusaurus v3.9.0">
+<meta name="generator" content="Docusaurus v3.9.1">
 <title data-rh="true">Contribution Guide | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/contributing"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="Contribution Guide | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Author(s): SpagoAsparago, PlatinumMaster"><meta data-rh="true" property="og:description" content="Author(s): SpagoAsparago, PlatinumMaster"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/contributing"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/contributing" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/contributing" hreflang="x-default"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.83da81f0.css">
-<script src="/assets/js/runtime~main.b0b2e920.js" defer="defer"></script>
-<script src="/assets/js/main.a995b644.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.f55c684f.js" defer="defer"></script>
+<script src="/assets/js/main.a9055687.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -82,23 +82,6 @@
 <p><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection" target="_blank" rel="noopener noreferrer">Test the SSH connection is working correctly</a></p>
 </li>
 <li>
-<p><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork" target="_blank" rel="noopener noreferrer">Specify a &quot;remote upstream&quot; repository</a> for synchronising changes made in the main repo to yours.</p>
-<ul>
-<li>
-<p>Run this command to confirm no <strong>upstream</strong> fetch and push remote repos exist (only <strong>origin</strong> fetch and pull).</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">git remote -v</span><br></span></code></pre></div></div>
-</li>
-<li>
-<p>Configure the upstream repository to the main DS Pokémon Hacking repository</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">git remote add upstream https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io.git</span><br></span></code></pre></div></div>
-</li>
-<li>
-<p>Confirm this has been successfully applied (two new <strong>upstream</strong> entries are visible)</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">git remote -v</span><br></span></code></pre></div></div>
-</li>
-</ul>
-</li>
-<li>
 <p>Now, you can clone the repository to your local machine. You can do this by running <code>git clone git@github.com:&lt;your account name&gt;/ds-pokemon-hacking.github.io.git</code> in your terminal.</p>
 </li>
 <li>
@@ -122,7 +105,7 @@
 <p>Remember, any changes you make to the files in the project directory will be reflected in the local server, allowing you to preview your changes in real time.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="continuing-making-local-changes">Continuing Making Local Changes<a href="#continuing-making-local-changes" class="hash-link" aria-label="Direct link to Continuing Making Local Changes" title="Direct link to Continuing Making Local Changes" translate="no">​</a></h3>
 <p>If you want to restart the server to continue making changes in local after a break (when the local server was stopped) and seeing the live changes.</p>
-<p>Follow steps 8 and 10 in the <a href="#first-time-setup-steps">First Time Setup Steps</a> to restart the local server.</p>
+<p>Follow steps 7 and 9 in the <a href="#first-time-setup-steps">First Time Setup Steps</a> to restart the local server.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="synchronising-from-the-main-repo">Synchronising from the Main Repo<a href="#synchronising-from-the-main-repo" class="hash-link" aria-label="Direct link to Synchronising from the Main Repo" title="Direct link to Synchronising from the Main Repo" translate="no">​</a></h3>
 <p>Once a PR has been merged or cancelled, if you wish to start a new set of changes, it is good practice to avoid potential problems with the following PR, to refresh the user remote repo from the main repo. This also removes some noise (commits in the PR that are already merged). To do this, the following steps can be completed:</p>
 <ol>
@@ -137,7 +120,7 @@
 </ul>
 </li>
 <li>Delete the existing local user repo folder from your machine: this allows a clean clone to be taken.</li>
-<li>Recreate the local user repo (cloned from the remote user repo) &amp; build the local repo: As per steps 7-11 from the <a href="#first-time-setup-steps">First Time Setup Steps</a>.</li>
+<li>Recreate the local user repo (cloned from the remote user repo) &amp; build the local repo: As per steps 6-10 from the <a href="#first-time-setup-steps">First Time Setup Steps</a>.</li>
 </ol>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="creating-a-new-guideresource">Creating a New Guide/Resource<a href="#creating-a-new-guideresource" class="hash-link" aria-label="Direct link to Creating a New Guide/Resource" title="Direct link to Creating a New Guide/Resource" translate="no">​</a></h2>
 <ol>
