@@ -3,6 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { logger } from '@docusaurus/logger';
 import path from 'path';
 
 const config: Config = {
@@ -22,7 +23,6 @@ const config: Config = {
   projectName: 'ds-pokemon-hacking.github.io', // Usually your repo name.
 
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -62,6 +62,13 @@ const config: Config = {
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: (broken) => {
+        logger.warn(
+          `Broken Markdown Link in ${broken.sourceFilePath}: ${broken.url}`
+        );
+      },
+    },
   },
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {
