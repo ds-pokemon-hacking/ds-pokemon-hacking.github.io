@@ -1,21 +1,22 @@
 ---
-title: File Structure (HeartGold & SoulSilver)
+title: File Structure (HGSS & Platinum)
 tags:
+  - Resource (Platinum) 
   - Resource (HeartGold)
   - Resource (SoulSilver)  
 ---
 
-# File Structure (HeartGold & SoulSilver)
+# File Structure (HGSS & Platinum)
 > Author(s): [MrHam88](https://github.com/DevHam88)  
 > Source: [Unkown Author](https://docs.google.com/document/d/15YuxZpMmmuSDEcMa8chkjXWWgVPv-MlCELZK5lBx5EI/edit?pli=1&tab=t.0)
 
-This page provides a filterable and sortable table of the filestructure of Pokémon HeartGold & SoulSilver Versions.
+This page provides a filterable and sortable table of the filestructure of Pokémon HeartGold, SoulSilver & Platinum Versions.
 
 import FilterableSortableTable from '/src/components/FilterableSortableTable';
 
 <FilterableSortableTable defaultSort={{ column: 2, direction: 'desc' }} types={['string','number']}>
 
-| Area | Sub-Area | Path | Narc name | Description |
+| Area | Sub-Area | HGSS Path | Platinum Path | Description |
 | --- | --- | --- | --- | --- |
 | Pokemon Data |  | /a/0/0/2 | personal.narc |  |
 | Pokemon Data |  | /a/0/3/3 |  |  |
@@ -24,7 +25,7 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 | Pokemon Data |  | /a/2/2/9 | kowaza.narc | Egg Move Table |
 | Pokemon Data |  | /data/kowaza | kowaza.narc | Egg Move Table (copy?) |
 | Pokemon Data |  | /poketool/personal | pms.bin | Baby Table |
-| Pokemon Data |  | /fielddata/wazaoshie | waza_oshie.bin | Move Tutor Table |
+| Pokemon Data |  | /fielddata/wazaoshie | waza_oshie.bin | Move Tutor Compatibility Table |
 | Pokemon Data |  | /a/1/1/7 | height_o.narc | Height Order(?) |
 | Pokemon Data | Pokemon Graphics | /a/0/0/4 | pokegra.narc | Pokemon Sprites |
 | Pokemon Data | Pokemon Graphics | /a/1/1/4 | otherpoke.narc | Alt Forme Sprites |
@@ -85,17 +86,17 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 | Items |  | /a/0/1/7 | item_data.narc | Item Data |
 | Items |  | /a/0/6/6 | nuts_data.narc | Berry Data |
 | Items | Item Graphics | /a/0/1/8 | item_icon.narc | Item Icons |
-| Moves |  | /a/0/1/1 | waza_tbl.narc | Move Table |
-| Moves |  | /a/0/1/0 | we.narc | Move Effects |
-| Moves |  | /a/0/6/1 | we_sub.narc |  |
-| Moves |  | /a/0/3/0 | be_seq.narc | Move Behaviours |
-| Moves |  | /a/0/0/1 | sub_seq.narc |  |
-| Moves |  | /a/0/0/0 | waza_seq.narc |  |
-| Moves | Move Graphics | /a/0/2/2 | wechar.narc | Move Tiles |
-| Moves | Move Graphics | /a/0/2/3 | wepltt.narc | Move Palettes |
-| Moves | Move Graphics | /a/0/2/4 | wecell.narc | Move Cells |
-| Moves | Move Graphics | /a/0/2/5 | wecellanm.narc | Move Animations |
-| Moves | Move Graphics | /a/0/2/9 | waza_particle.narc | Move Particle Data |
+| Moves |  | /a/0/1/1 | /poketool/waza/waza_tbl.narc | Move Data Table |
+| Moves |  | /a/0/1/0 | /data/wazaeffect/we.narc | Move Effects (Animations per move) |
+| Moves |  | /a/0/6/1 | /data/wazaeffect/we_sub.narc | Ongoing Move Animations |
+| Moves |  | /a/0/3/0 | /battle/skill/be_seq.narc | Move Effect Scripts (Behaviours) |
+| Moves |  | /a/0/0/1 | /battle/skill/sub_seq.narc | Move Effect Sub-Scripts |
+| Moves |  | /a/0/0/0 | /battle/skill/waza_seq.narc | Move Scripts |
+| Moves | Move Graphics | /a/0/2/2 | /data/wazaeffect/effectclact/wechar.narc | Move Tiles |
+| Moves | Move Graphics | /a/0/2/3 | /data/wazaeffect/effectclact/wepltt.narc | Move Palettes |
+| Moves | Move Graphics | /a/0/2/4 | /data/wazaeffect/effectclact/wecell.narc | Move Cells |
+| Moves | Move Graphics | /a/0/2/5 | /data/wazaeffect/effectclact/wecellanm.narc | Move Animations |
+| Moves | Move Graphics | /a/0/2/9 | /data/wazaeffect/effectdata/waza_particle.narc | Move Particle Data |
 | Scripts |  | /a/1/1/2 | fld_trade.narc | In-Game Trades |
 | Scripts |  | /a/0/1/2 | scr_seq.narc | Scripts |
 | Scripts |  | /a/0/1/3 | scr_msg.narc | (?) |
