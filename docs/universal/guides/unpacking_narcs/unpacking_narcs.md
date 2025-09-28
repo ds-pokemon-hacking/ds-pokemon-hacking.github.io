@@ -36,7 +36,9 @@ Launch the Command Prompt in that same folder.
 <details>
  <summary>On Windows you can type `cmd` in the folder address and press enter:</summary>
 
-<video src="resources/quickcmdvideo.mp4" width="640" height="480" controls></video>
+<video width="640" height="480" controls>
+  <source src="/video/universal/guides/unpacking_narcs/quickcmdvideo.mp4" type="video/mp4"/>
+</video>
 
 </details>
 
