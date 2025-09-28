@@ -170,4 +170,4 @@ In HGSS there are nine Pattern Animations in the mapping bin file. These relate 
 8. dsea_on
 9. r_sea_rock  
 
-Textures 1-7 are commonly found in the main overworld in HGSS, Textures 1, 4-5, 8-9 are used in some caves
+Textures 1-7 are commonly found in the main overworld in HGSS, Textures 1, 4-5, 8-9 are used in some caves.
