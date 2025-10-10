@@ -3708,17 +3708,3 @@ The steps outlined in the [TMs & HMs section](#technical--hidden-machines-tms--h
   - Use the Pokémon editor in DSPRE to enable TM51 for all of these Pokémon.
 
 </details>
-
-<details>
-<summary>New Tutor with Additional Moves (**BP Move Tutor, HGSS**)</summary>
-
-TBC
-
-</details>
-
-<details>
-<summary>Change Moves Tutored (**Shard Move Tutor, Platinum**)</summary>
-
-TBC
-
-</details>
