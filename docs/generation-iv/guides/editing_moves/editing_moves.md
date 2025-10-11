@@ -1022,7 +1022,6 @@ There are a number of move effect scripts that appear to have no intended use, a
 
 It is also possible to use these unused move effect scripts to implement unused combinations such as these. The below are the list of undocumented (unused) move effect scripts which only contain the standard damaging critical hit determination and damage calculation (or don't exist).  
 
-- `64` (assumed to be Evasion reduction by one stage for a damaging move)
 - `96`
 - `110`
 - `131`
