@@ -1862,7 +1862,7 @@ The amount of damage dealt at the end of each turn that a trapping effect is pre
 
 The information is located in different overlays for different game versions. For games where the overlays are compressed (HeartGold & SoulSilver), decompression of the overlays must be done before hex editing the overlay. A unique hex string of `48 43 10 21 09 F0` (HGSS/Plat) or `10 21 08 F0 E9` (Diamond/Pearl) can be searched to find the area to be edited, the specific value to change is the `10` (16 in decimal, hence 1/16 max HP damage per turn).
 
-This value could be changed to another value, for example to `08` for 1/8 damage per turn (as in later generations of Pokémon games), or something totally different, for example `32` for 1/32 damage per turn. As this is a divisor, the higher the number the lower the damage dealt.
+This value could be changed to another value, for example to `08` for 1/8 damage per turn (as in later generations of Pokémon games), or something totally different, for example `20` for 1/32 damage per turn. As this is a divisor, the higher the number the lower the damage dealt.
 
 <table>
   <tr>
