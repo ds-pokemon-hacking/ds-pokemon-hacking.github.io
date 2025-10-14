@@ -2298,7 +2298,7 @@ To find the offset of any given Pokémon to edit, paste the following formula in
 | `504` | Rotom (FAN) |
 | `505` | Rotom (MOW) |
 </details>
-Ftrapping
+
 ##### Type 2B (HGSS): Compatibility & Special Currency (*Battle Points*)
 
 **Move pool definition**  
@@ -2335,7 +2335,7 @@ When considering adding new Tutor IDs in HGSS, bear in mind that tutor ID `03` i
 **Pokémon compatibility**
 > Source(s): [Mixone (2024)](https://discord.com/channels/446824489045721090/468060243688161300/1268200787251564584)
 
-The compatibility table can be found at offest `0x0` (this is the entire file). In HGSS each Pokémon ID uses 8 bytes.
+The compatibility table can be found in `waza_oshie.bin` at offest `0x0` (this is the entire file). In HGSS each Pokémon ID uses 8 bytes.
 
 The format of the bytes is as follows: `AA BB CC DD EE FF GG HH`, where:
 - `AA` : Binary true/false definition for tutorable moves 01-08
