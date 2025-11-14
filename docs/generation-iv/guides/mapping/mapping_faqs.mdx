@@ -1,0 +1,34 @@
+---
+title: FAQs
+tags:
+  - Guide (Diamond)
+  - Guide (Pearl)
+  - Guide (Platinum)
+  - Guide (HeartGold)
+  - Guide (SoulSilver)  
+---
+
+# Mapping FAQs
+> Author(s): [MrHam88](https://github.com/DevHam88)  
+
+This page provides a filterable and sortable table of frequently asked Generation IV mapping questions. It is intended to be an evolving list over time.  
+
+Please submit any Question & Answers you think are appropriate for this list [here](https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/issues/new/choose), and they will be added.
+
+import FilterableSortableTable from '/src/components/FilterableSortableTable';
+
+<FilterableSortableTable defaultSort={{ column: 0, direction: 'desc' }} types={['string','number']}>
+
+| Topic | Question | Answer/Link |
+| --- | --- | --- |
+| Map Headers | Why can't I add new Headers in DSPRE? | Before new headers can be added, the **Dynamic Header Allocation** patch must be applied. This can be found in DSPRE's **Patch Toolbox** (The icon to launch this is the `Underground Kit` key item symbol). |
+| Permissions | What is the difference between Permission **Collisions** and Permission **Types**? | **Collisions** determine where the player can and cannot walk: collision 80 is "blocked", every other collision ID is "walkable" but they produce different sounds (grass, metal, rock, etc). **Types** determine special interactions in the tiles, such as encounters (tall grass, cave floor etc), tiles only walkable on certain conditions (e.g. surfable water), interactable models (trees, TVs, etc), jumpable ledges... etc.  |
+| Custom Maps | How do I import my custom maps? | [Written tutorial](/docs/generation-iv/guides/mapping/models/#importexport) & [video tutorial](https://youtu.be/fcGjxI7oWsI?si=01_Q8QSJYttHvcZB). |
+| Tiles & Tilesets | How do I import tilesets to PDSMS? | [Written tutorial](https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/mapping/tiles_and_tilesets/) |
+| Tiles & Tilesets | Why do I get a silent failure (nothing happens) when I try to import a tileset to PDSMS? | This may be due to the version of PDSMS used to create the tileset and the version of PDSMS in use. Tilesets created on the AdAstra fork are not backwards compatible with the base version. Check the version you are using, and the version the tileset was created on. Links to both versions can be found on the [Generation IV Getting Started](/docs/generation-iv/guides/getting_started/) Wiki page. |
+| Tiles & Tilesets | What are Vertex Colours and why are they used? | They are colour overlays you can put on tiles that use the vertices of the tiles as their centres, they can be used for more precise shading, but their use will exclude the affected materials from the Day/Night lighting in "exterior" locations in-game. |
+| Custom Maps | What is a good workflow for map creation? | Good may look different for different people. One good approach would be to have a folder for each map. For example one folder for the whole overworld, another for a cave... etc. When saving the maps, use the default names PDSMS gives you, which will prevent potential filename issues. And from time to time, make backup copies of the folder. |
+
+</FilterableSortableTable>
+
+
