@@ -12,7 +12,7 @@ tags:
 > Author(s): [MrHam88](https://github.com/DevHam88).  
 > Implementation & Research: Aero, [BlueRose](https://github.com/BluRosie), [DarmaniDan](https://github.com/DarmaniDan), [Drayano](https://pastebin.com/u/DrayHackTutorials), [Fexty](https://github.com/Fexty12573), [Lhea](https://gist.github.com/lhearachel), Lmaokai, MapleDonut, [Mixone](https://github.com/Mixone-FinallyHere), Paille92, [RefinedPlat](https://github.com/refinedplat), Solace, [TurtleIsaac](https://github.com/turtleisaac), [Yako?](https://github.com/YakoSWG).
 
-This page is a full guide on making changes to moves and their related data in Generation IV Pokémon games (moves, move effects, animations, learnsets, TMs, move tutors). This guide focusses on editing, re-organising and replacing existing data. There are methods to *add* new moves (without replacing any existing moves) to Generation IV Pokémon games, but these are significantly involved, and require moving data/tables.  
+This page is a full guide on making changes to moves and their related data in Generation IV Pokémon games (moves, move effects, animations, learnsets, TMs, move tutors). This guide focuses on editing, re-organising and replacing existing data. There are methods to *add* new moves (without replacing any existing moves) to Generation IV Pokémon games, but these are significantly involved, and require moving data/tables.  
 
 The contents of the guide are proven for Platinum Version, HeartGold Version & SoulSilver Version. Many of the sections are directly applicable to Diamond Version and Pearl Version as well, but there may be differences in specific offsets when hex editing for these versions. **If not stated otherwise, any hex editing offsets or files given in this page are for known good US versions of the relevant ROMs**.  
 
@@ -46,7 +46,7 @@ Every unique move *(identified by move index/ID)* in the game has:
 - One **move animation**
     - Which is made up of one or more **animation components**
 
-The exact mapping of how a move is executed can be found [here](https://github.com/pret/pokeplatinum/blob/2bf38f5952b791524b5f767c583e4fe0830a82c5/src/battle/battle_lib.c#L7507) in the Platinum Decompilation project. The specific file locations for each of these elements in HGSS can be found [here](/docs/generation-iv/resources/hgss-file_structure/), and an overview is below include HGSS & Platinum file names:
+The exact mapping of how a move is executed can be found [here](https://github.com/pret/pokeplatinum/blob/2bf38f5952b791524b5f767c583e4fe0830a82c5/src/battle/battle_lib.c#L7507) in the Platinum Decompilation project. The specific file locations for each of these elements in HGSS can be found [here](/docs/generation-iv/resources/hgss-file_structure/), and an overview is below including HGSS & Platinum file names:
 
 | - | HGSS File | Platinum File |
 | --- | --- | --- |
@@ -62,7 +62,7 @@ The exact mapping of how a move is executed can be found [here](https://github.c
 - Each **animation component** may be used across many move animations, but each move has it's own animation definition. *There are three main types of animation components/instructions (sprite translations, "particles" & backgrounds).*  
 - Each effect **sub-script** may be used across multiple move **effect scripts**, but a move effect script may use zero effect sub-scripts.  
     - The **move data** NARC contains basic data on the move, which can be edited in DSPRE. This includes, for example, reference to the move **effect script**.
-    - Move **animations** can be edited using a hex editor such as HxD, or by using a tool called WazaEditor.
+    - Move **animations** can be edited using a hex editor such as HxD, or by using a tool called WazaEffectEditor.
     - Move **move scripts**, **effect scripts** & **effect sub-scripts** can be edited using a hex editor such as HxD.
 
 --- 
@@ -117,7 +117,7 @@ An example of a basic level-up learnset count from HGSS is below. Bear in mind t
 
 <details>
 <summary>HGSS: Vanilla Move Level-Up Learnset Distribution (Reverse Ordered by Count)</summary>
-| Move ID | Move Name | Level Up Learnset |
+| Move ID | Move Name | Level-Up Learnset |
 | --- | --- | --- |
 | 15 | Cut | 0 |
 | 57 | Surf | 0 |
@@ -615,7 +615,7 @@ Move names and descriptions are present in a number of Text Archives accessible 
    - Battle texts (e.g. "x" used "y" move)
 - Move Descriptions, as they appear in:
    - Pokémon summary screen
-   - TM item description (as approporiate)
+   - TM item description (as appropriate)
 
 The following are the relevant Text Archives for US versions of the Generation IV Pokémon games. The search function in DSPRE can be used to easily locate the right messages (and archives in other versions of the games).
 
@@ -634,7 +634,7 @@ The majority of attributes of moves are adjusted in this section of the Move Dat
 | Attribute | Possible Values | Description |
 | :--- | :--- | :--- |
 | Type | `NORMAL` `FIRE` `GRASS` ... etc. | The type of a move: the 18 types in Generation IV includes `???` but not `Fairy` |
-| Split | `PHYSICAL` `SPECIAL` `STATUS` | The difference between physical damaging moves, special damaging moves & status moves that do not inflicy direct damage |
+| Split | `PHYSICAL` `SPECIAL` `STATUS` | The difference between physical damaging moves, special damaging moves & status moves that do not inflict direct damage |
 | Contest Condition | `COOL` `BEAUTIFUL` `CUTE` `SMART` `TOUGH` | The five categories of competitions, moves and condition in "Super Contests" in Diamond, Pearl or Platinum. |
 | Priority | `-32` to `+32` | The priority stage of a move, where a higher number indicates a move to be executed earlier. Vanilla Generation IV moves range from `-7` to `+5`. |
 | Effect Sequence | `000 - ...` to `470 - ...` | A numeric value that determines the more complex effects of the move beyond basic data (such as secondary effects, damage modifiers, more details in the [Move Effect Scripts](#move-effect-scripts) section below). |
@@ -816,7 +816,7 @@ More complex damaging moves include this basic functionality at the end of their
 
 Status moves which increase or decrease a single stat by one or two stages, usually call a specific **move effect sub-script** with and a parameter for the stat/no. of stages, including which of the [list of possible side effects effects](https://github.com/pret/pokeplatinum/blob/main/include/data/move_side_effect_subscripts.h) to apply.
 
-In hex a common status-only stat-stage asjusting move effect script in HGSS looks like this:  
+In hex a common status-only stat-stage adjusting move effect script in HGSS looks like this:  
 > `32 00 00 00 07 00 00 00 AA AA AA AA ## ## ## ## E0 00 00 00`  
 
 Where:
@@ -841,7 +841,7 @@ Where:
 
 Because they are not used in the vanilla Generation IV Pokémon games, there are a number of move effect scripts which do not actually call/use the common "side effects" **effect sub-script** and the reference to the right parameters. These move effect scripts are named in DSPRE as the intended use, but if they are to be used, they require hex edits.
 
-The process to fix these move effect scripts is relatively straightforward, involving copying the move effect script of a similar fuinctional move and substituting in the correct parameters (table entries). For example, move effect script `012` is intended to increase the user's Speed stat by one stage, a side effect that does not occur in the vanilla Generation IV games (in isolation).
+The process to fix these move effect scripts is relatively straightforward, involving copying the move effect script of a similar functional move and substituting in the correct parameters (table entries). For example, move effect script `012` is intended to increase the user's Speed stat by one stage, a side effect that does not occur in the vanilla Generation IV games (in isolation).
 
 - As with the others, move effect script `012` currently contains only the basic move effects (to determine critical hits and calculate damage). In hex this appears as: `26 00 00 00 0F 00 00 00 E0 00 00 00`
 - Replacing it with the below will set the effect script to raise the user's Speed stat by one stage (in line with the DSPRE description): `32 00 00 00 07 00 00 00 02 00 00 00 11 00 00 40 E0 00 00 00`  
@@ -1057,7 +1057,7 @@ Move animations can be edited in a number of ways (not including using decompila
 1. Direct hex editing of the relevant data,
 2. A tool called WazaEffectEditor (often shortened to WazaEditor) that has a UI.
 
-For the purposes of this guide it is assumed that WazaEffectEditor will be used to edit animations. WazaEffectEditor was initially designed for Pokémon Platinum Version by Acent, and a modified variation is available for HGSS (modified by DavveDP) as well (not, it is unclear if this variation is functionally complete as it appears to be in a work in progress state on the developer's GitHub repository). The different versions can be found here: 
+For the purposes of this guide it is assumed that WazaEffectEditor will be used to edit animations. WazaEffectEditor was initially designed for Pokémon Platinum Version by Acent, and a modified variation is available for HGSS (modified by DavveDP) as well (note, it is unclear if this variation is functionally complete as it appears to be in a work in progress state on the developer's GitHub repository). The different versions can be found here: 
 - [WazaEffectEditor (Platinum)](https://drive.google.com/drive/folders/1YcRGuzTaGfNXJpO1rhb4t6GLyE2UVfaA)
     - [Original Release](https://discord.com/channels/446824489045721090/482242795982159872/799743818797940797)
 - [WazaEffectEditor (HGSS)](https://discord.com/channels/446824489045721090/534415767454875678/1250447089067102300)
@@ -1217,7 +1217,7 @@ If editing the Move Animations NARC in a hex editor such as HxD:
 5. The ROM re-built using the NARC (e.g. using DSPRE), &
 6. The ROM saved as a `.nds` file.
 
-Some elements of the animation are dependant upon the move effects. For example, if a single-turn move is given the vanilla animation of a two-turn move, only the first turn's animation will play, without further edits.
+Some elements of the animation are dependent upon the move effects. For example, if a single-turn move is given the vanilla animation of a two-turn move, only the first turn's animation will play, without further edits.
 
 ### Edit Animation Elements
 Editing individual elements of a move animation is straightforward with the above understanding, but may require some trial and testing to get the desired result. Often the basis for these changes is to identify the elements to change, and identify any existing moves that use the same patterns.  
@@ -1232,7 +1232,7 @@ Changes such as the below are all relatively simple:
 ------------------------------
 
 ## Move Categories (Battle Engine & AI)
-There are a number of mechanical categories of moves in the Pokémon games, these categories have some kind of interaction with certain Abilities and/or items, and are typically offensive or defensive. Some of these categories were introduced afterGeneration IV. This section provides an overview of the mechanical move categories already present in Generation IV, and how to edit the specific moves considered to be within these categories, while also ensuring that the Trainer AI comprehends the changes.  
+There are a number of mechanical categories of moves in the Pokémon games, these categories have some kind of interaction with certain Abilities and/or items, and are typically offensive or defensive. Some of these categories were introduced after Generation IV. This section provides an overview of the mechanical move categories already present in Generation IV, and how to edit the specific moves considered to be within these categories, while also ensuring that the Trainer AI comprehends the changes.  
 
 The table below is a list of mechanical categories which interact with Abilities or Items, including which generation they were introduced in. The following sections further detail the categories natively available in Generation IV.
 
@@ -1697,7 +1697,7 @@ In Generation IV, the 'End of Turn' damage fraction is 1/16 (or 0.0625) of the t
 
 The steps required to turn a move into a trapping move are:
 1. Editing of the move data, including setting the effect script to a trapping effect (e.g. `042` - Binding move effect)
-2. Configuring the intial trapping text which appears when the 'End of Turn' effect takes hold.
+2. Configuring the initial trapping text which appears when the 'End of Turn' effect takes hold.
 3. Configuring the 'End of Turn' trapping animation to play each turn that the trapping effect is present.
 
 #### Editing Move Data
@@ -1722,7 +1722,7 @@ The texts that are displayed at the beginning, during and end of the trapping ef
 </table>
 
 - The texts that are displayed during the effect and when it ends are common to all the trapping moves, and are determined/defined directly from the relevant effect sub-scripts (`0059` and `0060`).
-- The text that is displayed when the trapping effect first applies, are varied, and can be unique per move. These are determined indirectly in the relevant sub-script (`0058`), which reuires their definition in the relevant move sccript (move script number equal to the move index/ID).
+- The text that is displayed when the trapping effect first applies, are varied, and can be unique per move. These are determined indirectly in the relevant sub-script (`0058`), which requires their definition in the relevant move script (move script number equal to the move index/ID).
 - There is some further variation as some trapping moves initial text refer to the target only, and others refer to the target and the user. For example:
     - **Bind** initial trapping text: `Target` was squeezed by `User`  
     - **Fire Spin** initial trapping text: `Target` was trapped in the vortex!  
@@ -1915,7 +1915,7 @@ To change the standard randomised duration, the maximum outcome and number to be
 - The number to be added is `4`
 - The outcome is always `4`, which translates to **3** turns.
 
-***Example 2:*** set the number of turns to ranndomly vary between **4** and **5** turns: `38 00 00 00 01 00 00 00 05 00 00 00`
+***Example 2:*** set the number of turns to randomly vary between **4** and **5** turns: `38 00 00 00 01 00 00 00 05 00 00 00`
 - The random number is returned between `0` and `1`.
 - The number to be added is `5`
 - The outcome is either always `5` or `6`, which translates to either **4** or **5** turns respectively.
@@ -2062,9 +2062,18 @@ In order to change the move that a TM or HM teaches, two to four areas need edit
     - The move description associated to the TM item (distinct from the *move* description), and
     - Any NPC text or other text called by Scripts that reference the move - necessary only when the TM is given to the player with context (e.g. by a Gym Leader after their defeat).
 
+<details>
+<summary>Version-Specific Offsets</summary>
+| Version | US | JP | FR | DE | IT | ES |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Diamond/Pearl Version | `0xF84EC` | `0xFA458` | `0xF8530` | `0xF8500` | `0xF84A4` | `0xF853C` |
+| Platinum Version | `0xF0BFC` | `0xF028C` | `0xF0C84` | `0xF0C54` | `0xF0C18` | `0xF0C90` |
+| HeartGold/SoulSilver Version | `0x1000CC` | `0xFF84C` | `0x1000B0` | `0x100080` | `0x100044` | `0x1000B4` |
+</details>
+
 **Part 1: Hex Edits**  
 1. Uncompress ARM9 (if not already uncompressed)
-2. Open ARM9 in a [Hex editor](/docs/universal/guides/hex_editing/)
+2. Open ARM9 in a [hex editor](/docs/universal/guides/hex_editing/)
 3. **Edit the move index number associated to the TM:**
       - Go to offset `0x1000CC` (HGSS), `0xF0BFC` (Platinum) or `0xF84EC` (Diamond/Pearl), which is the offset for TM01.
         - Each TM uses two bytes in a list from this point onwards.
@@ -2075,7 +2084,7 @@ In order to change the move that a TM or HM teaches, two to four areas need edit
       - Replace the two bytes representing the vanilla move index, with the two bytes representing the move index you wish to replace it with.
         - A simple method to identify the move index is to check the Bulbapedia page for [moves by index](https://bulbapedia.bulbagarden.net/wiki/List_of_moves).
 4. **Edit the TM icon palette used**
-    - Open ARM9 in a [Hex editor](/docs/universal/guides/hex_editing/)
+    - Open ARM9 in a [hex editor](/docs/universal/guides/hex_editing/)
     - Go to offset `0x100BD6` (HGSS), `0xF1706` (Platinum) or `0xF8FF6` (Diamond/Pearl), which is the offset for TM01.
       - Each TM palette uses eight bytes in a list from this point onwards.
       - The bytes for TM01 (Focus Punch) are: `8D 01 8E 01 21 01 33 01` (in HGSS/Plat)
@@ -2108,7 +2117,6 @@ In order to change the move that a TM or HM teaches, two to four areas need edit
 | Bug | `62 02` |
 </details>
 
-
 **Part 2: Text Edits (DSPRE):**
 1. Open the ROM in DSPRE ***from the extracted folder*** (to preserve the above ARM9 changes, opening the `.nds` file will re-extract the data from the ROM, and wipe the previous ARM9 edits unless they have previously been saved back to the `.nds` file).
 2. **Edit the TM item description**
@@ -2136,7 +2144,7 @@ Whether simply to change the availability of a vanilla TM, or to adjust compatib
 1. Open the ROM in DSPRE
 2. Navigate to the Pokémon Editor (via the "Other Editors" dropdown as of version 1.13.1 of the tool).
 3. On the "Personal Editor" tab, select the Pokémon to have it's TM learnset edited.
-4. Move a TM from the "Disabled" list to the "Enabled" list to allow the Pokémon to be taught the move in the TM, or visa versa to prevent the Pokémon from being taught the move from the TM.
+4. Move a TM from the "Disabled" list to the "Enabled" list to allow the Pokémon to be taught the move in the TM, or vice versa to prevent the Pokémon from being taught the move from the TM.
 5. Save the changes to the Pokémon.
 6. Repeat steps 3-5 for all required Pokémon.
 7. Save the ROM to `.nds` file using DSPRE.
@@ -2184,14 +2192,14 @@ Move tutors are implemented in a number of different ways in the Generation IV P
     <td>Compatibility & Special Currency (*Shards*)</td>
     <td>Platinum</td>
     <td>Three Shard Tutors (*Route 212, Snowpoint City, Survival Area*)</td>
-    <td>This move tutor uses scripting, but also two tables of data stored in `overlay_0005.bin`, which define the available pool of moves that can be tutored, compatibiltiy with each Pokémon, the prices and assigned tutors for each.</td>
+    <td>This move tutor uses scripting, but also two tables of data stored in `overlay_0005.bin`, which define the available pool of moves that can be tutored, compatibility with each Pokémon, the prices and assigned tutors for each.</td>
   </tr>
   <tr>
     <td>2B</td>
     <td>Compatibility & Special Currency (*Battle Points*)</td>
     <td>HeartGold, SoulSilver</td>
     <td>Three BP Tutors (*Frontier Access*)</td>
-    <td>This move tutor uses scripting, but also two tables of data stored in `overlay_0001.bin` and `waza_oshie.bin`, which define the available pool of moves that can be tutored, compatibiltiy with each Pokémon, the prices and assigned tutors for each.</td>
+    <td>This move tutor uses scripting, but also two tables of data stored in `overlay_0001.bin` and `waza_oshie.bin`, which define the available pool of moves that can be tutored, compatibility with each Pokémon, the prices and assigned tutors for each.</td>
   </tr>
   <tr>
     <td>2C</td>
@@ -2387,7 +2395,7 @@ This is achieved through a very specific command `CheckHeadbuttCompatibility` wh
 
 With the information documented above, it is possible to create new move tutors, by utilising unused Tutor IDs (for both Platinum & HGSS). In HGSS it is easily possible to define six more moves that can be tutored, using the available space in the existing table in `overlay_0001`. Existing commonscripts can be copied/replicated to create new tutors that use the same purchasing mechanisms (shards or BP). It is also easily possible to use the same move tutor data to develop tutors that have more unique/complex logic controlling availability/purchase of the tutorable moves with custom scripting.
 
-In **HGSS**, the Event and Script data of the move tutors in the Frontier Access can be reviewed to find that a small series of commonscripts are used to drive their dialogue & options. Adding a new tutor that uses (for example Tutor ID `04`), can be acheived by following these steps:
+In **HGSS**, the Event and Script data of the move tutors in the Frontier Access can be reviewed to find that a small series of commonscripts are used to drive their dialogue & options. Adding a new tutor that uses (for example Tutor ID `04`), can be achieved by following these steps:
 1. Update the Tutorable Moves data (`overlay_0001`) to include moves that are aligned to Tutor ID `04` *(Details [here](#type-2b-hgss-compatibility--special-currency-battle-points); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
 2. Update the Pokémon Compatibility data (`waza_oshie.bin`) to set the compatibility for the newly added moves *(Details [here](#type-2b-hgss-compatibility--special-currency-battle-points); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
 3. Locate the last move tutor commonscript (file 2, Script 3). Copy the script and paste it as Script 4, editing the `SetVar` commands for variables `32768` & `32775` to change the value the variable is set to (`2`) to `4`, for example:  
@@ -2485,6 +2493,14 @@ Where:
   </tr>
 </table>
 
+<details>
+<summary>Version-Specific Offsets</summary>
+| Version | US | JP | FR | DE | IT | ES | Length |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Diamond/Pearl Version | `0x20668` | `0x21654` | `0x20620` | `0x20620` | `0x20620` | `0x20620` | `0xEEA` |
+| Platinum Version | `0x29222` | `0x29012` | `0x2922A` | `0x2923E` | `0x29232` | `0x2922A` | `0xEEC` |
+</details>
+
 Because the data is held in its own NARC for HGSS, it is easily editable and expandable, however for Diamond, Pearl & Platinum versions this data is held within an overlay with no space for expansion in-situ.  
 
 It is relatively straightforward to update/change existing entries, for example changing an Egg Move from 'x' move to 'y' move for a species. It is also simple to add new entries in HGSS, but the table would need re-pointing to add more (total) entries (without replacing existing data) in Diamond, Pearl or Platinum versions. Without re-pointing the table, entries could be added in these versions as long as the length of the total egg move data remained the same (i.e. removing other entries).
@@ -2537,7 +2553,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Remove the duplicated elements of the remaining two sections (each representing the animation on one turn)
     - Everything from `Init` to `Cmd_3c` and from `WaitAnim` to `End` are common across both elements, so the second set of these can be removed.
 5. Merge the remaining elements as they should be animated:
-    - Each `LoadAnim` commands should be retained in the order that exist in. In this case, the desired outcome is for the first animation to finish before the next starts, so teh `Wait` commands should be kept after each.
+    - Each `LoadAnim` commands should be retained in the order that exist in. In this case, the desired outcome is for the first animation to finish before the next starts, so the `Wait` commands should be kept after each.
     - Insert the `PlaySound` from the first turn element just before the `WaitSound` and `Wait` from the second turn element.
     - Insert the `ApplyCmd` commands,
     - Discard the excess `Wait`
@@ -2685,7 +2701,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 In this example, the Pokémon which learn the move will remain as-per Leaf Blade, including any that may learn via methods such as Egg Moves. However, the levels that these Pokémon learn the move will be altered to reflect the new power level of the updated move.
 1. Consult a [source material](https://bulbapedia.bulbagarden.net/wiki/Leaf_Blade_(move)#Learnset) to identify all Pokémon in the game which learn Leaf Blade by level up.
 2. Open DSPRE & load the ROM (from the `.nds` file to ensure animation changes are included)
-3. Decide which learnsets to adjust, in this example Grovyle & Sceptile's level up learnsets will be adjusted (and Victreelbel, Bellossom, Leafeon & Gallade will remain as-is).
+3. Decide which learnsets to adjust, in this example Grovyle & Sceptile's level-up learnsets will be adjusted (and Victreelbel, Bellossom, Leafeon & Gallade will remain as-is).
 4. Open the `Pokémon Editor` from the `Other Editors` toolbar option, switch to the `Learnset Editor` tab.
 5. Select Grovyle and the move `Solar Blade` at level `29`, click **Edit**.
 6. Enter a new level to be learned (e.g. `39`), click **Confirm**.
@@ -2888,7 +2904,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 2. Use the search function to find the move description, taking a small part of the text (as displayed in the Move Data Editor), e.g. "foe's movements"
 3. Update the message (`170`) to include a more accurate description (while retaining appropriate line breaks), for example changing the vanilla: 
     - `The user senses the\nfoe’s movements\nwith its mind to\nensure its next\nattack does not miss.` to something like:  
-    - `The user’s predatory\neyesight focuses\non it’s targets.\nIt sharply boosts\nthe Accuracy stat.`  
+    - `The user’s predatory\neyesight focuses\non its targets.\nIt sharply boosts\nthe Accuracy stat.`  
 4. Click the `Save Current Archive` button
 5. Click the `Save ROM` button from the main toolbar to apply the changes to a `.nds` ROM file.
 
