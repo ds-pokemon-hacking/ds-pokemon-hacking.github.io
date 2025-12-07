@@ -1,10 +1,10 @@
 ---
-title: Type Expansion
+title: Type Expansion / Fairy Type
 tags:
   - Guide (Platinum)
 ---
 
-# Type Expansion<sup>*(Platinum)*</sup>
+# Type Expansion / Fairy Type<sup>*(Platinum)*</sup>
 > Author: Yako <br />
 > Previous implementations: Mikelan98 and BagBoy ([Original guide](https://pokehacking.com/tutorials/fairypt/) to fairy type), Drayano ([Another guide](https://pastebin.com/hTeS5EkD) to fairy type) <br /> 
 > Credits: Mikelan98 and Nomura (ARM9 Expansion), the entire DSPRE team and everyone who worked on pokeplatinum
@@ -12,8 +12,11 @@ tags:
 This is a tutorial on how to expand the types available in Platinum. This includes but is not limited to the addition of the Fairy type.
 This **only works on the US Version of the game**.
 
+**Looking for HGSS?** This guide does not cover HGSS, however, there is an excellent guide by BluRose available [here](https://www.pokecommunity.com/threads/hg-adding-a-new-type-to-heart-gold-using-fairy-as-an-example.439891/).
+
 This guide is split into two versions: A **lite version** that replaces the existing Mystery type (also known as ??? type) with the Fairy type, and an **advanced version** that sets up an environment that allows you to add multiple new types, including Fairy, without replacing any existing type.
-I want to preface this guide by saying that even just replacing existing types is a very complex process, and it is not recommended for beginners. It requires a lot of knowledge about hex editing, spriting and the inner workings of the game. You will need to be comfortable using a hex editor, adding and modifying sprites, working with Nitro Paint as well as using DSPRE. The advanced version requires a basic understanding of armips and ASM code, but you won't need to write any ASM code yourself. If you are not comfortable with these things, I recommend you start with the lite version of this guide.
+I want to preface this guide by saying that even just replacing existing types is a very complex process, and it is not recommended for beginners. It requires a lot of knowledge about [hex editing](https://ds-pokemon-hacking.github.io/docs/universal/guides/hex_editing/), spriting and the inner workings of the game. You will need to be comfortable using a hex editor, adding and modifying sprites, working with Nitro Paint as well as using DSPRE. The advanced version requires a basic understanding of armips and ASM code, but you won't need to write any ASM code yourself. If you are not comfortable with these things, I recommend you start with the lite version of this guide. 
+Remember that you can always start with another part of your hack first and come back to this later, when you feel more comfortable with the required skills.
 
 This guide was only possible thanks to the work of Mikelan98 and BagBoy, who created the original Fairy type implementation for Platinum, which served as a starting point for this guide. I also want to thank everyone who worked on pokeplatinum, I am heavily relying on their work for this guide.
 
@@ -62,7 +65,7 @@ Next you will need to actually move the move effect subscript table to a differe
 00 00 00 00 12 00 00 00 16 00 00 00 19 00 00 00 ...
 ```
 In total this table is a whole 0x244 (= 580) bytes long. Select the entire table and copy it to the clipboard. 
-In HxD, you can do this by pressing `Ctrl + E` which will bring up a block selection menu. Your start offset should be `0x33CE4` and the length should be `0x244`.
+In HxD, you can do this by pressing `Ctrl + E` which will bring up a block selection menu. Your start offset should be `0x33CE4` and the length should be `0x244`. Copy the selected data to the clipboard by pressing `Ctrl + C`. <br />
 Keep your hex editor and this file open, as we will need it again later.
 
 ![Copying the move effect subscript table in HxD](./resources/block_select.png)
@@ -100,11 +103,11 @@ The first byte (Byte A) is the attacking type, the second byte (Byte D) is the d
 - `0x14` (= 20) for super effective
 
 In damage calculations, these multipliers are divided by 10, so 0x5 becomes 0.5, 0xA becomes 1.0 and 0x14 becomes 2.0.
-To determine effectiveness, the game will go trough this table trying to find a match for the attacking type and the defending type. If it finds a match, it will use the multiplier to calculate the damage dealt. If it doesn't find a match, it will **default to 1.0** (normal effectiveness).
+To determine effectiveness, the game will go through this table trying to find a match for the attacking type and the defending type. If it finds a match, it will use the multiplier to calculate the damage dealt. You might notice that most type interactions are absent from this table. This is because the game **defaults to normal effectiveness (1.0)** if no match is found.
 
-At the end there is a set of three spacer bytes (`0xFE 0xFE 0x00`) followed by the ghost type immunities. It's important that you preserve these bytes, as otherwise moves like foresight and odour sleuth will not work properly. After the ghost type immunities, there is a set of three bytes that mark the end of the type chart (`0xFF 0xFF 0x00`).
+At the end there is a set of three spacer bytes (`0xFE 0xFE 0x00`) followed by the ghost type immunities. It's important that you preserve these bytes, as otherwise moves like foresight and odour sleuth will not work properly. After the ghost type immunities, there is a set of three bytes that mark the end of the type chart (`0xFF 0xFF 0x00`). If you are using the python script this is largely handled for you.
 
-To add a new type or change an existing type we can insert new triplets into this table, modify the existing triplets or remove existing triplets. If you want to add a new type, you will need to add a new triplet for each type it is effective against, as well as triplets for each type that resists it or is immune to it. Make sure to add the triplets before the spacer bytes. Also keep in mind that duplicate triplets will be ignored, only the first match will be used.
+To add a new type or change an existing type we can insert new triplets into this table, modify the existing triplets or remove existing triplets. If you want to add a new type, you will need to add a new triplet for each type it is effective against, as well as triplets for each type that resists it or is immune to it. Make sure to add the triplets before the spacer bytes. Also keep in mind that **duplicate triplets will be ignored**, only the first match will be used.
 
 Before we can edit the type chart, we will also need the list of the type's IDs:
 <a id="type-ids"></a>
@@ -145,7 +148,7 @@ For your convenience, here is the modern type chart with the Fairy type replacin
 </details>
 
 #### Using the `type_chart_helper.py` script
-If you want to use the `type_chart_helper.py` script, you will need to have Python installed on your computer. You can download it from [here](https://www.python.org/downloads/). Alternatively, you can install it from the Microsoft Store, which is the easiest way to get it on Windows. At the top of the file you will find the settings for the script. You will need to provide the path to your overlay 16 file, the path may be something like `platinum_DSPRE_contents/unpacked/overlay/overlay_0016.bin`. There is also a `mode` setting which can be set to either `bin-to-csv` or `csv-to-bin`. The first mode will convert the binary type chart to a CSV file, while the second mode will convert a CSV file to a binary type chart and write it to your overlay. The script will create a new file called `type_chart.csv` in the same folder as the script. If you plan on adding new types, you can also add them to the enum at the top of the file. The resources folder contains a template CSV file for the modern type chart with the Fairy type replacing the Mystery type calles `modern_type_chart.csv`. You can use this as a starting point for your own type chart or just copy it as is. The folder also contains a copy of the vanilla type chart called `vanilla_type_chart.csv` which you can use to revert your changes if needed.
+If you want to use the `type_chart_helper.py` script, you will need to have Python installed on your computer. You can download it from [here](https://www.python.org/downloads/). Alternatively, you can install it from the Microsoft Store, which is the easiest way to get it on Windows. At the top of the file you will find the settings for the script. You will need to provide the path to your overlay 16 file, the path may be something like `platinum_DSPRE_contents/unpacked/overlay/overlay_0016.bin`. There is also a `mode` setting which can be set to either `bin-to-csv` or `csv-to-bin`. The first mode will convert the binary type chart to a CSV file, while the second mode will convert a CSV file to a binary type chart and write it to your overlay. The script will create a new file called `type_chart.csv` in the same folder as the script. If you plan on adding new types, you can also add them to the enum at the top of the file. The resources folder contains a template CSV file for the modern type chart with the Fairy type replacing the Mystery type calles `modern_type_chart.csv`. You can use this as a starting point for your own type chart or just copy it as is. The folder also contains a copy of the vanilla type chart called `vanilla_type_chart.csv` which you can use to revert your changes if needed. If you don't want to write to the overlay directly you can also use the `csv-to-local-bin` mode.
 
 
 ### Assigning new types to moves and Pokémon
@@ -251,7 +254,7 @@ Instead of doing some complex mapping of the type IDs to the sequences, we simpl
 We also need to tell the game where to find the yellow rectangle sprite (used in the backround of the Pokédex). To do so navigate to following three offsets:
 - `0xE514` 
 - `0x1066C`
-- `0x1066C`
+- `0x187C8`
 
 At each of these offsets you should see `11 21`. Replace it with `00 21`.
 
