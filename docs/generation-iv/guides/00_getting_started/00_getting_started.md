@@ -189,7 +189,7 @@ The following tools are recommended to use when modifying the game files.
     </tr>
     <tr>
         <td>Script Editing</td>
-        <td>Edit Scripts and Level Scripts:<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> Script Commands Database (Gen4):<ul><li>[SCRCMD](https://docs.google.com/spreadsheets/u/0/d/1rcrCz9Y5HXdD9vVSmkACX19I9Jid4dzFTD0PXaIDg2w/htmlview#gid=1350726349)</li></ul></td>
+        <td>Edit Scripts and Level Scripts:<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul> Script Commands Database (Gen4):<ul><li>[SCRCMD](https://docs.google.com/spreadsheets/d/1WE6aCJeVbIMDfWYPykQEqLyBAZCDK8YlYFBD6hChiVA/edit?usp=sharing)</li></ul></td>
         <td><ul><li>[How to Write a Script](https://www.youtube.com/watch?v=FW0s6vUB9KA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=27)</li><li>[Scripting 101](https://youtu.be/N0IG1p1TUZQ?feature=shared)</li></ul></td>
     </tr>
     <tr>
