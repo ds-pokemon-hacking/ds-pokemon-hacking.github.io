@@ -46,7 +46,7 @@ Before you start: In addition to this guide I have created a  a folder with a co
 This version replaces the existing Mystery type with the Fairy Type. It is a simpler version of the advanced version, but it still requires some knowledge of hex editing and spriting as well as a basic understanding of DSPRE.
 
 ### Tools used:
-- [DSPRE](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor/releases)
+- [DSPRE](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases)
 - [Nitro Paint](https://github.com/Garhoogin/NitroPaint/releases)
 - [HxD](https://mh-nexus.de/en/downloads.php?product=HxD) (or any other hex editor)
 - [Python](https://www.python.org/downloads/) - Or install from the Microsoft Store (optional, for the type chart and palette helper scripts)

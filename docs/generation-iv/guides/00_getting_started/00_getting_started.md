@@ -194,7 +194,7 @@ The following tools are recommended to use when modifying the game files.
     </tr>
     <tr>
         <td>Texts Editing</td>
-        <td>Edit Dialogue and More (Location names, move names...etc.):<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor)</li></ul></td>
+        <td>Edit Dialogue and More (Location names, move names...etc.):<ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/DS-Pokemon-Rom-Editor/DSPRE)</li></ul></td>
         <td><ul><li>[How to Edit Text](https://www.youtube.com/watch?v=qxSx2oQt4kE&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=8)</li></ul></td>
     </tr>
     <tr>
