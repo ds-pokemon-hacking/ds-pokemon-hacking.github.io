@@ -14,6 +14,8 @@
   --ifm-background-color: #f2f2f2;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   font-feature-settings: 'lnum' 1;
+  --filterable-sortable-table-highlighted-background-color: #dce6f0;
+  --filterable-sortable-table-button: #f0f0f0;
 }
 
 [data-theme='dark'] {
@@ -25,6 +27,8 @@
   --ifm-color-primary-lighter: #00cce4;
   --ifm-color-primary-lightest: #02e4ff;
   --ifm-background-color: #000000;
+  --filterable-sortable-table-highlighted-background-color: ##4f5459;
+  --filterable-sortable-table-button: #0000;
 }
 
 code {
@@ -69,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Hover */
-.filterable-sortable-table tbody tr:hover { background-color: #dce6f0; }
+.filterable-sortable-table tbody tr:hover { background-color: var(--filterable-sortable-table-highlighted-background-color); }
 
 .filterable-sortable-table th,
 .filterable-sortable-table td { padding: 8px; }
@@ -100,7 +104,7 @@ div > button {
   font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #ccc;
-  background-color: #f0f0f0;
+  background-color: var(--filterable-sortable-table-button);
   cursor: pointer;
   transition: background-color 0.2s;
 }
