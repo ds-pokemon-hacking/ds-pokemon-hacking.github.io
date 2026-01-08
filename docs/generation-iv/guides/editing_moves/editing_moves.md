@@ -1968,7 +1968,7 @@ In the Generation IV Pokémon games, level-up learnsets usually have a maximum o
 
 This upper limit can be edited with [hex editing](/docs/universal/guides/hex_editing/) based on the research above for **HGSS** (Mikelan98), **Platinum** (BagBoy) & **Diamond/Pearl** (Chritchy & MrHam88), preventing the issues described above in the respective games.  
 
-The below table shows the required offsets for each game version, the standard (or "vanilla") values at these offsets, an example of what they would be changed to to increase the limit from 20 to 30 moves, and a calculation that can be used to find any required custom value. The upper limit on these values is not known.
+The below table shows the required offsets for each game (US) version, the standard (or "vanilla") values at these offsets, an example of what they would be changed to to increase the limit from 20 to 30 moves, and a calculation that can be used to find any required custom value. The upper limit on these values is not known, but it has been sucessfully tested up to 40 on a French Platinum ROM.
 
 <table>
   <tr>
@@ -2042,6 +2042,146 @@ The below table shows the required offsets for each game version, the standard (
   </tr>
 </table>
 
+<details>
+<summary>Version-Specific Offsets</summary>
+<table>
+  <tr>
+    <th>Game Version</th>
+    <th>File</th>
+    <th>US</th>
+    <th>JP</th>
+    <th>FR</th>
+    <th>DE</th>
+    <th>IT</th>
+    <th>ES</th>
+  </tr>
+  <tr>
+    <th rowspan="3">HeartGold/SoulSilver</th>
+    <td rowspan="3">`arm9.bin`</td>
+    <td>`0x712E0`  
+    `0x7153E`  
+    `0x71908`</td>
+    <td>`0x70D74`  
+    `0x70FD2`  
+    `0x7139C`</td>
+    <td>`0x712E0`  
+    `0x7153E`  
+    `0x71908`</td>
+    <td>`0x712E0`  
+    `0x7153E`  
+    `0x71908`</td>
+    <td>`0x712E0`  
+    `0x7153E`  
+    `0x71908`</td>
+    <td>`0x712D8`  
+    `0x71536`  
+    `0x71900`</td>
+  </tr>
+  <tr>
+    <td>`0x917C4`  
+    `0x917CE`</td>
+    <td>`0x90FFC`  
+    `0x91006`</td>
+    <td>`0x917C4`  
+    `0x917CE`</td>
+    <td>`0x917C4`  
+    `0x917CE`</td>
+    <td>`0x917C4`  
+    `0x917CE`</td>
+    <td>`0x917BC`  
+    `0x917C6`</td>
+  </tr>
+  <tr>
+    <td>`0x91858`</td>
+    <td>`0x91090`</td>
+    <td>`0x91858`</td>
+    <td>`0x91858`</td>
+    <td>`0x91858`</td>
+    <td>`0x91850`</td>
+  </tr>
+  <tr>
+    <th rowspan="2">Platinum</th>
+    <td rowspan="2">`arm9.bin`</td>
+    <td>`0x77028`  
+    `0x77286`  
+    `0x77668`  
+    `0x99830`  
+    `0x9983A`</td>
+    <td>`0x76900`  
+    `0x76B5E`  
+    `0x76F40`  
+    `0x98F58`  
+    `0x98F62`</td>
+    <td>`0x770C8`  
+    `0x77326`  
+    `0x77708`  
+    `0x998D0`  
+    `0x998DA`</td>
+    <td>`0x770C8`  
+    `0x77326`  
+    `0x77708`  
+    `0x998D0`  
+    `0x998DA`</td>
+    <td>`0x770C8`  
+    `0x77326`  
+    `0x77708`  
+    `0x998D0`  
+    `0x998DA`</td>
+    <td>`0x770C8`  
+    `0x77326`  
+    `0x77708`  
+    `0x998D0`  
+    `0x998DA`</td>
+  </tr>
+  <tr>
+    <td>`0x998C4`</td>
+    <td>`0x98FEC`</td>
+    <td>`0x99964`</td>
+    <td>`0x99964`</td>
+    <td>`0x99964`</td>
+    <td>`0x99964`</td>
+  </tr>
+  <tr>
+    <th rowspan="2">Diamond/Pearl</th>
+    <td rowspan="2">`arm9.bin`</td>
+    <td>`0x695FC`  
+    `0x69822`  
+    `0x69C04`  
+    `0x88E56`  
+    `0x88E5A`</td>
+    <td>Unknown</td>
+    <td>`0x69658`  
+    `0x6987E`  
+    `0x69C60`  
+    `0x88EB2`  
+    `0x88EB6`</td>
+    <td>`0x69658`  
+    `0x6987E`  
+    `0x69C60`  
+    `0x88EB2`  
+    `0x88EB6`</td>
+    <td>`0x69638`  
+    `0x6985E`  
+    `0x69C40`  
+    `0x88E92`  
+    `0x88E96`</td>
+    <td>`0x69658`  
+    `0x6987E`  
+    `0x69C60`  
+    `0x88EB2`  
+    `0x88EB6`</td>
+  </tr>
+  <tr>
+    <td>`0x88EE4`</td>
+    <td>Unknown</td>
+    <td>`0x88F40`</td>
+    <td>`0x88F40`</td>
+    <td>`0x88F20`</td>
+    <td>`0x88F40`</td>
+  </tr>
+</table>
+</details>
+
 
 ### Technical & Hidden Machines (TMs & HMs)
 
@@ -2054,22 +2194,32 @@ The following sections detail how to change the move that a TM teaches, and ensu
 #### Editing the Move within a TM
 > Source(s): [Mixone (2023)](https://discord.com/channels/446824489045721090/477197363954581542/1176874701226782820) & [Drayano (2021)](https://discord.com/channels/446824489045721090/446865033310240769/897638507508539434)  
 
-In order to change the move that a TM or HM teaches, two to four areas need editing in Generation IV Pokémon games, which can be grouped by the method of editing:
-1. ARM9 Edits (hex edits):
+In order to change the move that a TM or HM teaches, two to four areas need editing in Generation IV Pokémon games, which previously had to be achieved with a mix of hex edits and DSPRE. However, as of DSPRE v1.14.2 all edits to TMs can be completed within the DSPRE user interface. The original hex editing methods are retained in collapsed sections for reference.
+
+1. Definition Edits (DSPRE/Hex editing):
     - The move index number associated to the TM,
     - The TM icon palette being used by the TM item (the colour of the 'disc') - necessary only when the type of the move is changed,
 2. Text Edits (DSPRE):
     - The move description associated to the TM item (distinct from the *move* description), and
     - Any NPC text or other text called by Scripts that reference the move - necessary only when the TM is given to the player with context (e.g. by a Gym Leader after their defeat).
 
+**Part 1: Definition Edits**  
+1. Open the ROM in DSPRE
+2. Navigate to the TM Editor (from the 'Other Editors' menu option) and select the TM number to be edited.
+3. Use the `Move` drop-down selector to choose the new move to be contained in the TM
+4. Either:
+    - Manually select the new palette option if required.
+    - Click the `Auto Palette` button to automatically assign the correct palette.
+5. Repeat steps 3 and 4 for any other TM changes required.
+6. Save the changes using the Save button.
+7. Save the ROM to `.nds` file using DSPRE.
+
+> The `Auto Palette All` button can be used to correctly set the palettes of all TMs (based on their current move setting in the editor).
+
+![](resources/dspre_tm_editor.png)
+
 <details>
-<summary>Version-Specific Offsets</summary>
-| Version | US | JP | FR | DE | IT | ES |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| Diamond/Pearl Version | `0xF84EC` | `0xFA458` | `0xF8530` | `0xF8500` | `0xF84A4` | `0xF853C` |
-| Platinum Version | `0xF0BFC` | `0xF028C` | `0xF0C84` | `0xF0C54` | `0xF0C18` | `0xF0C90` |
-| HeartGold/SoulSilver Version | `0x1000CC` | `0xFF84C` | `0x1000B0` | `0x100080` | `0x100044` | `0x1000B4` |
-</details>
+<summary>Part 1: Legacy hex edit methods for move index and TM icon palettes</summary>
 
 **Part 1: Hex Edits**  
 1. Uncompress ARM9 (if not already uncompressed)
@@ -2083,6 +2233,16 @@ In order to change the move that a TM or HM teaches, two to four areas need edit
       - Identify the TM you wish to edit, simply by counting through to reach the right offset.
       - Replace the two bytes representing the vanilla move index, with the two bytes representing the move index you wish to replace it with.
         - A simple method to identify the move index is to check the Bulbapedia page for [moves by index](https://bulbapedia.bulbagarden.net/wiki/List_of_moves).
+
+<details>
+<summary>Version-Specific Offsets</summary>
+| Version | US | JP | FR | DE | IT | ES |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Diamond/Pearl Version | `0xF84EC` | `0xFA458` | `0xF8530` | `0xF8500` | `0xF84A4` | `0xF853C` |
+| Platinum Version | `0xF0BFC` | `0xF028C` | `0xF0C84` | `0xF0C54` | `0xF0C18` | `0xF0C90` |
+| HeartGold/SoulSilver Version | `0x1000CC` | `0xFF84C` | `0x1000B0` | `0x100080` | `0x100044` | `0x1000B4` |
+</details>
+
 4. **Edit the TM icon palette used**
     - Open ARM9 in a [hex editor](/docs/universal/guides/hex_editing/)
     - Go to offset `0x100BD6` (HGSS), `0xF1706` (Platinum) or `0xF8FF6` (Diamond/Pearl), which is the offset for TM01.
@@ -2117,8 +2277,10 @@ In order to change the move that a TM or HM teaches, two to four areas need edit
 | Bug | `62 02` |
 </details>
 
+</details>
+
 **Part 2: Text Edits (DSPRE):**
-1. Open the ROM in DSPRE ***from the extracted folder*** (to preserve the above ARM9 changes, opening the `.nds` file will re-extract the data from the ROM, and wipe the previous ARM9 edits unless they have previously been saved back to the `.nds` file).
+1. Open the ROM in DSPRE
 2. **Edit the TM item description**
     - Navigate to the Text Editor and select Text Archive `749` (HGSS), `646` (Platinum) or `587` (Diamond/Pearl); which contains the descriptions for all *moves*.
     - Identify the move description you wish to change (the Message number relates directly to the move index) the TM *to* and copy the Message
