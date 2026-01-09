@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunkkodsh_wiki_new=globalThis.webpackChunkkodsh_wiki_new||[]).push([[2325],{2325:(e,k,i)=>{i.d(k,{createPacketServices:()=>s.$});var s=i(73858);i(87960)}}]);

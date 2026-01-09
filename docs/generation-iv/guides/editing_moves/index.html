@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Editing Moves | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Editing Moves | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Author(s): MrHam88."><meta data-rh="true" property="og:description" content="Author(s): MrHam88."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Guides","item":"https://ds-pokemon-hacking.github.io/docs/category/guides"},{"@type":"ListItem","position":2,"name":"Editing Moves","item":"https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/"}]}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.1f588a76.css">
-<script src="/assets/js/runtime~main.39fb0ad4.js" defer="defer"></script>
-<script src="/assets/js/main.5723afd1.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.248d12d2.js" defer="defer"></script>
+<script src="/assets/js/main.4ecf0d03.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -685,7 +685,7 @@ The move script for a move will define whether one or both are needed, and the f
 <li class="">Incomplete relearner lists to be populated</li>
 </ul>
 <p>This upper limit can be edited with <a class="" href="/docs/universal/guides/hex_editing/">hex editing</a> based on the research above for <strong>HGSS</strong> (Mikelan98), <strong>Platinum</strong> (BagBoy) &amp; <strong>Diamond/Pearl</strong> (Chritchy &amp; MrHam88), preventing the issues described above in the respective games.</p>
-<p>The below table shows the required offsets for each game version, the standard (or &quot;vanilla&quot;) values at these offsets, an example of what they would be changed to to increase the limit from 20 to 30 moves, and a calculation that can be used to find any required custom value. The upper limit on these values is not known.</p>
+<p>The below table shows the required offsets for each game (US) version, the standard (or &quot;vanilla&quot;) values at these offsets, an example of what they would be changed to to increase the limit from 20 to 30 moves, and a calculation that can be used to find any required custom value. The upper limit on these values is not known, but it has been sucessfully tested up to 40 on a French Platinum ROM.</p>
 <table><tr><th>Game Version</th><th>File</th><th>Offset(s)</th><th>Standard Value<br>
 <!-- -->(<em>move limit</em> = 20)</th><th>Example Value<br>
 <!-- -->(<em>move limit</em> = 30)</th><th>Calculation</th></tr><tr><th rowspan="3">HeartGold/SoulSilver</th><td rowspan="3"><code>arm9.bin</code></td><td><code>0x712E0</code><br>
@@ -700,6 +700,69 @@ The move script for a move will define whether one or both are needed, and the f
 <code>0x69C04</code><br>
 <code>0x88E56</code><br>
 <code>0x88E5A</code></td><td><code>2C</code> (44 in decimal)</td><td><code>40</code> (64 in decimal)</td><td>(<em>move limit</em> <strong>+2</strong>) <strong>×2</strong></td></tr><tr><td><code>0x88EE4</code></td><td><code>16</code> (22 in decimal)</td><td><code>20</code> (32 in decimal)</td><td><em>move limit</em> <strong>+2</strong></td></tr></table>
+<details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Version-Specific Offsets</summary><div><div class="collapsibleContent_i85q"><table><tr><th>Game Version</th><th>File</th><th>US</th><th>JP</th><th>FR</th><th>DE</th><th>IT</th><th>ES</th></tr><tr><th rowspan="3">HeartGold/SoulSilver</th><td rowspan="3"><code>arm9.bin</code></td><td><code>0x712E0</code><br>
+<code>0x7153E</code><br>
+<code>0x71908</code></td><td><code>0x70D74</code><br>
+<code>0x70FD2</code><br>
+<code>0x7139C</code></td><td><code>0x712E0</code><br>
+<code>0x7153E</code><br>
+<code>0x71908</code></td><td><code>0x712E0</code><br>
+<code>0x7153E</code><br>
+<code>0x71908</code></td><td><code>0x712E0</code><br>
+<code>0x7153E</code><br>
+<code>0x71908</code></td><td><code>0x712D8</code><br>
+<code>0x71536</code><br>
+<code>0x71900</code></td></tr><tr><td><code>0x917C4</code><br>
+<code>0x917CE</code></td><td><code>0x90FFC</code><br>
+<code>0x91006</code></td><td><code>0x917C4</code><br>
+<code>0x917CE</code></td><td><code>0x917C4</code><br>
+<code>0x917CE</code></td><td><code>0x917C4</code><br>
+<code>0x917CE</code></td><td><code>0x917BC</code><br>
+<code>0x917C6</code></td></tr><tr><td><code>0x91858</code></td><td><code>0x91090</code></td><td><code>0x91858</code></td><td><code>0x91858</code></td><td><code>0x91858</code></td><td><code>0x91850</code></td></tr><tr><th rowspan="2">Platinum</th><td rowspan="2"><code>arm9.bin</code></td><td><code>0x77028</code><br>
+<code>0x77286</code><br>
+<code>0x77668</code><br>
+<code>0x99830</code><br>
+<code>0x9983A</code></td><td><code>0x76900</code><br>
+<code>0x76B5E</code><br>
+<code>0x76F40</code><br>
+<code>0x98F58</code><br>
+<code>0x98F62</code></td><td><code>0x770C8</code><br>
+<code>0x77326</code><br>
+<code>0x77708</code><br>
+<code>0x998D0</code><br>
+<code>0x998DA</code></td><td><code>0x770C8</code><br>
+<code>0x77326</code><br>
+<code>0x77708</code><br>
+<code>0x998D0</code><br>
+<code>0x998DA</code></td><td><code>0x770C8</code><br>
+<code>0x77326</code><br>
+<code>0x77708</code><br>
+<code>0x998D0</code><br>
+<code>0x998DA</code></td><td><code>0x770C8</code><br>
+<code>0x77326</code><br>
+<code>0x77708</code><br>
+<code>0x998D0</code><br>
+<code>0x998DA</code></td></tr><tr><td><code>0x998C4</code></td><td><code>0x98FEC</code></td><td><code>0x99964</code></td><td><code>0x99964</code></td><td><code>0x99964</code></td><td><code>0x99964</code></td></tr><tr><th rowspan="2">Diamond/Pearl</th><td rowspan="2"><code>arm9.bin</code></td><td><code>0x695FC</code><br>
+<code>0x69822</code><br>
+<code>0x69C04</code><br>
+<code>0x88E56</code><br>
+<code>0x88E5A</code></td><td>Unknown</td><td><code>0x69658</code><br>
+<code>0x6987E</code><br>
+<code>0x69C60</code><br>
+<code>0x88EB2</code><br>
+<code>0x88EB6</code></td><td><code>0x69658</code><br>
+<code>0x6987E</code><br>
+<code>0x69C60</code><br>
+<code>0x88EB2</code><br>
+<code>0x88EB6</code></td><td><code>0x69638</code><br>
+<code>0x6985E</code><br>
+<code>0x69C40</code><br>
+<code>0x88E92</code><br>
+<code>0x88E96</code></td><td><code>0x69658</code><br>
+<code>0x6987E</code><br>
+<code>0x69C60</code><br>
+<code>0x88EB2</code><br>
+<code>0x88EB6</code></td></tr><tr><td><code>0x88EE4</code></td><td>Unknown</td><td><code>0x88F40</code></td><td><code>0x88F40</code></td><td><code>0x88F20</code></td><td><code>0x88F40</code></td></tr></table></div></div></details>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="technical--hidden-machines-tms--hms">Technical &amp; Hidden Machines (TMs &amp; HMs)<a href="#technical--hidden-machines-tms--hms" class="hash-link" aria-label="Direct link to Technical &amp; Hidden Machines (TMs &amp; HMs)" title="Direct link to Technical &amp; Hidden Machines (TMs &amp; HMs)" translate="no">​</a></h3>
 <p><img decoding="async" loading="lazy" src="/assets/images/tm_edits-f29cd3704df88ae8db724729815bb039.png" width="1346" height="623" class="img_ev3q"></p>
 <p>The following sections detail how to change the move that a TM teaches, and ensure that the learnsets of Pokémon are updated accordingly.</p>
@@ -710,9 +773,9 @@ The move script for a move will define whether one or both are needed, and the f
 <blockquote>
 <p>Source(s): <a href="https://discord.com/channels/446824489045721090/477197363954581542/1176874701226782820" target="_blank" rel="noopener noreferrer" class="">Mixone (2023)</a> &amp; <a href="https://discord.com/channels/446824489045721090/446865033310240769/897638507508539434" target="_blank" rel="noopener noreferrer" class="">Drayano (2021)</a></p>
 </blockquote>
-<p>In order to change the move that a TM or HM teaches, two to four areas need editing in Generation IV Pokémon games, which can be grouped by the method of editing:</p>
+<p>In order to change the move that a TM or HM teaches, two to four areas need editing in Generation IV Pokémon games, which previously had to be achieved with a mix of hex edits and DSPRE. However, as of DSPRE v1.14.2 all edits to TMs can be completed within the DSPRE user interface. The original hex editing methods are retained in collapsed sections for reference.</p>
 <ol>
-<li class="">ARM9 Edits (hex edits):<!-- -->
+<li class="">Definition Edits (DSPRE/Hex editing):<!-- -->
 <ul>
 <li class="">The move index number associated to the TM,</li>
 <li class="">The TM icon palette being used by the TM item (the colour of the &#x27;disc&#x27;) - necessary only when the type of the move is changed,</li>
@@ -725,17 +788,29 @@ The move script for a move will define whether one or both are needed, and the f
 </ul>
 </li>
 </ol>
-<details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Version-Specific Offsets</summary><div><div class="collapsibleContent_i85q"><table><thead><tr><th>Version</th><th>US</th><th>JP</th><th>FR</th><th>DE</th><th>IT</th><th>ES</th></tr></thead><tbody><tr><td>Diamond/Pearl Version</td><td><code>0xF84EC</code></td><td><code>0xFA458</code></td><td><code>0xF8530</code></td><td><code>0xF8500</code></td><td><code>0xF84A4</code></td><td><code>0xF853C</code></td></tr><tr><td>Platinum Version</td><td><code>0xF0BFC</code></td><td><code>0xF028C</code></td><td><code>0xF0C84</code></td><td><code>0xF0C54</code></td><td><code>0xF0C18</code></td><td><code>0xF0C90</code></td></tr><tr><td>HeartGold/SoulSilver Version</td><td><code>0x1000CC</code></td><td><code>0xFF84C</code></td><td><code>0x1000B0</code></td><td><code>0x100080</code></td><td><code>0x100044</code></td><td><code>0x1000B4</code></td></tr></tbody></table></div></div></details>
-<p><strong>Part 1: Hex Edits</strong></p>
+<p><strong>Part 1: Definition Edits</strong></p>
 <ol>
-<li class="">
-<p>Uncompress ARM9 (if not already uncompressed)</p>
+<li class="">Open the ROM in DSPRE</li>
+<li class="">Navigate to the TM Editor (from the &#x27;Other Editors&#x27; menu option) and select the TM number to be edited.</li>
+<li class="">Use the <code>Move</code> drop-down selector to choose the new move to be contained in the TM</li>
+<li class="">Either:<!-- -->
+<ul>
+<li class="">Manually select the new palette option if required.</li>
+<li class="">Click the <code>Auto Palette</code> button to automatically assign the correct palette.</li>
+</ul>
 </li>
-<li class="">
-<p>Open ARM9 in a <a class="" href="/docs/universal/guides/hex_editing/">hex editor</a></p>
-</li>
-<li class="">
-<p><strong>Edit the move index number associated to the TM:</strong></p>
+<li class="">Repeat steps 3 and 4 for any other TM changes required.</li>
+<li class="">Save the changes using the Save button.</li>
+<li class="">Save the ROM to <code>.nds</code> file using DSPRE.</li>
+</ol>
+<blockquote>
+<p>The <code>Auto Palette All</code> button can be used to correctly set the palettes of all TMs (based on their current move setting in the editor).</p>
+</blockquote>
+<p><img decoding="async" loading="lazy" src="/assets/images/dspre_tm_editor-eabe550a2308f1e86c69f0e0507d0225.png" width="379" height="488" class="img_ev3q"></p>
+<details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Part 1: Legacy hex edit methods for move index and TM icon palettes</summary><div><div class="collapsibleContent_i85q"><p><strong>Part 1: Hex Edits</strong></p><ol>
+<li class="">Uncompress ARM9 (if not already uncompressed)</li>
+<li class="">Open ARM9 in a <a class="" href="/docs/universal/guides/hex_editing/">hex editor</a></li>
+<li class=""><strong>Edit the move index number associated to the TM:</strong>
 <ul>
 <li class="">Go to offset <code>0x1000CC</code> (HGSS), <code>0xF0BFC</code> (Platinum) or <code>0xF84EC</code> (Diamond/Pearl), which is the offset for TM01.<!-- -->
 <ul>
@@ -753,6 +828,7 @@ The move script for a move will define whether one or both are needed, and the f
 </li>
 </ul>
 </li>
+</ol><details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Version-Specific Offsets</summary><div><div class="collapsibleContent_i85q"><table><thead><tr><th>Version</th><th>US</th><th>JP</th><th>FR</th><th>DE</th><th>IT</th><th>ES</th></tr></thead><tbody><tr><td>Diamond/Pearl Version</td><td><code>0xF84EC</code></td><td><code>0xFA458</code></td><td><code>0xF8530</code></td><td><code>0xF8500</code></td><td><code>0xF84A4</code></td><td><code>0xF853C</code></td></tr><tr><td>Platinum Version</td><td><code>0xF0BFC</code></td><td><code>0xF028C</code></td><td><code>0xF0C84</code></td><td><code>0xF0C54</code></td><td><code>0xF0C18</code></td><td><code>0xF0C90</code></td></tr><tr><td>HeartGold/SoulSilver Version</td><td><code>0x1000CC</code></td><td><code>0xFF84C</code></td><td><code>0x1000B0</code></td><td><code>0x100080</code></td><td><code>0x100044</code></td><td><code>0x1000B4</code></td></tr></tbody></table></div></div></details><ol start="4">
 <li class="">
 <p><strong>Edit the TM icon palette used</strong></p>
 <ul>
@@ -771,11 +847,10 @@ The move script for a move will define whether one or both are needed, and the f
 <li class="">
 <p>Save ARM9</p>
 </li>
-</ol>
-<details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>TM Item: Type Palettes</summary><div><div class="collapsibleContent_i85q"><table><thead><tr><th>Type</th><th>Palette</th></tr></thead><tbody><tr><td>Fighting</td><td><code>8E 01</code></td></tr><tr><td>Dragon</td><td><code>8F 01</code></td></tr><tr><td>Water</td><td><code>90 01</code></td></tr><tr><td>Psychic</td><td><code>91 01</code></td></tr><tr><td>Normal</td><td><code>92 01</code></td></tr><tr><td>Poison</td><td><code>93 01</code></td></tr><tr><td>Ice</td><td><code>94 01</code></td></tr><tr><td>Grass</td><td><code>95 01</code></td></tr><tr><td>Fire</td><td><code>96 01</code></td></tr><tr><td>Dark</td><td><code>97 01</code></td></tr><tr><td>Steel</td><td><code>98 01</code></td></tr><tr><td>Electric</td><td><code>99 01</code></td></tr><tr><td>Ground</td><td><code>9A 01</code></td></tr><tr><td>Ghost</td><td><code>9B 01</code></td></tr><tr><td>Rock</td><td><code>9C 01</code></td></tr><tr><td>Flying</td><td><code>9D 01</code></td></tr><tr><td>Bug</td><td><code>62 02</code></td></tr></tbody></table></div></div></details>
+</ol><details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>TM Item: Type Palettes</summary><div><div class="collapsibleContent_i85q"><table><thead><tr><th>Type</th><th>Palette</th></tr></thead><tbody><tr><td>Fighting</td><td><code>8E 01</code></td></tr><tr><td>Dragon</td><td><code>8F 01</code></td></tr><tr><td>Water</td><td><code>90 01</code></td></tr><tr><td>Psychic</td><td><code>91 01</code></td></tr><tr><td>Normal</td><td><code>92 01</code></td></tr><tr><td>Poison</td><td><code>93 01</code></td></tr><tr><td>Ice</td><td><code>94 01</code></td></tr><tr><td>Grass</td><td><code>95 01</code></td></tr><tr><td>Fire</td><td><code>96 01</code></td></tr><tr><td>Dark</td><td><code>97 01</code></td></tr><tr><td>Steel</td><td><code>98 01</code></td></tr><tr><td>Electric</td><td><code>99 01</code></td></tr><tr><td>Ground</td><td><code>9A 01</code></td></tr><tr><td>Ghost</td><td><code>9B 01</code></td></tr><tr><td>Rock</td><td><code>9C 01</code></td></tr><tr><td>Flying</td><td><code>9D 01</code></td></tr><tr><td>Bug</td><td><code>62 02</code></td></tr></tbody></table></div></div></details></div></div></details>
 <p><strong>Part 2: Text Edits (DSPRE):</strong></p>
 <ol>
-<li class="">Open the ROM in DSPRE <em><strong>from the extracted folder</strong></em> (to preserve the above ARM9 changes, opening the <code>.nds</code> file will re-extract the data from the ROM, and wipe the previous ARM9 edits unless they have previously been saved back to the <code>.nds</code> file).</li>
+<li class="">Open the ROM in DSPRE</li>
 <li class=""><strong>Edit the TM item description</strong>
 <ul>
 <li class="">Navigate to the Text Editor and select Text Archive <code>749</code> (HGSS), <code>646</code> (Platinum) or <code>587</code> (Diamond/Pearl); which contains the descriptions for all <em>moves</em>.</li>
@@ -1497,6 +1572,6 @@ Meaning this is move ID <code>291</code> (Dive), costs 40 Battle Points, and is 
 <li class="">Use the Pokémon editor in DSPRE to enable TM51 for all of these Pokémon.</li>
 </ul>
 </li>
-</ul></div></div></details></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/editing_moves.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_VsjB"></div></div></footer></article><nav class="pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/generation-iv/guides/getting_started/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Getting Started</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/generation-iv/guides/hgss-a3i5_a5i3_materials_and_darkness/"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Translucent Textures with Darkness Weather</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#move--associated-data-structure" class="table-of-contents__link toc-highlight">Move (&amp; Associated) Data Structure</a></li><li><a href="#design-thoughts--external-resources" class="table-of-contents__link toc-highlight">Design Thoughts &amp; External Resources</a><ul><li><a href="#trainer-move-selection-ai" class="table-of-contents__link toc-highlight">Trainer Move Selection AI</a></li><li><a href="#move-variations" class="table-of-contents__link toc-highlight">Move Variations</a></li><li><a href="#vanilla-move-compatibility" class="table-of-contents__link toc-highlight">Vanilla Move Compatibility</a></li><li><a href="#move-animation-options" class="table-of-contents__link toc-highlight">Move Animation Options</a></li></ul></li><li><a href="#basic-move-data-dspre" class="table-of-contents__link toc-highlight">Basic Move Data (DSPRE)</a><ul><li><a href="#move-name-description--battle-texts" class="table-of-contents__link toc-highlight">Move Name, Description &amp; Battle Texts</a></li><li><a href="#type-category-power-accuracy-pp" class="table-of-contents__link toc-highlight">Type, Category, Power, Accuracy, PP</a></li><li><a href="#range" class="table-of-contents__link toc-highlight">Range</a></li><li><a href="#other-flags" class="table-of-contents__link toc-highlight">Other Flags</a></li></ul></li><li><a href="#move-effect-scripts" class="table-of-contents__link toc-highlight">Move Effect Scripts</a><ul><li><a href="#broken-move-effect-scripts" class="table-of-contents__link toc-highlight">&quot;Broken&quot; Move Effect Scripts</a></li><li><a href="#unused-move-effect-scripts" class="table-of-contents__link toc-highlight">Unused Move Effect Scripts</a></li><li><a href="#backporting-stat-changing-moves" class="table-of-contents__link toc-highlight">Backporting Stat-Changing Moves</a></li></ul></li><li><a href="#move-animations" class="table-of-contents__link toc-highlight">Move Animations</a><ul><li><a href="#running-wazaeffecteditor" class="table-of-contents__link toc-highlight">Running WazaEffectEditor</a></li><li><a href="#review--interpret-vanilla-animations" class="table-of-contents__link toc-highlight">Review &amp; Interpret Vanilla Animations</a></li><li><a href="#replace-one-animation-for-another" class="table-of-contents__link toc-highlight">Replace one Animation for another</a></li><li><a href="#edit-animation-elements" class="table-of-contents__link toc-highlight">Edit Animation Elements</a></li></ul></li><li><a href="#move-categories-battle-engine--ai" class="table-of-contents__link toc-highlight">Move Categories (Battle Engine &amp; AI)</a><ul><li><a href="#sound-based-moves" class="table-of-contents__link toc-highlight">Sound-based Moves</a></li><li><a href="#punching-moves" class="table-of-contents__link toc-highlight">Punching Moves</a></li><li><a href="#trapping-binding-moves" class="table-of-contents__link toc-highlight">Trapping (Binding) Moves</a></li></ul></li><li><a href="#move-compatibility-distribution" class="table-of-contents__link toc-highlight">Move Compatibility (Distribution)</a><ul><li><a href="#level-up-learnset" class="table-of-contents__link toc-highlight">Level-Up Learnset</a></li><li><a href="#technical--hidden-machines-tms--hms" class="table-of-contents__link toc-highlight">Technical &amp; Hidden Machines (TMs &amp; HMs)</a></li><li><a href="#move-tutors" class="table-of-contents__link toc-highlight">Move Tutors</a></li><li><a href="#egg-moves" class="table-of-contents__link toc-highlight">Egg Moves</a></li></ul></li><li><a href="#example-case-studies" class="table-of-contents__link toc-highlight">Example Case Studies</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 DS Pokémon Hacking. Built with Docusaurus.</div></div></div></footer></div>
+</ul></div></div></details></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/ds-pokemon-hacking/ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/editing_moves.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_VsjB"></div></div></footer></article><nav class="pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/generation-iv/guides/getting_started/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Getting Started</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/generation-iv/guides/hgss-a3i5_a5i3_materials_and_darkness/"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Translucent Textures with Darkness Weather</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#move--associated-data-structure" class="table-of-contents__link toc-highlight">Move (&amp; Associated) Data Structure</a></li><li><a href="#design-thoughts--external-resources" class="table-of-contents__link toc-highlight">Design Thoughts &amp; External Resources</a><ul><li><a href="#trainer-move-selection-ai" class="table-of-contents__link toc-highlight">Trainer Move Selection AI</a></li><li><a href="#move-variations" class="table-of-contents__link toc-highlight">Move Variations</a></li><li><a href="#vanilla-move-compatibility" class="table-of-contents__link toc-highlight">Vanilla Move Compatibility</a></li><li><a href="#move-animation-options" class="table-of-contents__link toc-highlight">Move Animation Options</a></li></ul></li><li><a href="#basic-move-data-dspre" class="table-of-contents__link toc-highlight">Basic Move Data (DSPRE)</a><ul><li><a href="#move-name-description--battle-texts" class="table-of-contents__link toc-highlight">Move Name, Description &amp; Battle Texts</a></li><li><a href="#type-category-power-accuracy-pp" class="table-of-contents__link toc-highlight">Type, Category, Power, Accuracy, PP</a></li><li><a href="#range" class="table-of-contents__link toc-highlight">Range</a></li><li><a href="#other-flags" class="table-of-contents__link toc-highlight">Other Flags</a></li></ul></li><li><a href="#move-effect-scripts" class="table-of-contents__link toc-highlight">Move Effect Scripts</a><ul><li><a href="#broken-move-effect-scripts" class="table-of-contents__link toc-highlight">&quot;Broken&quot; Move Effect Scripts</a></li><li><a href="#unused-move-effect-scripts" class="table-of-contents__link toc-highlight">Unused Move Effect Scripts</a></li><li><a href="#backporting-stat-changing-moves" class="table-of-contents__link toc-highlight">Backporting Stat-Changing Moves</a></li></ul></li><li><a href="#move-animations" class="table-of-contents__link toc-highlight">Move Animations</a><ul><li><a href="#running-wazaeffecteditor" class="table-of-contents__link toc-highlight">Running WazaEffectEditor</a></li><li><a href="#review--interpret-vanilla-animations" class="table-of-contents__link toc-highlight">Review &amp; Interpret Vanilla Animations</a></li><li><a href="#replace-one-animation-for-another" class="table-of-contents__link toc-highlight">Replace one Animation for another</a></li><li><a href="#edit-animation-elements" class="table-of-contents__link toc-highlight">Edit Animation Elements</a></li></ul></li><li><a href="#move-categories-battle-engine--ai" class="table-of-contents__link toc-highlight">Move Categories (Battle Engine &amp; AI)</a><ul><li><a href="#sound-based-moves" class="table-of-contents__link toc-highlight">Sound-based Moves</a></li><li><a href="#punching-moves" class="table-of-contents__link toc-highlight">Punching Moves</a></li><li><a href="#trapping-binding-moves" class="table-of-contents__link toc-highlight">Trapping (Binding) Moves</a></li></ul></li><li><a href="#move-compatibility-distribution" class="table-of-contents__link toc-highlight">Move Compatibility (Distribution)</a><ul><li><a href="#level-up-learnset" class="table-of-contents__link toc-highlight">Level-Up Learnset</a></li><li><a href="#technical--hidden-machines-tms--hms" class="table-of-contents__link toc-highlight">Technical &amp; Hidden Machines (TMs &amp; HMs)</a></li><li><a href="#move-tutors" class="table-of-contents__link toc-highlight">Move Tutors</a></li><li><a href="#egg-moves" class="table-of-contents__link toc-highlight">Egg Moves</a></li></ul></li><li><a href="#example-case-studies" class="table-of-contents__link toc-highlight">Example Case Studies</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 DS Pokémon Hacking. Built with Docusaurus.</div></div></div></footer></div>
 </body>
 </html>
