@@ -1968,13 +1968,17 @@ In the Generation IV Pokémon games, level-up learnsets usually have a maximum o
 
 This upper limit can be edited with [hex editing](/docs/universal/guides/hex_editing/) based on the research above for **HGSS** (Mikelan98), **Platinum** (BagBoy) & **Diamond/Pearl** (Chritchy & MrHam88), preventing the issues described above in the respective games.  
 
-The below table shows the required offsets for each game (US) version, the standard (or "vanilla") values at these offsets, an example of what they would be changed to to increase the limit from 20 to 30 moves, and a calculation that can be used to find any required custom value. The upper limit on these values is not known, but it has been sucessfully tested up to 40 on a French Platinum ROM.
+The below table shows the required offsets for each game (US) version, the standard (or "vanilla") values at these offsets, an example of what they would be changed to to increase the limit from `20` to `30` moves, and a calculation that can be used to find any required custom value.  
+- The upper limit on these values is not known, but it has been sucessfully tested up to `40` on a French Platinum ROM.  
+- When making the hex edits, if the original offsets don't match the values in this table, validate that the ROM is based on a [known good base ROM](/docs/generation-iv/guides/getting_started/#known-good-roms).
+- The offsets for other regions can be found in the collapsible table below.
 
 <table>
   <tr>
     <th>Game Version</th>
     <th>File</th>
-    <th>Offset(s)</th>
+    <th>Offset(s)  
+    *(US Version)*</th>
     <th>Standard Value  
     (*move limit* = 20)</th>
     <th>Example Value  
