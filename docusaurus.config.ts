@@ -40,6 +40,23 @@ const config: Config = {
       crossorigin: 'anonymous',
     },
   ],
+  plugins: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      {
+        // Index the documentation and pages
+        indexDocs: true,
+        indexPages: true,
+        indexBlog: false,
+        // Set the maximum number of search results
+        searchResultLimits: 10,
+        // hashed file names help with long-term caching
+        hashed: true,
+        // language to index
+        language: 'en',
+      },
+    ],
+  ],
   presets: [
     [
       'classic',
