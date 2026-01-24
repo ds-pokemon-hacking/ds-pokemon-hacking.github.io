@@ -125,7 +125,7 @@ Open up your `game_DSPRE_contents` folder, find the `arm9.bin` file and open it 
 Change `AC 00 00 00` to `17 01 00 00` to point to the new `0279` file containing the Fairy icon we added to the `battle_obj.narc`.
 
 **Changing the palette used by the icon** <br/>
-While still editing the `arm9.bin` in the hexeditor, navigate to offset `0xF8446`. You should see the byte `02`. Change it to `01`.
+While still editing the `arm9.bin` in the hexeditor, navigate to offset `0xF8445`. You should see the byte `02`. Change it to `01`.
 
 <details>
   <summary>For reference, here are the following bytes</summary>
@@ -192,5 +192,6 @@ Save your project with DSPRE and check the Pokédex entry for the Pokémon you c
 ---
 
 Congratulations! At this point you should have a fully functional Fairy Type in your game!
+
 
 Thank you to Yako, the authors of previous Fairy Type implementation guides, researchers of Arm9 expansion, the developers of DSPRE, and those working on Pokémon decomps for making this possible.
