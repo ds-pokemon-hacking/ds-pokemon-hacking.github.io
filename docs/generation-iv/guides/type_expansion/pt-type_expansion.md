@@ -1,7 +1,8 @@
 ---
-title: Type Expansion / Fairy Type
+title: Type Expansion / Fairy Type (Platinum)
 tags:
   - Guide (Platinum)
+sidebar_position: 1
 ---
 
 # Type Expansion / Fairy Type<sup>*(Platinum)*</sup>
@@ -14,7 +15,7 @@ This **only works on the US Version of the game**.
 
 **Looking for HGSS?** This guide does not cover HGSS, however, there is an excellent guide by BluRose available [here](https://www.pokecommunity.com/threads/hg-adding-a-new-type-to-heart-gold-using-fairy-as-an-example.439891/).
 
-**Looking for Diamond/Pearl?** Check [**here**](/docs/generation-iv/guides/pt-type_expansion/dp-fairy_type.md).
+**Looking for Diamond/Pearl?** Check [here](dp-type_expansion.md).
 
 This guide is split into two versions: A **lite version** that replaces the existing Mystery Type (also known as ??? Type) with the Fairy Type, and an **advanced version** that sets up an environment that allows you to add multiple new types, including Fairy, without replacing any existing type.
 I want to preface this guide by saying that even just replacing existing types is a very complex process, and it is not recommended for beginners. It requires a lot of knowledge about [hex editing](https://ds-pokemon-hacking.github.io/docs/universal/guides/hex_editing/), spriting and the inner workings of the game. You will need to be comfortable using a hex editor, adding and modifying sprites, working with Nitro Paint as well as using DSPRE. The advanced version requires a basic understanding of armips and ASM code, but you won't need to write any ASM code yourself. If you are not comfortable with these things, I recommend you start with the lite version of this guide. 

@@ -1,22 +1,23 @@
 ---
-title: Implementing Fairy Type (Diamond/Pearl)
+title: Fairy Type (Diamond/Pearl)
 tags:
   - Guide (Diamond)
   - Guide (Pearl)
+sidebar_position: 2
 ---
 
-# Implementing Fairy Type (Diamond/Pearl)
+# Fairy Type <br/> <sup>*(Diamond/Pearl)*</sup>
 > Author: Lmaokai <br/>
-> Credits: Yako ([Platinum Guide](/docs/generation-iv/guides/pt-type_expansion/)) for which this guide is based one, and previous credits from that guide
+> Credits: Yako ([Platinum Guide](pt-type_expansion.md)) for which this guide is based one, and previous credits from that guide
 
-This is a guide on how to add the Fairy Type (replacing the Mystery Type) in Diamond and Pearl, based on the [Lite Version](/docs/generation-iv/guides/pt-type_expansion/#lite-version) of Yako's Platinum Guide. I recommend you read through Yako's guide for more context regarding the edits, as this guide is more of a bare-bones version to inform of the equivalent Diamond/Pearl files and offsets.
+This is a guide on how to add the Fairy Type (replacing the Mystery Type) in Diamond and Pearl, based on the [Lite Version](pt-type_expansion.md#lite-version) of Yako's Platinum Guide. I recommend you read through Yako's guide for more context regarding the edits, as this guide is more of a bare-bones version to inform of the equivalent Diamond/Pearl files and offsets.
 
 :::warning
 This guide is for the **US version** of Diamond/Pearl.
 
-Implementing the Fairy type requires Arm9 expansion, which is highly experimental for Diamond/Pearl and will not receive as much (if any) support as Platinum.
+Implementing the Fairy Type requires Arm9 expansion, which is highly experimental for Diamond/Pearl and will not receive as much (if any) support as Platinum.
 
-**Please make a backup of your ROM before following this guide.**
+**Please make a backup of your project before following this guide.**
 :::
 
 
@@ -72,15 +73,15 @@ Save your project with DSPRE. Get in a battle and test as any moves as possible 
 
 ## Part 2 - Editing the type chart
 **The Gen IV type chart** <br/>
-Now we have made space for a new type chart to add the Fairy type interactions. Return to the `overlay_0011.bin` file opened in the hex editor and navigate to offset `0x30DB8`. You should see the following bytes:
+Now we have made space for a new type chart to add the Fairy Type interactions. Return to the `overlay_0011.bin` file opened in the hex editor and navigate to offset `0x30DB8`. You should see the following bytes:
 ```
 00 05 05 00 08 05 0A 0A ...
 ```
 
 **Modern type chart** <br/>
-This guide will be using the modern type chart. If you would like to create your own type chart, refer to the [Editing the type chart](/docs/generation-iv/guides/pt-type_expansion/#editing-the-type-chart) section in Yako's guide for more information.
+This guide will be using the modern type chart. If you would like to create your own type chart, refer to the [Editing the type chart](pt-type_expansion.md#editing-the-type-chart) section in Yako's guide for more information.
 
-Below is the modern type chart provided by Yako. Since we will be using the Mystery Type to add the Fairy Type, we will use the Mystery Type's ID for Fairy type interactions.
+Below is the modern type chart provided by Yako. Since we will be using the Mystery Type to add the Fairy Type, we will use the Mystery Type's ID for Fairy Type interactions.
 
 Copy the bytes for the modern type chart and paste it ("overwite") at offset `0x30DB8` of `overlay_0011.bin` and save it back to the `game_DSPRE_contents/overlay/` folder.
 <details>
