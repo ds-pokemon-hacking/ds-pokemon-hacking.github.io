@@ -148,7 +148,7 @@ Open the relevant file and change the byte at the provided offset:
   | **Diamond/Pearl**        | `05 21 AB F6` |
 </details>
 
-A frozen Pokémon has a **20%** of being thawed out on each of its turns in Gen IV. The battle logic calculates this chance through the following process:
+A frozen Pokémon has a **20%** chance of being thawed out on each of its turns in Gen IV. The battle logic calculates this chance through the following process:
 1. Divide a random number by an explicitly defined value, in this case **5**
 2. Compare the remainder to 0
 3. If the remainder is not equal to 0, the Pokémon remains frozen
@@ -178,9 +178,12 @@ Open the relevant file and change the byte(s) at the provided offset(s):
 | **Platinum**             | `Overlay 16`                | `0x1F94C`           | `0C`         | `0x1F950`        | `0A`         |
 | **Diamond/Pearl**        | `Overlay 11`                | `0x1E520`           | `0C`         | `0x1E524`        | `0A`         |
 
-:::info
-You can also search for these bytes instead: `0C 20 60 43 0A 21`
-:::
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes        |
+  |:-------------:|:--------------------:|
+  | **All Games** | `0C 20 60 43 0A 21`  |
+</details>
 
 Iron Fist increases the power of effected punching moves by **20%**. The battle logic calculates the increased damage by multiplying and dividing the move's power by explicitly defined values, in this case **12** and **10**, respectively.
 
@@ -375,9 +378,12 @@ Open the relevant file and change the byte at the provided offset:
 | **Platinum**             | `Overlay 16`                | `0xA244`  | `10`         |
 | **Diamond/Pearl**        | `Overlay 11`                | `0x98D4`  | `10`         |
 
-:::info
-You can also search for these bytes instead: `10 21 80 59`
-:::
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes  |
+  |:-------------:|:--------------:|
+  | **All Games** | `10 21 80 59`  |
+</details>
 
 Rain Dish restores **1/16<sup>th</sup>** of the Pokémon's max HP. The battle logic calculates the HP restoration amount by dividing the Pokémon's max HP by an explicitly defined value, in this case **16**. 
 
@@ -452,9 +458,12 @@ Open the relevant file and change the byte at the provided offset:
 | **Platinum**             | `Overlay 16`                | `0x1CF78`  | `08`         |
 | **Diamond/Pearl**        | `Overlay 11`                | `0x1BD94`  | `08`         |
 
-:::info
-You can also search for these bytes instead: `08 21 FE F7`
-:::
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes  |
+  |:-------------:|:--------------:|
+  | **All Games** | `08 21 FE F7`  |
+</details>
 
 Black Sludge (*specifically the item held effect assigned to Black Sludge in vanilla Pokémon games*) damages **1/8<sup>th</sup>** of a non-Poison-Type Pokémon's max HP. Damage for this item held effect is determined in the battle logic instead of the item's properties, and is calculated by dividing the Pokémon's max HP by an explicitly defined value, in this case **8**.
 
@@ -512,7 +521,7 @@ Open the relevant file and change the byte at the provided offset:
 
 The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, deals **1/16<sup>th</sup>** of the Pokémon's max HP. The battle logic calculates the damage for this move effect by dividing the Pokémon's max HP by an explicitly defined value, in this case **16**. 
 
-As an example, to change the damage from **1/16<sup>th</sup>** of the Pokémon's max HP to **1/12<sup>th</sup>**, change the byte from `10` (16 in decimal) to `0C` (12 in decimal).
+As an example, to change the damage from **1/16<sup>th</sup>** of the Pokémon's max HP to **1/8<sup>th</sup>** (matching Gen VI onwards), change the byte from `10` (16 in decimal) to `08` (8 in decimal).
 <br/>
 
 
@@ -527,7 +536,7 @@ Unpack the relevant NARC, open the specified file, and change the byte(s) at the
 | **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_58.bin` | `0x38`                  | `03`         | `0x3C`                   | `03`         |
 | **Diamond/Pearl**        | `/battle/skill/sub_seq.narc` | `sub_seq_58.bin` | `0x38`                  | `03`         | `0x3C`                   | `03`         |
 
-The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, lasts **3-6 turns** in Gen IV, but effectively traps and deals damage for **2-5 turns**. The battle logic calculates the total number of turns through the following process:
+The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, lasts **3-6 turns** in Gen IV, but effectively traps and deals damage for **2-5 turns**. The battle logic (more specifically, the subscript called by the move effect for binding moves) calculates the total number of turns through the following process:
 1. Generate a random number from zero to an explicitly defined value, in this case **3** (the 'Maximum Addend' or range)
 2. Add it to another explicitly defined value, in this case **3** (the base number of turns)
 
@@ -539,6 +548,10 @@ As an example, to change the duration to instead last **5-6 turns** (effectively
 
 This results in (**0 + 5**) and (**1 + 5**) as possible outcomes, effectively lasting for **4** or **5 turns**. Make sure to pack the NARC after saving the file.
 
+Another example, but to fix the duration to always be **3 *effective* turns**
+1. Change the byte at `0x38` from `3` (3 in decimal) to `00` (0 in decimal)
+2. Change the byte at `0x3C` from `3` (3 in decimal) to `04` (4 in decimal) 
+
 Later in the same file contains the logic for Grip Claw (*specifically the item held effect assigned to Grip Claw in vanilla Pokémon games*) causing binding moves to always last a certain number of turns.
 | Game                     | Offset (Grip Claw Duration) | Vanilla Byte |
 |:------------------------:|:---------------------------:|:------------:|
@@ -546,7 +559,7 @@ Later in the same file contains the logic for Grip Claw (*specifically the item 
 | **Platinum**             | `0x60`                      | `06`         |
 | **Diamond/Pearl**        | `0x60`                      | `06`         |
 
-As an example, to change Grip Claw to cause binding moves to always last for **4 *effective* turns**, change the byte at `0x60` from `06` (6 in decimal) to `05` (5 in decimal). Make sure to pack the NARC after saving the file.
+As an example, to change Grip Claw to cause binding moves to always last for **7 *effective* turns** (matching Gen V onwards), change the byte at `0x60` from `06` (6 in decimal) to `08` (8 in decimal). Make sure to pack the NARC after saving the file.
 <br/>
 
 
