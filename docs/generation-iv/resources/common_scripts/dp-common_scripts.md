@@ -1,11 +1,12 @@
 ---
-title: Common Scripts (PT)
+title: Common Scripts (Diamond/Pearl)
 tags:
-  - Guide (Platinum)
+  - Guide (Diamond)
+  - Guide (Pearl)
 ---
 
-# Common Scripts (PT)
-> Author(s): [AdAstra](https://discord.com/channels/446824489045721090/490620027125628931/986996541325725706), [MrHam88](https://github.com/DevHam88) (*reformat for Wiki*)
+# Common Scripts (Diamond/Pearl)
+> Author(s): Lmaokai
 
 ---
 
@@ -27,189 +28,177 @@ This mapping table allows quick lookup of the Common Script ID, to find the scri
     <th>Notes</th>
   </tr>
   <tr>
-    <td>`10490` - `65535`</td>
-    <td>`499`</td>
-    <td>`541`</td>
-    <td>Battle Frontier Scratch-Off Corner</td>
-  </tr>
-  <tr>
-    <td>`10450` - `10489`</td>
-    <td>`500`</td>
-    <td>`16`</td>
+    <td>-</td>
+    <td>?</td>
+    <td>481</td>
     <td>Trainer Records</td>
   </tr>
   <tr>
-    <td>`10400` - `10449`</td>
-    <td>`400`</td>
-    <td>`203`</td>
-    <td>Pokémon Center Roaming Trainers</td>
-  </tr>
-  <tr>
     <td>`10200` - `10399`</td>
-    <td>`407`</td>
-    <td>`379`</td>
+    <td>373</td>
+    <td>332</td>
     <td>Poké Mart Mystery Gifts</td>
   </tr>
   <tr>
     <td>`10150` - `10199`</td>
-    <td>`1116`</td>
-    <td>`621`</td>
+    <td>1042</td>
+    <td>562</td>
     <td>Jubilife TV Interviewer</td>
   </tr>
   <tr>
     <td>`10100` - `10149`</td>
-    <td>`1115`</td>
-    <td>`622`</td>
+    <td>1041</td>
+    <td>563</td>
     <td>TV Broadcasts</td>
   </tr>
   <tr>
     <td>`10000` - `10099`</td>
-    <td>`409`</td>
-    <td>`381`</td>
+    <td>375</td>
+    <td>334</td>
     <td>HM Field Use</td>
   </tr>
   <tr>
     <td>`9950` - `9999`</td>
-    <td>`411`</td>
-    <td>`383`</td>
+    <td>376</td>
+    <td>335</td>
     <td>Poké Dex Progress Check</td>
   </tr>
   <tr>
-    <td>`9900` - `9949`</td>
-    <td>`397`</td>
-    <td>`213`</td>
+    <td>-</td>
+    <td>365 (?)</td>
+    <td>?</td>
     <td></td>
   </tr>
   <tr>
     <td>`9800` - `9899`</td>
-    <td>`212`</td>
-    <td>`217`</td>
+    <td>206</td>
+    <td>203</td>
     <td>Contests</td>
   </tr>
   <tr>
     <td>`9700` - `9799`</td>
-    <td>`422`</td>
-    <td>`429`</td>
+    <td>387</td>
+    <td>378</td>
     <td>NPC Partners</td>
   </tr>
   <tr>
-    <td>`9600` - `9699`</td>
-    <td>`412`</td>
-    <td>`213`</td>
+    <td>-</td>
+    <td>377</td>
+    <td>-</td>
     <td>Game Initialization Script</td>
   </tr>
   <tr>
     <td>`9500` - `9599`</td>
-    <td>`501`</td>
-    <td>`547`</td>
+    <td>464</td>
+    <td>492</td>
     <td>Day-Care</td>
   </tr>
   <tr>
     <td>`9400` - `9499`</td>
-    <td>`426`</td>
-    <td>`432`</td>
+    <td>391</td>
+    <td>381</td>
     <td>Poffin WiFi</td>
   </tr>
   <tr>
     <td>`9300` - `9399`</td>
-    <td>`406`</td>
-    <td>`374`</td>
+    <td>372</td>
+    <td>3</td>
     <td>Groups</td>
   </tr>
   <tr>
     <td>`9200` - `9299`</td>
-    <td>`423`</td>
-    <td>`430`</td>
+    <td>388</td>
+    <td>379</td>
     <td>WiFi Club</td>
   </tr>
   <tr>
     <td>`9100` - `9199`</td>
-    <td>`0`</td>
-    <td>`11`</td>
+    <td>0</td>
+    <td>9</td>
     <td>Mix Battles</td>
   </tr>
   <tr>
     <td>`9000` - `9099`</td>
-    <td>`213`</td>
-    <td>`221`</td>
+    <td>207</td>
+    <td>207</td>
     <td>Pokémon Center Clubs Info</td>
   </tr>
   <tr>
     <td>`8970` - `8999`</td>
-    <td>`425`</td>
-    <td>`7`</td>
+    <td>390</td>
+    <td>7</td>
     <td>Poké Radar</td>
   </tr>
   <tr>
     <td>`8950` - `8969`</td>
-    <td>`498`</td>
-    <td>`539`</td>
+    <td>463</td>
+    <td>486</td>
     <td>Vs. Seeker</td>
   </tr>
   <tr>
     <td>`8900` - `8949`</td>
-    <td>`424`</td>
-    <td>`431`</td>
+    <td>389</td>
+    <td>380</td>
     <td>Chatter Field Use</td>
   </tr>
   <tr>
     <td>`8800` - `8899`</td>
-    <td>`497`</td>
-    <td>`538`</td>
+    <td>462</td>
+    <td>485</td>
     <td>Safari Train/Game End</td>
   </tr>
   <tr>
     <td>`8000` - `8799`</td>
-    <td>`408`</td>
-    <td>`380`</td>
+    <td>374</td>
+    <td>333</td>
     <td>Hidden Items</td>
   </tr>
   <tr>
     <td>`7000` - `7999`</td>
-    <td>`404`</td>
-    <td>`369`</td>
+    <td>370</td>
+    <td>325</td>
     <td>Ground Items</td>
   </tr>
   <tr>
     <td>`5000` - `6999`</td>
-    <td>`1114`</td>
-    <td>`213`</td>
+    <td>1040</td>
+    <td>558</td>
     <td>Double Battles</td>
   </tr>
   <tr>
     <td>`3000` - `4999`</td>
-    <td>`1114`</td>
-    <td>`213`</td>
+    <td>1040</td>
+    <td>558</td>
     <td>Single Battles</td>
   </tr>
   <tr>
     <td>`2800` - `2999`</td>
-    <td>`413`</td>
-    <td>`397`</td>
+    <td>378</td>
+    <td>350</td>
     <td>Berry Planting</td>
   </tr>
   <tr>
     <td>`2500` - `2799`</td>
-    <td>`1`</td>
-    <td>`17`</td>
+    <td>1</td>
+    <td>13</td>
     <td>Book Shelves</td>
   </tr>
   <tr>
     <td>`2000` - `2499`</td>
-    <td>`211`</td>
-    <td>`213`</td>
-    <td>"Common" scripts</td>
+    <td>205</td>
+    <td>199</td>
+    <td>"Common" Scripts</td>
   </tr>
   <tr>
     <td>`1` - `1999`</td>
     <td>Linked via Header</td>
     <td>Linked via Header</td>
-    <td>Standard scripts</td>
+    <td>Standard Scripts</td>
   </tr>
   <tr>
     <td>`0`</td>
-    <td>`402`</td>
-    <td>`355`</td>
+    <td>?</td>
+    <td>?</td>
     <td>Error/dummy script</td>
   </tr>
 </table>
