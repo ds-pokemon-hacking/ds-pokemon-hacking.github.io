@@ -1,5 +1,5 @@
 ---
-title: Battle Hex Edits
+title: Battle Logic Edits
 tags:
   - Guide (Diamond)
   - Guide (Pearl)
@@ -8,13 +8,13 @@ tags:
   - Guide (SoulSilver)  
 ---
 
-# Battle Hex Edits
+# Battle Logic Edits
 > Author(s): Lmaokai <br/>
 > Implementation & Research: [HGSS Decompilation](https://github.com/pret/pokeheartgold), [Platinum Decompilation](https://github.com/pret/pokeplatinum), [HG Engine](https://github.com/BluRosie/hg-engine), DarmaniDan, MrHam88, Yako, Lhea, Chritchy, Fantafaust, Aero, Paille92, Lmaokai
 
 <br/>
 
-This page is a collation of hex edits for the simpler aspects of the battle logic in Generation IV Pokémon games (e.g. [Iron Fist's damage multiplier](/docs/generation-iv/guides/editing_moves/editing_moves.md#editing-the-iron-fist-damage-multiplier)). **Any hex editing offsets or files given in this page are for known good US versions of the relevant games.**
+This page is a collation of hex edits to the battle logic in Generation IV Pokémon games. This primarily focuses on simpler aspects where only a single byte needs to be edited, such as [Iron Fist's damage multiplier](#iron-fist-damage-multiplier). **Any hex editing offsets or files present on this page are for known good US versions of the relevant games.**
 
 These edits rely upon a basic understanding of hex editing and unpacking NARCs. An initial grounding in these subjects can be found in the following:
 - [Hex Editing Primer](/docs/universal/guides/hex_editing/hex_editing.md)
@@ -397,46 +397,46 @@ As an example, to change the HP restoration from **1/16<sup>th</sup>** of the Po
 
 Reckless increases the power of moves that have recoil or crash damage by **20%**, except Struggle. The battle logic calculates the increased damage by multiplying and dividing the move's power by explicitly defined values, in this case **12** and **10**, respectively.
 
-However, the **multiplier value** is explicitly defined across six individual move effects that involve recoil or crash damage (in vanilla Pokémon games), meaning six edits are needed to effectively change Reckless' damage multiplier. 
+However, the **multiplier value** is explicitly defined across six individual **move effects** that involve recoil or crash damage in the vanilla Pokémon games. This means six edits are needed to effectively change Reckless' damage multiplier. 
 
-Unpack the following NARCs, open the specified files, and change the bytes at the provided offsets. Make sure to pack the NARC after saving all the files.
+Unpack the following NARCs, open the six specified files, and change the bytes at the provided offsets. Make sure to pack the NARC after saving all the files.
 
-#### Crash Damage if Move Misses (Vanilla Moves: Hi Jump Kick, Jump Kick)
+#### 1) Crash Damage if Move Misses (Hi Jump Kick, Jump Kick)
 | Game                     | NARC to unpack              | File            | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:---------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_45.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_45.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_45.bin` | `0x20` | `0C`         |
 
-#### 25% Recoil Damage (Vanilla Moves: Take Down, Submission) 
+#### 2) 25% Recoil Damage (Take Down, Submission) 
 | Game                     | NARC to unpack              | File            | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:---------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_48.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_48.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_48.bin` | `0x20` | `0C`         |
 
-#### 33% Recoil Damage (Vanilla Moves: Double-Edge, Brave Bird, Wood Hammer) 
+#### 3) 33% Recoil Damage (Double-Edge, Brave Bird, Wood Hammer) 
 | Game                     | NARC to unpack              | File             | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:----------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_198.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_198.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_198.bin` | `0x20` | `0C`         |
 
-#### 33% Recoil Damage and Chance to Burn (Vanilla Moves: Flare Blitz)
+#### 4) 33% Recoil Damage, Chance to Burn, and Thaws the User (Flare Blitz)
 | Game                     | NARC to unpack              | File             | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:----------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_253.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_253.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_253.bin` | `0x20` | `0C`         |
 
-#### 33% Recoil Damage and Chance to Paraluze (Vanilla Moves: Volt Tackle)
+#### 5) 33% Recoil Damage and Chance to Paralyze (Volt Tackle)
 | Game                     | NARC to unpack              | File             | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:----------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_262.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_262.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_262.bin` | `0x20` | `0C`         |
 
-#### 50% Recoil Damage (Vanilla Moves: Head Smash) 
+#### 6) 50% Recoil Damage (Head Smash)
 | Game                     | NARC to unpack              | File             | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:----------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_269.bin`      | `0x20` | `0C`         |
