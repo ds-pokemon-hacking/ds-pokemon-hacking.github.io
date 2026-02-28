@@ -29,183 +29,183 @@ This mapping table allows quick lookup of the Common Script ID, to find the scri
   </tr>
   <tr>
     <td>`10490` - `65535`</td>
-    <td>`263`</td>
-    <td>`433`</td>
-    <td></td>
+    <td>263</td>
+    <td>433</td>
+    <td>Scratch cards (Battle Frontier)</td>
   </tr>
   <tr>
     <td>`10450` - `10489`</td>
-    <td>`264`</td>
-    <td>`19`</td>
-    <td></td>
+    <td>264</td>
+    <td>19</td>
+    <td>VS Recorder (Battle Frontier)</td>
   </tr>
   <tr>
     <td>`10440` - `10449`</td>
-    <td>`2`</td>
-    <td>`748`</td>
-    <td></td>
+    <td>2</td>
+    <td>748</td>
+    <td>Move tutors (Frontier Access)</td>
   </tr>
   <tr>
     <td>`10400` - `10439`</td>
-    <td>`151`</td>
-    <td>`246`</td>
-    <td></td>
+    <td>151</td>
+    <td>246</td>
+    <td>Bug contests</td>
   </tr>
   <tr>
     <td>`10350` - `10399`</td>
-    <td>`952`</td>
-    <td>`726`</td>
-    <td></td>
+    <td>952</td>
+    <td>726</td>
+    <td>Viridian trainer house</td>
   </tr>
   <tr>
     <td>`10300` - `10349`</td>
-    <td>`734`</td>
-    <td>`444`</td>
+    <td>734</td>
+    <td>444</td>
     <td></td>
   </tr>
   <tr>
     <td>`10200` - `10299`</td>
-    <td>`144`</td>
-    <td>`209`</td>
-    <td></td>
+    <td>144</td>
+    <td>209</td>
+    <td>Mystery gifts, mom's savings deliveries</td>
   </tr>
   <tr>
     <td>`10150` - `10199`</td>
-    <td>`955`</td>
-    <td>`732`</td>
-    <td></td>
+    <td>955</td>
+    <td>732</td>
+    <td>TV broadcasts</td>
   </tr>
   <tr>
     <td>`10100` - `10149`</td>
-    <td>`954`</td>
-    <td>`733`</td>
+    <td>954</td>
+    <td>733</td>
     <td></td>
   </tr>
   <tr>
     <td>`10000` - `10099`</td>
-    <td>`146`</td>
-    <td>`211`</td>
-    <td></td>
+    <td>146</td>
+    <td>211</td>
+    <td>Field moves (Hidden Machines, HMs)</td>
   </tr>
   <tr>
     <td>`9950` - `9999`</td>
-    <td>`148`</td>
-    <td>`666`</td>
-    <td></td>
+    <td>148</td>
+    <td>666</td>
+    <td>Pokédex evaluation (Professor Oak)</td>
   </tr>
   <tr>
     <td>`9900` - `9949`</td>
-    <td>`136`</td>
-    <td>`40`</td>
+    <td>136</td>
+    <td>40</td>
     <td></td>
   </tr>
   <tr>
     <td>`9850` - `9899`</td>
-    <td>`167`</td>
-    <td>`312`</td>
-    <td></td>
+    <td>167</td>
+    <td>312</td>
+    <td>Pokéathlon</td>
   </tr>
   <tr>
     <td>`9800` - `9849`</td>
-    <td>`166`</td>
-    <td>`43`</td>
+    <td>166</td>
+    <td>43</td>
     <td></td>
   </tr>
   <tr>
     <td>`9700` - `9799`</td>
-    <td>`163`</td>
-    <td>`266`</td>
-    <td></td>
+    <td>163</td>
+    <td>266</td>
+    <td>Following Pokémon interaction</td>
   </tr>
   <tr>
     <td>`9600` - `9699`</td>
-    <td>`149`</td>
-    <td>`40`</td>
-    <td></td>
+    <td>149</td>
+    <td>40</td>
+    <td>Game initialization</td>
   </tr>
   <tr>
     <td>`9500` - `9599`</td>
-    <td>`265`</td>
-    <td>`439`</td>
-    <td></td>
+    <td>265</td>
+    <td>439</td>
+    <td>Day-Care</td>
   </tr>
   <tr>
     <td>`9300` - `9499`</td>
-    <td>`143`</td>
-    <td>`204`</td>
-    <td></td>
+    <td>143</td>
+    <td>204</td>
+    <td>Union Groups</td>
   </tr>
   <tr>
     <td>`9200` - `9299`</td>
-    <td>`164`</td>
-    <td>`267`</td>
-    <td></td>
+    <td>164</td>
+    <td>267</td>
+    <td>Wi-Fi Club</td>
   </tr>
   <tr>
     <td>`9100` - `9199`</td>
-    <td>`0`</td>
-    <td>`14`</td>
-    <td></td>
+    <td>0</td>
+    <td>14</td>
+    <td>Colosseum</td>
   </tr>
   <tr>
     <td>`9000` - `9099`</td>
-    <td>`4`</td>
-    <td>`748`</td>
-    <td></td>
+    <td>4</td>
+    <td>46</td>
+    <td>Communication Club</td>
   </tr>
   <tr>
     <td>`8900` - `8999`</td>
-    <td>`165`</td>
-    <td>`268`</td>
-    <td></td>
+    <td>165</td>
+    <td>268</td>
+    <td>Chatot</td>
   </tr>
   <tr>
     <td>`8800` - `8899`</td>
-    <td>`262`</td>
-    <td>`427`</td>
-    <td></td>
+    <td>262</td>
+    <td>427</td>
+    <td>Safari Game</td>
   </tr>
   <tr>
     <td>`8000` - `8799`</td>
-    <td>`145`</td>
-    <td>`210`</td>
-    <td></td>
+    <td>145</td>
+    <td>210</td>
+    <td>Hidden Items</td>
   </tr>
   <tr>
     <td>`7000` - `7999`</td>
-    <td>`141`</td>
-    <td>`199`</td>
-    <td></td>
+    <td>141</td>
+    <td>199</td>
+    <td>Ground Items</td>
   </tr>
   <tr>
     <td>`5000` - `6999`</td>
-    <td>`953`</td>
-    <td>`40`</td>
-    <td></td>
+    <td>953</td>
+    <td>40</td>
+    <td>Trainer battles (Doubles)</td>
   </tr>
   <tr>
     <td>`3000` - `4999`</td>
-    <td>`953`</td>
-    <td>`40`</td>
-    <td></td>
+    <td>953</td>
+    <td>40</td>
+    <td>Trainer battles</td>
   </tr>
   <tr>
     <td>`2800` - `2999`</td>
-    <td>`150`</td>
-    <td>`23`</td>
-    <td>Apricorn tree common script only</td>
+    <td>150</td>
+    <td>23</td>
+    <td>Apricorn trees</td>
   </tr>
   <tr>
     <td>`2500` - `2799`</td>
-    <td>`1`</td>
-    <td>`20`</td>
-    <td></td>
+    <td>1</td>
+    <td>20</td>
+    <td>Bookshelves</td>
   </tr>
   <tr>
     <td>`2000` - `2499`</td>
-    <td>`3`</td>
-    <td>`40`</td>
-    <td></td>
+    <td>3</td>
+    <td>40</td>
+    <td>Pokémon Center, Save Menu, PC, Whiteout, Fishing, Sweet Scent, Bike, Egg Hatching, Special Pokémon form changes</td>
   </tr>
   <tr>
     <td>`1` - `1999`</td>
