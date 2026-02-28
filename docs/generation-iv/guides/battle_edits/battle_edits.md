@@ -194,7 +194,7 @@ As an example, to change the boost from **20%** to **50%** (matching similar dam
 
 
 ### Pickup Activation Chance
-> Sources and Credits: [Lhea, Aero, & DarmaniDan](https://discord.com/channels/446824489045721090/920372513488404542/1263129361826185320), [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1435116003108327494), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L8026), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L4695)
+> Sources and Credits: [Lhea, Aero, & DarmaniDan](https://discord.com/channels/446824489045721090/920372513488404542/1263129361826185320), [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1435116003108327494), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L8025), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L4695)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset     | Vanilla Byte |
@@ -236,7 +236,7 @@ Here is a table of bytes and the resulting Pickup activation chance.
 
 
 ### Honey Gather Rate
-> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436538616821321950), DarmaniDan, Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L8067), [2](https://github.com/pret/pokeplatinum/blob/2ffb3faf3ea3e9bc27cd50bcf2cc3e5bcd34005e/include/data/pickup.h#L52)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/51025245684ef1a29c733887093061b4fe36b181/src/battle/battle_command.c#L4725), [2](https://github.com/pret/pokeheartgold/blob/51025245684ef1a29c733887093061b4fe36b181/asm/overlay_12_battle_command.s#L4797))
+> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436538616821321950), DarmaniDan, Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L8066), [2](https://github.com/pret/pokeplatinum/blob/2ffb3faf3ea3e9bc27cd50bcf2cc3e5bcd34005e/include/data/pickup.h#L52)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/51025245684ef1a29c733887093061b4fe36b181/src/battle/battle_command.c#L4725), [2](https://github.com/pret/pokeheartgold/blob/51025245684ef1a29c733887093061b4fe36b181/asm/overlay_12_battle_command.s#L4797))
 
 Honey Gather has a variable activation chance, starting at **5%** if the Pokémon is between **levels 1-10**, and increasing by **5%** every **10 levels**, ending at a **50%** chance at **levels 91-100**. 
 
@@ -273,7 +273,7 @@ Given how the logic for Honey Gather works, the values in the table are effectiv
 
 
 ### Ice Body End-of-Turn HP Restoration
-> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436238788526604349), DarmaniDan, [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L5828), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3356)
+> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436238788526604349), DarmaniDan, [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L5827), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3356)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
@@ -316,7 +316,7 @@ As an example, to change the divisor from **2** to **1** (effectively changing H
 
 
 ### Quick Feet Speed Multiplier
-> Sources and Credits: Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_lib.c#L1258), [2](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_lib.c#L1324)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1055), [2](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1114))
+> Sources and Credits: Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_lib.c#L1258), [2](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_lib.c#L1324)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1055), [2](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1114))
 
 Open the relevant file and go to the provided offsets:
 | Game                     | File                        | Offset (Battler 1 Multiplier) | Vanilla Byte | Offset (Battler 1 Divisor) | Vanilla Byte |
@@ -370,7 +370,7 @@ Slow Start lasts for **5 turns** whenever the Pokémon is switched into battle. 
 
 
 ### Rain Dish End-of-Turn HP Restoration
-> Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/920372513488404542/1168373730372767744), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L5842), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3366)
+> Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/920372513488404542/1168373730372767744), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L5841), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3366)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
@@ -393,7 +393,7 @@ As an example, to change the HP restoration from **1/16<sup>th</sup>** of the Po
 
 
 ### Reckless Damage Multiplier
-> Sources and Credits: [Yako](https://discord.com/channels/446824489045721090/920372513488404542/1475182718189830297), Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/effects/effect_script_0045.s#L6), [2](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0048.s#L6), [3](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0198.s#L6), [4](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0253.s#L6), [5](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0262.s#L6), [6](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0269.s#L6)), HGSS Decomp ([1](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0045.s#L7), [2](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0048.s#L7), [3](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0198.s#L7), [4](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0253.s#L7), [5](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0262.s#L7), [6](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0269.s#L7))
+> Sources and Credits: [Yako](https://discord.com/channels/446824489045721090/920372513488404542/1475182718189830297), Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/res/battle/scripts/effects/effect_script_0045.s#L6), [2](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0048.s#L6), [3](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0198.s#L6), [4](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0253.s#L6), [5](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0262.s#L6), [6](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0269.s#L6)), HGSS Decomp ([1](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0045.s#L7), [2](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0048.s#L7), [3](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0198.s#L7), [4](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0253.s#L7), [5](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0262.s#L7), [6](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0269.s#L7))
 
 Reckless increases the power of moves that have recoil or crash damage by **20%**, except Struggle. The battle logic calculates the increased damage by multiplying and dividing the move's power by explicitly defined values, in this case **12** and **10**, respectively.
 
@@ -623,7 +623,7 @@ As an example, to change Grip Claw to cause binding moves to always last for **7
 ## Weather
 
 ### Hail End-of-Turn Damage for Non-Ice Types
-> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436238788526604349), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L5834), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3360)
+> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436238788526604349), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L5833), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3360)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
