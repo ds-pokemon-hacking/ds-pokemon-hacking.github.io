@@ -10,7 +10,7 @@ tags:
 
 # Battle Logic Edits
 > Author(s): Lmaokai <br/>
-> Implementation & Research: [HGSS Decompilation](https://github.com/pret/pokeheartgold), [Platinum Decompilation](https://github.com/pret/pokeplatinum), [HG Engine](https://github.com/BluRosie/hg-engine), DarmaniDan, MrHam88, Yako, Lhea, Chritchy, Fantafaust, Aero, Paille92, Lmaokai
+> Implementation & Research: [HGSS Decompilation](https://github.com/pret/pokeheartgold), [Platinum Decompilation](https://github.com/pret/pokeplatinum), [HG Engine](https://github.com/BluRosie/hg-engine), DarmaniDan, MrHam88, Yako, Lhea, Chritchy, Fantafaust, Aero, Paille92, Shogo Kawada Fan, Memory5ty7, Lmaokai
 
 <br/>
 
@@ -56,6 +56,10 @@ This information comes from tutorials, guides, and research shared via other mea
 
 - [Weather](#weather)
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
+
+- [Bug Fixes](#bug-fixes)
+  - [Fire Fang vs Wonder Guard](#fire-fang-vs-wonder-guard)
+  - [Trainer AI Water Immunity Check vs Dry Skin](#trainer-ai-water-immunity-check-vs-dry-skin)
 
 
 ---
@@ -194,7 +198,7 @@ As an example, to change the boost from **20%** to **50%** (matching similar dam
 
 
 ### Pickup Activation Chance
-> Sources and Credits: [Lhea, Aero, & DarmaniDan](https://discord.com/channels/446824489045721090/920372513488404542/1263129361826185320), [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1435116003108327494), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L8026), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L4695)
+> Sources and Credits: [Lhea, Aero, & DarmaniDan](https://discord.com/channels/446824489045721090/920372513488404542/1263129361826185320), [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1435116003108327494), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L8025), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L4695)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset     | Vanilla Byte |
@@ -236,7 +240,7 @@ Here is a table of bytes and the resulting Pickup activation chance.
 
 
 ### Honey Gather Rate
-> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436538616821321950), DarmaniDan, Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L8067), [2](https://github.com/pret/pokeplatinum/blob/2ffb3faf3ea3e9bc27cd50bcf2cc3e5bcd34005e/include/data/pickup.h#L52)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/51025245684ef1a29c733887093061b4fe36b181/src/battle/battle_command.c#L4725), [2](https://github.com/pret/pokeheartgold/blob/51025245684ef1a29c733887093061b4fe36b181/asm/overlay_12_battle_command.s#L4797))
+> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436538616821321950), DarmaniDan, Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L8066), [2](https://github.com/pret/pokeplatinum/blob/2ffb3faf3ea3e9bc27cd50bcf2cc3e5bcd34005e/include/data/pickup.h#L52)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/51025245684ef1a29c733887093061b4fe36b181/src/battle/battle_command.c#L4725), [2](https://github.com/pret/pokeheartgold/blob/51025245684ef1a29c733887093061b4fe36b181/asm/overlay_12_battle_command.s#L4797))
 
 Honey Gather has a variable activation chance, starting at **5%** if the Pokémon is between **levels 1-10**, and increasing by **5%** every **10 levels**, ending at a **50%** chance at **levels 91-100**. 
 
@@ -273,7 +277,7 @@ Given how the logic for Honey Gather works, the values in the table are effectiv
 
 
 ### Ice Body End-of-Turn HP Restoration
-> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436238788526604349), DarmaniDan, [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L5828), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3356)
+> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436238788526604349), DarmaniDan, [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L5827), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3356)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
@@ -316,7 +320,7 @@ As an example, to change the divisor from **2** to **1** (effectively changing H
 
 
 ### Quick Feet Speed Multiplier
-> Sources and Credits: Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_lib.c#L1258), [2](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_lib.c#L1324)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1055), [2](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1114))
+> Sources and Credits: Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_lib.c#L1258), [2](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_lib.c#L1324)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1055), [2](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1114))
 
 Open the relevant file and go to the provided offsets:
 | Game                     | File                        | Offset (Battler 1 Multiplier) | Vanilla Byte | Offset (Battler 1 Divisor) | Vanilla Byte |
@@ -370,7 +374,7 @@ Slow Start lasts for **5 turns** whenever the Pokémon is switched into battle. 
 
 
 ### Rain Dish End-of-Turn HP Restoration
-> Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/920372513488404542/1168373730372767744), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L5842), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3366)
+> Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/920372513488404542/1168373730372767744), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L5841), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3366)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
@@ -393,7 +397,7 @@ As an example, to change the HP restoration from **1/16<sup>th</sup>** of the Po
 
 
 ### Reckless Damage Multiplier
-> Sources and Credits: [Yako](https://discord.com/channels/446824489045721090/920372513488404542/1475182718189830297), Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/effects/effect_script_0045.s#L6), [2](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0048.s#L6), [3](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0198.s#L6), [4](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0253.s#L6), [5](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0262.s#L6), [6](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0269.s#L6)), HGSS Decomp ([1](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0045.s#L7), [2](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0048.s#L7), [3](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0198.s#L7), [4](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0253.s#L7), [5](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0262.s#L7), [6](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0269.s#L7))
+> Sources and Credits: [Yako](https://discord.com/channels/446824489045721090/920372513488404542/1475182718189830297), Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/res/battle/scripts/effects/effect_script_0045.s#L6), [2](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0048.s#L6), [3](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0198.s#L6), [4](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0253.s#L6), [5](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0262.s#L6), [6](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0269.s#L6)), HGSS Decomp ([1](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0045.s#L7), [2](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0048.s#L7), [3](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0198.s#L7), [4](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0253.s#L7), [5](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0262.s#L7), [6](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0269.s#L7))
 
 Reckless increases the power of moves that have recoil or crash damage by **20%**, except Struggle. The battle logic calculates the increased damage by multiplying and dividing the move's power by explicitly defined values, in this case **12** and **10**, respectively.
 
@@ -592,7 +596,7 @@ Unpack the relevant NARC, open the specified file, and change the byte(s) at the
 | **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_58.bin` | `0x38`                  | `03`         | `0x3C`                   | `03`         |
 | **Diamond/Pearl**        | `/battle/skill/sub_seq.narc` | `sub_seq_58.bin` | `0x38`                  | `03`         | `0x3C`                   | `03`         |
 
-The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, lasts **3-6 turns** in Gen IV, but effectively traps and deals damage for **2-5 turns**. The battle logic (more specifically, the subscript called by the move effect for binding moves) calculates the total number of turns through the following process:
+The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, lasts **3-6 turns** in Gen IV, but effectively traps and deals damage for **2-5 turns**. The battle logic (*specifically, the subscript called by the move effect for binding moves*) calculates the total number of turns through the following process:
 1. Generate a random number from zero to an explicitly defined value, in this case **3** (the 'Maximum Addend' or range)
 2. Add it to another explicitly defined value, in this case **3** (the base number of turns)
 
@@ -623,7 +627,7 @@ As an example, to change Grip Claw to cause binding moves to always last for **7
 ## Weather
 
 ### Hail End-of-Turn Damage for Non-Ice Types
-> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436238788526604349), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L5834), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3360)
+> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1436238788526604349), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L5833), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3360)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
@@ -644,4 +648,54 @@ Open the relevant file and change the byte at the provided offset:
 Hail damages **1/16<sup>th</sup>** of a non-Ice-Type Pokémon's max HP. The battle logic calculates this damage by dividing the Pokémon's max HP by an explicitly defined value, in this case **16**.
 
 As an example, to change Hail damage from **1/16<sup>th</sup>** of the Pokémon's max HP to **1/12<sup>th</sup>**, change the byte from `10` (16 in decimal) to `0C` (12 in decimal).
+<br/>
+
+
+
+## Bug Fixes
+
+### Fire Fang vs Wonder Guard
+> Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/920372513488404542/1109241450329280552), [Shogo Kawada Fan](https://discord.com/channels/446824489045721090/920372513488404542/1289333415270678631)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x20BCC` | `11`         |
+| **Platinum**             | `Overlay 16`                | `0x205D4` | `11`         |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x1F160` | `11`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes  |
+  |:-------------:|:--------------:|
+  | **All Games** | `11 32 93 42`  |
+</details>
+
+Fire Fang (*specifically the move effect assigned to only Fire Fang*) is able to hit through Wonder Guard, even if the target does not have a weakness to Fire-Type moves. More information about the bug can be found on [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/List_of_battle_glitches_in_Generation_IV#Fire_Fang_Wonder_Guard_glitch) or searching `Fire Fang Wonder Guard` on the Kingdom of DS Hacking Discord.
+
+To fix the issue, change the byte from `11` to `10`.
+<br/>
+
+
+
+### Trainer AI Water Immunity Check vs Dry Skin
+> Sources and Credits: [Memory5ty7](https://discord.com/channels/446824489045721090/920372513488404542/1216114974255091774), [DarmaniDan](https://discord.com/channels/446824489045721090/920372513488404542/1216146554646433914), [Lhea](https://discord.com/channels/446824489045721090/1201213967389966378/1210066487562207302), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L78C50-L78C65)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0x4DB4`  | `1A`         |
+| **Platinum**             | `Overlay 14`                | `0x4DAC`  | `1A`         |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x1DA7C` | `1A`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes              |
+  |:-------------:|:--------------------------:|
+  | **All Games** | `1A 00 00 00 26 00 00 00`  |
+</details>
+
+The Trainer AI performs two checks when considering whether the opposing Pokémon is immune to Water-Type moves. The first check considers Water Absorb, but the second check mistakenly considers Levitate instead of Dry Skin. In practice, this means that **(1)** a Trainer's Pokémon won't use Water-Type moves if it knows that the opposing Pokémon has Levitate, and **(2)** a Trainer's Pokémon may repeatedly use a Water-Type move against an opposing Pokémon with Dry Skin.
+
+To fix the issue, change the byte from `1A` (26 in decimal, Levitate's ID) to `57` (87 in decimal, Dry Skin's ID).
 <br/>
