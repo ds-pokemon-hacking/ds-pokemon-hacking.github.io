@@ -139,6 +139,8 @@ When using **NSBTA 8_0 from Black 2** (as a Generation V example), the following
 13. mizu_sita2
 14. ike01
 
+![](resources/black2_nsbta.gif) 
+
 ## Texture Patterns
 These are "flipbook" or sequence animations, where a series of image textures are displayed in sequence, where the relative time any given image texture is visible can vary (an example of this from HGSS are the red and white flowers placed on many grass areas).  
 
