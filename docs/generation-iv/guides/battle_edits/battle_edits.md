@@ -10,7 +10,7 @@ tags:
 
 # Battle Logic Edits
 > Author(s): Lmaokai <br/>
-> Implementation & Research: [HGSS Decompilation](https://github.com/pret/pokeheartgold), [Platinum Decompilation](https://github.com/pret/pokeplatinum), [HG Engine](https://github.com/BluRosie/hg-engine), DarmaniDan, MrHam88, Yako, Lhea, Chritchy, Fantafaust, Aero, Paille92, Lmaokai
+> Implementation & Research: [HGSS Decompilation](https://github.com/pret/pokeheartgold), [Platinum Decompilation](https://github.com/pret/pokeplatinum), [HG Engine](https://github.com/BluRosie/hg-engine), DarmaniDan, MrHam88, Yako, Lhea, Chritchy, Fantafaust, Aero, Paille92, Shogo Kawada Fan, Memory5ty7, Lmaokai
 
 <br/>
 
@@ -56,6 +56,10 @@ This information comes from tutorials, guides, and research shared via other mea
 
 - [Weather](#weather)
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
+
+- [Bug Fixes](#bug-fixes)
+  - [Fire Fang vs Wonder Guard](#fire-fang-vs-wonder-guard)
+  - [Trainer AI Water Immunity Check vs Dry Skin](#trainer-ai-water-immunity-check-vs-dry-skin)
 
 
 ---
@@ -592,7 +596,7 @@ Unpack the relevant NARC, open the specified file, and change the byte(s) at the
 | **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_58.bin` | `0x38`                  | `03`         | `0x3C`                   | `03`         |
 | **Diamond/Pearl**        | `/battle/skill/sub_seq.narc` | `sub_seq_58.bin` | `0x38`                  | `03`         | `0x3C`                   | `03`         |
 
-The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, lasts **3-6 turns** in Gen IV, but effectively traps and deals damage for **2-5 turns**. The battle logic (more specifically, the subscript called by the move effect for binding moves) calculates the total number of turns through the following process:
+The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, lasts **3-6 turns** in Gen IV, but effectively traps and deals damage for **2-5 turns**. The battle logic (*specifically, the subscript called by the move effect for binding moves*) calculates the total number of turns through the following process:
 1. Generate a random number from zero to an explicitly defined value, in this case **3** (the 'Maximum Addend' or range)
 2. Add it to another explicitly defined value, in this case **3** (the base number of turns)
 
@@ -644,4 +648,54 @@ Open the relevant file and change the byte at the provided offset:
 Hail damages **1/16<sup>th</sup>** of a non-Ice-Type Pokémon's max HP. The battle logic calculates this damage by dividing the Pokémon's max HP by an explicitly defined value, in this case **16**.
 
 As an example, to change Hail damage from **1/16<sup>th</sup>** of the Pokémon's max HP to **1/12<sup>th</sup>**, change the byte from `10` (16 in decimal) to `0C` (12 in decimal).
+<br/>
+
+
+
+## Bug Fixes
+
+### Fire Fang vs Wonder Guard
+> Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/920372513488404542/1109241450329280552), [Shogo Kawada Fan](https://discord.com/channels/446824489045721090/920372513488404542/1289333415270678631)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x20BCC` | `11`         |
+| **Platinum**             | `Overlay 16`                | `0x205D4` | `11`         |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x1F160` | `11`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes  |
+  |:-------------:|:--------------:|
+  | **All Games** | `11 32 93 42`  |
+</details>
+
+Fire Fang (*specifically the move effect assigned to only Fire Fang*) is able to hit through Wonder Guard, even if the target does not have a weakness to Fire-Type moves. More information about the bug can be found on [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/List_of_battle_glitches_in_Generation_IV#Fire_Fang_Wonder_Guard_glitch) or searching `Fire Fang Wonder Guard` on the Kingdom of DS Hacking Discord.
+
+To fix the issue, change the byte from `11` to `10`.
+<br/>
+
+
+
+### Trainer AI Water Immunity Check vs Dry Skin
+> Sources and Credits: [Memory5ty7](https://discord.com/channels/446824489045721090/920372513488404542/1216114974255091774), [DarmaniDan](https://discord.com/channels/446824489045721090/920372513488404542/1216146554646433914), [Lhea](https://discord.com/channels/446824489045721090/1201213967389966378/1210066487562207302), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L78C50-L78C65)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0x4DB4`  | `1A`         |
+| **Platinum**             | `Overlay 14`                | `0x4DAC`  | `1A`         |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x1DA7C` | `1A`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes              |
+  |:-------------:|:--------------------------:|
+  | **All Games** | `1A 00 00 00 26 00 00 00`  |
+</details>
+
+The Trainer AI performs two checks when considering whether the opposing Pokémon is immune to Water-Type moves. The first check considers Water Absorb, but the second check mistakenly considers Levitate instead of Dry Skin. In practice, this means that **(1)** a Trainer's Pokémon won't use Water-Type moves if it knows that the opposing Pokémon has Levitate, and **(2)** a Trainer's Pokémon may repeatedly use a Water-Type move against an opposing Pokémon with Dry Skin.
+
+To fix the issue, change the byte from `1A` (26 in decimal, Levitate's ID) to `57` (87 in decimal, Dry Skin's ID).
 <br/>
