@@ -396,6 +396,7 @@ As an example, to change the HP restoration from **1/16<sup>th</sup>** of the Po
 <br/>
 
 
+
 ### Reckless Damage Multiplier
 > Sources and Credits: [Yako](https://discord.com/channels/446824489045721090/920372513488404542/1475182718189830297), Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/res/battle/scripts/effects/effect_script_0045.s#L6), [2](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0048.s#L6), [3](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0198.s#L6), [4](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0253.s#L6), [5](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0262.s#L6), [6](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0269.s#L6)), HGSS Decomp ([1](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0045.s#L7), [2](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0048.s#L7), [3](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0198.s#L7), [4](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0253.s#L7), [5](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0262.s#L7), [6](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0269.s#L7))
 
@@ -446,8 +447,6 @@ Unpack the following NARCs, open the six specified files, and change the bytes a
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_269.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_269.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_269.bin` | `0x20` | `0C`         |
-
-
 <br/>
 
 
@@ -619,7 +618,11 @@ Later in the same file contains the logic for Grip Claw (*specifically the item 
 | **Platinum**             | `0x60`                      | `06`         |
 | **Diamond/Pearl**        | `0x60`                      | `06`         |
 
-As an example, to change Grip Claw to cause binding moves to always last for **7 *effective* turns** (matching Gen V onwards), change the byte at `0x60` from `06` (6 in decimal) to `08` (8 in decimal). Make sure to pack the NARC after saving the file.
+As an example, to change Grip Claw to cause binding moves to always last for **6 *effective* turns**, change the byte at `0x60` from `06` (6 in decimal) to `07` (7 in decimal). Make sure to pack the NARC after saving the file.
+
+:::warning
+The forced Grip Claw duration can not be changed to a value greater than `07`.
+:::
 <br/>
 
 
