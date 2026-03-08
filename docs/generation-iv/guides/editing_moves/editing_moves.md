@@ -3889,3 +3889,187 @@ The steps outlined in the [TMs & HMs section](#technical--hidden-machines-tms--h
   - Use the Pokémon editor in DSPRE to enable TM51 for all of these Pokémon.
 
 </details>
+
+
+<details>
+<summary>+1 Attack & Special Attack, or if in Harsh Sunlight, +2 Attack & Special Attack Status Move (**Growth Gen V+**)</summary>
+
+> Author: Lmaokai
+
+In this case study, the move Growth will be updated to match Gen V+ behavior. In Gen IV, Growth raises the user's Special Attack by 1 stage. In Gen V+, Growth raises the user's Attack and Special Attack by 1 stage. Additionally, in Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages instead.
+
+Although Vanilla Platinum does not have any move that specifically raises the user's Attack **and** Special Attack stat (by either 1 or 2 stages), this effect can still be achieved with two methods. The first method is simpler and will follow the approach described in Drayano's tutorial, [linked above](#backporting-stat-changing-moves). The second method is more complex, but provides a cleaner effect as shown in the comparison below.
+
+Then, to add the interaction with Harsh Sunlight, the logic from [Move Battle Effect 151](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/effects/effect_script_0151.s) (the effect associated with SolarBeam) can be copied, with some adjustments.
+
+| Method One (two stat change animations)           | Method Two (single stat change animation)      |
+|:-------------------------------------------------:|:----------------------------------------------:|
+| ![](resources/case_study_growth_sun_two_anim.gif) | ![](resources/case_study_growth_sun_clean.gif) |
+
+:::warning
+The following steps are for Pokémon Platinum (US).
+:::
+
+<details>
+<summary>**Method One (two stat change animations)**</summary>
+
+This method will comprise of the following steps:
+1. Unpack the Move Battle Effect NARC `be_seq.narc`
+2. Create and edit a new Move Battle Effect file
+3. Save the new Move Battle Effect file and pack the Move Battle Effect NARC
+4. Edit Growth's move data
+5. Test the changes and other tasks
+
+#### Step 1: Unpack the Move Battle Effect NARC `be_seq.narc`
+1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Move Battle Effects NARC located at `/battle/skill/be_seq.narc`.
+2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
+3. If you've never unpacked `be_seq.narc` before, you should have 277 files in this folder (with the first file numbered as `0000` and last file numbered as `0276` because these files are zero-indexed).
+
+#### Step 2: Create and edit a new Move Battle Effect file
+1. Using any hex editor of your choice, create a new blank file.
+2. Paste the following:
+```
+D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00 00 32 00 00 00 07 00 00 00 02 00 00 00 0F 00 00 40 32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 60 DE 00 00 00 32 00 00 00 07 00 00 00 02 00 00 00 27 00 00 40 32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 60 DE 00 00 00
+```
+3. Here is a breakdown of the logic:
+    - `D3 00 00 00 05 00 00 00` - These values are copied from [Move Battle Effect 151](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/effects/effect_script_0151.s) (the effect associated with SolarBeam). They check if **Cloud Nine** or **Air Lock** are in effect, and if so, then skip the next 5 words (a word is 4 bytes, each hexadecimal pair is a single byte). Essentially, this skips the following bytes that check for Harsh Sunlight, and continues with the logic that raises the user's Attack and Special Attack by 1 stage.
+    - `20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00 00` - These values are also based on Move Battle Effect 151, which checks if the weather is Harsh Sunlight, and if so, then skip the next 9 words. This skips to the logic that raises the user's Attack and Special Attack by 2 stages.
+    - `32 00 00 00 07 00 00 00 02 00 00 00 0F 00 00 40` - Sets the Direct Side Effect to raise Attack by 1 stage and target the attacker.
+    - `32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 60` - Sets the Indirect Side Effect to raise Special Attack by 1 stage and target the attacker if the move successfully executes. Alternatively, `32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 80` can be used instead, but requires setting the move data's `Side Effect Probability` to `100`.
+    - `DE 00 00 00` - This is the `End` command for Platinum, which ends the execution of this Move Battle Effect Script.
+    - `32 00 00 00 07 00 00 00 02 00 00 00 27 00 00 40` - Sets the Direct Side Effect to raise Attack by 2 stages and target the attacker.
+    - `32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 60` - Sets the Indirect Side Effect to raise Special Attack by 2 stages and target the attacker if the move successfully executes. Alternatively, `32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 80` can be used instead, but requires setting the move data's `Side Effect Probability` to `100`.
+    - `DE 00 00 00` - Another `End` command
+
+#### Step 3: Save the new Move Battle Effect file and pack the Move Battle Effect NARC
+1. Save this file as `0277` to your unpacked `be_seq.narc` folder (assuming new files haven't been added already).
+2. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `be_seq.narc` folder back to `/battle/skill/be_seq.narc`.
+
+#### Step 4: Edit Growth's move data
+1. Open DSPRE's Move Data Editor and select the move Growth.
+2. Change the `Effect Sequence` to `277 - Undocumented`.
+3. Change the PP to `20` (matching Gen VI+).
+4. Save the changes in the Move Data Editor.
+
+#### Step 5: Test the changes and other tasks
+1. Test the following scenarios to verify that Growth functions properly:
+    - Under non-Harsh Sunlight weather conditions, Growth raises the user's Attack and Special Attack by 1 stage.
+    - In Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages.
+    - In Harsh Sunlight, but with either the abilities Cloud Nine or Air Lock in effect, Growth raises the user's Attack and Special Attack by 1 stage.
+2. If Growth works as expected, great! Make sure to update the Move Description (Platinum - `Text Archive 646`, line 74)  as well to reflect these changes.
+
+| Growth (Normal)                                      | Growth (Sun)                                      |
+|:----------------------------------------------------:|:-------------------------------------------------:|
+| ![](resources/case_study_growth_no_sun_two_anim.gif) | ![](resources/case_study_growth_sun_two_anim.gif) |
+
+</details>
+
+<details>
+<summary>**Method Two (Complex but single stat change animation)**</summary>
+
+This method will comprise of the following steps:
+1. Apply ARM9 Expansion
+2. Move the `Move Battle Effect Subscript to Battle Subscript Table`
+3. Unpack the Battle Subscript NARC `sub_seq.narc`
+4. Create and save a new Battle Subscript file
+5. Create and save a second new Battle Subscript file
+6. Pack the Battle Subscript NARC
+7. Add new entries to the `Move Battle Effect Subscript to Battle Subscript Table`
+8. Unpack the Move Battle Effect NARC `be_seq.narc`
+9. Create and edit a new Move Battle Effect file
+10. Save the new Move Battle Effect file and pack the Move Battle Effect NARC
+11. Edit Growth's move data
+12. Test the changes and other tasks
+
+#### Step 1: Apply ARM9 Expansion
+1. If you haven't already, use the latest version of [DSPRE](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the ARM9 Expansion patch. 
+2. Verify that the `/unpacked/synthOverlay/0009` file size is 88 KB or 90,112 bytes.
+3. If your file is not the correct size, or if you've applied a different version of the ARM9 Expansion, please ask for assistance in the [Kingdom of DS Hacking Discord support channels](https://discord.com/channels/446824489045721090/446865033310240769).
+
+#### Step 2: Move the `Move Battle Effect Subscript to Battle Subscript Table`
+1. If you've followed this [**Fairy Implementation Guide**](../type_expansion/pt-type_expansion.md), this step may already be complete, but you can still follow along to verify.
+2. Using any hex editor of your choice, open `Overlay 16` and go to offset `0x33CE4`. You will see the following bytes:
+```
+00 00 00 00 12 00 00 00 16 00 00 00 19 00 00 00...
+```
+3. This is the start of the [Move Battle Effect Subscript to Battle Subscript Table](https://github.com/pret/pokeplatinum/blob/34c0566c09e2a7e78d4f92443b8c10aa35cd67d6/include/data/move_side_effect_subscripts.h#L7) that points [Move Battle Effect Subscript IDs](https://github.com/pret/pokeplatinum/blob/main/generated/battle_move_subscript_ptrs.txt) invoked by Direct and Indirect Side Effects in Move Effect Scripts to the relevant [Battle Subscript ID](https://github.com/pret/pokeplatinum/blob/main/generated/battle_subscripts.txt).
+4. From offset `0x33CE4`, copy the next `0x244` (`580`) bytes. Alternatively, you can copy the following bytes instead:
+```
+00 00 00 00 12 00 00 00 16 00 00 00 19 00 00 00 1B 00 00 00 1F 00 00 00 2F 00 00 00 25 00 00 00 0E 00 00 00 37 00 00 00 38 00 00 00 30 00 00 00 0D 00 00 00 3A 00 00 00 3F 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 40 00 00 00 42 00 00 00 55 00 00 00 56 00 00 00 5D 00 00 00 77 00 00 00 73 00 00 00 82 00 00 00 8A 00 00 00 93 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 2C 00 00 00 8E 00 00 00 95 00 00 00 96 00 00 00 94 00 00 00 97 00 00 00 98 00 00 00 18 00 00 00 21 00 00 00 22 00 00 00 23 00 00 00 2B 00 00 00 2D 00 00 00 2E 00 00 00 31 00 00 00 34 00 00 00 36 00 00 00 3E 00 00 00 43 00 00 00 44 00 00 00 46 00 00 00 49 00 00 00 4D 00 00 00 4E 00 00 00 4F 00 00 00 50 00 00 00 51 00 00 00 52 00 00 00 54 00 00 00 57 00 00 00 58 00 00 00 59 00 00 00 5B 00 00 00 5C 00 00 00 5F 00 00 00 60 00 00 00 61 00 00 00 7E 00 00 00 64 00 00 00 65 00 00 00 67 00 00 00 69 00 00 00 6A 00 00 00 6D 00 00 00 70 00 00 00 71 00 00 00 72 00 00 00 78 00 00 00 7A 00 00 00 7B 00 00 00 7C 00 00 00 7D 00 00 00 7F 00 00 00 80 00 00 00 81 00 00 00 83 00 00 00 84 00 00 00 86 00 00 00 87 00 00 00 8C 00 00 00 8D 00 00 00 8F 00 00 00 91 00 00 00 9A 00 00 00 9B 00 00 00 9C 00 00 00 9E 00 00 00 9F 00 00 00 A0 00 00 00 A1 00 00 00 A2 00 00 00 A3 00 00 00 A4 00 00 00 A5 00 00 00 A6 00 00 00 A7 00 00 00 A8 00 00 00 AA 00 00 00 AB 00 00 00 AD 00 00 00 AF 00 00 00 DA 00 00 00 DB 00 00 00 DC 00 00 00 E2 00 00 00 F6 00 00 00 F7 00 00 00 F8 00 00 00 F9 00 00 00 04 01 00 00 05 01 00 00 76 00 00 00
+```
+5. Open `synthOverlay 9` in your hex editor and go to offset `0x1000`. Make sure there is no actual data here (unless you've already done this before). Paste/overwrite the copied bytes at that offset.
+6. Go back to `Overlay 16` in your hex editor and go to offset `0x204F8`. Replace `24 EE 26 02` with `00 90 3C 02`. This tells the game the new location of the `Move Battle Effect Subscript to Battle Subscript Table`.
+7. Save the files back to their respective `project_name_DSPRE_contents` folder.
+8. Save your ROM, get in a battle, and test as any moves as possible to make sure the game doesn't crash or produce graphical glitches.
+
+#### Step 3: Unpack the Battle Subscript NARC `sub_seq.narc`
+1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Battle Subscripts NARC located at `/battle/skill/sub_seq.narc`.
+2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
+3. If you've never unpacked `sub_seq.narc` before, you should have 297 files in this folder (with the first file numbered as `0000` and last file numbered as `0296` because these files are zero-indexed).
+
+#### Step 4: Create and save a new Battle Subscript file
+1. The first Battle Subscript will handle raising Attack and Special Attack by 1 stage. Vanilla Platinum has a few existing [Battle Subscripts](https://github.com/pret/pokeplatinum/tree/main/res/battle/scripts/subscripts) that raise two different stats by 1 stage, which we can copy and modify.
+2. Open the unpacked `sub_seq.narc` folder, make a copy of file `0152` and rename it `0297` (if you have already added files here, use the next available number). File `0152` is the [Battle Subscript for raising Attack and Speed by 1 stage](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/subscripts/subscript_user_atk_and_speed_up_1_stage.s) (associated with the Dragon Dance move effect).
+3. Open up the new `0297` file in any hex editor and go to offset `0x24`. You should see `15 00 00 00` which is part of the command that checks the Pokémon's Speed stat stage. Replace it with `16 00 00 00` to check Special Attack instead.
+4. Go to offset `0x8C`. You should see `11 00 00 00` which is the [Move Battle Effect Subscript](https://github.com/pret/pokeplatinum/blob/007a26cc66d503814447cdfed4d2fced5eec48a6/generated/battle_move_subscript_ptrs.txt#L18) that raises Speed by 1 stage. Replace it with `12 00 00 00` to change the effect to raise Special Attack by 1 stage.
+5. Save the `0297` file back to the unpacked `sub_seq.narc` folder.
+
+#### Step 5: Create and save a second new Battle Subscript file
+1. The second Battle Subscript will handle raising Attack and Special Attack by 2 stages. This will mirror the previous step, but adjusted to raise Attack and Special Attack by 2 stages.
+2. Open the unpacked `sub_seq.narc` folder, make a copy of file `0297` and rename it `0298`.
+3. Open up the new `0298` file in any hex editor and go to offset `0x74`. Replace `0F 00 00 00` with `27 00 00 00` to change the effect to raise Attack by 2 stages.
+4. Open up the new `0298` file in any hex editor and go to offset `0x8C`. Replace `12 00 00 00` with `2A 00 00 00` to change the effect to raise Special Attack by 2 stages.
+5. Save the `0298` file back to the unpacked `sub_seq.narc` folder.
+
+#### Step 6: Pack the Battle Subscript NARC
+1. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `sub_seq.narc` folder back to `/battle/skill/sub_seq.narc`.
+
+#### Step 7: Add new entries to the `Move Battle Effect Subscript to Battle Subscript Table`
+1. Go back to `synthOverlay 9` in your hex editor and go to offset `0x1244`. This should be right after the end of the table you moved previously.
+2. Assuming you haven't added new entries here already, overwrite the next 8 bytes with `29 01 00 00 2A 01 00 00`. 
+3. This essentially creates two new Move Battle Effect Subscript IDs, `145` and `146`, that will point to the two new Battle Subscripts you added, respectively. 
+4. Save the file back to `/unpacked/synthOverlay/0009`.
+
+#### Step 8: Unpack the Move Battle Effect NARC `be_seq.narc`
+1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Move Battle Effects NARC located at `/battle/skill/be_seq.narc.`
+2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
+3. If you've never unpacked `be_seq.narc` before, you should have 277 files in this folder (with the first file numbered as `0000` and last file numbered as `0276` because these files are zero-indexed).
+
+#### Step 9: Create and edit a new Move Battle Effect file
+1. Using any hex editor of your choice, create a new blank file.
+2. Copy and paste the following bytes:
+```
+D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00 00 32 00 00 00 07 00 00 00 02 00 00 00 91 00 00 40 DE 00 00 00 32 00 00 00 07 00 00 00 02 00 00 00 92 00 00 40 DE 00 00 00
+```
+3. Here is a breakdown of the logic:
+    - `D3 00 00 00 05 00 00 00` - Check if **Cloud Nine** or **Air Lock** are in effect, and if so, skip to the logic that raises the user's Attack and Special Attack by 1 stage.
+    - `20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00 00` - Check if the weather is Harsh Sunlight, and if so, skip to the logic that raises the user's Attack and Special Attack by 2 stages.
+    - `32 00 00 00 07 00 00 00 02 00 00 00 91 00 00 40` - Sets the Direct Side Effect to the newly added Move Effect Subscript 145, which then points to the Battle Subscript 297 that raises Attack and Special Attack by 1 stage. Also specifies to target the attacker.
+    - `DE 00 00 00` - `End` command
+    - `32 00 00 00 07 00 00 00 02 00 00 00 92 00 00 40` - Sets the Direct Side Effect to the newly added Move Effect Subscript 146, which then points to the Battle Subscript 298 that raises Attack and Special Attack by 2 stages. Also specifies to target the attacker.
+    - `DE 00 00 00` - `End` command
+
+#### Step 10: Save the new Move Battle Effect file and pack the Move Battle Effect NARC
+1. Save this file as `0277` to your unpacked `be_seq.narc` folder (assuming new files haven't been added already).
+2. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `be_seq.narc` folder back to `/battle/skill/be_seq.narc`.
+
+#### Step 11: Edit Growth's move data
+1. Open DSPRE's Move Data Editor and select the move Growth.
+2. Change the `Effect Sequence` to `277 - Undocumented`.
+3. Change the PP to `20` (matching Gen VI+).
+4. Save the changes in the Move Data Editor.
+
+#### Step 12: Test the changes and other tasks
+1. Test the following scenarios to verify that Growth functions properly:
+    - Under non-Harsh Sunlight weather conditions, Growth raises the user's Attack and Special Attack by 1 stage.
+    - In Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages.
+    - In Harsh Sunlight, but with either the abilities Cloud Nine or Air Lock in effect, Growth raises the user's Attack and Special Attack by 1 stage.
+2. If Growth works as expected, great! Make sure to update the Move Description (Platinum - `Text Archive 646`, line 74)  as well to reflect these changes.
+
+| Growth (Normal)                                   | Growth (Sun)                                   |
+|:-------------------------------------------------:|:----------------------------------------------:|
+| ![](resources/case_study_growth_no_sun_clean.gif) | ![](resources/case_study_growth_sun_clean.gif) |
+
+</details>
+
+</details>
