@@ -621,7 +621,7 @@ Later in the same file contains the logic for Grip Claw (*specifically the item 
 As an example, to change Grip Claw to cause binding moves to always last for **6 *effective* turns**, change the byte at `0x60` from `06` (6 in decimal) to `07` (7 in decimal). Make sure to pack the NARC after saving the file.
 
 :::warning
-The forced Grip Claw duration can not be changed to a value greater than `07`.
+The forced Grip Claw duration cannot be changed to a value greater than `07`.
 :::
 <br/>
 
