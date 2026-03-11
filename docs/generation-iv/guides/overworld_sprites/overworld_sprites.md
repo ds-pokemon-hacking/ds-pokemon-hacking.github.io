@@ -75,7 +75,7 @@ Heroine:
 
 ## Making your own Sprite
 Before proceeding you should be familiar with Sprite Indexing, as all the sprites must have at most 16 color, with the background color being indexed to the first slot of the palette.
-See [Sprite Indexing](ds-pokemon-hacking.github.io/tree/main/src/universal/guides/sprite_indexing) for more information.
+See [Sprite Indexing](/docs/universal/guides/sprite_indexing/) for more information.
 
 First you want to load the png spritesheet you previously extracted in the graphic editing software of your choice, to either make edits to it or use it as a base for your spritesheet.
 You may also want to enable some kind of grid visualization in order to view the proper position of each frame. In Aseprite you can do so by clicking View>Grid>Grid Settings.

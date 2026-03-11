@@ -3,6 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { logger } from '@docusaurus/logger';
 import path from 'path';
 
 const config: Config = {
@@ -22,7 +23,6 @@ const config: Config = {
   projectName: 'ds-pokemon-hacking.github.io', // Usually your repo name.
 
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -39,6 +39,23 @@ const config: Config = {
         'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
       crossorigin: 'anonymous',
     },
+  ],
+  plugins: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      {
+        // Index the documentation and pages
+        indexDocs: true,
+        indexPages: true,
+        indexBlog: false,
+        // Set the maximum number of search results
+        searchResultLimits: 10,
+        // hashed file names help with long-term caching
+        hashed: true,
+        // language to index
+        language: 'en',
+      },
+    ],
   ],
   presets: [
     [
@@ -62,6 +79,13 @@ const config: Config = {
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: (broken) => {
+        logger.warn(
+          `Broken Markdown Link in ${broken.sourceFilePath}: ${broken.url}`
+        );
+      },
+    },
   },
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {

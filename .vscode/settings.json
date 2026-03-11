@@ -1,0 +1,8 @@
+{
+  // Use the project's TypeScript version in VS Code
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // Prompt to use workspace TS SDK when detected
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  // Prefer relative imports for local modules
+  "typescript.preferences.importModuleSpecifier": "relative"
+}

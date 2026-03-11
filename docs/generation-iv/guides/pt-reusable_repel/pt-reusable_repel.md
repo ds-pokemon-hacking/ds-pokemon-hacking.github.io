@@ -31,21 +31,21 @@ If you don't have one already, create a new project by loading your ROM in DSPRE
 
 ### Scripting
 
-Go to `Script 33` replace it with the following:
+Go to `Script 33` (Script File `211`) replace it with the following:
 <details>
-<summary>Script 33</summary>
+<summary>Script 33 (Script File `211`)</summary>
 
 ```
 Script 33:
 	PlayFanfare 1500
 	LockAll
-  CheckPlayerHasItem 79 1 0x800C
+  CheckItem 79 1 0x800C
 	CompareVarValue 0x800C 1
 	JumpIf EQUAL Function#177
-	CheckPlayerHasItem 76 1 0x800C
+	CheckItem 76 1 0x800C
 	CompareVarValue 0x800C 1
 	JumpIf EQUAL Function#177
-	CheckPlayerHasItem 77 1 0x800C
+	CheckItem 77 1 0x800C
 	CompareVarValue 0x800C 1
 	JumpIf EQUAL Function#177
 	Message 79
@@ -75,13 +75,13 @@ End
 Function 178:
   CloseMessage
 	MultiStandardText 1 1 0 1 0x800C
-	CheckPlayerHasItem 79 1 0x8000
+	CheckItem 79 1 0x8000
 	CompareVarValue 0x8000 1
 	CallIf EQUAL Function#179
-	CheckPlayerHasItem 76 1 0x8000
+	CheckItem 76 1 0x8000
 	CompareVarValue 0x8000 1
 	CallIf EQUAL Function#180
-	CheckPlayerHasItem 77 1 0x8000
+	CheckItem 77 1 0x8000
 	CompareVarValue 0x8000 1
 	CallIf EQUAL Function#181
 	ShowMulti

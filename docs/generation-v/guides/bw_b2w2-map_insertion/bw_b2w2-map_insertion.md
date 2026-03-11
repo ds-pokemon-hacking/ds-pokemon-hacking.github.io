@@ -14,7 +14,7 @@ tags:
 
 This is a tutorial on how to insert your own maps in Generation V games, as well as change the Area Data textures.
 It is assumed you have already made your map in PDSMS (or Blender) and have all the files already converted.
-If you're unsure how to do so, check Jay's video on (creating your first map with PDSMS)[https://www.youtube.com/watch?v=Xnj8cWDRbaA].
+If you're unsure how to do so, check Jay's video on [creating your first map with PDSMS](https://www.youtube.com/watch?v=Xnj8cWDRbaA).
 
 ---
 ## Table of Contents
