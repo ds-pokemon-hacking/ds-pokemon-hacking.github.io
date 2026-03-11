@@ -1,5 +1,5 @@
 ---
-title: It's all rigged, baby: Getting a skin-weighted model from Blender to DS
+title: Getting a skin-weighted model from Blender to DS
 tags:
   - Guide (Diamond)
   - Guide (Pearl)
@@ -12,7 +12,7 @@ tags:
   - Guide (White 2)
 ---
 
-# It's all rigged, baby: Getting a skin-weighted model from Blender to DS
+# Getting a skin-weighted model from Blender to DS
 > Author(s): [Brom](https://github.com/BromBromBromley).
 
 ## Table of Contents
