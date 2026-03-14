@@ -24,7 +24,7 @@ This is a tutorial on how to hex edit your files for the first time.
 Binary Hacking is done by editing the compiled binaries of the game files. 
 For most of the regular stuff like wild encounters and trainers there are tools in place to simplify the process, but sometimes it is still necessary to hex edit things manually.
 
-If you haven't already you need to download a Hex Editor. There are plenty of different softwares that can do it, in this guide I will be using **HxD**. Other hex editors, such as **ImHex** may have shortcuts and methods.
+If you haven't already you need to download a Hex Editor. There are plenty of different softwares that can do it, in this guide I will be using **HxD**. Other hex editors, such as **ImHex** may have other shortcuts and methods.
 
 To start, open the file you want to edit with it. Worth mentioning that you can open in a hex editor any file regardless of its extension, keep this in mind since narc files or their contents once extracted might not have an extension.
 
