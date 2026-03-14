@@ -1034,7 +1034,7 @@ To replace the values for any one or more of these move effect scripts:
 7. Open the project_DSPRE_contents folder in DSPRE and save the ROM.
   
 ### Unused Move Effect Scripts
-There are a number of **move effect scripts** that appear to have no intended use (named as `### - Unused ###` or `### - Undocumented``` in DSPRE's Move Editor). Below are the unused and undocumented move effect scripts which only contain the standard damaging critical hit determination and damage calculation (or don't exist as a file in the move effect scripts NARC).  
+There are a number of **move effect scripts** that appear to have no intended use (named as `### - Unused ###` or `### - Undocumented` in DSPRE's Move Editor). Below are the unused and undocumented move effect scripts which only contain the standard damaging critical hit determination and damage calculation (or don't exist as a file in the move effect scripts NARC).  
 
 - `96`
 - `110`
@@ -1044,7 +1044,7 @@ There are a number of **move effect scripts** that appear to have no intended us
 - `141`
 - `157`
 - `163`
-- `264` *Identified as "Unused" in DSPRE, but has [unique code](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/effects/effect_script_0264.s).*
+- `264` (*Identified as "Unused" in DSPRE, but has [unique code](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/effects/effect_script_0264.s).*)
 - `277` - `470`
   
 The safest scripts to use are the latter range of `277`-`470`. These data aren't just the standard critical hit and damage calculation (and could be used for some unknown or unclear purpose), they just do not exist.  
@@ -1065,7 +1065,7 @@ The table that points **move effect subscripts** to **battle subscripts** can be
 | **File**   |       Overlay 12      |       Overlay 16      |       Overlay 11      |
 | **Offset** | `0x3550C` - `0x3574C` | `0x33CE4` - `0x33F27` | `0x30F08` - `0x3114B` |
 
-Creating **battle subscripts** which handle different combinations of two or more 1- or 2-stage stat changes, is achievable by mirroring battle subscritps for existing moves such as Calm Mind, Dragon Dance and Curse (non-Ghost) as a base, by reviewing the unpacked battle subscripts NARC (`sub_seq.narc`), decompilation projects and reverse engineering tools (such as Ghidra). This more complicated method is beyond the scope of this guide, but an example of what can be achieved is included in the [Case Studies](#example-case-studies) section (Quiver Dance).
+Creating **battle subscripts** which handle different combinations of two or more 1- or 2-stage stat changes, is achievable by mirroring battle subscripts for existing moves such as [Calm Mind](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0151_CalmMind.s), [Dragon Dance](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0152_DragonDance.s) and [Curse (non-Ghost)](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0096_CurseNormal.s) as a base, by reviewing the unpacked battle subscripts NARC (`/a/0/0/1` or `sub_seq.narc`), decompilation projects and reverse engineering tools (such as Ghidra). This more complicated method is beyond the scope of this guide, but an example of what can be achieved is included in the [Case Studies](#example-case-studies) section (Quiver Dance).
 
 ------------------------------
 
@@ -1742,8 +1742,8 @@ The texts that are displayed at the beginning, during and end of the trapping ef
   </tr>
 </table>
 
-- The texts that are displayed during the effect and when it ends are common to all the trapping moves, and are determined/defined directly from the relevant battle subscripts ([`0059`](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0059_Bind.s) and [`0060`](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0060_BindEnd.s)).
-- The text that is displayed when the trapping effect first applies, are varied, and can be unique per move. These are determined indirectly in the relevant battle subscript ([`0058`](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0060_BindEnd.s)) through a `PrintBufferedMessage` command, which requires their definition in the relevant **move script** (move script number equal to the move index/ID, [see Bind for example](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/move_script/move_script_0020_Bind.s)).
+- The texts that are displayed during the effect and when it ends are common to all the trapping moves, and are determined/defined directly from the relevant **battle subscripts** ([`0059`](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0059_Bind.s) and [`0060`](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0060_BindEnd.s)).
+- The text that is displayed when the trapping effect first applies, are varied, and can be unique per move. These are determined indirectly in the relevant **battle subscript** ([`0058`](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0060_BindEnd.s)) through a `PrintBufferedMessage` command, which requires their definition in the relevant **move script** (move script number equal to the move index/ID, [see Bind for example](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/move_script/move_script_0020_Bind.s)).
 - There is some further variation as some trapping moves initial text refer to the target only, and others refer to the target and the user. For example:
     - **Bind** initial trapping text: `Target` was squeezed by `User`  
     - **Fire Spin** initial trapping text: `Target` was trapped in the vortex!  
@@ -1773,7 +1773,7 @@ Where `## ##` should be replaced by the hex of the first message index of the se
 #### End of Turn Trapping Animation
 Using the correct trapping Effect Sequence (`042` - Binding move effect script), will enable the mechanical aspects of the trapping effect, however, the animation will default to showing the Bind animation with the 'End of Turn' damage is applied at the end of each turn. In order to set the trapping animation to match the chosen move, two things must be done:
 1. The animation must be added to the **continuous animations** NARC that contains these types of 'End of Turn' animations (trapping moves, Leech Seed, Ingrain...etc.).
-2. The [trapping effect battle subscript](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0059_Bind.s) must be updated to add logic to check for the newly added animation.
+2. The [trapping/binding effect battle subscript](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0059_Bind.s) must be updated to add logic to check for the newly added animation.
 
 The second of these steps is fairly involved, and will require some edits to existing data as well as addition of new.
 
@@ -1799,7 +1799,7 @@ These steps assume that the exact animation of the move will be duplicated as th
 ##### Trapping Effect Subscript Mapping
 > Source(s): [Lhea, Paille92. & Yako? (2025)](https://discord.com/channels/446824489045721090/920372513488404542/1417589117210071072)  
 
-In order for the new trapping animation to play when the appropriate trapping move is used, the trapping/binding battle subscript must be updated to compare the move used, and play the correct battle animation.  
+In order for the new trapping animation to play when the appropriate trapping move is used, the [trapping/binding effect battle subscript](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0059_Bind.s) must be updated to compare the move used, and play the correct battle animation.  
 This is not necessarily complicated, but somewhat involved, because the comparison and the execution are in two different places, and there is some accounting for the Magic Guard ability in the file as well.  
 
 Viewing the battle subscript hex and [Decompilation](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0059_Bind.s) together may help understand what is happening easier.  
@@ -1815,12 +1815,12 @@ This is not necessarily intuitive, therefore the following collapsible sections 
 In simple terms three tasks (steps 3-5) need to be completed for each new trapping move:
 1. Unpack the "Battle Subscripts" NARC using (using the [DSPRE "Unpack NARC to Folder" function](/docs/universal/guides/unpacking_narcs/#dspre)).
     - HGSS: `/a/0/0/1`
-    - Platinum: `/battle/skill/sub_seq.narc`
+    - Platinum/Diamond/Pearl: `/battle/skill/sub_seq.narc`
 2. Open file `059` in a hex editor such as HxD.
 
 <details>
 <summary>3. Add a new check on the move that was used (compare function).</summary>
-- Each trapping move except Bind has five sets of four byts for the comparison.
+- Each trapping move except Bind has five sets of four bytes for the comparison.
     - Bind doesn't have one as it is the "fallback", this is why the Bind animation is used if this file is not updated.
 - A new set of twenty bytes must be added after the last check (Sand Tomb in vanilla), replacing the 13th and 14th bytes with the relevant move ID (Little Endian).
     - Here is Sand Tomb's compare function from HGSS:  
