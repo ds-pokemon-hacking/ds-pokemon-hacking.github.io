@@ -655,7 +655,7 @@ The majority of attributes of moves are adjusted in this section of the Move Dat
 | Split | `PHYSICAL` `SPECIAL` `STATUS` | The difference between physical damaging moves, special damaging moves & status moves that do not inflict direct damage |
 | Contest Condition | `COOL` `BEAUTIFUL` `CUTE` `SMART` `TOUGH` | The five categories of competitions, moves and condition in "Super Contests" in Diamond, Pearl or Platinum. |
 | Priority | `-32` to `+32` | The priority stage of a move, where a higher number indicates a move to be executed earlier. Vanilla Generation IV moves range from `-7` to `+5`. |
-| Effect Sequence | `000 - ...` to `470 - ...` | A numeric value that determines the more complex effects of the move beyond basic data (such as side effects or damage modifiers; more details in the [Move Effect Scripts](#move-effect-scripts) section below). |
+| Effect Sequence | `000 - ...` to `470 - ...` | A numeric value that determines the more complex effects of the move beyond basic data (such as direct or indirect side effects, or damage modifiers; more details in the [Move Effect Scripts](#move-effect-scripts) section below). |
 | PP | `0` to `100` | The base number of Power Points, i.e. the amount of times the move can be executed before PP is restored. |
 | Contest Appeal | `0` to `255` | A numeric value the determines the behaviour of the move in a "Super Contest" in Diamond, Pearl or Platinum. Index to Effect mapping in the table below. |
 | Side Effect Probability | `0` to `255` | The probability in % of an indirect side effect triggering, for example a stat boost or fall as an indirect side effect of a damage-dealing move. |
@@ -861,7 +861,7 @@ Where:
 - `E0 00 00 00` - Ends the script *(different across each game, see above note)*.  
 
 **Direct and Indirect Side Effects**
-- **Move effect scripts** typically invoke **move effect subscripts** as a **direct** or **indirect side effect**.
+- **Move effect scripts** may invoke **move effect subscripts** as **direct** or **indirect side effects**.
 - **Direct side effects** will occur 100% of the time (as long as the move successfully executes). Though direct side effects are typically used by status moves, they will occur before damage has been dealt if used by a damage-dealing move.
 - **Indirect side effects** occur after damage has been dealt. Though indirect side effects are typically used by damage-dealing moves and not mixed with direct side effects, they will occur after direct side effects have been executed. **Indirect side effects** are usually subject to the "effect chance" set in the move's basic data (i.e. the "Side Effect Probability" percentage value in DSPRE's Move Editor).
 - The vanilla Generation IV games do not have any moves that mix direct and indirect side effects in a single move effect script, but it is possible to create a move effect script which includes both direct and indirect side effects.
@@ -869,7 +869,7 @@ Where:
 ### "Broken" Move Effect Scripts
 > Source(s): [Yako?](https://github.com/YakoSWG)  
 
-Because they are not used in the vanilla Generation IV games, there are a number of **move effect scripts** which do not actually invoke any **move effect subscripts** or side effects. These move effect scripts are named in DSPRE as the intended use, but require hex edits to function as intended.
+Because they are not used in the vanilla Generation IV games, there are a number of **move effect scripts** which do not actually invoke any **move effect subscripts** or side effects. These move effect scripts are named in DSPRE (with a `Dummy` prefix) as the intended use, but require hex edits to function as intended.
 
 The process to fix these move effect scripts is relatively straightforward, involving copying the move effect script of a similar functional move and substituting in the correct parameters. For example, move effect script `012` is intended to increase the user's Speed stat by one stage, a side effect that does not occur in the vanilla Generation IV games (in isolation).
 
@@ -1026,12 +1026,12 @@ To replace the values for any one or more of these move effect scripts:
     - HGSS: `/a/0/3/0`
     - Platinum/Diamond/Pearl: `/battle/skill/be_seq.narc`
 2. Open the relevant move effect script file using a hex editor.
-3. Replace the entire contents of the file with the relevant "Required Hex" string.
+3. Replace the entire contents of the file with the relevant "Required Hex" string (including the game-specific `End` command).
 4. Save the file.
 5. Move the backup file created by the hex editor to another location (this may be named `###.bak` for example). This is very important, if not done there will be issues with all move effect scripts *after* the modified one.
 6. Re-pack the move effect script NARC (using the DSPRE ["Build NARC from folder"](/docs/universal/guides/unpacking_narcs/#dspre) function).
     - For HGSS, the NARC will be created with the `.narc` suffix, that should be removed.
-7. Open the project_DSPRE_contents folder in DSPRE and save the ROM.
+7. Open the `project_DSPRE_contents` folder in DSPRE and save the ROM.
   
 ### Unused Move Effect Scripts
 There are a number of **move effect scripts** that appear to have no intended use (named as `### - Unused ###` or `### - Undocumented` in DSPRE's Move Editor). Below are the unused and undocumented move effect scripts which only contain the standard damaging critical hit determination and damage calculation (or don't exist as a file in the move effect scripts NARC).  
