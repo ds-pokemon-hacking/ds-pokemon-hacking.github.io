@@ -27,7 +27,16 @@ In addition for the Sprite Properties section you will need DSPRE and an Hex Edi
   * [Platinum](#platinum)
   * [HGSS](#hgss)
 
-## Extracting the Sprite
+## Extracting the Sprite  
+1. In DSPRE open the ROM to be edited.
+2. Navigate to the **Overworld Editor** from the **Other Editors** menu option.
+3. Select the overworld to export (by it's OW Entry ID), and click `Export PNG`.
+
+![](resources/dspre_overworld_btx_editor.png)
+
+<details>
+<summary>Legacy Tinke BTX export method</summary>
+	
 Overworld sprites are contained in BTX files, start by opening your ROM with Tinke and then navigating to the following filepath depending on your game:
 * **DPPt**: mmodel/mmodel.narc
 * **HGSS**: a/0/8/1
@@ -72,6 +81,7 @@ Heroine:
   </p>
 </details>
 
+</details>
 
 ## Making your own Sprite
 Before proceeding you should be familiar with Sprite Indexing, as all the sprites must have at most 16 color, with the background color being indexed to the first slot of the palette.
@@ -86,10 +96,22 @@ If you're making your own sprite from scratch, remember that all the frames you 
 
 Once you're done, you can open the BTX you previously extracted in BTX Editor 2.0 and click import, then import the spritesheet you made, and save the BTX.
 
-## Replacing the Sprite
+## Replacing the Sprite  
+:::info
+If your replacement sprite has a different size and/or number of frames from the sprite to the original (and you will therefore need to change the [sprite properties](#changing-the-sprite-properties) as well, the Tinke method will be needed. If the replacement sprite is the same size and number of frames, the DSPRE import method can be used.
+:::
+
+### Tinke BTX Import Method  
 Replacing the sprite simply consists in just clicking the "Change File" button in Tinke on the BTX file you want to replace, and then select the BTX you either extracted or obtained from BTX Editor. Don't forget to **click the Pack button on the narc file** after you've replaced the BTX. Now you can save the ROM.
 
 Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its properties to get the movement working correctly even if it's the same size. Single-frame sprites with the same dimension as the original won't have the issue however.
+
+### DSPRE Import Method  
+1. Return to DSPRE.
+2. Navigate back to the **Overworld Editor** from the **Other Editors** menu option.
+3. Select the overworld to override (by it's OW Entry ID), and click `Import PNG`.
+
+DSPRE will only accept a replacement sprite sheet of the same dimensions as the original, if you need to change the size or number of frames, use the Tinke method.
 
 ### Unused Sprites
 Adding new overworld sprites would require ASM but luckily there are a number of unused sprites that may be useful to you:
