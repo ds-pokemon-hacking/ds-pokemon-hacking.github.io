@@ -104,6 +104,10 @@ If your replacement sprite has a different size and/or number of frames from the
 ### Tinke BTX Import Method  
 Replacing the sprite simply consists in just clicking the "Change File" button in Tinke on the BTX file you want to replace, and then select the BTX you either extracted or obtained from BTX Editor. Don't forget to **click the Pack button on the narc file** after you've replaced the BTX. Now you can save the ROM.
 
+Overworld sprites are contained in BTX files, start by opening your ROM with Tinke and then navigating to the following filepath depending on your game:
+* **DPPt**: mmodel/mmodel.narc
+* **HGSS**: a/0/8/1
+
 Just remember that the sprite you're inserting must have the same size and number of frames as the one you're replacing, otherwise you will have to change its properties to get the movement working correctly even if it's the same size. Single-frame sprites with the same dimension as the original won't have the issue however.
 
 ### DSPRE Import Method  
