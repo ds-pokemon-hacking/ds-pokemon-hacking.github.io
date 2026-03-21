@@ -77,7 +77,7 @@ Unpack the relevant NARC, open the specified file, and change the byte at the pr
 | **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_26.bin` | `0x30` | `08`         |
 | **Diamond/Pearl**        | `/battle/skill/sub_seq.narc` | `sub_seq_26.bin` | `0x30` | `08`         |
 
-Burn damage in Gen IV is **1/8<sup>th</sup>** of the Pokémon's max HP. The battle logic calculates Burn damage by dividing the Pokémon's max HP by an explicitly defined value, in this case **8**.
+Burn damage in Gen IV is **1/8<sup>th</sup>** of the Pokémon's max HP. The battle logic (*more specifically, a battle subscript*) calculates Burn damage by dividing the Pokémon's max HP by an explicitly defined value, in this case **8**.
 
 As an example, to change Burn damage from **1/8<sup>th</sup>** of the Pokémon's max HP to **1/16<sup>th</sup>** (matching Generation VII onwards), change the byte from `08` (8 in decimal) to `10` (16 in decimal). Make sure to pack the NARC after saving the file.
 <br/>
@@ -119,17 +119,17 @@ We can change the number of logical shifts from **2** to **1**, effectively chan
 Unpack the relevant NARC, open the specified file, and change the byte(s) at the provided offset(s):
 | Game                     | NARC to unpack               | File             | Offset (Maximum Addend) | Vanilla Byte | Offset (Base # of Turns) | Vanilla Byte |
 |:------------------------:|:----------------------------:|:----------------:|:-----------------------:|:------------:|:------------------------:|:------------:|
-| **HeartGold/SoulSilver** | `/a/0/0/1`                   | `1_18.bin`       | `0x250`                 | `03`         | `0x254`                  | `02`         |
-| **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_18.bin` | `0x250`                 | `03`         | `0x254`                  | `02`         |
+| **HeartGold/SoulSilver** | `/a/0/0/1`                   | `1_18.bin`       | `0x264`                 | `03`         | `0x268`                  | `02`         |
+| **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_18.bin` | `0x264`                 | `03`         | `0x268`                  | `02`         |
 | **Diamond/Pearl**        | `/battle/skill/sub_seq.narc` | `sub_seq_18.bin` | `0x250`                 | `03`         | `0x254`                  | `02`         |
 
-Sleep in Gen IV lasts **2-5 turns**, but effectively prevents movement for **1-4 turns**. The battle logic calculates the number of turns through the following process:
+Sleep in Gen IV lasts **2-5 turns**, but effectively prevents movement for **1-4 turns**. The battle logic (*more specifically, a battle subscript*) calculates the number of turns through the following process:
 1. Generate a random number from zero to an explicitly defined value, in this case **3** (the 'Maximum Addend' or range)
 2. Add it to another explicitly defined value, in this case **2** (the base number of turns)
 
 This results in (**0 + 2**), (**1 + 2**), (**2 + 2**), and (**3 + 2**) as possible outcomes for the number of sleep turns, which effectively prevents movement for **1**, **2**, **3**, or **4** turns.
 
-As an example, to change Sleep to instead last **2-4 turns**, effectively preventing movement for **1-3 turns**, (matching Gen V onwards), change the byte at `0x250` from `03` (3 in decimal) to `02` (2 in decimal). This results in (**0 + 2**), (**1 + 2**), (**2 + 2**), as possible outcomes, effectively preventing movement for **1**, **2**, or **3 turns**. Make sure to pack the NARC after saving the file.
+As an example, for HeartGold/SoulSilver and Platinum, to change Sleep to instead last **2-4 turns**, effectively preventing movement for **1-3 turns**, (matching Gen V onwards), change the byte at `0x264` from `03` (3 in decimal) to `02` (2 in decimal). This results in (**0 + 2**), (**1 + 2**), (**2 + 2**), as possible outcomes, effectively preventing movement for **1**, **2**, or **3 turns**. Make sure to pack the NARC after saving the file.
 <br/>
 
 
@@ -312,7 +312,7 @@ Unpack the relevant NARC, open the specified file, and change the byte at the pr
 | **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_26.bin` | `0x50` | `02`         |
 | **Diamond/Pearl**        | `/battle/skill/sub_seq.narc` | `sub_seq_26.bin` | `0x50` | `02`         |
 
-Heatproof halves the normal damage done from the Burn status. The battle logic calculates the reduced burn damage by dividing the normal burn damage by an explicitly defined value, in this case **2**.
+Heatproof halves the normal damage done from the Burn status. The battle logic (*more specifically, a battle subscript*) calculates the reduced burn damage by dividing the normal burn damage by an explicitly defined value, in this case **2**.
 
 As an example, to change the divisor from **2** to **1** (effectively changing Heatproof to have no impact on burn damage), change the byte from `02` (2 in decimal) to `01` (1 in decimal). Alternatively, you can use a larger value to *increase* the reduction of burn damage (e.g. change the byte to `04` to divide the burn damage by **4**). Make sure to pack the NARC after saving the file.
 <br/>
@@ -396,58 +396,59 @@ As an example, to change the HP restoration from **1/16<sup>th</sup>** of the Po
 <br/>
 
 
+
 ### Reckless Damage Multiplier
 > Sources and Credits: [Yako](https://discord.com/channels/446824489045721090/920372513488404542/1475182718189830297), Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/res/battle/scripts/effects/effect_script_0045.s#L6), [2](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0048.s#L6), [3](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0198.s#L6), [4](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0253.s#L6), [5](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0262.s#L6), [6](https://github.com/pret/pokeplatinum/blob/baf527b30d8d7ed6d3fefd6ad48e5c7acd6ce889/res/battle/scripts/effects/effect_script_0269.s#L6)), HGSS Decomp ([1](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0045.s#L7), [2](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0048.s#L7), [3](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0198.s#L7), [4](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0253.s#L7), [5](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0262.s#L7), [6](https://github.com/pret/pokeheartgold/blob/47e0855242035f82d3002d962fdc8d018bf2be4f/files/battledata/script/effect_script/effect_script_0269.s#L7))
 
-Reckless increases the power of moves that have recoil or crash damage by **20%**, except Struggle. The battle logic calculates the increased damage by multiplying and dividing the move's power by explicitly defined values, in this case **12** and **10**, respectively.
+Reckless increases the power of moves that have recoil or crash damage by **20%**, except Struggle. The battle logic (*more specifically, multiple move effect scripts*) calculates the increased damage by multiplying the move's power by an explicitly defined value, in this case **12**.
 
-However, the **multiplier value** is explicitly defined across six individual **move effects** that involve recoil or crash damage in the vanilla Pokémon games. This means six edits are needed to effectively change Reckless' damage multiplier. 
+The **multiplier value** is explicitly defined across six individual **move effect scripts** that involve recoil or crash damage in the vanilla Pokémon games. This means six edits are required to effectively change Reckless' damage multiplier. 
+
+The **divisor value** is explicitly defined in the general battle logic overlay (i.e. Overlay 12 for HeartGold/SoulSilver, Overlay 16 for Platinum, and Overlay 11 for Diamond/Pearl), but is a general-use function that handles every case in which a move's power is modified.
 
 Unpack the following NARCs, open the six specified files, and change the bytes at the provided offsets. Make sure to pack the NARC after saving all the files.
 
-#### 1) Crash Damage if Move Misses (Hi Jump Kick, Jump Kick)
+#### 1) Move Effect Script 45: Crash Damage if Move Misses (Hi Jump Kick, Jump Kick)
 | Game                     | NARC to unpack              | File            | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:---------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_45.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_45.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_45.bin` | `0x20` | `0C`         |
 
-#### 2) 25% Recoil Damage (Take Down, Submission) 
+#### 2) Move Effect Script 48: 25% Recoil Damage (Take Down, Submission) 
 | Game                     | NARC to unpack              | File            | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:---------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_48.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_48.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_48.bin` | `0x20` | `0C`         |
 
-#### 3) 33% Recoil Damage (Double-Edge, Brave Bird, Wood Hammer) 
+#### 3) Move Effect Script 198: 33% Recoil Damage (Double-Edge, Brave Bird, Wood Hammer) 
 | Game                     | NARC to unpack              | File             | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:----------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_198.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_198.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_198.bin` | `0x20` | `0C`         |
 
-#### 4) 33% Recoil Damage, Chance to Burn, and Thaws the User (Flare Blitz)
+#### 4) Move Effect Script 253: 33% Recoil Damage, Chance to Burn, and Thaws the User (Flare Blitz)
 | Game                     | NARC to unpack              | File             | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:----------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_253.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_253.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_253.bin` | `0x20` | `0C`         |
 
-#### 5) 33% Recoil Damage and Chance to Paralyze (Volt Tackle)
+#### 5) Move Effect Script 262: 33% Recoil Damage and Chance to Paralyze (Volt Tackle)
 | Game                     | NARC to unpack              | File             | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:----------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_262.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_262.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_262.bin` | `0x20` | `0C`         |
 
-#### 6) 50% Recoil Damage (Head Smash)
+#### 6) Move Effect Script 269: 50% Recoil Damage (Head Smash)
 | Game                     | NARC to unpack              | File             | Offset | Vanilla Byte |
 |:------------------------:|:---------------------------:|:----------------:|:------:|:------------:|
 | **HeartGold/SoulSilver** | `/a/0/3/0`                  | `0_269.bin`      | `0x20` | `0C`         |
 | **Platinum**             | `/battle/skill/be_seq.narc` | `be_seq_269.bin` | `0x20` | `0C`         |
 | **Diamond/Pearl**        | `/battle/skill/be_seq.narc` | `be_seq_269.bin` | `0x20` | `0C`         |
-
-
 <br/>
 
 
@@ -596,7 +597,7 @@ Unpack the relevant NARC, open the specified file, and change the byte(s) at the
 | **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_58.bin` | `0x38`                  | `03`         | `0x3C`                   | `03`         |
 | **Diamond/Pearl**        | `/battle/skill/sub_seq.narc` | `sub_seq_58.bin` | `0x38`                  | `03`         | `0x3C`                   | `03`         |
 
-The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, lasts **3-6 turns** in Gen IV, but effectively traps and deals damage for **2-5 turns**. The battle logic (*specifically, the subscript called by the move effect for binding moves*) calculates the total number of turns through the following process:
+The move effect assigned to binding moves such as Bind, Fire Spin, and Whirlpool, lasts **3-6 turns** in Gen IV, but effectively traps and deals damage for **2-5 turns**. The battle logic (*more specifically, a battle subscript*) calculates the total number of turns through the following process:
 1. Generate a random number from zero to an explicitly defined value, in this case **3** (the 'Maximum Addend' or range)
 2. Add it to another explicitly defined value, in this case **3** (the base number of turns)
 
@@ -619,7 +620,11 @@ Later in the same file contains the logic for Grip Claw (*specifically the item 
 | **Platinum**             | `0x60`                      | `06`         |
 | **Diamond/Pearl**        | `0x60`                      | `06`         |
 
-As an example, to change Grip Claw to cause binding moves to always last for **7 *effective* turns** (matching Gen V onwards), change the byte at `0x60` from `06` (6 in decimal) to `08` (8 in decimal). Make sure to pack the NARC after saving the file.
+As an example, to change Grip Claw to cause binding moves to always last for **6 *effective* turns**, change the byte at `0x60` from `06` (6 in decimal) to `07` (7 in decimal). Make sure to pack the NARC after saving the file.
+
+:::warning
+The forced Grip Claw duration cannot be changed to a value greater than `07`.
+:::
 <br/>
 
 
