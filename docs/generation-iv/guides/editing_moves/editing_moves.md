@@ -4071,7 +4071,7 @@ D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00
     - In Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages.
     - In Harsh Sunlight, but with either the abilities Cloud Nine or Air Lock in effect, Growth raises the user's Attack and Special Attack by 1 stage.
     - There should only be one animation to indicate that both Attack and Special Attack rose.
-2. If Growth works as expected, great! Make sure to update the Move Description (Platinum - `Text Archive 646`, line 74)  as well to reflect these changes.
+2. If Growth works as expected, great! Make sure to update the Move Description (Platinum - `Text Archive 646`, line 74) as well to reflect these changes.
 
 | Growth (Normal)                                   | Growth (Sun)                                   |
 |:-------------------------------------------------:|:----------------------------------------------:|
