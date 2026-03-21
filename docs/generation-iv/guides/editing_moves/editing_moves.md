@@ -1097,9 +1097,9 @@ WazaEffectEditor works on the same premise as tools like DSPRE, i.e. the user se
 
 ### Review & Interpret Vanilla Animations
 
-<img src='https://archives.bulbagarden.net/media/upload/e/ea/Pound_IV.png' loading='lazy' alt='Pound' />
-<img src='https://archives.bulbagarden.net/media/upload/8/81/SolarBeam_IV.png' loading='lazy' alt='Solar Beam' />
-<img src='https://archives.bulbagarden.net/media/upload/0/09/Hydro_Pump_IV.png' loading='lazy' alt='Hydro Pump' />
+![Pound](resources/Pound_IV.png)
+![Solar Beam](resources/SolarBeam_IV.png)
+![Hydro Pump](resources/Hydro_Pump_IV.png)
 
 Animations can be viewed in hex by unpacking the relevant NARC (see [here](#move--associated-data-structure) for NARC details), or by viewing in WazaEffectEditor. Once opened, having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) can be invaluable in interpreting what is happening. Only some commands are named in WazaEffectEditor, whereas almost all have been named by Fexty.
 
