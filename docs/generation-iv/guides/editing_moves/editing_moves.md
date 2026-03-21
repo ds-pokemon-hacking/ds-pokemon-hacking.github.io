@@ -104,9 +104,9 @@ The groups referred to here are not mechanical groups/categorisations (such as S
 
 There are a number of online resources which document these groupings, for example this [Bulbapedia page](https://bulbapedia.bulbagarden.net/wiki/Move_variations). Some examples of move "groups" are in the table below.
 
-<img src='https://archives.bulbagarden.net/media/upload/c/c6/Icy_Wind_IV.png' loading='lazy' alt='Icy Wind' />
-<img src='https://archives.bulbagarden.net/media/upload/e/ee/Low_Kick_IV.png' loading='lazy' alt='Low Kick' />
-<img src='https://archives.bulbagarden.net/media/upload/f/fa/Octazooka_IV.png' loading='lazy' alt='Octazooka' />
+![Icy_Wind](resources/Icy_Wind_IV.png)
+![Low_Kick](resources/Low_Kick_IV.png)
+![Octazooka](resources/Octazooka_IV.png)
 
 |  | Icy Wind, Mud Shot, Electroweb, Snarl | Low Kick & Grass Knot | Octazooka, Mud Bomb, Mirror Shot |
 | --- | --- | --- | --- |
