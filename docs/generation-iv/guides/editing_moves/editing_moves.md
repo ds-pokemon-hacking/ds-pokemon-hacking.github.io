@@ -59,7 +59,7 @@ The exact mapping of how a move is executed can be found [here](https://github.c
 
 - The **move data** NARC contains [basic data](#basic-move-data-dspre) on the move, which can be edited in DSPRE's Move Editor. This includes, for example, the reference to the **move effect script** (labeled as `Effect Sequence` in DSPRE's Move Editor).
     - The general structure of basic move data can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/src/move_table.c#L37) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/move.h#L6) Decompilation projects.
-    - Basic move data for each move in Platinum can be found [in the Platinum](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/moves) Decompilation project.
+    - Basic move data for each move (in Platinum) can be found [here](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/moves) in the Platinum Decompilation project.
 - **Move scripts** are strictly per move and may not be shared. They may simply be an instruction to use the **move effect script**, or may have more complexity.
     - Move scripts for each move can be found in the [Platinum](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/moves) and [HeartGold](https://github.com/pret/pokeheartgold/tree/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/move_script) Decompilation projects.
     - Move scripts can be edited using a hex editor.
@@ -72,7 +72,7 @@ The exact mapping of how a move is executed can be found [here](https://github.c
 - **Move effect subscripts** may be shared by multiple **move effect scripts** and **battle subscripts**.
     - Move effect subscripts are simply pointers to a certain **battle subscript**. They queue up said battle subscript to execute after the **move effect script** ends.
     - The basic label description for each move effect subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_subscript_ptrs.txt) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) Decompilation projects.
-    - The table of each **move effect subscript** and the **battle subscript** they point to can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h) Decompilation project.
+    - The table that points **move effect subscripts** to **battle subscripts** can be found [here](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h) in the Platinum Decompilation project.
 - **Battle subscripts** may be called by multiple **move effect scripts** and even other **battle subscripts**. Battle subscripts contain the code to actually execute move effects.
   - Each battle subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/subscripts) and [HeartGold](https://github.com/pret/pokeheartgold/tree/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/subscript) Decompilation projects.
   - The basic label description for each battle subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/subscripts/sub_seq.order) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L4) Decompilation projects.
@@ -837,33 +837,41 @@ The end script command is different across HeartGold/Soulsilver, Platinum, and D
 | `E0 00 00 00`          | `DE 00 00 00` | `DA 00 00 00`   |
 :::
 
-More complex damaging moves include this basic functionality at the end of their **move effect script**, but also include more logic, possibly referencing one or more **move effect subscripts** and/or **battle subscripts**, for example to apply guaranteed or chances of stat changes to the user or target.
+More complex damaging moves include this basic functionality at the end of their move effect script, but also include more logic, possibly referencing one or more **move effect subscripts** and/or **battle subscripts**, for example to apply guaranteed or chances of stat changes to the user or target.
 
-Status moves which increase or decrease a single stat by one or two stages, usually are assigned a **move effect script** (e.g. [move effect script 11 - Raise the user's Defense by 1 stage](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/effects/effect_script_0011.s)) that invokes a specific **move effect subscript** (`MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE`) as a **direct side effect**, which then [points](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h#L23) to a **battle subscript** that handles one or two stage single stat changes ([`subscript_update_stat_stage`](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/subscripts/subscript_update_stat_stage.s)). 
-- [List of **move effect subscripts**](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_subscript_ptrs.txt) (or "side effects") that can be invoked in a **move effect script** (or even a **battle subscript**).
-- [Table](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h) of each **move effect subscript** and the **battle subscript** they point to.
-- Status moves which change multiple stats (e.g. [Calm Mind - move effect script 211](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/effects/effect_script_0211.s)) use specific **move effect subscripts** (`MOVE_SUBSCRIPT_PTR_USER_SPATK_AND_SPDEF_UP_1_STAGE`) that [point](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h#L65) to a specific **battle subscript** ([`subscript_user_spatk_and_spdef_up_1_stage`](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/subscripts/subscript_user_spatk_and_spdef_up_1_stage.s)) that handles those specific stats.
+Such damaging moves which may increase or decrease a single stat by one or two stages are assigned a move effect script that usually invokes a specific move effect subscript as an **indirect side effect**, which then points to a battle subscript that handles one or two stage single stat changes.
 
-In hex a common status-only stat-stage adjusting move effect script in HGSS looks like this:  
-> `32 00 00 00 07 00 00 00 AA AA AA AA ## ## ## ## E0 00 00 00`  
-
-Where:
-- `## ## ## ##` is a value that corresponds to a specific side effect in the list of move effect subscripts linked above.
-- `AA AA AA AA` is `02 00 00 00`, indicating that this is a **direct side effect**.  
-- `E0 00 00 00` - Ends the script *(different across each game, see above note)*.  
-
-In hex a common damaging move with a chance (which might be 100%) to adjust stat-stages in HGSS looks like this:  
+As a general example, a common damaging move with a chance (which might be 100%) to adjust stat-stages in HGSS may look like this in a hex editor:  
 > `26 00 00 00 0F 00 00 00 32 00 00 00 07 00 00 00 AA AA AA AA ## ## ## ## E0 00 00 00`
 
 Where:
-- `## ## ## ##` is a value that corresponds to a specific side effect in the list of move effect subscripts linked above.
+- `## ## ## ##` contains a value that corresponds to a specific move effect subscript (the "side effect").
 - `AA AA AA AA` is `03 00 00 00`, indicating that this is an **indirect side effect**. 
-- `E0 00 00 00` - Ends the script *(different across each game, see above note)*.  
+- `E0 00 00 00` - Ends the script *(different across each game, see above)*.  
+
+Status moves which increase or decrease a single stat by one or two stages are assigned a move effect script that usually invokes a specific move effect subscript as a **direct side effect**, which then points to a battle subscript that handles one or two stage single stat changes. 
+
+As a general example, a common status-only stat-stage adjusting move effect script in HGSS looks like this in a hex editor:  
+> `32 00 00 00 07 00 00 00 AA AA AA AA ## ## ## ## E0 00 00 00`  
+
+Where:
+- `## ## ## ##` contains a value that corresponds to a specific move effect subscript (the "side effect").
+- `AA AA AA AA` is `02 00 00 00`, indicating that this is a **direct side effect**.  
+- `E0 00 00 00` - Ends the script *(different across each game, see above)*.  
+
+As a more specific example, take a look at the move Harden, a status move that raises the user's Defense by one stage. 
+- In HGSS, Harden is assigned move effect script `11`. This file can be inspected by unpacking `/a/0/3/0` and opening `0_11.bin` in a hexeditor.
+- Move effect script `11` (`0_11.bin`) looks like this when opened in a hex editor: `32 00 00 00 07 00 00 00 02 00 00 00 10 00 00 40 E0 00 00 00`
+- Following the pattern from the general example, `10 00 00 40` would correspond to a move effect subscript, and `02 00 00 00` indicates that this is a direct side effect.
+- More specifically, the first two bytes of `10 00 00 40` corresponds to the move effect subscript (i.e. `10 00`). This is a hexadecimal value in little-endian format, so it should be flipped around (`00 10`) before being converted to decimal (`16`, or move effect subscript `16`).
+- If we take a look at the [list of move effect subscripts](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) found in the HeartGold Decompilation project, we can see that move effect subscript `16` corresponds to `MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE`, the effect that raises the Defense stat by one stage.
+- This info can also be seen when looking at move effect script `11` [here](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/effect_script/effect_script_0011.s) in the HeartGold Decompilation project.
 
 **Direct and Indirect Side Effects**
-- **Move effect scripts** may invoke **move effect subscripts** as **direct** or **indirect side effects**.
-- **Direct side effects** will occur 100% of the time (as long as the move successfully executes). Though direct side effects are typically used by status moves, they will occur before damage has been dealt if used by a damage-dealing move.
-- **Indirect side effects** occur after damage has been dealt. Though indirect side effects are typically used by damage-dealing moves and not mixed with direct side effects, they will occur after direct side effects have been executed. **Indirect side effects** are usually subject to the "effect chance" set in the move's basic data (i.e. the "Side Effect Probability" percentage value in DSPRE's Move Editor).
+- **Move effect subscripts** may be invoked as either a **direct** or **indirect side effect**.
+- **Direct side effects** will occur 100% of the time (as long as the move successfully executes). Though direct side effects are typically used only by status moves, they will occur before damage has been dealt if used by a damage-dealing move.
+- **Indirect side effects** occur after damage has been dealt. Though indirect side effects are typically used only by damaging moves and are not mixed with direct side effects, they will also occur after direct side effects have been executed. 
+- **Indirect side effects** are usually subject to the "effect chance" set in the move's basic data (i.e. the "Side Effect Probability" percentage value in DSPRE's Move Editor).
 - The vanilla Generation IV games do not have any moves that mix direct and indirect side effects in a single move effect script, but it is possible to create a move effect script which includes both direct and indirect side effects.
 
 ### "Broken" Move Effect Scripts
@@ -871,22 +879,20 @@ Where:
 
 Because they are not used in the vanilla Generation IV games, there are a number of **move effect scripts** which do not actually invoke any **move effect subscripts** or side effects. These move effect scripts are named in DSPRE (with a `Dummy` prefix) as the intended use, but require hex edits to function as intended.
 
-The process to fix these move effect scripts is relatively straightforward, involving copying the move effect script of a similar functional move and substituting in the correct parameters. For example, move effect script `012` is intended to increase the user's Speed stat by one stage, a side effect that does not occur in the vanilla Generation IV games (in isolation).
+The process to fix these move effect scripts is relatively straightforward, involving copying the move effect script of a similar functional move and substituting in the correct parameters. 
 
-- As with the others, move effect script `012` currently contains only the basic move effects (to determine critical hits and calculate damage). In hex this appears as: `26 00 00 00 0F 00 00 00 E0 00 00 00`
-- Replacing it with the below will set the move effect script to raise the user's Speed stat by one stage (in line with the DSPRE description): `32 00 00 00 07 00 00 00 02 00 00 00 11 00 00 40 E0 00 00 00`  
-- The `11 00 00 40` section can be understood by looking at another similar move effect script. For example, the move Harden uses move effect script `011`, which appears as `32 00 00 00 07 00 00 00 02 00 00 00 10 00 00 40 E0 00 00 00` (the relevant section being `10 00 00 40`). 
-- The relevant section that is replaced is formed of two parts, the first two bytes are the effect ID, the last two bytes are the target parameter.
-    - Take the first part, `10 00`, which is a hexadecimal value in little-endian (so flip it to get `00 10`). In decimal, that would be `16`.
-    - Look at the [list of **move effect subscripts**](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_subscript_ptrs.txt) (or "side effects").
-    - This list is zero-indexed, meaning the first **move effect subscript** entry has an ID of `0`. If we look at which entry would have an ID of `16`, we would see [`MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE`](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_subscript_ptrs.txt#L17). 
-    - Following that is [`MOVE_SUBSCRIPT_PTR_SPEED_UP_1_STAGE`](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_subscript_ptrs.txt#L18), which would be **move effect subscript** `17`, or `11` in hexadecimal (`11 00` in little-endian).
-    - Now, the second part (`00 40`) determines the target parameter. Usually you will see `00 40` when the effect should apply to the user, and `00 80` when the effect should apply to target. Other values may be used but go beyond the scope of this guide for now; see the table below:
+For example, move effect script `012` is intended to increase the user's Speed stat by one stage, a side effect that does not occur in the vanilla Generation IV games (in isolation). As with the others, move effect script `012` currently contains only the basic move effects (to determine critical hits and calculate damage).
+
+In HGSS, move effect script `012` can be inspected by unpacking `/a/0/3/0` and opening `0_12.bin` in a hexeditor, which appears as: `26 00 00 00 0F 00 00 00 E0 00 00 00`.
+- Replacing it with the following will set the move effect script to raise the user's Speed stat by one stage (in line with the DSPRE's description): `32 00 00 00 07 00 00 00 02 00 00 00 11 00 00 40 E0 00 00 00`.
+- The `11 00 00 40` section is responsible for invoking the effect that raises the user's Speed by one stage. 
+- The first two bytes (`11 00`) corresponds to the move effect subscript. This is a hexadecimal value in little-endian format, so it should be flipped around (`00 11`) before being converted to decimal (`17`, or move effect subscript `17`).
+- If we take a look at the [list of move effect subscripts](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) found in the HeartGold Decompilation project, we can see that move effect subscript `17` corresponds to `MOVE_SUBSCRIPT_PTR_SPEED_UP_1_STAGE`, the effect that raises the Speed stat by one stage.
+- The other two bytes of that section (`00 40`) determines the target parameter. Usually you will see `00 40` when the effect should apply to the user (such as this case), and `00 80` when the effect should apply to target. Other values may be used but go beyond the scope of this guide; see the table below:
   
 |  On-Hit |   User  | User (On-Hit) |  Target | Target (On-Hit) |
 |:-------:|:-------:|:-------------:|:-------:|:---------------:|
 | `00 20` | `00 40` |    `00 60`    | `00 80` |     `00 A0`     |
-
 
 <details>
 <summary>Hex Elements Identifying Stat Changes</summary>
@@ -1058,7 +1064,7 @@ Because this method uses only existing effects, the appearance is not as clean (
 
 It is possible to change existing **battle subscripts** to accomodate more complex stat changes, as well as add new battle subscripts, since files can be added the battle subscripts NARC. 
 
-Adding new battle subscript files for this purpose also requires adding entries to the [table that points move effect subscripts to battle subscripts](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h). However, across all Generation IV games, there is no space for additional entries for where the tables are located, meaning the tables would need to be re-pointed (for example, this [section](../type_expansion/pt-type_expansion.md#making-space-for-the-new-type-chart) in the Type Expansion/Fairy Type Platinum guide covers re-pointing the table for Platinum).
+Adding new battle subscript files for this purpose also requires adding entries to the table that points move effect subscripts to battle subscripts (details of this table can be found [here](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h) in the Platinum Decompilation project). However, across all Generation IV games, there is no space for additional entries for where the tables are located, meaning the tables would need to be re-pointed (for example, this [section](../type_expansion/pt-type_expansion.md#making-space-for-the-new-type-chart) in the Type Expansion/Fairy Type Platinum guide covers re-pointing the table for Platinum).
 
 The table that points move effect subscripts to battle subscripts can be found in the following locations:
 | Game       |  HeartGold/SoulSilver |        Platinum       |     Diamond/Pearl     |
@@ -1066,12 +1072,15 @@ The table that points move effect subscripts to battle subscripts can be found i
 | **File**   |     `Overlay 12`      |     `Overlay 16`      |     `Overlay 11`      |
 | **Offset** | `0x3550C` - `0x3574C` | `0x33CE4` - `0x33F27` | `0x30F08` - `0x3114B` |
 
-Each entry in the table is four bytes, and the hexadecimal values refer to the [battle subscript](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/subscripts/sub_seq.order).
-  - For example, take a look at the second set of four bytes, `12 00 00 00`.
-  - This set of bytes represents the [second move effect subscript](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_subscript_ptrs.txt#L2), which is listed as `MOVE_SUBSCRIPT_PTR_SLEEP` and will have an ID of `01` (because the list is zero-indexed) when invoked (e.g. open [move effect script 1 - "Causes Sleep"](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/effect_script/effect_script_0001.s) in a hex editor). 
-  - The value of the bytes means that this entry (i.e. move effect subscript) points to the [18th battle subscript file](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0018_FallAsleep.s) (the hexadecimal value `12` is `18` in decimal), which contains the logic for attempting to apply the Sleep status to the target. 
+Each entry in the table is four bytes, and the hexadecimal values refer to the battle subscript.
 
-Creating battle subscripts which handle different combinations of two or more 1- or 2-stage stat changes is achievable by mirroring battle subscripts for existing effects such as [Calm Mind](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0151_CalmMind.s), [Dragon Dance](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0152_DragonDance.s) and [Curse (non-Ghost)](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0096_CurseNormal.s) as a base. These files can be reviewed by unpacking the battle subscripts NARC (`/a/0/0/1` or `sub_seq.narc`), analyzing the [Platinum](https://github.com/pret/pokeplatinum/tree/main/res/battle/scripts/subscripts) and [HeartGold](https://github.com/pret/pokeheartgold/tree/master/files/battledata/script/subscript) decompilation projects, and by using reverse engineering tools (such as Ghidra). 
+For example, take a look at the table for HeartGold by opening (decompressed) `Overlay 12` in a hexeditor and going to offset `0x3550C`. 
+- If we take a look at the [list of move effect subscripts](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) found in the HeartGold Decompilation project, the **second move effect subscript** (the first "actual" effect in the list) is listed as `MOVE_SUBSCRIPT_PTR_SLEEP`, the effect that attempts to cause the Sleep status. Additionally, because this list is zero-indexed, this move effect subscript will have an ID of `01` when invoked by move effect scripts or battle subscripts.
+- Skip to the second entry of the table (`0x35510`), which should show the following four bytes: `12 00 00 00`.
+- This entry represents the **battle subscript file** that the **second move effect subscript** will point to. The hexadecimal value `12` is `18` in decimal, meaning this move effect subscript points to battle subscript `18`. 
+- If we take a look at the [list of battle subscripts](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L4) found in the HeartGold Decompilation project, battle subscript `18` is listed as `BATTLE_SUBSCRIPT_FALL_ASLEEP`, which contains the actual logic for attempting to apply the Sleep status to the target (details of this logic can also be found in [here](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0018_FallAsleep.s) the HeartGold Decompilation project). 
+
+Creating battle subscripts which handle different combinations of two or more 1- or 2-stage stat changes is achievable by mirroring battle subscripts for existing effects such as [Calm Mind](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0151_CalmMind.s), [Dragon Dance](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0152_DragonDance.s) and [Curse (non-Ghost)](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0096_CurseNormal.s) as a base. These files can be reviewed by unpacking the battle subscripts NARC (`/a/0/0/1` for HeartGold/SoulSilver or `sub_seq.narc` for Platinum/Diamond/Pearl), analyzing the [Platinum](https://github.com/pret/pokeplatinum/tree/main/res/battle/scripts/subscripts) and [HeartGold](https://github.com/pret/pokeheartgold/tree/master/files/battledata/script/subscript) decompilation projects, and by using reverse engineering tools (such as Ghidra). 
 
 Examples of what can be achieved by editing existing battle subscripts or adding new ones are included in the [Case Studies](#example-case-studies) section (e.g. Quiver Dance, Growth Gen V+).
 
