@@ -849,7 +849,7 @@ Where:
 - `AA AA AA AA` is `03 00 00 00`, indicating that this is an **indirect side effect**. 
 - `E0 00 00 00` - Ends the script *(different across each game, see above)*.  
 
-Status moves which increase or decrease a single stat by one or two stages are assigned a move effect script that usually invokes a specific move effect subscript as a **direct side effect**, which then points to a battle subscript that handles one or two stage single stat changes. 
+Status moves which increase or decrease a single stat by one or two stages are assigned a move effect script that usually invokes a specific move effect subscript as a **direct side effect**, which then points to a battle subscript that handles one or two stage single stat changes. Status moves which change multiple stats (e.g. Calm Mind) are handled by certain battle subscripts that explicitly change those specific stats (for example, see the battle subscript that raises Special Attack and Special Defense by one stage [here](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0151_CalmMind.s) in the HeartGold Decompilation project).
 
 As a general example, a common status-only stat-stage adjusting move effect script in HGSS looks like this in a hex editor:  
 > `32 00 00 00 07 00 00 00 AA AA AA AA ## ## ## ## E0 00 00 00`  
