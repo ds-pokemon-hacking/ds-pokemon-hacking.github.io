@@ -12,14 +12,14 @@ tags:
 This page is a guide to **Headbutt Trees** in Pokémon HeartGold and SoulSilver. It covers how the game determines which Pokémon appear, how encounter sets are selected for different trees, and how to edit this data using DSPRE or direct hex editing.
 
 :::info
-In HGSS, Headbutt encounters are map-dependent. HGSS uses pre-authored data files for each map header that list specific encounter-capable trees and their associated Pokémon.
+In HGSS, Headbutt encounters are map-dependent. HGSS uses predefined data files for each map header that list specific encounter-capable trees and their associated Pokémon.
 :::
 
 ---
 
 ## Glossary
 
-To clear up any confusion regarding the terminology used in DSPRE and technical documentation, refer to this quick glossary:
+Terminology in this area is different across DSPRE, decompilation projects and public community resources. This quick glossary shows the specific terms used in this guide (generally aligned to DSPRE):
 
 - **Encounter Set**: One of the three tables of 6 Pokémon (Common, Rare, or Special) available for a map header.
 - **Tree Group**: A logical grouping of coordinates (up to 6) that all represent the same "physical" tree on the map.
@@ -56,13 +56,13 @@ While community documentation often implies that **encounters** are shared acros
 
 ### How the game chooses an Encounter Set
 
-For **Normal Tree Group**s (the majority of trees on a map), the game determines whether to use **Group A**, **Group B**, or no encounter at all based on a combination of:
+For **Normal Tree Group**s (the majority of trees on a map), the game determines whether to use **Encounter Set A**, **Encounter Set B**, or no encounter at all based on a combination of:
 1. The last digit of the player's **Trainer ID** (`ID % 10`).
 2. The specific (multiple) **Tree Group Index** (its position in the map's coordinate list).
 
 This logic ensures that a **Tree Group** that is "rare" for one player might be "common" or "empty" for another, introducing randomisation.
 
-For **Special Tree Group**s, the game bypasses this logic entirely. If a **Tree Group** is defined in the map's Special list, it will **always** trigger an encounter from **Group C**. These are typically used for "signature" trees blocked by terrain (like Rock Climb or Waterfall).
+For **Special Tree Group**s, the game bypasses this logic entirely. If a **Tree Group** is defined in the map's Special list, it will **always** trigger an encounter from **Encounter Set C**. These are typically used for trees blocked by late- or post-game terrain obstacles (requiring Waterfall or Rock Climb to access).
 
 ---
 
@@ -85,7 +85,7 @@ Each of the three encounter sets (A, B, and C) contains exactly **6 Pokémon slo
 
 In HGSS a single "logical" tree on the map can be headbutted from multiple sides. To account for this, the game allows each **Tree Group** to contain up to **6 coordinate pairs**. If the player headbutts a tile that matches any of the coordinates in a group, that group's encounter logic is triggered from any given visible "tree".
 
-- **Normal Tree Group**s: Subject to the Trainer ID logic (Encounter Set A/Encounter Set B/None).
+- **Normal Tree Group**s: Subject to the Trainer ID logic (Common (A) or Rare (B) Encounter Sets).
 - **Special Tree Group**s: Always use the Special (C) Encounter Set.
 
 If a tree's coordinates are not present in either list for the current map, that tree is empty and will never yield an encounter.
