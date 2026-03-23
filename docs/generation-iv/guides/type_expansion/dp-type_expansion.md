@@ -67,7 +67,7 @@ Return to the `overlay_0011.bin` file opened in the hex editor. Navigate to offs
   FF FF 7F 00 C8 E4 25 02 38 B5 21 49 15
   ```
 </details>
-Save your project with DSPRE. Get in a battle and test as any moves as possible to make sure the game doesn't crash or produce graphical glitches.
+Save your project with DSPRE. Get in a battle and test as many moves as possible to make sure the game doesn't crash or produce graphical glitches.
 
 <br/>
 

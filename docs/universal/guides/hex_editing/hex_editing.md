@@ -24,7 +24,7 @@ This is a tutorial on how to hex edit your files for the first time.
 Binary Hacking is done by editing the compiled binaries of the game files. 
 For most of the regular stuff like wild encounters and trainers there are tools in place to simplify the process, but sometimes it is still necessary to hex edit things manually.
 
-If you haven't already you need to download a Hex Editor. There are plenty of different softwares that can do it, in this guide I will be using HxD.
+If you haven't already you need to download a Hex Editor. There are plenty of different softwares that can do it, in this guide I will be using **HxD**. Other hex editors, such as **ImHex** may have other shortcuts and methods.
 
 To start, open the file you want to edit with it. Worth mentioning that you can open in a hex editor any file regardless of its extension, keep this in mind since narc files or their contents once extracted might not have an extension.
 
@@ -68,12 +68,16 @@ Also, in HxD you can see the decimal value of the bytes you currently have selec
 
 ## Pasting Bytes
 
-Once you are at the right offset you can simply type the bytes you want to replace and save the file, or use the Ctrl+B shortcut, which will overwrite the amount of bytes you have currently copied at the offset location. In HxD the bytes you edited before saving the file will be displayed in red.
+Once you are at the right offset you can simply type the bytes you want to replace and save the file, or use the **Ctrl+B** shortcut, which will overwrite the amount of bytes you have currently copied at the offset location. In HxD the bytes you edited before saving the file will be displayed in red.
 
 ![](resources/hexpaste.png)
 
-**Remember to only replace bytes and never expand the size of the original file, unless you know what you are doing**.
-The game expects an exact amount of data, generally expanding the size of the file will break your game unless you are also accounting for that trough code editing.
+
+:::warning
+Remember to only replace bytes (**Ctrl+B**) and never expand the size of the original file by inserting bytes (**Ctrl+V**), unless you know what you are doing.
+:::
+
+The game expects an exact amount of data, generally expanding the size of the file will break your game unless you are also accounting for that through code editing.
 
 Don't forget to save the file after you're done hex editing!
 
