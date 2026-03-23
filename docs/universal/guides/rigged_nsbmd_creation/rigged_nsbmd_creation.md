@@ -47,7 +47,10 @@ _¹Do note that if the `Install plug-in` button doesn't open a file dialog, you 
 
 ## Blender export settings
 
-For this tutorial, [a sample BLEND file will be provided]() so that anyone can follow along and check for any issues in their own model. If you're following along using your own model make sure that:
+![A sample model provided for this tutorial](resources/humanoid_template.png)
+For this tutorial, [a sample BLEND file will be provided](resources/humanoid_template.zip) (602 polys / 509 verts) so that anyone can follow along and check for any issues in their own model. 
+
+If you're following along using your own model make sure that:
 - Has at most 2048 polygons or 6144 vertices (the smaller of the two)
 - There are only triangle or quadrilateral faces on the mesh
 - The armature and mesh's scale is `1` for every axis or were applied with `CTRL + A` if not
@@ -206,13 +209,15 @@ When testing in game, there still may be some issues that you notice. Although t
 
 Sometimes when exporting the model, although the model mostly shows up correctly, some of the triangles seem to be missing or distorted. One potential reason for this is that the model is too small. Because of the model being too small, there's not enough precision to place the vertices properly resulting in a corrupted looking model. To fix this, try increasing the scale of the model's armature, applying the scale (`CTRL + A > Scale` within Blender after scaling the armature with it selected), then exporting it again.
 
+If there are other models to compare against such as other building models, then it may be best to try matching their scale as well. If that's not possible, I've found scaling by about 8-10 times larger than the default Blender scale has worked well for me (i.e. something meant to be 2 meters tall in Blender becoming 16 meters large by upscaling it by 8x.)
+
 #### Poor topology
 
 To address some basic things to keep in mind is that the DS can only render 2048 polygons or 6144 vertices on the screen at once. Along with this, only tris and quads can be rendered.
 
 Even if the model fulfills these conditions well, oddly formed quads may cause some issues. This mostly comes from the fact that the DS has issues drawing quads with a concave surface as seen below.
 
-TODO - ADD PICTURE FROM MELONDS BLOG
+![From the MelonDS blog post called "The DS GPU and its fun quirks". Since a single polygon can only be drawn once per scanline, concave surfaces might appear weird if it needs to be drawn multiple times on the same scanline.](resources/concave_poly.png)
 
 The simple solution to this is just splitting this quad into two tris instead.
 
