@@ -2729,7 +2729,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 
 ![](resources/case_study_razor_wind.gif)
 
-#### Step 1: Move Effect & Attributes
+##### Step 1: Move Effect & Attributes
 1. Open DSPRE & load the ROM
 2. Open the `Move Data Editor` from the `Other Editors` toolbar option
 3. Select the move `Leaf Storm` and make a note of the configuration:
@@ -2741,7 +2741,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Select the move `Razor Wind` and update the configuration to include the above (and anything else desirable, in this example the type is also changed to Flying).
 5. Click the `Save` button
 
-#### Step 2: Move Description
+##### Step 2: Move Description
 1. Open the `Text Editor` from the main toolbar
 2. Use the search function to find the move description, taking a small part of the text (as displayed in the Move Data Editor), e.g. "Blades of wind"
 3. Update the message to include a more accurate description (while retaining appropriate line breaks), for example changing the vanilla: 
@@ -2750,7 +2750,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Click the `Save Current Archive` button
 5. Click the `Save ROM` button from the main toolbar to apply the changes to a `.nds` ROM file.
 
-#### Step 3: Move Animation
+##### Step 3: Move Animation
 1. Open WazaEffectEditor (for HGSS in this case)
 2. Select the move Razor Wind.
 3. Remove the initial `CheckTurn` command and `End` lines.
@@ -2873,7 +2873,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 
 ![](resources/case_study_solar_blade.gif)
 
-#### Step 1: Move Effect & Attributes
+##### Step 1: Move Effect & Attributes
 1. Open DSPRE & load the ROM
 2. Open the `Move Data Editor` from the `Other Editors` toolbar option
 3. Select the move `Solar Beam` and make a note of the configuration:
@@ -2885,7 +2885,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Select the move `Leaf Blade` and update the configuration to include the above (and anything else desirable).
 5. Click the `Save` button
 
-#### Step 2: Move Description
+##### Step 2: Move Description
 1. Open the `Text Editor` from the main toolbar
 2. Use the search function to find the move description, taking a small part of the text (as displayed in the Move Data Editor), e.g. "a sharp leaf"
 3. Update the message (`349`) to include a more accurate description (while retaining appropriate line breaks), for example changing the vanilla: 
@@ -2894,14 +2894,14 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Click the `Save Current Archive` button
 5. Click the `Save ROM` button from the main toolbar to apply the changes to a `.nds` ROM file.
 
-#### Step 3: Move Animation
+##### Step 3: Move Animation
 1. Open WazaEffectEditor (for HGSS in this case)
 2. Select the move Solar Beam, and copy the initial and first-turn elements of the animation script (from `Init` to the **second** `End`).
 3. Select the move Solar Blade (previously Leaf Blade), paste the copied script at the beginning of the existing Leaf Blade script.
 4. Click the `Save Current` button to save the Animation script.
 5. Save the ROM from the File option on the toolbar.
 
-#### Step 4: Adjust Learnsets
+##### Step 4: Adjust Learnsets
 In this example, the Pokémon which learn the move will remain as-per Leaf Blade, including any that may learn via methods such as Egg Moves. However, the levels that these Pokémon learn the move will be altered to reflect the new power level of the updated move.
 1. Consult a [source material](https://bulbapedia.bulbagarden.net/wiki/Leaf_Blade_(move)#Learnset) to identify all Pokémon in the game which learn Leaf Blade by level up.
 2. Open DSPRE & load the ROM (from the `.nds` file to ensure animation changes are included)
@@ -3088,10 +3088,10 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 
 ![](resources/case_study_sharp_eyes.gif)  
 
-#### Step 1: Fix Unused Stat-Changing Move Effect Scripts
+##### Step 1: Fix Unused Stat-Changing Move Effect Scripts
 1. Follow the steps [here](#broken-move-effect-scripts) to correct the "non-implemented" move effect scripts (specifically move effect script `55`).
 
-#### Step 2: Move Effect & Attributes
+##### Step 2: Move Effect & Attributes
 1. Open DSPRE & load the ROM
 2. Open the `Move Data Editor` from the `Other Editors` toolbar option
 3. Select the move `Mind Reader` and make the following configuration changes:
@@ -3103,7 +3103,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
     - Flags: `SNATCH` `KEEP_HP_BAR`
 5. Click the `Save` button
 
-#### Step 3: Move Description
+##### Step 3: Move Description
 1. Open the `Text Editor` from the main toolbar
 2. Use the search function to find the move description, taking a small part of the text (as displayed in the Move Data Editor), e.g. "foe's movements"
 3. Update the message (`170`) to include a more accurate description (while retaining appropriate line breaks), for example changing the vanilla: 
@@ -3112,7 +3112,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Click the `Save Current Archive` button
 5. Click the `Save ROM` button from the main toolbar to apply the changes to a `.nds` ROM file.
 
-#### Step 4: Move Animation
+##### Step 4: Move Animation
 1. Open WazaEffectEditor (for HGSS in this case)
 2. Select the move Glare, and copy entire animation script.
 3. Select the move Sharp Eyes (previously Mind Reader)
@@ -3121,7 +3121,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Click the `Save Current` button to save the Animation script.
 5. Save the ROM from the File option on the toolbar.
 
-#### Step 5: Adjust Learnsets
+##### Step 5: Adjust Learnsets
 In this example, the Pokémon which learn the move will be changed to limit the new move to some specific Pokémon, and Egg Move learnsets will also be adjusted.
 1. Consult a [source material](https://bulbapedia.bulbagarden.net/wiki/Mind_Reader_(move)#Learnset) to identify all Pokémon in the game which learn Mind Reader by level up.
 
@@ -3234,10 +3234,10 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 
 ![](resources/case_study_constrict.gif)  
 
-#### Step 1: Fix Unused Stat-Changing Move Effect Scripts
+##### Step 1: Fix Unused Stat-Changing Move Effect Scripts
 1. Follow the steps [here](#broken-move-effect-scripts) to correct the "non-implemented" move effect scripts (specifically move effect script `74`).
 
-#### Step 2: Move Effect & Attributes
+##### Step 2: Move Effect & Attributes
 1. Open DSPRE & load the ROM
 2. Open the `Move Data Editor` from the `Other Editors` toolbar option
 3. Select the move `Mind Reader` and make the following configuration changes:
@@ -3249,7 +3249,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
     - Flags: `SNATCH` `KEEP_HP_BAR`
 5. Click the `Save` button
 
-#### Step 3: Move Description
+##### Step 3: Move Description
 1. Open the `Text Editor` from the main toolbar
 2. Use the search function to find the move description, taking a small part of the text (as displayed in the Move Data Editor), e.g. "foe's movements"
 3. Update the message (`132`) to include a more accurate description (while retaining appropriate line breaks), for example changing the vanilla: 
@@ -3280,7 +3280,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 
 ![](resources/case_study_quiver_dance.gif)  
 
-#### Step 1: Re-write the Dragon Dance Battle Subscript
+##### Step 1: Re-write the Dragon Dance Battle Subscript
 1. Using DSPRE, unpack the **battle subscripts** NARC `/a/0/0/1`.
 2. Open file [`152`](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0152_DragonDance.s) in a hex editor such as HxD.
 3. Delete the contents of the file and replace it with the below.
@@ -3295,7 +3295,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 7. Open DSPRE & load the `project_DSPRE_contents` folder.
 8. Click the `Save ROM` button from the main toolbar to apply the changes to a `.nds` ROM file.
 
-#### Step 2: Move Effect & Attributes
+##### Step 2: Move Effect & Attributes
 1. Open DSPRE & load the ROM
 2. Open the `Move Data Editor` from the `Other Editors` toolbar option
 3. Select the move `Dragon Dance` and make the following configuration changes:
@@ -3305,7 +3305,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
     - Contest Appeal: `6`
 5. Click the `Save` button
 
-#### Step 3: Move Description
+##### Step 3: Move Description
 1. Open the `Text Editor` from the main toolbar
 2. Use the search function to find the move description, taking a small part of the text (as displayed in the Move Data Editor), e.g. "foe's movements"
 3. Update the message (`349`) to include a more accurate description (while retaining appropriate line breaks), for example changing the vanilla: 
@@ -3314,7 +3314,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Click the `Save Current Archive` button
 5. Click the `Save ROM` button from the main toolbar to apply the changes to a `.nds` ROM file.
 
-#### Step 4: Move Animation
+##### Step 4: Move Animation
 For the move animation, elements of Lunar Dance, Petal Dance & Thrash will be combined.
 1. Open WazaEffectEditor (for HGSS in this case)
 2. Select the move Lunar Dance, and copy the animation script from the first `Init` (after the `CheckTurn`) all the way to the next `End` (lines 4-75).
@@ -3335,7 +3335,7 @@ For the move animation, elements of Lunar Dance, Petal Dance & Thrash will be co
 11. Click the `Save Current` button to save the Animation script.
 12. Save the ROM from the File option on the toolbar.
 
-#### Step 5: Adjust Learnsets
+##### Step 5: Adjust Learnsets
 In this example, the Pokémon which learn the move will be changed completely, and some new Pokémon will be able to learn this move by breeding.
 1. Consult a [source material](https://bulbapedia.bulbagarden.net/wiki/Dragon_Dance_(move)#Learnset) to identify all Pokémon in the game which learn Dragon Dance.
 
@@ -3599,7 +3599,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 
 ![](resources/case_study_snarl.gif) 
 
-#### Step 1: Move Effect & Attributes
+##### Step 1: Move Effect & Attributes
 1. Open DSPRE & load the ROM
 2. Open the `Move Data Editor` from the `Other Editors` toolbar option
 3. Select the move `Barrage` and update the configuration to:
@@ -3612,7 +3612,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
     - Range: `BOTH`
 5. Click the `Save` button
 
-#### Step 2: Move Description
+##### Step 2: Move Description
 1. Open the `Text Editor` from the main toolbar
 2. Use the search function to find the move description, taking a small part of the text (as displayed in the Move Data Editor), e.g. "Round objects"
 3. Update the message (`140`) to include a more accurate description (while retaining appropriate line breaks), for example changing the vanilla: 
@@ -3621,7 +3621,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Click the `Save Current Archive` button
 5. Click the `Save ROM` button from the main toolbar to apply the changes to a `.nds` ROM file.
 
-#### Step 3: Move Animation
+##### Step 3: Move Animation
 1. Open WazaEffectEditor (for HGSS in this case)
 2. Select the move Howl, and copy the animation script.
 3. Select the move Snarl (previously Barrage), delete the entire script and paste the copied script in it's place.
@@ -3647,7 +3647,7 @@ WaitBack2
 7. Click the `Save Current` button to save the Animation script.
 8. Save the ROM from the File option on the toolbar.
 
-#### Step 4: Adjust Learnsets
+##### Step 4: Adjust Learnsets
 In this example, the Pokémon which learn the move will be changed completely, and some new Pokémon will be able to learn this move by breeding.
 1. Consult a [source material](https://bulbapedia.bulbagarden.net/wiki/Barrage_(move)#Learnset) to identify all Pokémon in the game which learn Barrage.
 
@@ -3846,7 +3846,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 
 ![](resources/case_study_twister.gif)  
 
-#### Step 1: Move Effect & Attributes
+##### Step 1: Move Effect & Attributes
 1. Open DSPRE & load the ROM
 2. Open the `Move Data Editor` from the `Other Editors` toolbar option
 3. Select the move `Twister` and update the configuration to:
@@ -3856,7 +3856,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
     - Other elements such as power, accuracy, contest data & priority are not edited in this example (but could be).
 4. Click the `Save` button
 
-#### Step 2: Move Description
+##### Step 2: Move Description
 1. Open the `Text Editor` from the main toolbar
 2. Use the search function to find the move description, taking a small part of the text (as displayed in the Move Data Editor), e.g. "Round objects"
 3. Update the message (`239`) to include a more accurate description (while retaining appropriate line breaks), for example changing the vanilla: 
@@ -3865,7 +3865,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Click the `Save Current Archive` button
 5. Click the `Save ROM` button from the main toolbar to apply the changes to a `.nds` ROM file.
 
-#### Step 3: End of Turn Trapping Animation
+##### Step 3: End of Turn Trapping Animation
 1. Unpack the `/a/0/1/0` NARC (using the [DSPRE "Unpack NARC to Folder" function](/docs/universal/guides/unpacking_narcs/#dspre)).
 2. Locate the animation for Twister (file `239`) and copy the whole animation file contents.
 3. Unpack the `/a/0/6/1` NARC (using the DSPRE "Unpack NARC to Folder" function).
@@ -3883,7 +3883,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 37 00 00 00 00 00 00 00 FF 00 00 00 62 00 00 00 58 00 00 00 20 00 00 00 00 00 00 00 23 00 00 00 23 00 00 00 23 00 00 00 20 00 00 00 00 00 00 00 23 00 00 00 53 00 00 00 23 00 00 00 20 00 00 00 00 00 00 00 23 00 00 00 CF 01 00 00 23 00 00 00 20 00 00 00 00 00 00 00 23 00 00 00 80 00 00 00 23 00 00 00 20 00 00 00 00 00 00 00 23 00 00 00 FA 00 00 00 23 00 00 00 20 00 00 00 00 00 00 00 23 00 00 00 48 01 00 00 23 00 00 00 20 00 00 00 00 00 00 00 23 00 00 00 EF 00 00 00 23 00 00 00 45 00 00 00 FF 00 00 00 21 00 00 00 3B 00 00 00 21 00 00 00 45 00 00 00 FF 00 00 00 22 00 00 00 3B 00 00 00 1C 00 00 00 45 00 00 00 FF 00 00 00 23 00 00 00 3B 00 00 00 17 00 00 00 45 00 00 00 FF 00 00 00 24 00 00 00 3B 00 00 00 12 00 00 00 45 00 00 00 FF 00 00 00 25 00 00 00 3B 00 00 00 0D 00 00 00 45 00 00 00 FF 00 00 00 26 00 00 00 3B 00 00 00 08 00 00 00 45 00 00 00 FF 00 00 00 27 00 00 00 3B 00 00 00 03 00 00 00 45 00 00 00 FF 00 00 00 32 00 00 00 0E 00 00 00 12 00 00 00 06 01 00 00 0A 00 00 00 FF 00 00 00 FF 00 00 00 0E 00 00 00 1E 00 00 00 1E 00 00 00 32 00 00 00 0A 00 00 00 06 00 00 00 40 00 00 00 23 00 00 00 02 00 00 00 E0 00 00 00
 ```
 
-#### Step 4: Initial Trapping Texts
+##### Step 4: Initial Trapping Texts
 In this case study, the initial trapping text used by Fire Spin will be used for Twister.  
 1. Unpack the move scripts NARC (using the ["DSPRE Unpack NARC to Folder function"](/docs/universal/guides/unpacking_narcs/#dspre)) (`/a/0/0/0` in US Heartgold Version).
 2. Open the index for Fire Spin (`83`) and copy the contents.
@@ -3958,12 +3958,12 @@ This method will comprise of the following steps:
 4. Edit Growth's move data
 5. Test the changes and other tasks
 
-#### Step 1: Unpack the Move Effect Scripts NARC `be_seq.narc`
+##### Step 1: Unpack the Move Effect Scripts NARC `be_seq.narc`
 1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Move Effect Scripts NARC located at `/battle/skill/be_seq.narc`.
 2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
 3. If you've never unpacked `be_seq.narc` before, you should have 277 files in this folder (with the first file numbered as `0000` and last file numbered as `0276` because these files are zero-indexed).
 
-#### Step 2: Create and edit a new Move Effect Script file
+##### Step 2: Create and edit a new Move Effect Script file
 1. Using any hex editor of your choice, create a new blank file.
 2. Paste the following:
 ```
@@ -3981,17 +3981,17 @@ D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00
         - Alternatively, `32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 80` can be used, but requires setting the move data's `Side Effect Probability` to `100`.
     - `DE 00 00 00` - `End` command for Platinum
 
-#### Step 3: Save the new file and pack the Move Effect Scripts NARC
+##### Step 3: Save the new file and pack the Move Effect Scripts NARC
 1. Save this file as `0277` to your unpacked `be_seq.narc` folder (assuming new files haven't been added already).
 2. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `be_seq.narc` folder back to `/battle/skill/be_seq.narc`.
 
-#### Step 4: Edit Growth's move data
+##### Step 4: Edit Growth's move data
 1. Open DSPRE's Move Data Editor and select the move Growth.
 2. Change the `Effect Sequence` to `277 - Undocumented`.
 3. Change the PP to `20` (matching Gen VI+).
 4. Save the changes in the Move Data Editor.
 
-#### Step 5: Test the changes and other tasks
+##### Step 5: Test the changes and other tasks
 1. Test the following scenarios:
     - Under non-Harsh Sunlight weather conditions, Growth raises the user's Attack and Special Attack by 1 stage.
     - In Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages.
@@ -4021,12 +4021,12 @@ This method will comprise of the following steps:
 11. Edit Growth's move data
 12. Test the changes and other tasks
 
-#### Step 1: Apply ARM9 Expansion
+##### Step 1: Apply ARM9 Expansion
 1. If you haven't already, use the latest version of [DSPRE](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the ARM9 Expansion patch. 
 2. Verify that the `/unpacked/synthOverlay/0009` file (referred to as `synthOverlay 9` moving forward) size is 88 KB or 90,112 bytes.
 3. If your file is not the correct size, or if you've applied a different version of the ARM9 Expansion, please ask for assistance in the [Kingdom of DS Hacking Discord support channels](https://discord.com/channels/446824489045721090/446865033310240769).
 
-#### Step 2: Move the Move Effect Subscript Pointer Table
+##### Step 2: Move the Move Effect Subscript Pointer Table
 1. If you've followed this [Platinum Fairy Implementation Guide](../type_expansion/pt-type_expansion.md), this step will already be complete, but you can still follow along to verify.
 2. Using any hex editor of your choice, open `Overlay 16` and go to offset `0x33CE4`. You will see the following bytes:
 ```
@@ -4046,40 +4046,40 @@ This method will comprise of the following steps:
 8. Save the files back to their respective `project_name_DSPRE_contents` folder.
 9. Save your ROM, get in a battle, and test as many moves as possible to make sure the game doesn't crash or produce graphical glitches.
 
-#### Step 3: Unpack the Battle Subscripts NARC `sub_seq.narc`
+##### Step 3: Unpack the Battle Subscripts NARC `sub_seq.narc`
 1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Battle Subscripts NARC located at `/battle/skill/sub_seq.narc`.
 2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
 3. If you've never unpacked `sub_seq.narc` before, you should have 297 files in this folder (with the first file numbered as `0000` and last file numbered as `0296` because these files are zero-indexed).
 
-#### Step 4: Create and save a new Battle Subscript file
+##### Step 4: Create and save a new Battle Subscript file
 1. The first battle subscript will handle raising Attack and Special Attack by 1 stage. Vanilla Platinum has a few existing battle subscripts that raise two different stats by 1 stage, which we can copy and modify.
 2. Open the unpacked `sub_seq.narc` folder, make a copy of file `0152` and rename it `0297` (if you have already added files here, use the next available number). File `0152` is the battle subscript that specifically raises Attack and Speed by 1 stage (see more info from the Platinum Decompilation project [here](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/subscripts/subscript_user_atk_and_speed_up_1_stage.s)).
 3. Open up the new `0297` file in any hex editor and go to offset `0x24`. You should see `15 00 00 00` which is part of the command that checks the Pokémon's Speed stat stage. Replace it with `16 00 00 00` to check Special Attack instead.
 4. Go to offset `0x8C`. You should see `11 00 00 00` which is the move effect subscript that raises Speed by 1 stage. Replace it with `12 00 00 00` to change the effect to raise Special Attack by 1 stage.
 5. Save the `0297` file back to the unpacked `sub_seq.narc` folder.
 
-#### Step 5: Create and save a second new Battle Subscript file
+##### Step 5: Create and save a second new Battle Subscript file
 1. The second battle subscript will handle raising Attack and Special Attack by 2 stages. This will mirror the previous step, but adjusted to raise Attack and Special Attack by 2 stages.
 2. Open the unpacked `sub_seq.narc` folder, make a copy of file `0297` and rename it `0298`.
 3. Open up the new `0298` file in any hex editor and go to offset `0x74`. Replace `0F 00 00 00` with `27 00 00 00` to change the effect to raise Attack by 2 stages.
 4. Open up the new `0298` file in any hex editor and go to offset `0x8C`. Replace `12 00 00 00` with `2A 00 00 00` to change the effect to raise Special Attack by 2 stages.
 5. Save the `0298` file back to the unpacked `sub_seq.narc` folder.
 
-#### Step 6: Pack the Battle Subscripts NARC
+##### Step 6: Pack the Battle Subscripts NARC
 1. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `sub_seq.narc` folder back to `/battle/skill/sub_seq.narc`.
 
-#### Step 7: Add new entries to the Move Effect Subscript Pointer Table
+##### Step 7: Add new entries to the Move Effect Subscript Pointer Table
 1. Go back to `synthOverlay 9` in your hex editor and go to offset `0x1244`. This should be right after the end of the table you moved previously.
 2. Assuming you haven't added new entries here already, overwrite the next 8 bytes with `29 01 00 00 2A 01 00 00`. 
 3. This essentially adds two new **move effect subscripts** entries or IDs, `145` and `146`, that will point to the two new **battle subscript** files, respectively. 
 4. Save the file back to `/unpacked/synthOverlay/0009`.
 
-#### Step 8: Unpack the Move Effect Scripts NARC `be_seq.narc`
+##### Step 8: Unpack the Move Effect Scripts NARC `be_seq.narc`
 1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Move Effect Scripts NARC located at `/battle/skill/be_seq.narc.`
 2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
 3. If you've never unpacked `be_seq.narc` before, you should have 277 files in this folder (with the first file numbered as `0000` and last file numbered as `0276` because these files are zero-indexed).
 
-#### Step 9: Create and edit a new Move Effect Script file
+##### Step 9: Create and edit a new Move Effect Script file
 1. Using any hex editor of your choice, create a new blank file.
 2. Copy and paste the following bytes:
 ```
@@ -4093,17 +4093,17 @@ D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00
     - `32 00 00 00 07 00 00 00 02 00 00 00 92 00 00 40` - Sets the **direct side effect** to invoke the newly added move effect subscript (entry `146`, or `92` in hexadecimal), which will point to the new battle subscript that raises Attack and Special Attack by 2 stages. The command also specifies that the effect should apply to the attacker.
     - `DE 00 00 00` - `End` command
 
-#### Step 10: Save the new file and pack the Move Effect Scripts NARC
+##### Step 10: Save the new file and pack the Move Effect Scripts NARC
 1. Save this file as `0277` to your unpacked `be_seq.narc` folder (assuming new files haven't been added already).
 2. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `be_seq.narc` folder back to `/battle/skill/be_seq.narc`.
 
-#### Step 11: Edit Growth's move data
+##### Step 11: Edit Growth's move data
 1. Open DSPRE's Move Data Editor and select the move Growth.
 2. Change the `Effect Sequence` to `277 - Undocumented`.
 3. Change the PP to `20` (matching Gen VI+).
 4. Save the changes in the Move Data Editor.
 
-#### Step 12: Test the changes and other tasks
+##### Step 12: Test the changes and other tasks
 1. Test the following scenarios:
     - Under non-Harsh Sunlight weather conditions, Growth raises the user's Attack and Special Attack by 1 stage.
     - In Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages.
