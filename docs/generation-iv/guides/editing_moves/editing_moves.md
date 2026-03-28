@@ -10,7 +10,7 @@ tags:
 
 # Editing Moves
 > Author(s): [MrHam88](https://github.com/DevHam88), Lmaokai.  
-> Implementation & Research: Aero, [BlueRose](https://github.com/BluRosie), [DarmaniDan](https://github.com/DarmaniDan), [Drayano](https://pastebin.com/u/DrayHackTutorials), [Fexty](https://github.com/Fexty12573), [Lhea](https://gist.github.com/lhearachel), Lmaokai, MapleDonut, [Mixone](https://github.com/Mixone-FinallyHere), Paille92, [RefinedPlat](https://github.com/refinedplat), Solace, [TurtleIsaac](https://github.com/turtleisaac), [Yako?](https://github.com/YakoSWG).
+> Implementation & Research: Aero, [BlueRose](https://github.com/BluRosie), [DarmaniDan](https://github.com/DarmaniDan), [Drayano](https://pastebin.com/u/DrayHackTutorials), [Fexty](https://github.com/Fexty12573), [Lhea](https://gist.github.com/lhearachel), Lmaokai, MapleDonut, [Mixone](https://github.com/Mixone-FinallyHere), Paille92, [RefinedPlat](https://www.pokecommunity.com/members/refinedplat.1351327/#about), Solace, [TurtleIsaac](https://github.com/turtleisaac), [Yako?](https://github.com/YakoSWG).
 
 This page is a full guide on making changes to moves and their related data in Generation IV Pokémon games (moves, move effects, animations, learnsets, TMs, move tutors). This guide focuses on editing, re-organising and replacing existing data. There are methods to *add* new moves (without replacing any existing moves) to Generation IV Pokémon games, but these are significantly involved, and require moving data/tables.  
 
