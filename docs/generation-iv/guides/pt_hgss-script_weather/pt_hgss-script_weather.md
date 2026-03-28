@@ -8,7 +8,7 @@ tags:
 
 # Setting the Weather From a Script
 
-> Author(s): [RefinedPlat](https://www.romhacking.net/community/6532/)
+> Author(s): [RefinedPlat](https://www.pokecommunity.com/members/refinedplat.1351327/#about)
 
 The goal of this tutorial is to use `AdrsValueSet` to alter a value related to the `DefogAnimation/FlashAnimation` command to make it update to an arbitrary weather of the scripter's choice.
 
