@@ -48,14 +48,14 @@ Every unique move *(identified by move index/ID)* in the game has:
 
 The exact mapping of how a move is executed can be found [here](https://github.com/pret/pokeplatinum/blob/2bf38f5952b791524b5f767c583e4fe0830a82c5/src/battle/battle_lib.c#L7507) in the Platinum Decompilation project. The specific file locations for each of these elements in HGSS can be found [here](/docs/generation-iv/resources/hgss-file_structure/), and an overview is below including HGSS & Platinum file names:
 
-| - | HGSS File | Platinum File |
-| --- | --- | --- |
-| Move Data | `/a/0/1/1` | `/poketool/waza/pl_waza_tbl.narc` |
-| Move Scripts | `/a/0/0/0` | `/battle/skill/waza_seq.narc` |
-| Move Effect Scripts | `/a/0/3/0` | `/battle/skill/be_seq.narc` |
-| Battle Subscripts | `/a/0/0/1` | `/battle/skill/sub_seq.narc` |  
-| Move Animation | `/a/0/1/0` | `/data/wazaeffect/we.arc` |
-| Continuous Animations | `/a/0/6/1` | `/data/wazaeffect/we_sub.narc` |
+| -                     | HGSS File  | Platinum File                     |
+| --------------------- | ---------- | --------------------------------- |
+| Move Data             | `/a/0/1/1` | `/poketool/waza/pl_waza_tbl.narc` |
+| Move Scripts          | `/a/0/0/0` | `/battle/skill/waza_seq.narc`     |
+| Move Effect Scripts   | `/a/0/3/0` | `/battle/skill/be_seq.narc`       |
+| Battle Subscripts     | `/a/0/0/1` | `/battle/skill/sub_seq.narc`      |  
+| Move Animation        | `/a/0/1/0` | `/wazaeffect/we.arc`              |
+| Continuous Animations | `/a/0/6/1` | `/wazaeffect/we_sub.narc`         |
 
 - The **move data** NARC contains [basic data](#basic-move-data-dspre) on the move, which can be edited in DSPRE's Move Editor. This includes, for example, the reference to the **move effect script** (labeled as `Effect Sequence` in DSPRE's Move Editor).
     - The general structure of basic move data can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/src/move_table.c#L37) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/move.h#L6) Decompilation projects.
