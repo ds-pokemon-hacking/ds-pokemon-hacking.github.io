@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkkodsh_wiki_new=globalThis.webpackChunkkodsh_wiki_new||[]).push([[7196],{7196(e,i,k){k.d(i,{createTreeViewServices:()=>s.I});var s=k(89314);k(72519)}}]);

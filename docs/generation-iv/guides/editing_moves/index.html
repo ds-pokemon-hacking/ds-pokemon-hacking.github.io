@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Editing Moves | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Editing Moves | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Author(s): MrHam88, Lmaokai."><meta data-rh="true" property="og:description" content="Author(s): MrHam88, Lmaokai."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Guides","item":"https://ds-pokemon-hacking.github.io/docs/category/guides"},{"@type":"ListItem","position":2,"name":"Editing Moves","item":"https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/editing_moves/"}]}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.28dbf986.css">
-<script src="/assets/js/runtime~main.718fb842.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.16fc3c58.js" defer="defer"></script>
 <script src="/assets/js/main.1ebbfbc3.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -59,7 +59,7 @@
 </li>
 </ul>
 <p>The exact mapping of how a move is executed can be found <a href="https://github.com/pret/pokeplatinum/blob/2bf38f5952b791524b5f767c583e4fe0830a82c5/src/battle/battle_lib.c#L7507" target="_blank" rel="noopener noreferrer" class="">here</a> in the Platinum Decompilation project. The specific file locations for each of these elements in HGSS can be found <a class="" href="/docs/generation-iv/resources/hgss-file_structure/">here</a>, and an overview is below including HGSS &amp; Platinum file names:</p>
-<table><thead><tr><th>-</th><th>HGSS File</th><th>Platinum File</th></tr></thead><tbody><tr><td>Move Data</td><td><code>/a/0/1/1</code></td><td><code>/poketool/waza/waza_tbl.narc</code></td></tr><tr><td>Move Scripts</td><td><code>/a/0/0/0</code></td><td><code>/battle/skill/waza_seq.narc</code></td></tr><tr><td>Move Effect Scripts</td><td><code>/a/0/3/0</code></td><td><code>/battle/skill/be_seq.narc</code></td></tr><tr><td>Battle Subscripts</td><td><code>/a/0/0/1</code></td><td><code>/battle/skill/sub_seq.narc</code></td></tr><tr><td>Move Animation</td><td><code>/a/0/1/0</code></td><td><code>/data/wazaeffect/we.arc</code></td></tr><tr><td>Continuous Animations</td><td><code>/a/0/6/1</code></td><td><code>/data/wazaeffect/we_sub.narc</code></td></tr></tbody></table>
+<table><thead><tr><th>-</th><th>HGSS File</th><th>Platinum File</th></tr></thead><tbody><tr><td>Move Data</td><td><code>/a/0/1/1</code></td><td><code>/poketool/waza/pl_waza_tbl.narc</code></td></tr><tr><td>Move Scripts</td><td><code>/a/0/0/0</code></td><td><code>/battle/skill/waza_seq.narc</code></td></tr><tr><td>Move Effect Scripts</td><td><code>/a/0/3/0</code></td><td><code>/battle/skill/be_seq.narc</code></td></tr><tr><td>Battle Subscripts</td><td><code>/a/0/0/1</code></td><td><code>/battle/skill/sub_seq.narc</code></td></tr><tr><td>Move Animation</td><td><code>/a/0/1/0</code></td><td><code>/wazaeffect/we.arc</code></td></tr><tr><td>Continuous Animations</td><td><code>/a/0/6/1</code></td><td><code>/wazaeffect/we_sub.narc</code></td></tr></tbody></table>
 <ul>
 <li class="">The <strong>move data</strong> NARC contains <a href="#basic-move-data-dspre" class="">basic data</a> on the move, which can be edited in DSPRE&#x27;s Move Editor. This includes, for example, the reference to the <strong>move effect script</strong> (labeled as <code>Effect Sequence</code> in DSPRE&#x27;s Move Editor).<!-- -->
 <ul>
@@ -142,7 +142,7 @@
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="move-animation-options">Move Animation Options<a href="#move-animation-options" class="hash-link" aria-label="Direct link to Move Animation Options" title="Direct link to Move Animation Options" translate="no">​</a></h3>
 <p>There are a large number of animation components in the game, that are often used in conjunction with each other to create the overall move animations. There are some resources available to view/inspect the vanilla animations to get ideas for how to take elements of them and build custom animations. A <a href="#move-animations" class="">later section (Move Animations)</a> of the page will deal with editing animations specifically, but these resources can help with viewing vanilla animations in action without having to test individually in-game.</p>
 <ul>
-<li class=""><strong>External Resource:</strong> <a href="https://www.youtube.com/watch?v=gukPRu2iZ_w" target="_blank" rel="noopener noreferrer" class="">TwilightPrincess&#x27;s YouTube video of all Animations</a> - See time-index in the comments, ordered by Move ID.</li>
+<li class=""><strong>External Resource:</strong> <a href="https://www.youtube.com/watch?v=gukPRu2iZ_w" target="_blank" rel="noopener noreferrer" class="">TwilightPrincess&#x27;s YouTube video of all Generation IV Move Animations</a> - See time-index in the comments, ordered by Move ID.</li>
 <li class=""><strong>Wiki Resource:</strong> <a class="" href="/docs/generation-iv/resources/move_animations/">Generation IV Move Animations list</a> - Sourced/linked from Bulbapedia, filterable &amp; sortable table.</li>
 </ul>
 <hr>
@@ -343,8 +343,20 @@
 </ul>
 <p>There are a number of other resources which may be useful in move animation editing:</p>
 <ul>
-<li class=""><a class="" href="/docs/generation-iv/resources/move_animations/">Vanilla Move Animations</a></li>
-<li class=""><a href="https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790" target="_blank" rel="noopener noreferrer" class="">Fexty&#x27;s definitions for the commands used</a></li>
+<li class=""><strong>Wiki Resource:</strong> <a class="" href="/docs/generation-iv/resources/move_animations/">Generation IV Move Animations list</a></li>
+<li class=""><strong>Platinum Decompilation Project</strong>
+<ul>
+<li class=""><a href="https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790" target="_blank" rel="noopener noreferrer" class="">Fexty&#x27;s definitions for Move Animation Script commands</a></li>
+<li class=""><a href="https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/moves" target="_blank" rel="noopener noreferrer" class="">Decompiled Move Animation Script for each move</a></li>
+</ul>
+</li>
+<li class=""><strong>External Resources:</strong>
+<ul>
+<li class=""><a href="https://www.youtube.com/watch?v=gukPRu2iZ_w" target="_blank" rel="noopener noreferrer" class="">TwilightPrincess&#x27;s YouTube video of all Generation IV Move Animations</a> (time-index in the comments)</li>
+<li class=""><a href="https://www.youtube.com/@magiscars/playlists" target="_blank" rel="noopener noreferrer" class="">Magiscars Database&#x27;s Youtube channel of Generation I-IX Move Animations</a> (not all moves are published yet)</li>
+<li class="">Nintendo Unity&#x27;s Youtube <a href="https://www.youtube.com/playlist?list=PLsOPwXA-m0-Bk-3P3avQGg-poPESOibEw" target="_blank" rel="noopener noreferrer" class="">playlist of Generation I-VII Move Animations</a> and <a href="https://www.youtube.com/watch?v=B01cWKbAEw4" target="_blank" rel="noopener noreferrer" class="">video of Generation IX New Move Animations</a></li>
+</ul>
+</li>
 </ul>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="running-wazaeffecteditor">Running WazaEffectEditor<a href="#running-wazaeffecteditor" class="hash-link" aria-label="Direct link to Running WazaEffectEditor" title="Direct link to Running WazaEffectEditor" translate="no">​</a></h3>
 <p>The first time that WazaEffectEditor is opened a message about downloading libraries/moves from Bulbapedia may be presented, this should be accepted. This may then result in a hanging state after a few minutes. If this is the case, closing and re-opening the application should resolve and allow use of the tool.</p>
@@ -355,7 +367,7 @@
 <img decoding="async" loading="lazy" alt="Hydro Pump" src="/assets/images/Hydro_Pump_IV-ff1c0b571eeafabbd11ecfed223300fb.png" width="256" height="192" class="img_ev3q"></p>
 <p>Animations can be viewed in hex by unpacking the relevant NARC (see <a href="#move--associated-data-structure" class="">here</a> for NARC details), or by viewing in WazaEffectEditor. Once opened, having the <a href="https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790" target="_blank" rel="noopener noreferrer" class="">translation of the animation commands</a> can be invaluable in interpreting what is happening. Only some commands are named in WazaEffectEditor, whereas almost all have been named by Fexty.</p>
 <p>Lots of animations have common components, and some similar animations have similar patterns (such as charging or recharge moves having different animations on the first and second turn).</p>
-<p>There are three main types of animation components/instructions:</p>
+<p>There are four main types of animation components/instructions:</p>
 <ol>
 <li class=""><strong>Sprite translations</strong> - where the user or target Pokemon sprite is rotated, scaled or translated (moved).</li>
 <li class=""><strong>&quot;Particles&quot;</strong> - where new visual elements are added &quot;on top&quot; of the view in battle.<!-- -->
@@ -373,36 +385,64 @@
 <p>With nothing more than these resources, and a basic understanding of what happens (and can happen) in a Pokemon battle generally, and with the specific move, we can infer a few things from Pound (many are applicable to other moves).</p>
 <p>The move animation goes through some decipherable steps (with some obscured detail):</p>
 <ol>
-<li class="">Initialise the animation system,</li>
-<li class="">Load resources and specific sprites,</li>
+<li class="">Initialise the animation particle system</li>
+<li class="">Load resources and specific sprites</li>
 <li class="">Call some specific functions</li>
-<li class="">Load the animation system</li>
+<li class="">Load the animation particle system</li>
 <li class="">Remove sprites</li>
-<li class="">Load the specific &quot;emitter&quot; animations required (in this case concurrently)</li>
+<li class="">Initiate/play the specific animation particle(s) (in this case concurrently)</li>
 <li class="">Call some specific functions</li>
 <li class="">Play a sound effect</li>
 <li class="">Wait for the animations to end</li>
-<li class="">Unload the animation system</li>
+<li class="">Unload the animation particle system</li>
 <li class="">End</li>
 </ol>
 <p>Various other things can be inferred:</p>
 <ul>
-<li class="">The animation system must be loaded and unloaded before and after the animations play.</li>
-<li class="">When animations/particle emitters are initiated, there will be a wait function to ensure the animation finishes.</li>
-<li class="">Each unique &quot;Particle System&quot; (second parameter of the <code>SetPlayAnim</code> or <code>LoadParticleSystem</code> command), has a number of actual particle animations within it, played using the <code>LoadAnim</code> or <code>CreateEmitter</code> command.</li>
+<li class="">The animation particle system must be loaded and unloaded before and after the animations play.<!-- -->
+<ul>
+<li class="">The unique animation particle system to load is specified in the second parameter of the <code>SetPlayAnim</code> (WazaEffectEditor name) or <code>LoadParticleSystem</code> (Fexty&#x27;s name) command.</li>
+<li class="">The animation particle system is also given a local ID to be referenced by later commands, and is specified in the first parameter of the <code>SetPlayAnim</code> or <code>LoadParticleSystem</code> command.</li>
+</ul>
+</li>
+<li class="">Each unique animation particle system has a number of actual animation particles within it, which is initiated using the <code>LoadAnim</code> (WazaEffectEditor name) or <code>CreateEmitter</code> (Fexty&#x27;s name) command.<!-- -->
+<ul>
+<li class="">The second parameter of the <code>LoadAnim</code> or <code>CreateEmitter</code> command is what invokes the actual animation particle to play.</li>
+<li class="">The first parameter of the <code>LoadAnim</code> or <code>CreateEmitter</code> command specifies from which loaded animation particle system (via local ID) to invoke the actual animation particle.</li>
+<li class="">And finally, the third parameter of the <code>LoadAnim</code> or <code>CreateEmitter</code> command specifies to which battler to apply the actual animation particle.</li>
+</ul>
+</li>
+<li class="">When animations particles are initiated, there will be a wait command to ensure the animation finishes.<!-- -->
+<ul>
+<li class="">The wait command does not necessarily have to follow immediately after initiating the animation particle, but must be present before ending the move animation script.</li>
+</ul>
+</li>
 </ul>
 <p>To learn more, more complex move animations can be reviewed:</p>
 <ul>
-<li class="">Such as two-turn moves like Solarbeam, where an initialisation and two sets of animations can be seen, managed with the command:<!-- -->
+<li class="">Such as two-turn moves like SolarBeam, where an initialisation and two sets of animations can be seen, managed with the command:<!-- -->
 <ul>
-<li class=""><code>ov12_02220F30</code> (<code>CheckTurn</code>).</li>
+<li class=""><code>CheckTurn</code> (WazaEffectEditor name) / <code>ov12_02220F30/BtlAnimCmd_013</code> (unnamed in the Platinum Decompilation project).</li>
 </ul>
 </li>
-<li class="">A move that includes a background being generated as well as &quot;particle&quot; animations, e.g. Hydro Pump, which uses the commands:<!-- -->
+<li class="">A move that includes a background being generated, e.g. Hydro Pump, which uses the commands:<!-- -->
 <ul>
-<li class=""><code>BattleAnimScriptCmd_SwitchBg</code> (<code>ChangeBackG</code>),</li>
-<li class=""><code>BattleAnimScriptCmd_WaitForBgSwitch</code> (<code>WaitBack2</code>) &amp;</li>
-<li class=""><code>BattleAnimScriptCmd_RestoreBg</code> (<code>BackBackG</code>).</li>
+<li class=""><code>ChangeBackG</code> (WazaEffectEditor name) / <code>BattleAnimScriptCmd_SwitchBg</code> (Fexty&#x27;s name),</li>
+<li class=""><code>WaitBack2</code> / <code>BattleAnimScriptCmd_WaitForBgSwitch</code> &amp;</li>
+<li class=""><code>BackBackG</code> / <code>BattleAnimScriptCmd_RestoreBg</code>.</li>
+</ul>
+</li>
+<li class="">A move that hits both opponents or all battlers on the field, where a particle animation may be applied to a certain side instead of an individual battler, e.g. Twister, which may use the following parameters in the <code>LoadAnim</code> or <code>CreateEmitter</code> command:<!-- -->
+<ul>
+<li class=""><code>0x4</code> (WazaEffectEditor value) / <code>EMITTER_CB_SET_POS_TO_DEFENDER_SIDE</code> (Fexty&#x27;s name) or</li>
+<li class=""><code>0x11</code> / <code>EMITTER_CB_GENERIC</code>.</li>
+</ul>
+</li>
+<li class="">A move that combines multiple animation particle systems and plays their actual particle animations concurrently, e.g. Dig, which is managed by:<!-- -->
+<ul>
+<li class="">Loading the Dig animation particle system with a local ID of <code>0</code>,</li>
+<li class="">Loading the Pound animation particle system with a local ID of <code>1</code> &amp;</li>
+<li class="">Specifying the animation particle system (via local ID) in the first parameter of each <code>LoadAnim</code> or <code>CreateEmitter</code> command.</li>
 </ul>
 </li>
 </ul>

@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkkodsh_wiki_new=globalThis.webpackChunkkodsh_wiki_new||[]).push([[4821],{94821(e,i,h){h.d(i,{createGitGraphServices:()=>k.b});var k=h(24187);h(72519)}}]);
