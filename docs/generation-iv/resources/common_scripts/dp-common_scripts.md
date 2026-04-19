@@ -34,7 +34,13 @@ This mapping table allows quick lookup of the Common Script ID, to find the scri
     <td>Trainer Records</td>
   </tr>
   <tr>
-    <td>`10200` - `10399`</td>
+    <td>`10300` - `10399`</td>
+    <td>977</td>
+    <td>496</td>
+    <td>Sandgem Town Counterpart Talk</td>
+  </tr> 
+  <tr>
+    <td>`10200` - `10299`</td>
     <td>373</td>
     <td>332</td>
     <td>Poké Mart Mystery Gifts</td>
