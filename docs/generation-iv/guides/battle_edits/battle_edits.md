@@ -54,8 +54,8 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Aqua Ring End-of-Turn HP Restoration](#aqua-ring-end-of-turn-hp-restoration)
   - [Binding Moves End-of-Turn Damage](#binding-moves-end-of-turn-damage)
   - [Binding Moves Duration](#binding-moves-duration)
-  - [Magnitude Damage](#magnitude-damage)
-  - [Gyro Ball Damage Calculation Multiplier](#gyro-ball-damage-calculation-multiplier)
+  - [Magnitude Move Power](#magnitude-move-power)
+  - [Gyro Ball Move Power Calculation Multiplier](#gyro-ball-move-power-calculation-multiplier)
 
 - [Weather](#weather)
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
@@ -663,7 +663,7 @@ The forced Grip Claw duration cannot be changed to a value greater than `07`.
 
 
 
-### Magnitude Damage
+### Magnitude Move Power
 > Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/fb3156a07ad0addb95a6486b229f34bb35894b9d/src/battle/battle_script.c#L5821), [HG Decomp](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/battle_command.c#L3493)
 
 Open the relevant file and go to the provided offsets:
@@ -694,7 +694,7 @@ The move effect assigned to Magnitude has a varying move power based on randomly
 
 
 
-### Gyro Ball Damage Calculation Multiplier
+### Gyro Ball Move Power Calculation Multiplier
 > Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/fb3156a07ad0addb95a6486b229f34bb35894b9d/src/battle/battle_script.c#L7124), [HG Decomp](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/battle_command.c#L4299)
 
 Open the relevant file and go to the provided offsets:
