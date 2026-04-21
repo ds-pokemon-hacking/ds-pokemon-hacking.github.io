@@ -43,6 +43,7 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Slow Start Stat-Reduction Duration](#slow-start-stat-reduction-duration)
   - [Rain Dish End-of-Turn HP Restoration](#rain-dish-end-of-turn-hp-restoration)
   - [Reckless Damage Multiplier](#reckless-damage-multiplier)
+  - [Rivalry Damage Multipliers](#rivalry-damage-multipliers)
 
 - [Item Held Effects](#item-held-effects)
   - [Leftovers End-of-Turn HP Restoration](#leftovers-end-of-turn-hp-restoration)
@@ -53,6 +54,8 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Aqua Ring End-of-Turn HP Restoration](#aqua-ring-end-of-turn-hp-restoration)
   - [Binding Moves End-of-Turn Damage](#binding-moves-end-of-turn-damage)
   - [Binding Moves Duration](#binding-moves-duration)
+  - [Magnitude Damage](#magnitude-damage)
+  - [Gyro Ball Damage Calculation Multiplier](#gyro-ball-damage-calculation-multiplier)
 
 - [Weather](#weather)
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
@@ -453,6 +456,37 @@ Unpack the following NARCs, open the six specified files, and change the bytes a
 
 
 
+### Rivalry Damage Multipliers
+> Sources and Credits: [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1494755231093756155), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/73042ddea249cbfb6a3b885ac1fc82d8154cfba1/src/battle/battle_lib.c#L6901), [HG Decomp](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/overlay_12_0224E4FC.c#L5800)
+
+Open the relevant file and go to the provided offsets:
+| Game                     | File                      | Offset (Same Gender Multiplier) | Vanilla Byte | Offset (Same Gender Divisor) | Vanilla Byte |
+|:------------------------:|:-------------------------:|:-------------------------------:|:------------:|:----------------------------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12` |         `0x1FF00`               |     `7D`     |       `0x1FF04`              |     `64`     |
+| **Platinum**             | `Overlay 16`              |         `0x1F908`               |     `7D`     |       `0x1F90C`              |     `64`     |
+| **Diamond/Pearl**        | `Overlay 11`              |         `0x1E4DC`               |     `7D`     |       `0x1E4E0`              |     `64`     |
+
+| Game                     | File                      | Offset (Opposite Gender Multiplier) | Vanilla Byte | Offset (Opposite Gender Divisor) | Vanilla Byte |
+|:------------------------:|:-------------------------:|:-----------------------------------:|:------------:|:--------------------------------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12` |         `0x1FF26`                   |     `4B`     |       `0x1FF2A`                  |     `64`     |
+| **Platinum**             | `Overlay 16`              |         `0x1F92E`                   |     `4B`     |       `0x1F932`                  |     `64`     |
+| **Diamond/Pearl**        | `Overlay 11`              |         `0x1E502`                   |     `4B`     |       `0x1E506`                  |     `64`     |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |           Game           | Same Gender                  |          Opposite Gender           |
+  |--------------------------|------------------------------|------------------------------|
+  | **HeartGold/SoulSilver** | `7D 20 60 43 64 21 9B F6 E8` | `4B 20 60 43 64` |
+  |       **Platinum**       | `7D 20 60 43 64 21 87 F6 8E` | `4B 20 60 43 64` |
+  |     **Diamond/Pearl**    | `7D 20 60 43 64 21 A0 F6 EE` | `4B 20 60 43 64` |
+</details>
+
+Rivalry **increases** the power of moves by **25%** if the target and the user have the same gender. The battle logic calculates the increased damage by multiplying and dividing the move's power by explicitly defined values, in this case **125** (`7D` in hexadecimal) and **100** (`64` in hexadecimal), respectively.
+
+Rivalry **reduces** the power of moves by **25%** if the target and the user have opposite genders. The battle logic calculates the reduced damage by multiplying and dividing the move's power by explicitly defined values, in this case **75** (`4B` in hexadecimal) and **100** (`64` in hexadecimal), respectively.
+
+
+
 ## Item Held Effects
 
 ### Leftovers End-of-Turn HP Restoration
@@ -629,6 +663,58 @@ The forced Grip Claw duration cannot be changed to a value greater than `07`.
 
 
 
+### Magnitude Damage
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/fb3156a07ad0addb95a6486b229f34bb35894b9d/src/battle/battle_script.c#L5821), [HG Decomp](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/battle_command.c#L3493)
+
+Open the relevant file and go to the provided offsets:
+|           Game           |            File           | Offset (Magnitude 4) | Vanilla Byte | Offset (Magnitude 5) | Vanilla Byte | Offset (Magnitude 6) | Vanilla Byte | Offset (Magnitude 7) | Vanilla Byte | Offset (Magnitude 8) | Vanilla Byte | Offset (Magnitude 9) | Vanilla Byte | Offset (Magnitude 10) | Vanilla Byte |
+|:------------------------:|:-------------------------:|:--------------------:|:------------:|:--------------------:|:------------:|:--------------------:|:------------:|:--------------------:|:------------:|:--------------------:|:------------:|:--------------------:|:------------:|:---------------------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12` |       `0xA89A`       |     `0A`     |       `0xA8AA`       |     `1E`     |       `0xA8BA`       |     `32`     |       `0xA8CA`       |     `46`     |       `0xA8DA`       |     `5A`     |       `0xA8EA`       |     `6E`     |        `0xA8F4`       |     `96`     |
+|       **Platinum**       |        `Overlay 16`       |       `0xA672`       |     `0A`     |       `0xA682`       |     `1E`     |       `0xA692`       |     `32`     |       `0xA6A2`       |     `46`     |       `0xA6B2`       |     `5A`     |       `0xA6C2`       |     `6E`     |        `0xA6CC`       |     `96`     |
+|     **Diamond/Pearl**    |        `Overlay 11`       |       `0x9CFA`       |     `0A`     |       `0x9D0A`       |     `1E`     |       `0x9D1A`       |     `32`     |       `0x9D2A`       |     `46`     |       `0x9D3A`       |     `5A`     |       `0x9D4A`       |     `6E`     |        `0x9D54`       |     `96`     |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Magnitude 4 Bytes | Magnitude 5 Bytes | Magnitude 6 Bytes | Magnitude 7 Bytes | Magnitude 8 Bytes | Magnitude 9 Bytes | Magnitude 10 Bytes |
+  |:-------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|:------------------:|
+  | **All Games** |     `0A 22 62`    |     `1E 22 62`    |     `32 22 62`    |     `46 22 62`    |     `5A 22 62`    |     `6E 22 62`    |     `96 22 62`     |
+</details>
+
+The move effect assigned to Magnitude has a varying move power based on randomly selected "magnitude" level. The battle logic first determines the "magnitude" level, then provides the explicitly defined move power associated with each "magnitude" level.
+
+| Magnitude Level  | Vanilla Power  | Vanilla Byte |
+|:----------------:|:--------------:|:------------:|
+|         4        |       10       |     `0A`     |
+|         5        |       30       |     `1E`     |
+|         6        |       50       |     `32`     |
+|         7        |       70       |     `46`     |
+|         8        |       90       |     `5A`     |
+|         9        |       110      |     `6E`     |
+|        10        |       150      |     `96`     |
+
+
+
+### Gyro Ball Damage Calculation Multiplier
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/fb3156a07ad0addb95a6486b229f34bb35894b9d/src/battle/battle_script.c#L7124), [HG Decomp](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/battle_command.c#L4299)
+
+Open the relevant file and go to the provided offsets:
+| Game                     | File                      | Offset   | Vanilla Byte |
+|:------------------------:|:-------------------------:|:--------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12` | `0xBEAA` | `19`         |
+| **Platinum**             | `Overlay 16`              | `0xBC82` | `19`         |
+| **Diamond/Pearl**        | `Overlay 11`              | `0xB316` | `19`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Bytes      |
+  |:-------------:|:----------:|
+  | **All Games** | `19 20 50` |
+</details>
+
+The move effect assigned to Gyro Ball has a varying move power based on the user's Speed compared to the target's Speed. The battle logic calculates the move's power by dividing the target's Speed by the user's Speed, then multiplying the result by an explicitly defined value, in this case **25** (`19` in hexadecimal). Increasing this value will increase the calculated power (but is still restricted by the maximum power cap of 150).
+
+
+
 ## Weather
 
 ### Hail End-of-Turn Damage for Non-Ice Types
@@ -644,7 +730,7 @@ Open the relevant file and change the byte at the provided offset:
 <details>
   <summary>You can also search for these bytes instead</summary>
   | Game                     | Bytes            |
-  |--------------------------|------------------|
+  |:------------------------:|:----------------:|
   | **HeartGold/SoulSilver** | `10 21 11 F0 43` |
   | **Platinum**             | `10 21 11 F0 57` |
   | **Diamond/Pearl**        | `10 21 10 F0 33` |
