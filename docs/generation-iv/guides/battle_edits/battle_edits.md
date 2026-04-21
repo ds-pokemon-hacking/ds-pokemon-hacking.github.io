@@ -88,7 +88,7 @@ As an example, to change Burn damage from **1/8<sup>th</sup>** of the Pokémon's
 
 
 ### Paralysis Speed Reduction
-> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1447833050833616936), Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/75545a47f21ce27e376c60eeba15ac77e06e3c1c/src/battle/battle_lib.c#L1260), [2](https://github.com/pret/pokeplatinum/blob/75545a47f21ce27e376c60eeba15ac77e06e3c1c/src/battle/battle_lib.c#L1326)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1057), [2](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1116)), [Online Assembler and Disassembler](https://shell-storm.org/online/Online-Assembler-and-Disassembler/)
+> Sources and Credits: [Lmaokai](https://discord.com/channels/446824489045721090/477197363954581542/1447833050833616936), Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/75545a47f21ce27e376c60eeba15ac77e06e3c1c/src/battle/battle_lib.c#L1260), [2](https://github.com/pret/pokeplatinum/blob/75545a47f21ce27e376c60eeba15ac77e06e3c1c/src/battle/battle_lib.c#L1326)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1057), [2](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L1116))
 
 Open the relevant file and go to the provided offsets:
 | Game                     | File                        | Offset (Battler 1)  | Vanilla Byte | Offset (Battler 2) | Vanilla Byte |
