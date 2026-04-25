@@ -18,7 +18,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '25.1.0'
+          node-version: '20' # go back to past for safety
+          # node-version: '25.6.2' # accourding to https://github.com/facebook/docusaurus/issues/11545#issuecomment-3562159414 this one should work too if 20 doesnt
           cache: yarn
           cache-dependency-path: '**/package-lock.json' 
 
