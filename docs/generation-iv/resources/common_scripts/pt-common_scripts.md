@@ -45,7 +45,13 @@ This mapping table allows quick lookup of the Common Script ID, to find the scri
     <td>Pokémon Center Roaming Trainers</td>
   </tr>
   <tr>
-    <td>`10200` - `10399`</td>
+    <td>`10300` - `10399`</td>
+    <td>1051</td>
+    <td>552</td>
+    <td>Sandgem Town Counterpart Talk</td>
+  </tr>  
+  <tr>
+    <td>`10200` - `10299`</td>
     <td>407</td>
     <td>379</td>
     <td>Poké Mart Mystery Gifts</td>
