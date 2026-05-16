@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkkodsh_wiki_new=globalThis.webpackChunkkodsh_wiki_new||[]).push([[2555],{62555(e,i,k){k.d(i,{createWardleyServices:()=>s.J});var s=k(54837);k(69302)}}]);
