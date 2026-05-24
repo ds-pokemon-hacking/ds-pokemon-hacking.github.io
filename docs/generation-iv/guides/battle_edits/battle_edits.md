@@ -63,6 +63,9 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
   - [Remove Hail End-of-Turn Damage](#remove-hail-end-of-turn-damage)
 
+- [Miscellaneous](#miscellaneous)
+  - [Critical Hit Rate](#critical-hit-rate)
+
 - [Bug Fixes](#bug-fixes)
   - [Fire Fang vs Wonder Guard](#fire-fang-vs-wonder-guard)
   - [Trainer AI Water Immunity Check vs Dry Skin](#trainer-ai-water-immunity-check-vs-dry-skin)
@@ -868,6 +871,31 @@ Open the relevant file and go to the provided offset:
 </details>
 
 At this location, the battle logic checks if the Pokémon's first type is Ice, then if the second type is Ice, then if the ability is Snow Cloak to skip applying Hail damage to the Pokémon. Replacing `16 D0` with `16 E0` at this offset changes the first check from a conditional branch to an unconditional branch, which will effectively skip applying Hail damage to all Pokémon (mirroring the Snow weather that replaces Hail in Gen IX onwards).
+<br/>
+
+
+
+## Miscellaneous
+
+### Critical Hit Rate
+> Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/468060243688161300/1125290338471379074), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/9402d183dc4c3229e74bdd7b284745385cf5e0d0/src/battle/battle_lib.c#L7097), [HG Decomp](https://github.com/pret/pokeheartgold/blob/79d73f74cc41e5615ff99b23588d416e96262fc0/src/battle/overlay_12_0224E4FC.c#L5959)
+
+Open the relevant file and go to the provided offset:
+| Game                     | File                        | Offset    |
+|:------------------------:|:---------------------------:|:---------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x35288` |
+| **Platinum**             | `Overlay 16`                | `0x33A60` |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x30C84` |
+
+The battle logic calculates the chance of a critical hit by using a certain value as a divisor, pulled from a table based on the Pokémon's critical hit ratio stage. For example, in Gen IV, if an attacking Pokémon has a critical hit ratio stage of +2, then the chance of a critical hit rate is `1/4`.
+
+Here is a table of the vanilla bytes, as well as bytes that match the changes in Gen VI and Gen VII onwards.
+|              | Bytes            | Resulting Critical Hit Chance per Stage |
+|:------------:|:----------------:|:---------------------------------------:|
+| **Gen IV**   | `10 08 04 03 02` | `[1/16]  [1/8]  [1/4]  [1/3]  [1/2]`    |
+| **Gen VI**   | `10 08 02 01 01` | `[1/16]  [1/8]  [1/2]  [1]  [1]`        |
+| **Gen VII+** | `18 08 02 01 01` | `[1/24]  [1/8]  [1/2]  [1]  [1]`        |
+
 <br/>
 
 
