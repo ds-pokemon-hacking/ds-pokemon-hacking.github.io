@@ -206,6 +206,77 @@ Navigate to offsets `0xE270`, `0x10120`, and `0x18150`, and replace `11 21` with
 
 Save your project with DSPRE and check the Pokédex entry for the Pokémon you changed to the Fairy Type.
 
+<br/>
+
+## Bonus - Updating the Move Tester Pokétch app
+
+The Move Tester Pokétch app displays a type's effectiveness against a Pokémon with a particular type combination. However, this display uses a different table from the one used to determine effectiveness in battles. This means that the Move Tester Pokétch app must be manually updated as well.
+
+**Update the Move Tester Type Chart** <br/>
+Navigate to `game_DSPRE_contents/arm9_overlays/ov038.bin` (`Overlay 38`). Open the file in a hex editor and navigate to offset `0x8F4`. You should see the following 0x144 (324) bytes:
+
+```
+00 00 00 00 00 FF 00 F6 FF 00 00 00 00 00 00 00 00 00
+01 00 FF FF 00 01 FF F6 01 00 00 00 00 00 FF 01 00 01
+00 01 00 00 00 FF 01 00 FF 00 00 00 01 FF 00 00 00 00
+00 00 00 FF FF FF 00 FF F6 00 00 00 01 00 00 00 00 00
+00 00 F6 01 00 01 FF 00 01 00 01 00 FF 01 00 00 00 00
+00 FF 01 00 FF 00 01 00 FF 00 01 00 00 00 00 01 00 00
+00 FF FF FF 00 00 00 FF FF 00 FF 00 01 00 01 00 00 01
+F6 00 00 00 00 00 00 01 FF 00 00 00 00 00 01 00 00 FF
+00 00 00 00 00 01 00 00 FF 00 FF FF 00 FF 00 01 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 FF 01 00 01 00 FF FF 01 00 00 01 FF 00
+00 00 00 00 01 01 00 00 00 00 01 FF FF 00 00 00 FF 00
+00 00 FF FF 01 01 FF 00 FF 00 FF 01 FF 00 00 00 FF 00
+00 00 01 00 F6 00 00 00 00 00 00 01 FF FF 00 00 FF 00
+00 01 00 01 00 00 00 00 FF 00 00 00 00 00 FF 00 00 F6
+00 00 01 00 01 00 00 00 FF 00 FF FF 01 00 00 FF 01 00
+00 00 00 00 00 00 00 00 FF 00 00 00 00 00 00 00 01 00
+00 FF 00 00 00 00 00 01 FF 00 00 00 00 00 01 00 00 FF
+```
+
+There are 18 groups of 18 bytes representing every type (including the Mystery Type) and the attacking effectiveness against each type. The order follows the game's internal type ID order, which is also reflected in DSPRE (*i.e. Normal, Fighting, Flying, Poison, Ground, Rock, Bug, Ghost, Steel, Mystery/???, Fire, Water, Grass, Electric, Psychic, Ice, Dragon, Dark*). 
+
+The attacking effectiveness is represented by the following hexadecimal values:
+- `00` - Regularly effective
+- `01` - Super effective
+- `FF` - Not very effective
+- `F6` - Not effective/immune
+
+For your convenience, here are the bytes that includes the Fairy Type attacking effectiveness. This also includes the changes to Ghost and Dark Type moves being neutral instead of not very effective against Steel Pokémon (`0x97A` and `0xA2E`).
+
+```
+00 00 00 00 00 FF 00 F6 FF 00 00 00 00 00 00 00 00 00
+01 00 FF FF 00 01 FF F6 01 FF 00 00 00 00 FF 01 00 01
+00 01 00 00 00 FF 01 00 FF 00 00 00 01 FF 00 00 00 00
+00 00 00 FF FF FF 00 FF F6 01 00 00 01 00 00 00 00 00
+00 00 F6 01 00 01 FF 00 01 00 01 00 FF 01 00 00 00 00
+00 FF 01 00 FF 00 01 00 FF 00 01 00 00 00 00 01 00 00
+00 FF FF FF 00 00 00 FF FF FF FF 00 01 00 01 00 00 01
+F6 00 00 00 00 00 00 01 00 00 00 00 00 00 01 00 00 FF
+00 00 00 00 00 01 00 00 FF 01 FF FF 00 FF 00 01 00 00
+00 01 00 FF 00 00 00 00 FF 00 FF 00 00 00 00 00 01 01
+00 00 00 00 00 FF 01 00 01 00 FF FF 01 00 00 01 FF 00
+00 00 00 00 01 01 00 00 00 00 01 FF FF 00 00 FF FF 00
+00 00 FF FF 01 01 FF 00 FF 00 FF 01 FF 00 00 00 FF 00
+00 00 01 00 F6 00 00 00 00 00 00 01 FF FF 00 00 FF 00
+00 01 00 01 00 00 00 00 FF 00 00 00 00 00 FF 00 00 F6
+00 00 01 00 01 00 00 00 FF 00 FF FF 01 00 00 FF 01 00
+00 00 00 00 00 00 00 00 FF F6 00 00 00 00 00 00 01 00
+00 FF 00 00 00 00 00 01 00 FF 00 00 00 00 01 00 00 FF
+```
+
+**Add the Fairy Type** <br/>
+Go to the following offsets and make the changes:
+- `0x33C` - Replace `11 2C` with `12 2C`
+- `0x340` - Replace `11 2C` with `12 2C`
+- `0x356` - Replace `11 2C` with `12 2C`
+- `0x374` - Replace `10 24` with `11 24`
+- `0xA49` - Replace `00` with `09`
+
+This will add the Fairy Type to the end of the list after the Dark Type. Save this file back to `game_DSPRE_contents/arm9_overlays/`. Save your project with DSPRE and check your Move Tester Pokétch app! *Also, consider changing it to be received a bit earlier than the Icicle Badge...*
+
 ---
 
 Congratulations! At this point you should have a fully functional Fairy Type in your game!
