@@ -124,27 +124,27 @@ Adding new overworld sprites would require ASM but luckily there are a number of
 
 ## Changing the Sprite Properties
 If you've replaced a sprite with one having a different number of frames or a different size, the sprite will either not display correctly in game or not display at all if it has a different size.
-Unless your sprite is only made of one frame and has the same size the original one, you will need to fix this by hex editing each sprite properties. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created by DSPRE, which will be named *YourROMName*_DSPRE_Contents/overlay.
+Unless your sprite is only made of one frame and has the same size the original one, you will need to fix this by hex editing each sprite properties. If you haven't already open your ROM in DSPRE so you can easily access the necessary overlay files in the folder created by DSPRE, which will be named `YourROMName_DSPRE_Contents/arm9_overlays/`.
 
 All the offsets listed are based on the US version of the ROM and it has not been tested on other versions.
 
 ### Platinum
-In Platinum there are two tables we need to look up for changing sprite properties, both are in Overlay 5.
+In Platinum there are two tables we need to look up for changing sprite properties, both are in `Overlay 5`.
 
 First we need to find the ID number of the sprite we previously replaced. For my example I'll use the unused Rotom Oven, whose model number is 406, and I have replaced it with a 64x64 Ho-Oh Sprite ripped from HGSS, having two frames:
 
 ![](resources/hooh64x64.png)
 
-The first table is at 0x2BC34 and will look like this:
+The first table is at `0x2BC34` and will look like this:
 
 ![](resources/pt_owtable1.PNG)
 
-Each entry is made of 8 bytes, the first 4 in red for the ID number and the latter 4 in blue for the mmodel number. We already know the model number, which in little endian is 96 01, so we just need to search those bytes using HxD search hex values function with the search direction being set to "forward", then click Search All.
-Since my mmodel number is greater than 255, I'll get a single result, being the two bytes corresponding to the model number, the next 2 bytes are going to be 00 00 and the next 4 bytes are the ID number we are looking for, in my case F4 00 00 00.
+Each entry is made of 8 bytes, the first 4 in red for the ID number and the latter 4 in blue for the mmodel number. We already know the model number, which in little endian is `96 01`, so we just need to search those bytes using HxD search hex values function with the search direction being set to "forward", then click Search All.
+Since my mmodel number is greater than 255, I'll get a single result, being the two bytes corresponding to the model number, the next 2 bytes are going to be 00 00 and the next 4 bytes are the ID number we are looking for, in my case `F4 00 00 00`.
 
 If your model number was less than or equal to 255, **you need to look at the second result in the results tab**.
 
-With this information we can go to the second table at 0x2CA08, which is structured like this:
+With this information we can go to the second table at `0x2CA08`, which is structured like this:
 
 ![](resources/pt_owtable2.PNG)
 
@@ -154,16 +154,16 @@ The bytes you want to replace for this are going to be depending on which Sprite
 
 | Byte Sequence  | Corresponding Property | Example |
 | ------------- | ------------- |  ------------- |
-| 00 00 00 00 00 00 00 00 C0 B2 1F 02 | 32x32 Sprite with 16 frames | Regular NPCs |
-| 05 00 00 00 00 00 00 00 C0 B2 1F 02 | 64x64 Sprite with 2 frames  | DPPt larger Legendaries like Palkia and Dialga |
-| 0B 00 00 00 15 00 00 00 64 B1 1F 02 | 128x64 Sprite with 2 frames  | DPPt Giratina Distortion World sprite |
+| `00 00 00 00 00 00 00 00 C0 B2 1F 02` | 32x32 Sprite with 16 frames | Regular NPCs |
+| `05 00 00 00 00 00 00 00 C0 B2 1F 02` | 64x64 Sprite with 2 frames  | DPPt larger Legendaries like Palkia and Dialga |
+| `0B 00 00 00 15 00 00 00 64 B1 1F 02` | 128x64 Sprite with 2 frames  | DPPt Giratina Distortion World sprite |
 
 You can paste them with Ctrl+B in the green section of the row shown above. Then, save the overlay and save the ROM from DSPRE. If you have done the process correctly, it will show up in game.
 If the two frames are different you can set the OW movement to *20-Running Up, Down* in DSPRE event editor to have the animation play out costantly.
 
 ### HGSS
-Fortunately in HGSS there is only one table, it's at offset `0x21BA8` in Overlay 1.
-The Overlay 1 needs to be uncompressed, so you either have to use blz to decompress it or apply the *Configure Overlay 1 as uncompressed* patch from DSPRE's toolbox.
+Fortunately in HGSS there is only one table, it's at offset `0x21BA8` in `Overlay 1`.
+The `Overlay 1` needs to be uncompressed, so you either have to use **blz** to decompress it or apply the *Configure Overlay 1 as uncompressed* patch from DSPRE's toolbox.
 I will be replacing the glitched bulbasaur sprite with a standard 32x32 NPC, so first I need to find the correspondent ID number.
 The table will look like this:
 

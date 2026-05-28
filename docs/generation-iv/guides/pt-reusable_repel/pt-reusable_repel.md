@@ -16,6 +16,7 @@ When the repel runs out, a prompt will appear, from which the player can choose 
 The options only appear if the player has the appropriate repel item(s) in the bag
 
 You'll need to use [DSPRE](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases) and a Hex Editor. If you don't know how to hex edit, check out the [Hex Editing Guide](../../../universal/guides/hex_editing/hex_editing.md)
+
 :::info
 This **only works on the US Version of the game**. Attempting to replace the same bytes on a different language game will not work.
 :::
@@ -31,8 +32,8 @@ This **only works on the US Version of the game**. Attempting to replace the sam
 
 ## Hex Editing
 
-1. If you haven't already, you need to expand the arm9 through DSPRE's ROM Toolbox. You can do so by clicking the Explorer Kit Icon in the top bar and applying the *ARM9 Expansion* patch.
-2. In the folder where your ROM is located, DSPRE should have created a folder name yourROMname_DSPRE_Contents. Inside that you'll find a file called `arm9.bin`, open it in your hex editor of choice.
+1. If you haven't already, you need to expand the ARM9 through DSPRE's Patch Toolbox. You can do so by clicking the Explorer Kit Icon in the top bar (*or Tools -> Patch Toolbox*) and applying the **ARM9 Expansion** patch.
+2. In the folder where your ROM is located, DSPRE should have created a folder name `yourROMname_DSPRE_contents`. Navigate to `yourROMname_DSPRE_contents/arm9/`and inside that you'll find a file called `arm9.bin`, open it in your hex editor of choice.
 3. Go to the offset `0x4EAE8` and replace all the bytes from this offset with the following sequence:
 ```
 0B 48 01 68 0B 48 09 18 0B 48 02 78 0A 70 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 C0 46 70 47 40 1D 10 02 87 80 00 00 28 FF 3D 02
@@ -43,6 +44,7 @@ Do **not** add new bytes. Different hex editors will have different methods of "
 - In **HxD** you can paste and overwrite with the `Ctrl+B` shortcut.
 - In **ImHex** you can paste and overwrite with the `Ctrl+V` shortcut.
 :::
+
 4. Save the file.
 5. Now you can load DSPRE again and save the ROM. Remember to **not** re-extract the contents, otherwise your hex editing will be lost!
 
@@ -139,7 +141,7 @@ End
 
 ```
 Function 177:
-	Message 75
+	Message 72
 	YesNoBox 0x800C
 	CompareVarValue 0x800C 0
 	JumpIf EQUAL Function#178
@@ -187,7 +189,7 @@ Function 182:
 	TakeItem ITEM_REPEL 1 0x8000
 	TextPlayerName 0
 	TextItem 1 ITEM_REPEL
-	Message 72
+	Message 75
 	WaitButton
 	CloseMessage
 Return
@@ -198,7 +200,7 @@ Function 183:
 	TakeItem ITEM_SUPER_REPEL 1 0x8000
 	TextPlayerName 0
 	TextItem 1 ITEM_SUPER_REPEL
-	Message 72
+	Message 75
 	WaitButton
 	CloseMessage
 Return
@@ -209,7 +211,7 @@ Function 184:
 	TakeItem ITEM_MAX_REPEL 1 0x8000
 	TextPlayerName 0
 	TextItem 1 ITEM_MAX_REPEL
-	Message 72
+	Message 75
 	WaitButton
 	CloseMessage
 Return

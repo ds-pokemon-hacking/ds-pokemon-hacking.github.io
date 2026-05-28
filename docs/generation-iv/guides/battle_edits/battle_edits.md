@@ -10,7 +10,7 @@ tags:
 
 # Battle Logic Edits
 > Author(s): Lmaokai <br/>
-> Implementation & Research: [HGSS Decompilation](https://github.com/pret/pokeheartgold), [Platinum Decompilation](https://github.com/pret/pokeplatinum), [HG Engine](https://github.com/BluRosie/hg-engine), DarmaniDan, MrHam88, Yako, Lhea, Chritchy, Fantafaust, Aero, Paille92, Shogo Kawada Fan, Memory5ty7, Lmaokai
+> Implementation & Research: [HGSS Decompilation](https://github.com/pret/pokeheartgold), [Platinum Decompilation](https://github.com/pret/pokeplatinum), [HG Engine](https://github.com/BluRosie/hg-engine), Aero, Chritchy, DarmaniDan,  Fantafaust, Lhea, Lmaokai, MeKomoATuPrima, Memory5ty7, MrHam88, Paille92, Shogo Kawada Fan, Yako
 
 <br/>
 

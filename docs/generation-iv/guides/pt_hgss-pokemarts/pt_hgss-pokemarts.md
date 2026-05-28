@@ -23,10 +23,10 @@ All offsets mentioned are based on the US version of the ROMs.
 
 ## Adding a new Poké Mart
 
-If you haven't already, you'll have to perform the ARM9 expansion since that's were the new Poké Mart(s) will be written to.
-You can do so by clicking "Expand ARM9" in DSPRE toolbox, then go to Unpacked/SynthOverlay in your DSPRE project folder (which will be named ROMname_DSPRE_contents, and will be in the same folder of your ROM) and using your hex editor of choice open either file 0009 if you're on Platinum or 0000 for HGSS.
+If you haven't already, you'll have to apply the **ARM9 Expansion** patch since that's were the new Poké Mart(s) will be written to.
+You can do so by clicking **ARM9 Expansion** in DSPRE toolbox, then go to `YourROMNAme_DSPRE_contents/unpacked/synthoverlay` in your DSPRE project folder and using your hex editor of choice open either file `0009` if you're on Platinum or `0000` for HGSS.
 
-You can write at whatever offset you want as long as it's empty, I will be writing my Poké Mart at 0x100. You need to sum `0x023C8000` to this offset, and write it down since you'll need it later to display the mart in game. In my case it will be `0x023C8100`.
+You can write at whatever offset you want as long as it's empty, I will be writing my Poké Mart at `0x100`. You need to sum `0x023C8000` to this offset, and write it down since you'll need it later to display the mart in game. In my case it will be `0x023C8100`.
 
 Poké Mart are loaded in the RAM as a list of bytes of the items index numbers, with `FF FF` at the end of each mart, each item taking up two bytes.
 Refer to [Bulbapedia's list of items by index number](https://bulbapedia.bulbagarden.net/wiki/List_of_items_by_index_number_(Generation_IV)).
@@ -58,7 +58,7 @@ AdrsValueSet 0x0210FA3E 0x0F
 The first three commands change the original pointer to the new one in the synthetic overlay, then the Mart is opened like normal with `SpMartScreen 0`, and with the last three commands the original pointer is restored. Only 3 bytes are changed instead of 4 since RAM offsets always start with 02. Again the pointers are written in little endian, so `0x023C8100` will look like `00 81 3C 02` in the RAM.
 You can save the script and test the game now.
 Note that in Platinum the pointer will have to be changed back to `0x20EB978` instead.
-This is what my full script 19 looks like, I assigned it to a NPC which will show the new Pokè Mart when talked to:
+This is what my full Script 19 looks like, I assigned it to a NPC which will show the new Pokè Mart when talked to:
 
 ![](resources/pokemart_script1.PNG)
 

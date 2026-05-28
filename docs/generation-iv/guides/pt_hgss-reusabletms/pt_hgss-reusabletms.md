@@ -29,18 +29,18 @@ The tools required are an hex editor and Tinke 0.9.2, or instead CrystalTile2 if
 ## Extracting the files
 First you need to extract the relative files in order to perform the hex editing
 ### Platinum
-For Platinum the files you need are *arm9.bin* and *overaly9_84*.
+For Platinum the files you need are `arm9.bin` and `Overlay 84`.
 
 Open your ROM in Tinke, search the file, select it and click the extract button.
 
 ### HGSS
-For HGSS you need to extract *arm9.bin* and *overlay_0015.bin*, but they are compressed unlike in Platinum hence the need for CystalTile2.
-Open CrystalTile2 and then select File>Open and select your ROM. Then click the NDS icon in the top bar, which should open a window called *NDS filesystem information*:
+For HGSS you need to extract `arm9.bin` and `Overlay 15`, but they are compressed unlike in Platinum hence the need for **CystalTile2**.
+Open **CrystalTile2** and then select File>Open and select your ROM. Then click the NDS icon in the top bar, which should open a window called *NDS filesystem information*:
 
 ![](resources/tms_ct2screen.PNG)
 
 Select the file you want to export, right click and click *Extract (U)*, and save it somewhere.
-You can also use the arm9.bin from your DSPRE project folder, which is already uncompressed.
+You can also use the `arm9.bin` from your DSPRE project folder, which is already uncompressed.
 
 
 ## Hex Editing
@@ -49,13 +49,13 @@ Load the files you extracted in a hex editor, then change the bytes according to
 
 ### Making TMs infinite
 
-* For Platinum, at offset `0x865EB` in the arm9.bin change `D1` to `E0`
-* For HGSS, at `0x825A7` in the arm9.bin change `D1` to `E0`
+* For Platinum, at offset `0x865EB` in the `arm9.bin` change `D1` to `E0`
+* For HGSS, at `0x825A7` in the `arm9.bin` change `D1` to `E0`
 
 ### Removing the TM item count
 
-* For Platinum, at `0x4372` in overlay 84 change `FF F7 83 FF` to `00 00 00 00`
-* For HGSS,  at `0x6239` in overlay 15 change `D3` to `E0`
+* For Platinum, at `0x4372` in `Overlay 84` change `FF F7 83 FF` to `00 00 00 00`
+* For HGSS,  at `0x6239` in `Overlay 15` change `D3` to `E0`
 
 ## Reinserting the files
 

@@ -38,7 +38,7 @@ create some new space for additional data or code.
 
 ## Code Insertion
 
-1. Open the `arm9.bin` file in your `YourROMName_DSPRE_contents` folder in your
+1. Open the `arm9.bin` file in your `YourROMName_DSPRE_contents/arm9/` folder in your
 hex editor of choice.
 2. Navigate to offset `0x0793B8`.
 3. Paste (overwrite) the next `0x0410` bytes with the following:
