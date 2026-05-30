@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.10.1">
 <title data-rh="true">Enabling Reusable TMs | DS Pokémon Hacking</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://ds-pokemon-hacking.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/pt_hgss-reusabletms/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Enabling Reusable TMs | DS Pokémon Hacking"><meta data-rh="true" name="description" content="Author(s): Drayano (original), SpagoAsparago (reformatting)."><meta data-rh="true" property="og:description" content="Author(s): Drayano (original), SpagoAsparago (reformatting)."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/pt_hgss-reusabletms/"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/pt_hgss-reusabletms/" hreflang="en"><link data-rh="true" rel="alternate" href="https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/pt_hgss-reusabletms/" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Guides","item":"https://ds-pokemon-hacking.github.io/docs/category/guides"},{"@type":"ListItem","position":2,"name":"Enabling Reusable TMs","item":"https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/pt_hgss-reusabletms/"}]}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.bc7fc89b.css">
-<script src="/assets/js/runtime~main.e0f8fb4a.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.ce332a74.js" defer="defer"></script>
 <script src="/assets/js/main.f27d5d4c.js" defer="defer"></script>
 </head>
 <body>
@@ -39,25 +39,25 @@ Mikelan98 has requested that you give credit to him if you implement this in you
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="extracting-the-files">Extracting the files<a href="#extracting-the-files" class="hash-link" aria-label="Direct link to Extracting the files" title="Direct link to Extracting the files" translate="no">​</a></h2>
 <p>First you need to extract the relative files in order to perform the hex editing</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="platinum">Platinum<a href="#platinum" class="hash-link" aria-label="Direct link to Platinum" title="Direct link to Platinum" translate="no">​</a></h3>
-<p>For Platinum the files you need are <em>arm9.bin</em> and <em>overaly9_84</em>.</p>
+<p>For Platinum the files you need are <code>arm9.bin</code> and <code>Overlay 84</code>.</p>
 <p>Open your ROM in Tinke, search the file, select it and click the extract button.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="hgss">HGSS<a href="#hgss" class="hash-link" aria-label="Direct link to HGSS" title="Direct link to HGSS" translate="no">​</a></h3>
-<p>For HGSS you need to extract <em>arm9.bin</em> and <em>overlay_0015.bin</em>, but they are compressed unlike in Platinum hence the need for CystalTile2.
-Open CrystalTile2 and then select File&gt;Open and select your ROM. Then click the NDS icon in the top bar, which should open a window called <em>NDS filesystem information</em>:</p>
+<p>For HGSS you need to extract <code>arm9.bin</code> and <code>Overlay 15</code>, but they are compressed unlike in Platinum hence the need for <strong>CystalTile2</strong>.
+Open <strong>CrystalTile2</strong> and then select File&gt;Open and select your ROM. Then click the NDS icon in the top bar, which should open a window called <em>NDS filesystem information</em>:</p>
 <p><img decoding="async" loading="lazy" src="/assets/images/tms_ct2screen-df0d05f8391a6e1fffae59c92e12487d.PNG" width="899" height="569" class="img_ev3q"></p>
 <p>Select the file you want to export, right click and click <em>Extract (U)</em>, and save it somewhere.
-You can also use the arm9.bin from your DSPRE project folder, which is already uncompressed.</p>
+You can also use the <code>arm9.bin</code> from your DSPRE project folder, which is already uncompressed.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="hex-editing">Hex Editing<a href="#hex-editing" class="hash-link" aria-label="Direct link to Hex Editing" title="Direct link to Hex Editing" translate="no">​</a></h2>
 <p>Load the files you extracted in a hex editor, then change the bytes according to the following steps, then save the files.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="making-tms-infinite">Making TMs infinite<a href="#making-tms-infinite" class="hash-link" aria-label="Direct link to Making TMs infinite" title="Direct link to Making TMs infinite" translate="no">​</a></h3>
 <ul>
-<li class="">For Platinum, at offset <code>0x865EB</code> in the arm9.bin change <code>D1</code> to <code>E0</code></li>
-<li class="">For HGSS, at <code>0x825A7</code> in the arm9.bin change <code>D1</code> to <code>E0</code></li>
+<li class="">For Platinum, at offset <code>0x865EB</code> in the <code>arm9.bin</code> change <code>D1</code> to <code>E0</code></li>
+<li class="">For HGSS, at <code>0x825A7</code> in the <code>arm9.bin</code> change <code>D1</code> to <code>E0</code></li>
 </ul>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="removing-the-tm-item-count">Removing the TM item count<a href="#removing-the-tm-item-count" class="hash-link" aria-label="Direct link to Removing the TM item count" title="Direct link to Removing the TM item count" translate="no">​</a></h3>
 <ul>
-<li class="">For Platinum, at <code>0x4372</code> in overlay 84 change <code>FF F7 83 FF</code> to <code>00 00 00 00</code></li>
-<li class="">For HGSS,  at <code>0x6239</code> in overlay 15 change <code>D3</code> to <code>E0</code></li>
+<li class="">For Platinum, at <code>0x4372</code> in <code>Overlay 84</code> change <code>FF F7 83 FF</code> to <code>00 00 00 00</code></li>
+<li class="">For HGSS,  at <code>0x6239</code> in <code>Overlay 15</code> change <code>D3</code> to <code>E0</code></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="reinserting-the-files">Reinserting the files<a href="#reinserting-the-files" class="hash-link" aria-label="Direct link to Reinserting the files" title="Direct link to Reinserting the files" translate="no">​</a></h2>
 <ul>
