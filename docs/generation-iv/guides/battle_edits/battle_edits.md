@@ -45,10 +45,11 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Reckless Damage Multiplier](#reckless-damage-multiplier)
   - [Rivalry Damage Multipliers](#rivalry-damage-multipliers)
 
-- [Item Held Effects](#item-held-effects)
+- [Items](#items)
   - [Leftovers End-of-Turn HP Restoration](#leftovers-end-of-turn-hp-restoration)
   - [Black Sludge End-of-Turn HP Restoration](#black-sludge-end-of-turn-hp-restoration)
   - [Black Sludge End-of-Turn Damage for Non-Poison Types](#black-sludge-end-of-turn-damage-for-non-poison-types)
+  - [X Attack, X Defense, X Special, X Sp. Def, X Speed, and X Accuracy Stat Stage Boosts](#x-attack-x-defense-x-special-x-sp-def-x-speed-and-x-accuracy-stat-stage-boosts)
 
 - [Move Effects](#move-effects)
   - [Aqua Ring End-of-Turn HP Restoration](#aqua-ring-end-of-turn-hp-restoration)
@@ -56,9 +57,14 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Binding Moves Duration](#binding-moves-duration)
   - [Magnitude Move Power](#magnitude-move-power)
   - [Gyro Ball Move Power Calculation Multiplier](#gyro-ball-move-power-calculation-multiplier)
+  - [Flail and Reversal Move Power](#flail-and-reversal-move-power)
 
 - [Weather](#weather)
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
+  - [Remove Hail End-of-Turn Damage](#remove-hail-end-of-turn-damage)
+
+- [Miscellaneous](#miscellaneous)
+  - [Critical Hit Rate](#critical-hit-rate)
 
 - [Bug Fixes](#bug-fixes)
   - [Fire Fang vs Wonder Guard](#fire-fang-vs-wonder-guard)
@@ -484,10 +490,11 @@ Open the relevant file and go to the provided offsets:
 Rivalry **increases** the power of moves by **25%** if the target and the user have the same gender. The battle logic calculates the increased damage by multiplying and dividing the move's power by explicitly defined values, in this case **125** (`7D` in hexadecimal) and **100** (`64` in hexadecimal), respectively.
 
 Rivalry **reduces** the power of moves by **25%** if the target and the user have opposite genders. The battle logic calculates the reduced damage by multiplying and dividing the move's power by explicitly defined values, in this case **75** (`4B` in hexadecimal) and **100** (`64` in hexadecimal), respectively.
+<br/>
 
 
 
-## Item Held Effects
+## Items
 
 ### Leftovers End-of-Turn HP Restoration
 > Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/920372513488404542/1168373730372767744), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/75545a47f21ce27e376c60eeba15ac77e06e3c1c/src/battle/battle_lib.c#L4933), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/overlay_12_0224E4FC.c#L4146)
@@ -563,6 +570,32 @@ Open the relevant file and change the byte at the provided offset:
 Black Sludge (*specifically the item held effect assigned to Black Sludge in vanilla Pokémon games*) damages **1/8<sup>th</sup>** of a non-Poison-Type Pokémon's max HP. Damage for this item held effect is determined in the battle logic instead of the item's properties, and is calculated by dividing the Pokémon's max HP by an explicitly defined value, in this case **8**.
 
 As an example, to change the end-of-turn damage from **1/8<sup>th</sup>** of the Pokémon's max HP to **1/16<sup>th</sup>**, change the byte from `08` (8 in decimal) to `10` (16 in decimal).
+<br/>
+
+
+
+### X Attack, X Defense, X Special, X Sp. Def, X Speed, and X Accuracy Stat Stage Boosts
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/95fee6b1d38a541de19dacf57de74821d02ca94c/src/battle/battle_system.c#L578), [HG Decomp](https://github.com/pret/pokeheartgold/blob/79d73f74cc41e5615ff99b23588d416e96262fc0/src/battle/battle_system.c#L462)
+
+Open the relevant file and go to the provided offsets:
+|           Game           |            File           | Offset (X Attack) | Offset (X Defense) | Offset (X Special) | Offset (X Sp. Def) | Offset (X Speed) | Offset (X Accuracy) | Vanilla Byte (All Offsets) |
+|:------------------------:|:-------------------------:|:-----------------:|:------------------:|:------------------:|:------------------:|:----------------:|:-------------------:|:--------------------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12` |     `0x372A`      |      `0x3768`      |      `0x37A6`      |      `0x37E4`      |     `0x3822`     |      `0x3860`       |            `01`            |
+|       **Platinum**       |        `Overlay 16`       |     `0x3596`      |      `0x35D4`      |      `0x3612`      |      `0x3650`      |     `0x368E`     |      `0x36CC`       |            `01`            |
+|     **Diamond/Pearl**    |        `Overlay 11`       |     `0x317A`      |      `0x31B8`      |      `0x31F6`      |      `0x3234`      |     `0x3272`     |      `0x32B0`       |            `01`            |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  | Game                     | Bytes (6 results)  |
+  |--------------------------|--------------------|
+  | **HeartGold/SoulSilver** | `01 23 14 F0`      |
+  | **Platinum**             | `01 23 14 F0`      |
+  | **Diamond/Pearl**        | `01 23 13 F0`      |
+</details>
+
+The item properties assigned to X Attack, X Defense, X Special, X Sp. Def, X Speed, and X Accuracy in Gen IV enable them to be used from the bag during battle to raise the Pokémon's respective stat by **1 stage**.
+
+As an example, to change the effect to raise the Pokémon's respective state by **2 stages** (matching Gen VII onwards), change the byte from `01` to `02`.
 <br/>
 
 
@@ -664,7 +697,7 @@ The forced Grip Claw duration cannot be changed to a value greater than `07`.
 
 
 ### Magnitude Move Power
-> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/fb3156a07ad0addb95a6486b229f34bb35894b9d/src/battle/battle_script.c#L5821), [HG Decomp](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/battle_command.c#L3493)
+> Sources and Credits: Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/fb3156a07ad0addb95a6486b229f34bb35894b9d/src/battle/battle_script.c#L5821), [2](https://github.com/pret/pokeplatinum/blob/95fee6b1d38a541de19dacf57de74821d02ca94c/src/battle/trainer_ai/trainer_ai.c#L3028)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/battle_command.c#L3493), [2](https://github.com/pret/pokeheartgold/blob/79d73f74cc41e5615ff99b23588d416e96262fc0/asm/overlay_10_trainer_ai.s#L6804))
 
 Open the relevant file and go to the provided offsets:
 |           Game           |            File           | Offset (Magnitude 4) | Vanilla Byte | Offset (Magnitude 5) | Vanilla Byte | Offset (Magnitude 6) | Vanilla Byte | Offset (Magnitude 7) | Vanilla Byte | Offset (Magnitude 8) | Vanilla Byte | Offset (Magnitude 9) | Vanilla Byte | Offset (Magnitude 10) | Vanilla Byte |
@@ -692,10 +725,26 @@ The move effect assigned to Magnitude has a varying move power based on randomly
 |         9        |       110      |     `6E`     |
 |        10        |       150      |     `96`     |
 
+Additionally, the trainer AI may simulate a Magnitude roll depending on assigned AI flags. This is handled in a different overlay with a separate set of explicitly defined values.
+|           Game           |            File           | Offset (Magnitude 4) | Offset (Magnitude 5) | Offset (Magnitude 6) | Offset (Magnitude 7) | Offset (Magnitude 8) | Offset (Magnitude 9) | Offset (Magnitude 10) |
+|:------------------------:|:-------------------------:|:--------------------:|:--------------------:|:--------------------:|:--------------------:|:--------------------:|:--------------------:|:---------------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10` |       `0x351C`       |       `0x3524`       |       `0x352C`       |       `0x3534`       |       `0x353C`       |       `0x3544`       |       `0x3548`        |
+|       **Platinum**       |        `Overlay 14`       |       `0x351C`       |       `0x3524`       |       `0x352C`       |       `0x3534`       |       `0x353C`       |       `0x3544`       |       `0x3548`        |
+|     **Diamond/Pearl**    |        `Overlay 16`       |       `0x1BCBC`      |       `0x1BCC4`      |       `0x1BCCC`      |       `0x1BCD4`      |       `0x1BCDC`      |       `0x1BCE4`      |       `0x1BCE8`       |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Magnitude 4 Bytes | Magnitude 5 Bytes | Magnitude 6 Bytes | Magnitude 7 Bytes | Magnitude 8 Bytes | Magnitude 9 Bytes | Magnitude 10 Bytes |
+  |:-------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|:------------------:|
+  | **All Games** |   `0A 24 14 E0`   |   `1E 24 10 E0`   |   `32 24 0C E0`   |   `46 24 08 E0`   |   `5A 24 04 E0`   |   `6E 24 00 E0`   |   `96 24 00 27 22` |
+</details>
+
+<br/>
+
 
 
 ### Gyro Ball Move Power Calculation Multiplier
-> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/fb3156a07ad0addb95a6486b229f34bb35894b9d/src/battle/battle_script.c#L7124), [HG Decomp](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/battle_command.c#L4299)
+> Sources and Credits: Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/fb3156a07ad0addb95a6486b229f34bb35894b9d/src/battle/battle_script.c#L7124), [2](https://github.com/pret/pokeplatinum/blob/95fee6b1d38a541de19dacf57de74821d02ca94c/src/battle/trainer_ai/trainer_ai.c#L2995)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/d72700a52ad27ddf47847009a85b4bc9c85fa283/src/battle/battle_command.c#L4299), [2](https://github.com/pret/pokeheartgold/blob/79d73f74cc41e5615ff99b23588d416e96262fc0/asm/overlay_10_trainer_ai.s#L6724))
 
 Open the relevant file and go to the provided offsets:
 | Game                     | File                      | Offset   | Vanilla Byte |
@@ -712,6 +761,67 @@ Open the relevant file and go to the provided offsets:
 </details>
 
 The move effect assigned to Gyro Ball has a varying move power based on the user's Speed compared to the target's Speed. The battle logic calculates the move's power by dividing the target's Speed by the user's Speed, then multiplying the result by an explicitly defined value, in this case **25** (`19` in hexadecimal). Increasing this value will increase the calculated power (but is still restricted by the maximum power cap of 150).
+
+Additionally, the trainer AI may calculate Gyro Ball's power depending on assigned AI flags. This is handled in a different overlay. 
+| Game                     | File                      | Offset    |
+|:------------------------:|:-------------------------:|:---------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10` | `0x347C`  |
+| **Platinum**             | `Overlay 14`              | `0x347C`  |
+| **Diamond/Pearl**        | `Overlay 16`              | `0x1BC20` |
+
+<br/>
+
+
+
+### Flail and Reversal Move Power
+> Sources and Credits: Plat Decomp ([1](https://github.com/pret/pokeplatinum/blob/95fee6b1d38a541de19dacf57de74821d02ca94c/src/battle/battle_script.c#L4959), [2](https://github.com/pret/pokeplatinum/blob/95fee6b1d38a541de19dacf57de74821d02ca94c/src/battle/battle_script.c#L4942)), HG Decomp ([1](https://github.com/pret/pokeheartgold/blob/79d73f74cc41e5615ff99b23588d416e96262fc0/src/battle/battle_command.c#L2992), [2](https://github.com/pret/pokeheartgold/blob/79d73f74cc41e5615ff99b23588d416e96262fc0/asm/overlay_12_battle_command.s#L37))
+
+The move effect assigned to Flail and Reversal has a varying move power based on the user's current HP compared to its max HP. The battle logic calculates the move's power in two parts. First, the user's current HP is divided by its max HP, then multiplied by an explicitly defined value, in this case **64** (`40` in hexadecimal). Second, the result is compared to a table that provides an explicitly defined move power. 
+
+From Gen V onwards, the multiplier was changed from **64** to **48**, with the ratios likely changed as well (see [Pokemon Database](https://pokemondb.net/move/flail) for Gen V+ ratios).
+
+If you change the multiplier in the initial calculation, you will need to change the ratio(s) in the table. Otherwise, the intended move power may not be returned.
+
+#### Flail/Reversal Calculation Multiplier
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x97A4`  | `40`         |
+| **Platinum**             | `Overlay 16`                | `0x957C`  | `40`         |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x8C18`  | `40`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  | Game                     | Bytes            |
+  |:------------------------:|:----------------:|
+  | **HeartGold/SoulSilver** | `40 22 26`       |
+  | **Platinum**             | `40 22 47`       |
+  | **Diamond/Pearl**        | `40 22 43`       |
+</details>
+
+#### Flail/Reversal Power Table
+Open the relevant file and go the provided offset:
+| Game                     | File                        | Offset    |
+|:------------------------:|:---------------------------:|:---------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x34A40` |
+| **Platinum**             | `Overlay 16`                | `0x33444` |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x3067C` |
+
+|               | Vanilla Bytes                          |
+|:-------------:|:--------------------------------------:|
+| **All Games** | `01 C8 05 96 0C 64 15 50 2A 28 40 14`  |
+
+Here is the table of the HP ratio (based on the vanilla multiplier of **64**) to Move Power.
+| Ratio (N)     | Vanilla Byte | Move Power | Vanilla Byte |
+|:-------------:|:------------:|:----------:|:------------:|
+|  N ≤ 1        | `01`         | 200        | `C8`         |
+|  1 < N ≤ 5    | `05`         | 150        | `96`         |
+|  5 < N ≤ 12   | `0C`         | 100        | `64`         |
+|  12 < N ≤ 21  | `15`         | 80         | `50`         |
+|  21 < N ≤ 42  | `2A`         | 40         | `28`         |
+|  42 < N ≤ 64  | `40`         | 20         | `14`         |
+
+<br/>
 
 
 
@@ -739,6 +849,53 @@ Open the relevant file and change the byte at the provided offset:
 Hail damages **1/16<sup>th</sup>** of a non-Ice-Type Pokémon's max HP. The battle logic calculates this damage by dividing the Pokémon's max HP by an explicitly defined value, in this case **16**.
 
 As an example, to change Hail damage from **1/16<sup>th</sup>** of the Pokémon's max HP to **1/12<sup>th</sup>**, change the byte from `10` (16 in decimal) to `0C` (12 in decimal).
+<br/>
+
+
+
+### Remove Hail End-of-Turn Damage
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/f61660fddd90cb71b833cf326bfd04b405d05013/src/battle/battle_script.c#L5829), [HG Decomp](https://github.com/pret/pokeheartgold/blob/86dc0b14fbd90faeb91e17f0ed5e34b51e86ef61/src/battle/battle_command.c#L3358)
+
+Open the relevant file and go to the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0xA406`  | `16 D0`      |
+| **Platinum**             | `Overlay 16`                | `0xA1DE`  | `16 D0`      |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x986E`  | `16 D0`      |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Bytes         |
+  |:-------------:|:-------------:|
+  | **All Games** | `16 D0 0F 2F` |
+</details>
+
+At this location, the battle logic checks if the Pokémon's first type is Ice, then if the second type is Ice, then if the ability is Snow Cloak to skip applying Hail damage to the Pokémon. Replacing `16 D0` with `16 E0` at this offset changes the first check from a conditional branch to an unconditional branch, which will effectively skip applying Hail damage to all Pokémon (mirroring the Snow weather that replaces Hail in Gen IX onwards).
+<br/>
+
+
+
+## Miscellaneous
+
+### Critical Hit Rate
+> Sources and Credits: [Lhea](https://discord.com/channels/446824489045721090/468060243688161300/1125290338471379074), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/9402d183dc4c3229e74bdd7b284745385cf5e0d0/src/battle/battle_lib.c#L7097), [HG Decomp](https://github.com/pret/pokeheartgold/blob/79d73f74cc41e5615ff99b23588d416e96262fc0/src/battle/overlay_12_0224E4FC.c#L5959)
+
+Open the relevant file and go to the provided offset:
+| Game                     | File                        | Offset    |
+|:------------------------:|:---------------------------:|:---------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x35288` |
+| **Platinum**             | `Overlay 16`                | `0x33A60` |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x30C84` |
+
+The battle logic calculates the chance of a critical hit by using a certain value as a divisor, pulled from a table based on the Pokémon's critical hit ratio stage. For example, in Gen IV, if an attacking Pokémon has a critical hit ratio stage of +2, then the chance of a critical hit rate is `1/4`.
+
+Here is a table of the vanilla bytes, as well as bytes that match the changes in Gen VI and Gen VII onwards.
+|              | Bytes            | Resulting Critical Hit Chance per Stage |
+|:------------:|:----------------:|:---------------------------------------:|
+| **Gen IV**   | `10 08 04 03 02` | `[1/16]  [1/8]  [1/4]  [1/3]  [1/2]`    |
+| **Gen VI**   | `10 08 02 01 01` | `[1/16]  [1/8]  [1/2]  [1]  [1]`        |
+| **Gen VII+** | `18 08 02 01 01` | `[1/24]  [1/8]  [1/2]  [1]  [1]`        |
+
 <br/>
 
 
