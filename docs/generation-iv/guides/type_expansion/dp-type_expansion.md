@@ -8,14 +8,14 @@ sidebar_position: 2
 
 # Fairy Type <br/> <sup>*(Diamond/Pearl)*</sup>
 > Author: Lmaokai <br/>
-> Credits: Yako ([Platinum Guide](pt-type_expansion.md)) for which this guide is based one, and previous credits from that guide
+> Credits: Yako ([Platinum Guide](pt-type_expansion.md)), Mikelan98 and BagBoy ([Original guide](https://pokehacking.com/tutorials/fairypt/)), Drayano ([Another guide](https://pastebin.com/hTeS5EkD)), Mikelan98 and Nomura (ARM9 Expansion), DSPRE developers, pokeplatinum contributors, BagBoy ([Move Tester Pokétch app](https://discord.com/channels/446824489045721090/468060243688161300/1242976241347330048))
 
 This is a guide on how to add the Fairy Type (replacing the Mystery Type) in Diamond and Pearl, based on the [Lite Version](pt-type_expansion.md#lite-version) of Yako's Platinum Guide. I recommend you read through Yako's guide for more context regarding the edits, as this guide is more of a bare-bones version to inform of the equivalent Diamond/Pearl files and offsets.
 
 :::warning
 This guide is for the **US version** of Diamond/Pearl.
 
-Implementing the Fairy Type requires Arm9 expansion, which is highly experimental for Diamond/Pearl and will not receive as much (if any) support as Platinum.
+Implementing the Fairy Type requires **ARM9 Expansion**, which is highly experimental for Diamond/Pearl and will not receive as much (if any) support as Platinum.
 
 **Please make a backup of your project before following this guide.**
 :::
@@ -36,44 +36,51 @@ Implementing the Fairy Type requires Arm9 expansion, which is highly experimenta
 - [Part 4 - Changing the summary screen type icon](#part-4---changing-the-summary-screen-type-icon)
 - [Part 5 - Changing the battle move selection palette](#part-5---changing-the-battle-move-selection-palette)
 - [Part 6 - Changing the Pokédex Type Icon](#part-6---changing-the-pokédex-type-icon)
+- [Bonus - Updating the Move Tester Pokédex app](#bonus---updating-the-move-tester-pokédex-app)
 
 ---
 
 ## Part 1 - Making space for the new type chart
-**Apply the Arm9 Expansion** <br/>
-Make a backup of your ROM. Then use DSPRE's Patch Toolbox to apply the Arm9 expansion to your project.
+**Apply the ARM9 Expansion Patch** <br/>
+Make a backup of your project. Then use DSPRE's Patch Toolbox to apply the **ARM9 Expansion** patch to your project.
 
-**Move the move effect subscript table to a new location** <br/>
-Open up your `game_DSPRE_contents/overlay/` folder. Find the file named `overlay_0011.bin`, open it in a hex editor, and navigate to offset `0x30F08`. You should see the following bytes:
+**Relocate the move effect subscript table to a new location** <br/>
+Open up your project's contents folder and go to `game_DSPRE_contents/arm9_overlays/ov011.bin` (`Overlay 11`). Open the file in a hex editor and navigate to offset `0x30F08`. You should see the following bytes:
+
 ```
 00 00 00 00 12 00 00 00 16 00 00 00 19 00 00 00 ...
 ```
+
 This is the start of the move effect subscript table, which is 0x244 (580) bytes long, ending with the following bytes:
+
 ```
 ... F9 00 00 00 04 01 00 00 05 01 00 00 76 00 00 00
 ```
+
 Select and copy this table (`0x30F08` to `0x3114B`).
 
-Open up your `game_DSPRE_contents/unpacked/synthOverlay/` folder. Find the file named `0009` and open it in a hex editor. Navigate to offset `0x1000` and verify that the next 0x244 (580) bytes are all zeros. Paste ("overwrite") the copied move effect subscript table at this location. 
+Open up your project's contents folder and go to `game_DSPRE_contents/unpacked/synthOverlay/0009` (`SynthOverlay 9`). Open the file in a hex editor. Navigate to offset `0x1000` and verify that the next 0x244 (580) bytes are all zeros. Paste ("overwrite") the copied move effect subscript table at this location. Verify that the file size is unchanged because we are overwriting bytes, not adding them. 
 
-Save this file back to the `game_DSPRE_contents/unpacked/synthOverlay/` folder.
+Save this file back to `game_DSPRE_contents/unpacked/synthOverlay/`.
 
+**Change the pointer for the move effect subscript table to point to the new location** <br/>
+Return to the `Overlay 11` file opened in the hex editor. Navigate to offset `0x1F084`. You should see `C8 E4 25 02`. Change these bytes to `00 90 3C 02`. Save this file back to `game_DSPRE_contents/arm9_overlays/`.
 
-**Changing the pointer for the move effect subscript table to the new location** <br/>
-Return to the `overlay_0011.bin` file opened in the hex editor. Navigate to offset `0x1F084`. You should see `C8 E4 25 02`. Change these bytes to `00 90 3C 02`. Save this file back to the `game_DSPRE_contents/overlay/` folder.
 <details>
   <summary>For reference, here are the surrounding bytes</summary>
   ```
   FF FF 7F 00 C8 E4 25 02 38 B5 21 49 15
   ```
 </details>
-Save your project with DSPRE. Get in a battle and test as many moves as possible to make sure the game doesn't crash or produce graphical glitches.
+
+Save your project with DSPRE. Get in a battle and test multiple different move effects to verify that move effects function as expected, the game doesn't crash, and there are no graphical glitches.
 
 <br/>
 
 ## Part 2 - Editing the type chart
 **The Gen IV type chart** <br/>
-Now we have made space for a new type chart to add the Fairy Type interactions. Return to the `overlay_0011.bin` file opened in the hex editor and navigate to offset `0x30DB8`. You should see the following bytes:
+Now we have made space for a new type chart to add the Fairy Type interactions. Return to the `Overlay 11` file opened in the hex editor and navigate to offset `0x30DB8`. You should see the following bytes:
+
 ```
 00 05 05 00 08 05 0A 0A ...
 ```
@@ -83,7 +90,8 @@ This guide will be using the modern type chart. If you would like to create your
 
 Below is the modern type chart provided by Yako. Since we will be using the Mystery Type to add the Fairy Type, we will use the Mystery Type's ID for Fairy Type interactions.
 
-Copy the bytes for the modern type chart and paste it ("overwite") at offset `0x30DB8` of `overlay_0011.bin` and save it back to the `game_DSPRE_contents/overlay/` folder.
+Copy the bytes for the modern type chart and paste it ("overwite") at offset `0x30DB8` of `Overlay 11` and save it back to `game_DSPRE_contents/arm9_overlays/`.
+
 <details>
   <summary>Modern Type Chart (Fairy Type replacing Mystery Type)</summary>
   ```
@@ -107,15 +115,16 @@ If you'd like, you can now test the new type chart. However, we have not updated
 
 ## Part 4 - Changing the summary screen type icon
 **Add the RGCN file containing the Fairy icon** <br/>
-Open your project in DSPRE and select the **Unpack to Folder** button (*Tools > NARC Utility > Unpack to Folder*). <br/>
-Navigate to `game_DSPRE_contents/data/battle/graphic/batt_obj.narc` and unpack it somewhere. This will create a `batt_obj` folder with files `0000` to `0278`.
+Open your project in DSPRE and select the **Unpack to Folder** button (*or Tools > NARC Utility > Unpack to Folder*). <br/>
+Navigate to `game_DSPRE_contents/files/battle/graphic/batt_obj.narc` and unpack the NARC file somewhere else. This will create a `batt_obj` folder with files `0000` to `0278`.
 
 In the files provided by Yako, there is a `fairy_icon.rgcn` file in the `type_icon` folder. Copy that file, paste it in the unpacked `batt_obj` folder, and rename it `0279`.
 
-Use DSPRE to pack the `batt_obj` folder back into a NARC file and save it to the `game_DSPRE_contents/data/battle/graphic/` folder. 
+Use DSPRE to pack the `batt_obj` folder back into a NARC file (**Build NARC from Folder** button or *Tools > NARC Utlity > Build from Folder*) and save it to the `game_DSPRE_contents/files/battle/graphic/` folder. 
 
-**Changing the pointer for the icon to the new file** <br/>
-Open up your `game_DSPRE_contents` folder, find the `arm9.bin` file and open it in a hex editor. Navigate to offset `0xF8404`. You should see `AC 00 00 00`, which is referencing file 172, the Mystery Type icon, in the `battle_obj.narc`.
+**Change the pointer for the icon to the new file** <br/>
+Navigate to `game_DSPRE_contents/arm9/arm9.bin` and open the file in a hex editor. Navigate to offset `0xF8404`. You should see `AC 00 00 00`, which is referencing file 172, the Mystery Type icon, in the `battle_obj.narc`.
+
 <details>
   <summary>For reference, here are the surrounding bytes</summary>
   ```
@@ -125,7 +134,7 @@ Open up your `game_DSPRE_contents` folder, find the `arm9.bin` file and open it 
 
 Change `AC 00 00 00` to `17 01 00 00` to point to the new `0279` file containing the Fairy icon we added to the `battle_obj.narc`.
 
-**Changing the palette used by the icon** <br/>
+**Change the palette used by the icon** <br/>
 While still editing the `arm9.bin` in the hexeditor, navigate to offset `0xF8445`. You should see the byte `02`. Change it to `01`.
 
 <details>
@@ -135,7 +144,7 @@ While still editing the `arm9.bin` in the hexeditor, navigate to offset `0xF8445
   ```
 </details>
 
-Save the file back to the `game_DSPRE_contents` folder and save your project with DSPRE. You should now see the Fairy Type icon displayed correctly in the Pokémon summary screen.
+Save the file back to the `game_DSPRE_contents/arm9/` folder and save your project with DSPRE. You should now see the Fairy Type icon displayed correctly in the Pokémon summary screen.
 
 <details>
   <summary>For informational purposes, these are the Mystery Type palette and icon files</summary>
@@ -146,40 +155,48 @@ Save the file back to the `game_DSPRE_contents` folder and save your project wit
 <br/>
 
 ## Part 5 - Changing the battle move selection palette
-Open up your `game_DSPRE_contents/overlay/` folder. Find the file named `overlay_0008.bin`, open it in a hex editor, and navigate to offset `0x18A40`. You should see the following bytes:
+Navigate to `game_DSPRE_contents/arm9_overlays/ov008.bin` (`Overlay 8`). Open the file in a hex editor and navigate to offset `0x18A40`. You should see the following bytes:
+
 ```
 CD 75 FF 7F 7A 5A 17 4E B5 45 72 3D 30 31 ED 28 CB 20 FB 66 08 21 00 00 8C 31 B5 56 BB 53 0A 39
 ```
+
 Replace it with the following bytes:
+
 ```
 CD 75 FF 7F 7C 66 17 52 18 56 1B 5E 35 41 F2 38 B2 34 DD 6E 08 21 00 00 8C 31 B5 56 BB 53 0A 39
 ```
-Save this file back to the `game_DSPRE_contents/overlay/` folder and save your project in DSPRE. You should now see the updated battle move selection palette for Fairy moves.
+
+Save this file back to `game_DSPRE_contents/arm9_overlays/` and save your project. You should now see the updated battle move selection palette for Fairy Type moves.
 
 <br/>
 
 ## Part 6 - Changing the Pokédex Type Icon
 Almost done!
 
-**Replacing four files** <br/>
-Open your project in DSPRE and select the **Unpack to Folder** button (*Tools > NARC Utility > Unpack to Folder*). <br/>
-Navigate to `game_DSPRE_contents/data/resource/eng/zukan/zukan.narc` and unpack it somewhere. This will create a `zukan` folder with files `0000` to `0129`.
+**Replace four files** <br/>
+Open your project in DSPRE and select the **Unpack to Folder** button (*or Tools > NARC Utility > Unpack to Folder*). <br/>
+Navigate to `game_DSPRE_contents/files/resource/eng/zukan/zukan.narc` and unpack the NARC file somewhere else. This will create a `zukan` folder with files `0000` to `0129`.
 
-In the files provided by Yako, there four files in the `pokedex_icon` folder - `0013.rlcn`, `0088.recn`, `0089.rnan`, `0090.rgcn`. Copy those files and paste them the unpacked `zukan` folder, replacing or deleting the original files and/or removing the file extensions if the other files in the unpacked folder do not have them.
+In the files provided by Yako, there four files in the `pokedex_icon` folder - `0013.rlcn`, `0088.recn`, `0089.rnan`, `0090.rgcn`. Copy those files and paste them the unpacked `zukan` folder (replacing the original files and removing the file extensions if necessary).
 
-Use DSPRE to pack the `zukan` folder back into a NARC file and save it to the `game_DSPRE_contents/data/resource/eng/zukan/` folder. 
+Use DSPRE to pack the `zukan` folder back into a NARC file (**Build NARC from Folder** button or *Tools > NARC Utlity > Build from Folder*) and save it to the `game_DSPRE_contents/files/resource/eng/zukan/` folder. 
 
-**Modifying the game's code to show the Pokédex icon** <br/>
-Open up your `game_DSPRE_contents/overlay/` folder. Find the file named `overlay_0016.bin`, open it in a hex editor, and navigate to offset `0xE15C`. You should see the following bytes:
+**Modify the game's code to show the Pokédex icon** <br/>
+Navigate to `game_DSPRE_contents/arm9_overlays/ov016.bin` (`Overlay 16`). Open the file in a hex editor and navigate to offset `0xE15C`. You should see the following bytes:
+
 ```
 11 28 38 D8 01 18 79 44 ...
 ```
+
 Replace it with the following bytes:
+
 ```
 01 30 70 47 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 ```
 
-Navigate to offset `0xE270`, `0x10120`, and `0x18150`, and replace `11 21` with `00 21`. Save this file back to the `game_DSPRE_contents/overlay/` folder.
+Navigate to offsets `0xE270`, `0x10120`, and `0x18150`, and replace `11 21` with `00 21`. Save this file back to `game_DSPRE_contents/arm9_overlays/`.
+
 <details>
   <summary>For reference, here are the surrounding bytes</summary>
   1. `0xE270` - `FC 11 21 F0 60`
@@ -187,12 +204,82 @@ Navigate to offset `0xE270`, `0x10120`, and `0x18150`, and replace `11 21` with 
   3. `0x18150` - `FA 28 68 11 21`
 </details>
 
-
 Save your project with DSPRE and check the Pokédex entry for the Pokémon you changed to the Fairy Type.
+
+<br/>
+
+## Bonus - Updating the Move Tester Pokétch app
+
+The Move Tester Pokétch app displays a type's effectiveness against a Pokémon with a particular type combination. However, this display uses a different table from the one used to determine effectiveness in battles. This means that the Move Tester Pokétch app must be manually updated as well.
+
+**Update the Move Tester Type Chart** <br/>
+Navigate to `game_DSPRE_contents/arm9_overlays/ov038.bin` (`Overlay 38`). Open the file in a hex editor and navigate to offset `0x8F4`. You should see the following 0x144 (324) bytes:
+
+```
+00 00 00 00 00 FF 00 F6 FF 00 00 00 00 00 00 00 00 00
+01 00 FF FF 00 01 FF F6 01 00 00 00 00 00 FF 01 00 01
+00 01 00 00 00 FF 01 00 FF 00 00 00 01 FF 00 00 00 00
+00 00 00 FF FF FF 00 FF F6 00 00 00 01 00 00 00 00 00
+00 00 F6 01 00 01 FF 00 01 00 01 00 FF 01 00 00 00 00
+00 FF 01 00 FF 00 01 00 FF 00 01 00 00 00 00 01 00 00
+00 FF FF FF 00 00 00 FF FF 00 FF 00 01 00 01 00 00 01
+F6 00 00 00 00 00 00 01 FF 00 00 00 00 00 01 00 00 FF
+00 00 00 00 00 01 00 00 FF 00 FF FF 00 FF 00 01 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 FF 01 00 01 00 FF FF 01 00 00 01 FF 00
+00 00 00 00 01 01 00 00 00 00 01 FF FF 00 00 00 FF 00
+00 00 FF FF 01 01 FF 00 FF 00 FF 01 FF 00 00 00 FF 00
+00 00 01 00 F6 00 00 00 00 00 00 01 FF FF 00 00 FF 00
+00 01 00 01 00 00 00 00 FF 00 00 00 00 00 FF 00 00 F6
+00 00 01 00 01 00 00 00 FF 00 FF FF 01 00 00 FF 01 00
+00 00 00 00 00 00 00 00 FF 00 00 00 00 00 00 00 01 00
+00 FF 00 00 00 00 00 01 FF 00 00 00 00 00 01 00 00 FF
+```
+
+There are 18 groups of 18 bytes representing every type (including the Mystery Type) and the attacking effectiveness against each type. The order follows the game's internal type ID order, which is also reflected in DSPRE (*i.e. Normal, Fighting, Flying, Poison, Ground, Rock, Bug, Ghost, Steel, Mystery/???, Fire, Water, Grass, Electric, Psychic, Ice, Dragon, Dark*). 
+
+The attacking effectiveness is represented by the following hexadecimal values:
+- `00` - Regularly effective
+- `01` - Super effective
+- `FF` - Not very effective
+- `F6` - Not effective/immune
+
+For your convenience, here are the bytes that includes the Fairy Type attacking effectiveness. This also includes the changes to Ghost and Dark Type moves being neutral instead of not very effective against Steel Pokémon (`0x97A` and `0xA2E`).
+
+```
+00 00 00 00 00 FF 00 F6 FF 00 00 00 00 00 00 00 00 00
+01 00 FF FF 00 01 FF F6 01 FF 00 00 00 00 FF 01 00 01
+00 01 00 00 00 FF 01 00 FF 00 00 00 01 FF 00 00 00 00
+00 00 00 FF FF FF 00 FF F6 01 00 00 01 00 00 00 00 00
+00 00 F6 01 00 01 FF 00 01 00 01 00 FF 01 00 00 00 00
+00 FF 01 00 FF 00 01 00 FF 00 01 00 00 00 00 01 00 00
+00 FF FF FF 00 00 00 FF FF FF FF 00 01 00 01 00 00 01
+F6 00 00 00 00 00 00 01 00 00 00 00 00 00 01 00 00 FF
+00 00 00 00 00 01 00 00 FF 01 FF FF 00 FF 00 01 00 00
+00 01 00 FF 00 00 00 00 FF 00 FF 00 00 00 00 00 01 01
+00 00 00 00 00 FF 01 00 01 00 FF FF 01 00 00 01 FF 00
+00 00 00 00 01 01 00 00 00 00 01 FF FF 00 00 FF FF 00
+00 00 FF FF 01 01 FF 00 FF 00 FF 01 FF 00 00 00 FF 00
+00 00 01 00 F6 00 00 00 00 00 00 01 FF FF 00 00 FF 00
+00 01 00 01 00 00 00 00 FF 00 00 00 00 00 FF 00 00 F6
+00 00 01 00 01 00 00 00 FF 00 FF FF 01 00 00 FF 01 00
+00 00 00 00 00 00 00 00 FF F6 00 00 00 00 00 00 01 00
+00 FF 00 00 00 00 00 01 00 FF 00 00 00 00 01 00 00 FF
+```
+
+**Add the Fairy Type** <br/>
+Go to the following offsets and make the changes:
+- `0x33C` - Replace `11 2C` with `12 2C`
+- `0x340` - Replace `11 2C` with `12 2C`
+- `0x356` - Replace `11 2C` with `12 2C`
+- `0x374` - Replace `10 24` with `11 24`
+- `0xA49` - Replace `00` with `09`
+
+This will add the Fairy Type to the end of the list after the Dark Type. Save this file back to `game_DSPRE_contents/arm9_overlays/`. Save your project with DSPRE and check your Move Tester Pokétch app! *Also, consider changing it to be received a bit earlier than the Icicle Badge...*
 
 ---
 
 Congratulations! At this point you should have a fully functional Fairy Type in your game!
 
 
-Thank you to Yako, the authors of previous Fairy Type implementation guides, researchers of Arm9 expansion, the developers of DSPRE, and those working on Pokémon decomps for making this possible.
+Thanks Yako, the authors of previous Fairy Type implementation guides, researchers of ARM9 Expansion, the developers of DSPRE, and those working on Pokémon decompilations for making this possible.

@@ -59,9 +59,9 @@ The exact mapping of how a move is executed can be found [here](https://github.c
 
 - The **move data** NARC contains [basic data](#basic-move-data-dspre) on the move, which can be edited in DSPRE's Move Editor. This includes, for example, the reference to the **move effect script** (labeled as `Effect Sequence` in DSPRE's Move Editor).
     - The general structure of basic move data can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/src/move_table.c#L37) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/move.h#L6) Decompilation projects.
-    - Basic move data for each move (in Platinum) can be found [here](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/moves) in the Platinum Decompilation project.
+    - Basic move data for each move (in Platinum) can be found in the [Platinum Decompilation project](https://github.com/pret/pokeplatinum/tree/main/res/moves).
 - **Move scripts** are strictly per move and may not be shared. They may simply be an instruction to use the **move effect script**, or may have more complexity.
-    - Move scripts for each move can be found in the [Platinum](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/moves) and [HeartGold](https://github.com/pret/pokeheartgold/tree/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/move_script) Decompilation projects.
+    - Move scripts for each move can be found in the [Platinum](https://github.com/pret/pokeplatinum/tree/main/res/moves) and [HeartGold](https://github.com/pret/pokeheartgold/tree/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/move_script) Decompilation projects.
     - Move scripts can be edited using a hex editor.
 - **Move effect scripts** may be shared by multiple moves. Move effect scripts are typically responsible for queueing up relevant **battle subscripts**.
     - Move effect scripts are labeled as `Effect Sequence` in DSPRE's Move Editor. 
@@ -72,7 +72,7 @@ The exact mapping of how a move is executed can be found [here](https://github.c
 - **Move effect subscripts** may be shared by multiple **move effect scripts** and **battle subscripts**.
     - Move effect subscripts are simply pointers to a certain **battle subscript**. They queue up said battle subscript to execute after the **move effect script** ends.
     - The basic label description for each move effect subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_subscript_ptrs.txt) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) Decompilation projects.
-    - The table that points **move effect subscripts** to **battle subscripts** can be found [here](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h) in the Platinum Decompilation project.
+    - The table that points **move effect subscripts** to **battle subscripts** can be found in the [Platinum Decompilation project](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h).
 - **Battle subscripts** may be called by multiple **move effect scripts** and even other **battle subscripts**. Battle subscripts contain the code to actually execute move effects.
   - Each battle subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/subscripts) and [HeartGold](https://github.com/pret/pokeheartgold/tree/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/subscript) Decompilation projects.
   - The basic label description for each battle subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/subscripts/sub_seq.order) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L4) Decompilation projects.
@@ -80,6 +80,7 @@ The exact mapping of how a move is executed can be found [here](https://github.c
 - **Move animations** are strictly per move and may not be shared.
     - Move animations consist of **animation components**.
     - Move animations can be edited using a hex editor, or by using a tool called WazaEffectEditor (see [Move Animations](#move-animations)).
+    - Move animations for each move (in Platinum) can be found in the [Platinum Decompilation project](https://github.com/pret/pokeplatinum/tree/main/res/moves).
 - **Animation components** may be used across many move animations. *There are three main types of animation components/instructions (sprite translations, "particles" & backgrounds).*
 - The **continuous animations** NARC contains animations for moves that persist beyond the turn they are used (e.g. Bind, Fire Spin).
 
@@ -1105,7 +1106,7 @@ There are a number of other resources which may be useful in move animation edit
 - **Wiki Resource:** [Generation IV Move Animations list](/docs/generation-iv/resources/move_animations/)
 - **Platinum Decompilation Project**
     - [Fexty's definitions for Move Animation Script commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790)
-    - [Decompiled Move Animation Script for each move](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/moves)
+    - [Decompiled Move Animation Script for each move](https://github.com/pret/pokeplatinum/tree/main/res/moves)
 - **External Resources:**
     - [TwilightPrincess's YouTube video of all Generation IV Move Animations](https://www.youtube.com/watch?v=gukPRu2iZ_w) (time-index in the comments)
     - [Magiscars Database's Youtube channel of Generation I-IX Move Animations](https://www.youtube.com/@magiscars/playlists) (not all moves are published yet)
@@ -1489,21 +1490,21 @@ The changes must be made in a decompressed overlay.
   </tr>
   <tr>
     <td>HeartGold/SoulSilver</td>
-    <td>`Overlay_0012`</td>
+    <td>`Overlay 12`</td>
     <td>`0x37360`</td>
     <td>`0x1B718`</td>
     <td>`0x1B7A4`</td>
   </tr>
   <tr>
     <td>Platinum</td>
-    <td>`Overlay_0016`</td>
+    <td>`Overlay 16`</td>
     <td>`0x35A4C`</td>
     <td>`0x1B118`</td>
     <td>`0x1B1A4`</td>
   </tr>
   <tr>
     <td>Diamond/Pearl</td>
-    <td>`Overlay_0011`</td>
+    <td>`Overlay 11`</td>
     <td>`0x329C4`</td>
     <td>`0x19F68`</td>
     <td>`0x19FF4`</td>
@@ -1537,17 +1538,17 @@ The changes must be made in a decompressed overlay.
   </tr>
   <tr>
     <td>HeartGold/SoulSilver</td>
-    <td>`Overlay_0010`</td>
+    <td>`Overlay 10`</td>
     <td>`0x4EA8`</td>
   </tr>
   <tr>
     <td>Platinum</td>
-    <td>`Overlay_0014`</td>
+    <td>`Overlay 14`</td>
     <td>`0x4EA0`</td>
   </tr>
   <tr>
     <td>Diamond/Pearl</td>
-    <td>`Overlay_0016`</td>
+    <td>`Overlay 16`</td>
     <td>`0x1DB70`</td>
   </tr>
 </table>
@@ -1682,21 +1683,21 @@ The changes must be made in a decompressed overlay.
   </tr>
   <tr>
     <td>HeartGold/SoulSilver</td>
-    <td>`Overlay_0012`</td>
+    <td>`Overlay 12`</td>
     <td>`0x352FE`</td>
     <td>`0x1FF58`</td>
     <td>`0x20224`</td>
   </tr>
   <tr>
     <td>Platinum</td>
-    <td>`Overlay_0016`</td>
+    <td>`Overlay 16`</td>
     <td>`0x33AD6`</td>
     <td>`0x1F960`</td>
     <td>`0x1FC2C`</td>
   </tr>
   <tr>
     <td>Diamond/Pearl</td>
-    <td>`Overlay_0011`</td>
+    <td>`Overlay 11`</td>
     <td>`0x30CFA`</td>
     <td>`0x1E534`</td>
     <td>`0x1E81C`</td>
@@ -1728,19 +1729,19 @@ These values could be changed to other values, for example changing the multipli
   </tr>
   <tr>
     <td>HeartGold/SoulSilver</td>
-    <td>`Overlay_0012`</td>
+    <td>`Overlay 12`</td>
     <td>`0x1FF44`</td>
     <td>`0x1FF48`</td>
   </tr>
   <tr>
     <td>Platinum</td>
-    <td>`Overlay_0016`</td>
+    <td>`Overlay 16`</td>
     <td>`0x1F94C`</td>
     <td>`0x1F950`</td>
   </tr>
   <tr>
     <td>Diamond/Pearl</td>
-    <td>`Overlay_0011`</td>
+    <td>`Overlay 11`</td>
     <td>`0x1E520`</td>
     <td>`0x1E524`</td>
   </tr>
@@ -1822,12 +1823,12 @@ These steps assume that the exact animation of the move will be duplicated as th
 
 1. Unpack the "Move Animations" NARC using (using the [DSPRE "Unpack NARC to Folder" function](/docs/universal/guides/unpacking_narcs/#dspre)).
     - HGSS: `/a/0/1/0`
-    - Platinum/Diamond/Pearl: `/data/wazaeffect/we.arc`
+    - Platinum/Diamond/Pearl: `/files/wazaeffect/we.arc`
 2. Locate the animation for the move to being a trapping move, this can be done by identifying the move's index/ID, which will be the same number as the unpacked file name.
 3. Copy the whole animation file.
 4. Unpack the "Continuous Animations" NARC (using the [DSPRE "Unpack NARC to Folder" function](/docs/universal/guides/unpacking_narcs/#dspre)).
     - HGSS: `/a/0/6/1`
-    - Platinum/Diamond/Pearl: `/data/wazaeffect/we_sub.narc`
+    - Platinum/Diamond/Pearl: `/files/wazaeffect/we_sub.narc`
 5. Once unpacked, this should contain 50 files (0-49).
 6. Add a new file at the end, this will contain the new trapping animation.
 7. Paste in the content copied in step 3.
@@ -1930,17 +1931,17 @@ This value could be changed to another value, for example to `08` for 1/8 damage
   </tr>
   <tr>
     <td>HeartGold/SoulSilver</td>
-    <td>`Overlay_0012`</td>
+    <td>`Overlay 12`</td>
     <td>`0x12852`</td>
   </tr>
   <tr>
     <td>Platinum</td>
-    <td>`Overlay_0016`</td>
+    <td>`Overlay 16`</td>
     <td>`0x1228A`</td>
   </tr>
   <tr>
     <td>Diamond/Pearl</td>
-    <td>`Overlay_0011`</td>
+    <td>`Overlay 11`</td>
     <td>`0x11528`</td>
   </tr>
 </table>
@@ -2417,21 +2418,21 @@ Move tutors are implemented in a number of different ways in the Generation IV P
     <td>Compatibility & Special Currency (*Shards*)</td>
     <td>Platinum</td>
     <td>Three Shard Tutors (*Route 212, Snowpoint City, Survival Area*)</td>
-    <td>This move tutor uses scripting, but also two tables of data stored in `overlay_0005.bin`, which define the available pool of moves that can be tutored, compatibility with each Pokémon, the prices and assigned tutors for each.</td>
+    <td>This move tutor uses scripting, but also two tables of data stored in `Overlay 5.bin`, which define the available pool of moves that can be tutored, compatibility with each Pokémon, the prices and assigned tutors for each.</td>
   </tr>
   <tr>
     <td>2B</td>
     <td>Compatibility & Special Currency (*Battle Points*)</td>
     <td>HeartGold, SoulSilver</td>
     <td>Three BP Tutors (*Frontier Access*)</td>
-    <td>This move tutor uses scripting, but also two tables of data stored in `overlay_0001.bin` and `waza_oshie.bin`, which define the available pool of moves that can be tutored, compatibility with each Pokémon, the prices and assigned tutors for each.</td>
+    <td>This move tutor uses scripting, but also two tables of data stored in `Overlay 1.bin` and `waza_oshie.bin`, which define the available pool of moves that can be tutored, compatibility with each Pokémon, the prices and assigned tutors for each.</td>
   </tr>
   <tr>
     <td>2C</td>
     <td>Compatibility & Special Currency (*Free*)</td>
     <td>HeartGold, SoulSilver</td>
     <td>Headbutt Tutor (*Ilex Forest*)</td>
-    <td>This move tutor uses scripting, and a Headbutt-specific command, but also two tables of data stored in `overlay_0001.bin` and `waza_oshie.bin`.</td>
+    <td>This move tutor uses scripting, and a Headbutt-specific command, but also two tables of data stored in `Overlay 1.bin` and `waza_oshie.bin`.</td>
   </tr>
 </table>
 
@@ -2457,7 +2458,7 @@ The below download link is for a Microsoft Excel file which can be used to easil
 
 > Source(s): [MapleDonut, TurtleIsaac & Solace (2021)](https://pastebin.com/eaYtGpTw)
 
-All of the data exists in `Overlay_0005.bin`, and edits can be made from an extracted file (as produced by DSPRE during unpacking, or via a program such as Tinke).
+All of the data exists in `Overlay 5.bin`, and edits can be made from an extracted file (as produced by DSPRE during unpacking, or via a program such as Tinke).
 
 **Move pool definition**  
 The available pool of moves that can be tutored can be found at offest `0x2FF64` (and up to and including offset `0x3012B`).  
@@ -2535,10 +2536,10 @@ To find the offset of any given Pokémon to edit, paste the following formula in
 ##### Type 2B (HGSS): Compatibility & Special Currency (*Battle Points*)
 
 **Move pool definition**  
-> Thanks to Fantafaust for related research which identifies the location of the move pool definition table in HGSS (`overlay_0001`).
+> Thanks to Fantafaust for related research which identifies the location of the move pool definition table in HGSS (`Overlay 1`).
 
-The available pool of moves that can be tutored can be found at offest `0x23AE0` (and up to and including offset `0x23BC7`) in an **decompressed** `overlay_0001` (DSPRE can be used to decompress this overlay).  
-In HGSS there are 52 used moves, each takes four bytes of space. There is space in `overlay_0001` for six more moves to be defined (which are just present as `00 10 00 00` in the vanilla game) A list of the moves available in the pool can be found in online sources such as [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Move_Tutor#Generation_IV).
+The available pool of moves that can be tutored can be found at offest `0x23AE0` (and up to and including offset `0x23BC7`) in an **decompressed** `Overlay 1` (DSPRE can be used to decompress this overlay).  
+In HGSS there are 52 used moves, each takes four bytes of space. There is space in `Overlay 1` for six more moves to be defined (which are just present as `00 10 00 00` in the vanilla game) A list of the moves available in the pool can be found in online sources such as [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Move_Tutor#Generation_IV).
 
 The format of the bytes is as follows:
 `XX XX BB TT`
@@ -2618,10 +2619,10 @@ This is achieved through a very specific command `CheckHeadbuttCompatibility` wh
 
 #### Creating New Move Tutors
 
-With the information documented above, it is possible to create new move tutors, by utilising unused Tutor IDs (for both Platinum & HGSS). In HGSS it is easily possible to define six more moves that can be tutored, using the available space in the existing table in `overlay_0001`. Existing commonscripts can be copied/replicated to create new tutors that use the same purchasing mechanisms (shards or BP). It is also easily possible to use the same move tutor data to develop tutors that have more unique/complex logic controlling availability/purchase of the tutorable moves with custom scripting.
+With the information documented above, it is possible to create new move tutors, by utilising unused Tutor IDs (for both Platinum & HGSS). In HGSS it is easily possible to define six more moves that can be tutored, using the available space in the existing table in `Overlay 1`. Existing commonscripts can be copied/replicated to create new tutors that use the same purchasing mechanisms (shards or BP). It is also easily possible to use the same move tutor data to develop tutors that have more unique/complex logic controlling availability/purchase of the tutorable moves with custom scripting.
 
 In **HGSS**, the Event and Script data of the move tutors in the Frontier Access can be reviewed to find that a small series of commonscripts are used to drive their dialogue & options. Adding a new tutor that uses (for example Tutor ID `04`), can be achieved by following these steps:
-1. Update the Tutorable Moves data (`overlay_0001`) to include moves that are aligned to Tutor ID `04` *(Details [here](#type-2b-hgss-compatibility--special-currency-battle-points); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
+1. Update the Tutorable Moves data (`Overlay 1`) to include moves that are aligned to Tutor ID `04` *(Details [here](#type-2b-hgss-compatibility--special-currency-battle-points); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
 2. Update the Pokémon Compatibility data (`waza_oshie.bin`) to set the compatibility for the newly added moves *(Details [here](#type-2b-hgss-compatibility--special-currency-battle-points); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
 3. Locate the last move tutor commonscript (file 2, Script 3). Copy the script and paste it as Script 4, editing the `SetVar` commands for variables `32768` & `32775` to change the value the variable is set to (`2`) to `4`, for example:  
 
@@ -2708,12 +2709,12 @@ Where:
   </tr>
   <tr>
     <td>Platinum</td>
-    <td>`overlay_0005`</td>
+    <td>`Overlay 5`</td>
     <td>`0x29222`</td>
   </tr>
   <tr>
     <td>Diamond/Pearl</td>
-    <td>`overlay_0005`</td>
+    <td>`Overlay 5`</td>
     <td>`0x20668`</td>
   </tr>
 </table>
@@ -3845,8 +3846,8 @@ To accomodate this without re-pointing the relevant table, the move **Comet Punc
 
 1. Open DSPRE & load the ROM.
 2. Open the `Overlay Editor` from the `Other Editors` toolbar option.
-3. [Decompress and mark as decompressed](/docs/universal/guides/hex_editing/#hgss-specifically) `Overlay_0012`.
-4. Using a hex editor such as HxD, open the decompressed `overlay_0012` file and go to Offset `0x352FE`.
+3. [Decompress and mark as decompressed](/docs/universal/guides/hex_editing/#hgss-specifically) `Overlay 12`.
+4. Using a hex editor such as HxD, open the decompressed `Overlay 12` file and go to Offset `0x352FE`.
 5. Identify the bytes that represent **Comet Punch** (Move ID: `4`): `04 00`, which are within the list of fifteen moves (30 bytes).
 6. Replace these with the bytes that represent **Rock Smash** (Move ID: `249`): `F9 00`.
 7. Save the overlay and move any backup (e.g. `.bak`) files out of the folder.
@@ -4029,7 +4030,7 @@ D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00
 <summary>**Method Two (Complex but single stat change animation)**</summary>
 
 This method will comprise of the following steps:
-1. Apply ARM9 Expansion
+1. Apply the **ARM9 Expansion** patch
 2. Move the Move Effect Subscript Pointer Table
 3. Unpack the Battle Subscripts NARC `sub_seq.narc`
 4. Create and save a new Battle Subscript file
@@ -4042,14 +4043,14 @@ This method will comprise of the following steps:
 11. Edit Growth's move data
 12. Test the changes and other tasks
 
-##### Step 1: Apply ARM9 Expansion
-1. If you haven't already, use the latest version of [DSPRE](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the ARM9 Expansion patch. 
-2. Verify that the `/unpacked/synthOverlay/0009` file (referred to as `synthOverlay 9` moving forward) size is 88 KB or 90,112 bytes.
+##### Step 1: Apply the ARM9 Expansion patch
+1. If you haven't already, use the latest version of [DSPRE](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the **ARM9 Expansion** patch. 
+2. Verify that the `/unpacked/synthOverlay/0009` file (`synthOverlay 9`) size is 88 KB or 90,112 bytes.
 3. If your file is not the correct size, or if you've applied a different version of the ARM9 Expansion, please ask for assistance in the [Kingdom of DS Hacking Discord support channels](https://discord.com/channels/446824489045721090/446865033310240769).
 
 ##### Step 2: Move the Move Effect Subscript Pointer Table
 1. If you've followed this [Platinum Fairy Implementation Guide](../type_expansion/pt-type_expansion.md), this step will already be complete, but you can still follow along to verify.
-2. Using any hex editor of your choice, open `Overlay 16` and go to offset `0x33CE4`. You will see the following bytes:
+2. Using any hex editor of your choice, open `/arm9_overlays/ov016.bin` (`Overlay 16`) and go to offset `0x33CE4`. You will see the following bytes:
 ```
 00 00 00 00 12 00 00 00 16 00 00 00 19 00 00 00...
 ```
