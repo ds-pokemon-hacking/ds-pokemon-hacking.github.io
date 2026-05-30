@@ -595,7 +595,7 @@ Open the relevant file and go to the provided offsets:
 
 The item properties assigned to X Attack, X Defense, X Special, X Sp. Def, X Speed, and X Accuracy in Gen IV enable them to be used from the bag during battle to raise the Pokémon's respective stat by **1 stage**.
 
-As an example, the change the effect to raise the Pokémon's respective state by **2 stages** (matching Gen VII onwards), change the byte from `01` to `02`.
+As an example, to change the effect to raise the Pokémon's respective state by **2 stages** (matching Gen VII onwards), change the byte from `01` to `02`.
 <br/>
 
 
