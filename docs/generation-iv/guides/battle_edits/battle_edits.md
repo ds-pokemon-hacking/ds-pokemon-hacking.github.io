@@ -58,7 +58,7 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Magnitude Move Power](#magnitude-move-power)
   - [Gyro Ball Move Power Calculation Multiplier](#gyro-ball-move-power-calculation-multiplier)
   - [Flail and Reversal Move Power](#flail-and-reversal-move-power)
-  - [Trainer AI NPC Trick Logic Bypass](#trainer-ai-npc-trick-logic-bypass)
+  - [Bypass Trick 'Always Fail' Logic](#bypass-trick-always-fail-logic)
 
 - [Weather](#weather)
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
@@ -832,7 +832,7 @@ Here is the table of the HP ratio (based on the vanilla multiplier of **64**) to
 
 
 
-### Trainer AI NPC Trick Logic Bypass
+### Bypass Trick 'Always Fail' Logic
 > Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/src/battle/battle_script.c#L6347)
 
 Open the relevant file and change the byte at the provided offset:
@@ -854,7 +854,7 @@ In standard battles (wild battles and normal trainer battles), held items cannot
 By modifying this bitmask to `0x85` (adding `BATTLE_TYPE_TRAINER`), we can enable NPC trainers in normal in-game battles to successfully use Trick and Switcheroo as well (while still ensuring that if the moves are used by wild Pokémon, the move fails)!
 
 > [!NOTE]
-> This edit does not implement post-battle item restoration for normal trainer battles. Any items swapped during a standard story battle will remain swapped permanently after the battle concludes.
+> This edit does not implement post-battle item restoration for normal trainer battles. Any items swapped during a standard battle will remain swapped permanently after the battle concludes.
 
 To implement this edit, change the bitmask byte from `84` to `85`.
 <br/>
@@ -1003,7 +1003,7 @@ Open the relevant file and change the byte at the provided offsets:
   | **All Games** | `5D 00 00 00 04 00 00 00 09 00 00 00 00 00 00 00`        |
 </details>
 
-In the Basic Trainer AI scoring for Sunny Day, the game checks if the target has Hydration and is statused (which is a copy-paste error from the Rain Dance handler). For Sunny weather, it should instead evaluate whether the opponent has Leaf Guard and is *not* statused (since Leaf Guard prevents status in Sun, making status moves useless).
+In the Basic Trainer AI scoring for Sunny Day, the game checks if the target has Hydration and is statused (which is a copy-paste error from the Rain Dance handler). For Sunny weather, it should instead evaluate whether the opponent has Leaf Guard and is *not* statused (since Leaf Guard prevents status in Sun, but does not *heal* status conditions like Hydration).
 
 To fix this copy-paste bug:
 * Change the evaluated ability byte from `5D` (`ABILITY_HYDRATION`) to `66` (`ABILITY_LEAF_GUARD`).
@@ -1055,7 +1055,7 @@ Open the relevant file and change the byte at the provided offset:
   | **All Games** | `4D 00 00 00 0A 00 00 00 00 00 00 00 D8 00 00 00`        |
 </details>
 
-When evaluating the move Facade, the Expert Trainer AI checks if the target has a status condition (poison, burn, paralysis) that would boost the move's power, rather than checking if the user itself is statused. As a result, the AI incorrectly rewards using Facade when the opponent is statused instead of when the AI's own Pokémon is statused.
+When evaluating the move Facade, the Expert Trainer AI checks if the target has a status condition (poison, burn, paralysis), rather than checking if the user itself is statused (which would boost the move's power). As a result, the AI incorrectly rewards using Facade when the *opponent* is statused instead of when the AI's own Pokémon is statused.
 
 To fix this issue, change the target battler byte from `00` (target) to `01` (user).
 <br/>
@@ -1079,7 +1079,7 @@ Open the relevant file and change the byte at the provided offset:
   | **All Games** | `66 00 00 00 0C 00 00 00 09 00 00 00 01 00 00 00`        |
 </details>
 
-Under Sunny weather, the Leaf Guard ability protects a Pokémon from receiving status conditions. When scoring the move Sunny Day, the Expert Trainer AI evaluates whether its Pokémon has Leaf Guard and checks if it is *already* statused. However, the logic is inverted: it checks `IfStatus` (0x09) and awards a score bonus only if the Pokémon is already statused, rather than when it is healthy.
+Under Sunny weather, the Leaf Guard ability protects a Pokémon from receiving status conditions, but does not *heal* status conditions like Hydration. When scoring the move Sunny Day, the Expert Trainer AI evaluates whether its Pokémon has Leaf Guard and checks if it is *already* statused. However, the logic is inverted: it checks `IfStatus` (0x09) and awards a score bonus only if the Pokémon is already statused, rather than when it is healthy.
 
 To fix this issue, change the opcode byte from `09` (`IfStatus`) to `0A` (`IfStatusNot`).
 <br/>
