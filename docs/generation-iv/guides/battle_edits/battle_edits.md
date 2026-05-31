@@ -58,6 +58,7 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Magnitude Move Power](#magnitude-move-power)
   - [Gyro Ball Move Power Calculation Multiplier](#gyro-ball-move-power-calculation-multiplier)
   - [Flail and Reversal Move Power](#flail-and-reversal-move-power)
+  - [Trainer AI NPC Trick Logic Bypass](#trainer-ai-npc-trick-logic-bypass)
 
 - [Weather](#weather)
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
@@ -68,7 +69,13 @@ This information comes from tutorials, guides, and research shared via other mea
 
 - [Bug Fixes](#bug-fixes)
   - [Fire Fang vs Wonder Guard](#fire-fang-vs-wonder-guard)
-  - [Trainer AI Water Immunity Check vs Dry Skin](#trainer-ai-water-immunity-check-vs-dry-skin)
+  - [Trainer AI Basic Flag Water Immunity Check vs Dry Skin](#trainer-ai-basic-flag-water-immunity-check-vs-dry-skin)
+  - [Trainer AI Basic Flag Sunny Day Check](#trainer-ai-basic-flag-sunny-day-check)
+  - [Trainer AI Expert Flag Foresight and Odor Sleuth Ghost Type Check](#trainer-ai-expert-flag-foresight-and-odor-sleuth-ghost-type-check)
+  - [Trainer AI Expert Flag Facade Status Check](#trainer-ai-expert-flag-facade-status-check)
+  - [Trainer AI Expert Flag Leaf Guard Sunny Day Logic](#trainer-ai-expert-flag-leaf-guard-sunny-day-logic)
+  - [Trainer AI Expert Flag Water Spout and Eruption HP Check](#trainer-ai-expert-flag-water-spout-and-eruption-hp-check)
+  - [Trainer AI Expert Flag Charge-Turn Move Scoring Fix](#trainer-ai-expert-flag-charge-turn-move-scoring-fix)
 
 
 ---
@@ -178,7 +185,7 @@ Here is a table of bytes and the resulting thaw chance.
 |  `01`  |          100%         |
 <br/>
 
-
+---
 
 ## Abilities
 
@@ -492,7 +499,7 @@ Rivalry **increases** the power of moves by **25%** if the target and the user h
 Rivalry **reduces** the power of moves by **25%** if the target and the user have opposite genders. The battle logic calculates the reduced damage by multiplying and dividing the move's power by explicitly defined values, in this case **75** (`4B` in hexadecimal) and **100** (`64` in hexadecimal), respectively.
 <br/>
 
-
+---
 
 ## Items
 
@@ -598,7 +605,7 @@ The item properties assigned to X Attack, X Defense, X Special, X Sp. Def, X Spe
 As an example, to change the effect to raise the Pokémon's respective state by **2 stages** (matching Gen VII onwards), change the byte from `01` to `02`.
 <br/>
 
-
+---
 
 ## Move Effects
 
@@ -825,6 +832,35 @@ Here is the table of the HP ratio (based on the vanilla multiplier of **64**) to
 
 
 
+### Trainer AI NPC Trick Logic Bypass
+> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/src/battle/battle_script.c#L6347)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0xB1DA`  | `84`         |
+| **Platinum**             | `Decompressed Overlay 16`   | `0xAFB2`  | `84`         |
+| **Diamond/Pearl**        | `Decompressed Overlay 11`   | `0xA622`  | `84`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes                                            |
+  |:-------------:|:--------------------------------------------------------:|
+  | **All Games** | `00 28 08 D0 02 98 84 21 08 42 04 D1 20 1C 31 1C`        |
+</details>
+
+In standard battles (wild battles and normal trainer battles), held items cannot be swapped by the AI. This is an anti-griefing feature that prevents wild Pokémon or normal trainers from permanently taking the player's held items using moves like Trick or Switcheroo by ensuring the move always fails. The battle engine checks if the battle type is a Link Battle or a Battle Frontier battle using the bitmask `0x84` (`BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER`) and only allows item swapping if this check is successful. 
+
+By modifying this bitmask to `0x85` (adding `BATTLE_TYPE_TRAINER`), we can enable NPC trainers in normal in-game battles to successfully use Trick and Switcheroo as well (while still ensuring that if the moves are used by wild Pokémon, the move fails)!
+
+> [!NOTE]
+> This edit does not implement post-battle item restoration for normal trainer battles. Any items swapped during a standard story battle will remain swapped permanently after the battle concludes.
+
+To implement this edit, change the bitmask byte from `84` to `85`.
+<br/>
+
+---
+
 ## Weather
 
 ### Hail End-of-Turn Damage for Non-Ice Types
@@ -873,7 +909,7 @@ Open the relevant file and go to the provided offset:
 At this location, the battle logic checks if the Pokémon's first type is Ice, then if the second type is Ice, then if the ability is Snow Cloak to skip applying Hail damage to the Pokémon. Replacing `16 D0` with `16 E0` at this offset changes the first check from a conditional branch to an unconditional branch, which will effectively skip applying Hail damage to all Pokémon (mirroring the Snow weather that replaces Hail in Gen IX onwards).
 <br/>
 
-
+---
 
 ## Miscellaneous
 
@@ -898,7 +934,7 @@ Here is a table of the vanilla bytes, as well as bytes that match the changes in
 
 <br/>
 
-
+---
 
 ## Bug Fixes
 
@@ -926,7 +962,7 @@ To fix the issue, change the byte from `11` to `10`.
 
 
 
-### Trainer AI Water Immunity Check vs Dry Skin
+### Trainer AI Basic Flag Water Immunity Check vs Dry Skin
 > Sources and Credits: [Memory5ty7](https://discord.com/channels/446824489045721090/920372513488404542/1216114974255091774), [DarmaniDan](https://discord.com/channels/446824489045721090/920372513488404542/1216146554646433914), [Lhea](https://discord.com/channels/446824489045721090/1201213967389966378/1210066487562207302), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L78C50-L78C65)
 
 Open the relevant file and change the byte at the provided offset:
@@ -946,4 +982,152 @@ Open the relevant file and change the byte at the provided offset:
 The Trainer AI performs two checks when considering whether the opposing Pokémon is immune to Water-Type moves. The first check considers Water Absorb, but the second check mistakenly considers Levitate instead of Dry Skin. In practice, this means that **(1)** a Trainer's Pokémon won't use Water-Type moves if it knows that the opposing Pokémon has Levitate, and **(2)** a Trainer's Pokémon may repeatedly use a Water-Type move against an opposing Pokémon with Dry Skin.
 
 To fix the issue, change the byte from `1A` (26 in decimal, Levitate's ID) to `57` (87 in decimal, Dry Skin's ID).
+<br/>
+
+
+
+### Trainer AI Basic Flag Sunny Day Check
+> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L803-L816)
+
+Open the relevant file and change the byte at the provided offsets:
+| Game                     | File                        | Offset (Ability) | Vanilla Byte | Offset (Status) | Vanilla Byte |
+|:------------------------:|:---------------------------:|:----------------:|:------------:|:----------------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0x6310`         | `5D`         | `0x6318`         | `09`         |
+| **Platinum**             | `Overlay 14`                | `0x6308`         | `5D`         | `0x6310`         | `09`         |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x1EFD8`        | `5D`         | `0x1EFE0`        | `09`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes                                            |
+  |:-------------:|:--------------------------------------------------------:|
+  | **All Games** | `5D 00 00 00 04 00 00 00 09 00 00 00 00 00 00 00`        |
+</details>
+
+In the Basic Trainer AI scoring for Sunny Day, the game checks if the target has Hydration and is statused (which is a copy-paste error from the Rain Dance handler). For Sunny weather, it should instead evaluate whether the opponent has Leaf Guard and is *not* statused (since Leaf Guard prevents status in Sun, making status moves useless).
+
+To fix this copy-paste bug:
+* Change the evaluated ability byte from `5D` (`ABILITY_HYDRATION`) to `66` (`ABILITY_LEAF_GUARD`).
+* Change the status check opcode byte from `09` (`IfStatus`) to `0A` (`IfStatusNot`).
+<br/>
+
+
+
+### Trainer AI Expert Flag Foresight and Odor Sleuth Ghost Type Check
+> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L3605-L3618)
+
+Open the relevant file and change the byte at the provided offsets:
+| Game                     | File                        | Offset (Type 1) | Vanilla Byte | Offset (Type 2) | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------------:|:------------:|:---------------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0x9DD0`        | `01`         | `0x9DE4`        | `03`         |
+| **Platinum**             | `Overlay 14`                | `0x9DC8`        | `01`         | `0x9DDC`        | `03`         |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x22A70`       | `01`         | `0x22A84`       | `03`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes (Type 1)                                   | Vanilla Bytes (Type 2)                                   |
+  |:-------------:|:--------------------------------------------------------:|:--------------------------------------------------------:|
+  | **All Games** | `4D 00 00 00 1E 00 00 00 01 00 00 00 13 00 00 00`        | `0E 00 00 00 1E 00 00 00 03 00 00 00 13 00 00 00`        |
+</details>
+
+When considering whether to use Foresight or Odor Sleuth to enable Normal/Fighting moves to hit Ghost-type targets, the Expert Trainer AI evaluates the *user's* typing instead of the *target's* typing. This means the AI will only attempt to use these moves if its own Pokémon is a Ghost-type, rather than when the opponent is a Ghost-type.
+
+To fix this issue, swap the source type constant bytes from user typing to target typing:
+* Change Type 1 offset from `01` (`LOAD_ATTACKER_TYPE_1`) to `00` (`LOAD_DEFENDER_TYPE_1`).
+* Change Type 2 offset from `03` (`LOAD_ATTACKER_TYPE_2`) to `02` (`LOAD_DEFENDER_TYPE_2`).
+<br/>
+
+
+
+### Trainer AI Expert Flag Facade Status Check
+> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L4117-L4120)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0xA7F4`  | `00`         |
+| **Platinum**             | `Overlay 14`                | `0xA7EC`  | `00`         |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x23494` | `00`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes                                            |
+  |:-------------:|:--------------------------------------------------------:|
+  | **All Games** | `4D 00 00 00 0A 00 00 00 00 00 00 00 D8 00 00 00`        |
+</details>
+
+When evaluating the move Facade, the Expert Trainer AI checks if the target has a status condition (poison, burn, paralysis) that would boost the move's power, rather than checking if the user itself is statused. As a result, the AI incorrectly rewards using Facade when the opponent is statused instead of when the AI's own Pokémon is statused.
+
+To fix this issue, change the target battler byte from `00` (target) to `01` (user).
+<br/>
+
+
+
+### Trainer AI Expert Flag Leaf Guard Sunny Day Logic
+> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L3786-L3790)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0xA198`  | `09`         |
+| **Platinum**             | `Overlay 14`                | `0xA190`  | `09`         |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x22E38` | `09`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes                                            |
+  |:-------------:|:--------------------------------------------------------:|
+  | **All Games** | `66 00 00 00 0C 00 00 00 09 00 00 00 01 00 00 00`        |
+</details>
+
+Under Sunny weather, the Leaf Guard ability protects a Pokémon from receiving status conditions. When scoring the move Sunny Day, the Expert Trainer AI evaluates whether its Pokémon has Leaf Guard and checks if it is *already* statused. However, the logic is inverted: it checks `IfStatus` (0x09) and awards a score bonus only if the Pokémon is already statused, rather than when it is healthy.
+
+To fix this issue, change the opcode byte from `09` (`IfStatus`) to `0A` (`IfStatusNot`).
+<br/>
+
+
+
+### Trainer AI Expert Flag Water Spout and Eruption HP Check
+> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L4607-L4623)
+
+Open the relevant file and change the byte at the provided offsets:
+| Game                     | File                        | Offset (Faster) | Vanilla Byte | Offset (Slower) | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------------:|:------------:|:---------------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0xB110`        | `00`         | `0xB128`        | `00`         |
+| **Platinum**             | `Overlay 14`                | `0xB108`        | `00`         | `0xB120`        | `00`         |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x23DB0`       | `00`         | `0x23DC8`       | `00`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes (Faster)                                   | Vanilla Bytes (Slower)                                   |
+  |:-------------:|:--------------------------------------------------------:|:--------------------------------------------------------:|
+  | **All Games** | `06 00 00 00 06 00 00 00 00 00 00 00 32 00 00 00`        | `04 00 00 00 06 00 00 00 00 00 00 00 46 00 00 00`        |
+</details>
+
+When considering whether to use Water Spout or Eruption, the Expert Trainer AI evaluates the target's HP percentage rather than its own. Since these moves deal damage proportional to the user's remaining HP, the AI will incorrectly avoid using these moves when its own Pokémon is at full HP if the target is low on health, or utilize them poorly when its own Pokémon is near fainting if the target is healthy.
+
+To fix this issue, change both target battler bytes from `00` (target) to `01` (user).
+<br/>
+
+
+
+### Trainer AI Expert Flag Charge-Turn Move Scoring Fix
+> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/asm/trainer_ai/trainer_ai_script.s#L4061-L4063)
+
+Open the relevant file and change the bytes at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Bytes |
+|:------------------------:|:---------------------------:|:---------:|:-------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0xA710`  | `01 00 00 00` |
+| **Platinum**             | `Overlay 14`                | `0xA708`  | `01 00 00 00` |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x233B0` | `01 00 00 00` |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes                                            |
+  |:-------------:|:--------------------------------------------------------:|
+  | **All Games** | `4D 00 00 00 04 00 00 00 01 00 00 00 4D 00 00 00`        |
+</details>
+
+When evaluating charge-turn semi-invulnerable moves (such as Fly or Dig), the Expert Trainer AI includes logic that triggers if the opponent is immune or resistant to the move. However, instead of penalizing this move, a bug in the scoring block adds `+1` to the move score. This causes the AI to erroneously favor using Ground-type Dig against immune Flying-type opponents, or using Flying-type Fly against Electric-types.
+
+To fix the issue, change the score bonus bytes from `01 00 00 00` (+1) to `FF FF FF FF` (-1).
 <br/>
