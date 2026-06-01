@@ -840,7 +840,7 @@ Open the relevant file and change the byte at the provided offset:
 |:------------------------:|:---------------------------:|:---------:|:------------:|
 | **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0xB1DA`  | `84`         |
 | **Platinum**             | `Overlay 16`   | `0xAFB2`  | `84`         |
-| **Diamond/Pearl**        | `Decompressed Overlay 11`   | `0xA622`  | `84`         |
+| **Diamond/Pearl**        | `Overlay 11`   | `0xA622`  | `84`         |
 
 <details>
   <summary>You can also search for these bytes instead</summary>
@@ -979,7 +979,7 @@ Open the relevant file and change the byte at the provided offset:
   | **All Games** | `1A 00 00 00 26 00 00 00`  |
 </details>
 
-The Trainer AI performs two checks when considering whether the opposing Pokémon is immune to Water-Type moves. The first check considers Water Absorb, but the second check mistakenly considers Levitate instead of Dry Skin. In practice, this means that **(1)** a Trainer's Pokémon won't use Water-Type moves if it knows that the opposing Pokémon has Levitate, and **(2)** a Trainer's Pokémon may repeatedly use a Water-Type move against an opposing Pokémon with Dry Skin.
+The Basic Trainer AI performs two checks when considering whether the opposing Pokémon is immune to Water-Type moves. The first check considers Water Absorb, but the second check mistakenly considers Levitate instead of Dry Skin. In practice, this means that **(1)** a Trainer's Pokémon won't use Water-Type moves if it knows that the opposing Pokémon has Levitate, and **(2)** a Trainer's Pokémon may repeatedly use a Water-Type move against an opposing Pokémon with Dry Skin.
 
 To fix the issue, change the byte from `1A` (26 in decimal, Levitate's ID) to `57` (87 in decimal, Dry Skin's ID).
 <br/>
@@ -1000,7 +1000,7 @@ Open the relevant file and change the byte at the provided offsets:
   <summary>You can also search for these bytes instead</summary>
   |               | Vanilla Bytes                                            |
   |:-------------:|:--------------------------------------------------------:|
-  | **All Games** | `5D 00 00 00 04 00 00 00 09 00 00 00 00 00 00 00`        |
+  | **All Games** | `5D 00 00 00 04 00 00 00 09 00 00 00 00 00 00 00 FF 00 00 00 33 04 00 00`        |
 </details>
 
 In the Basic Trainer AI scoring for Sunny Day, the game checks if the target has Hydration and is statused (which is a copy-paste error from the Rain Dance handler). For Sunny weather, it should instead evaluate whether the opponent has Leaf Guard and is *not* statused (since Leaf Guard prevents status in Sun, but does not *heal* status conditions like Hydration).
@@ -1026,7 +1026,7 @@ Open the relevant file and change the byte at the provided offsets:
   <summary>You can also search for these bytes instead</summary>
   |               | Vanilla Bytes (Type 1)                                   | Vanilla Bytes (Type 2)                                   |
   |:-------------:|:--------------------------------------------------------:|:--------------------------------------------------------:|
-  | **All Games** | `4D 00 00 00 1E 00 00 00 01 00 00 00 13 00 00 00`        | `0E 00 00 00 1E 00 00 00 03 00 00 00 13 00 00 00`        |
+  | **All Games** | `01 00 00 00 13 00 00 00 07 00 00 00 0E 00 00 00`        | `03 00 00 00 13 00 00 00 07 00 00 00 09 00 00 00`        |
 </details>
 
 When considering whether to use Foresight or Odor Sleuth to enable Normal/Fighting moves to hit Ghost-type targets, the Expert Trainer AI evaluates the *user's* typing instead of the *target's* typing. This means the AI will only attempt to use these moves if its own Pokémon is a Ghost-type, rather than when the opponent is a Ghost-type.
@@ -1052,7 +1052,7 @@ Open the relevant file and change the byte at the provided offset:
   <summary>You can also search for these bytes instead</summary>
   |               | Vanilla Bytes                                            |
   |:-------------:|:--------------------------------------------------------:|
-  | **All Games** | `4D 00 00 00 0A 00 00 00 00 00 00 00 D8 00 00 00`        |
+  | **All Games** | `00 00 00 00 D8 00 00 00`        |
 </details>
 
 When evaluating the move Facade, the Expert Trainer AI checks if the target has a status condition (poison, burn, paralysis), rather than checking if the user itself is statused (which would boost the move's power). As a result, the AI incorrectly rewards using Facade when the *opponent* is statused instead of when the AI's own Pokémon is statused.
@@ -1076,7 +1076,7 @@ Open the relevant file and change the byte at the provided offset:
   <summary>You can also search for these bytes instead</summary>
   |               | Vanilla Bytes                                            |
   |:-------------:|:--------------------------------------------------------:|
-  | **All Games** | `66 00 00 00 0C 00 00 00 09 00 00 00 01 00 00 00`        |
+  | **All Games** | `09 00 00 00 01 00 00 00 FF 00 00 00 02 00 00 00 4C 00 00 00 06 00 00 00 04 00 00 00 01 00 00 00 4C 00 00 00 02 00 00 00 04 00 00 00 FF FF FF FF 4D 00 00 00 05 00 00 00 01 00 00 00 5A 00 00 00`        |
 </details>
 
 Under Sunny weather, the Leaf Guard ability protects a Pokémon from receiving status conditions, but does not *heal* status conditions like Hydration. When scoring the move Sunny Day, the Expert Trainer AI evaluates whether its Pokémon has Leaf Guard and checks if it is *already* statused. However, the logic is inverted: it checks `IfStatus` (0x09) and awards a score bonus only if the Pokémon is already statused, rather than when it is healthy.
@@ -1100,7 +1100,7 @@ Open the relevant file and change the byte at the provided offsets:
   <summary>You can also search for these bytes instead</summary>
   |               | Vanilla Bytes (Faster)                                   | Vanilla Bytes (Slower)                                   |
   |:-------------:|:--------------------------------------------------------:|:--------------------------------------------------------:|
-  | **All Games** | `06 00 00 00 06 00 00 00 00 00 00 00 32 00 00 00`        | `04 00 00 00 06 00 00 00 00 00 00 00 46 00 00 00`        |
+  | **All Games** | `00 00 00 00 32 00 00 00 08 00 00 00 4C 00 00 00`        | `00 00 00 00 46 00 00 00 02 00 00 00 04 00 00 00 FF FF FF FF`        |
 </details>
 
 When considering whether to use Water Spout or Eruption, the Expert Trainer AI evaluates the target's HP percentage rather than its own. Since these moves deal damage proportional to the user's remaining HP, the AI will incorrectly avoid using these moves when its own Pokémon is at full HP if the target is low on health, or utilize them poorly when its own Pokémon is near fainting if the target is healthy.
@@ -1124,7 +1124,7 @@ Open the relevant file and change the bytes at the provided offset:
   <summary>You can also search for these bytes instead</summary>
   |               | Vanilla Bytes                                            |
   |:-------------:|:--------------------------------------------------------:|
-  | **All Games** | `4D 00 00 00 04 00 00 00 01 00 00 00 4D 00 00 00`        |
+  | **All Games** | `01 00 00 00 4D 00 00 00 04 00 00 00 05 00 00 00`        |
 </details>
 
 When evaluating charge-turn semi-invulnerable moves (such as Fly or Dig), the Expert Trainer AI includes logic that triggers if the opponent is immune or resistant to the move. However, instead of penalizing this move, a bug in the scoring block adds `+1` to the move score. This causes the AI to erroneously favor using Ground-type Dig against immune Flying-type opponents, or using Flying-type Fly against Electric-types.
