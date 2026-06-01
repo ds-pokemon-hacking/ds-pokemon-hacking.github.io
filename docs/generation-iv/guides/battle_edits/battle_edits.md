@@ -846,7 +846,7 @@ Open the relevant file and change the byte at the provided offset:
   <summary>You can also search for these bytes instead</summary>
   |               | Vanilla Bytes                                            |
   |:-------------:|:--------------------------------------------------------:|
-  | **All Games** | `00 28 08 D0 02 98 84 21 08 42 04 D1 20 1C 31 1C`        |
+  | **All Games** | `84 21 08 42 04 D1 20 1C 31 1C 02 F0`        |
 </details>
 
 In standard battles (wild battles and normal trainer battles), held items cannot be swapped by the AI. This is an anti-griefing feature that prevents wild Pokémon or normal trainers from permanently taking the player's held items using moves like Trick or Switcheroo by ensuring the move always fails. The battle engine checks if the battle type is a Link Battle or a Battle Frontier battle using the bitmask `0x84` (`BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER`) and only allows item swapping if this check is successful. 
