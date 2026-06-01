@@ -833,7 +833,7 @@ Here is the table of the HP ratio (based on the vanilla multiplier of **64**) to
 
 
 ### Bypass Trick 'Always Fail' Logic
-> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/44f90af936713061fc9608b1332b2b4616d0c80f/src/battle/battle_script.c#L6347)
+> Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/3296fa8df7f09aeab1a44b12f52f4e456fce8836/src/battle/battle_script.c#L6347)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
