@@ -839,7 +839,7 @@ Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
 |:------------------------:|:---------------------------:|:---------:|:------------:|
 | **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0xB1DA`  | `84`         |
-| **Platinum**             | `Decompressed Overlay 16`   | `0xAFB2`  | `84`         |
+| **Platinum**             | `Overlay 16`   | `0xAFB2`  | `84`         |
 | **Diamond/Pearl**        | `Decompressed Overlay 11`   | `0xA622`  | `84`         |
 
 <details>
