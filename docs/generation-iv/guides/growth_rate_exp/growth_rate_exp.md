@@ -9,8 +9,8 @@ tags:
 ---
 
 # Modifying Growth Rate Experience
-> Authors: [Kristofferr (original)](https://discord.com/channels/446824489045721090/477197363954581542/1508070161876516934), Lmaokai (reformatting). <br/>
-> Credits and Research: PokePlatinum, Kristofferr, Lmaokai
+> Authors: [Kristofferr](https://discord.com/channels/446824489045721090/477197363954581542/1508070161876516934), Lmaokai (reformatting). <br/>
+> Credits and Research: PokePlatinum, Kristofferr, Lmaokai, [Lhea](https://discord.com/channels/446824489045721090/920372513488404542/1237510159048118413)
 
 :::info
 This is a guide on how to modify the amount of experience needed at each level for each growth rate category. 
