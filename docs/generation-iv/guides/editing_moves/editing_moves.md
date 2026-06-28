@@ -1731,7 +1731,11 @@ Move animation scripts can be edited in a number of ways:
 3. Through setting up a HG-Engine project, 
 4. WazaEffectEditor (or WazaEditor), a tool with versions supporting HeartGold/SoulSilver and Platinum.
 
-The following sections will provide resources and guidance on modifying move animations.
+The following sections will provide resources and guidance on modifying move animations:
+1. [Running WazaEffectEditor](#running-wazaeffecteditor)
+2. [Review & Interpret Vanilla Animations](#review--interpret-vanilla-animations)
+3. [Replace One Animation for Another](#replace-one-animation-for-another)
+4. [Considerations and References](#considerations-and-references)
 
 ### Running WazaEffectEditor
 
@@ -1908,7 +1912,7 @@ To learn more, more complex move animations can be reviewed:
     - Loading the Pound animation particle system with a local ID of `1`, 
     - Then specifying the animation particle system (via local ID) in the first parameter of each `LoadAnim` or `CreateEmitter` command.
 
-### Replace one Animation for another
+### Replace One Animation for Another
 A wholesale replacement of one animation with another is straightforward. Either a hex editor or WazaEffectEditor could be used to copy the entire animation and paste it into the animation file for another move.  
   
 If editing the move animation script NARC in a hex editor:
