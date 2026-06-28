@@ -1697,7 +1697,7 @@ The following are the summarized steps for creating new battle subscripts:
 11. Save the file (delete or move any automatically created backup files if necessary).
 12. Congratulations, you now have a new battle subscript and subscript pointer to use in new battle effect scripts! This enables the creation of moves such as Coil, Shell Smash, and modern Growth. Be sure to test your new battle effects.
 
-Examples of what can be achieved by editing existing battle subscripts or adding new ones are included in the [Case Studies](#example-case-studies) section (e.g. Quiver Dance, Growth Gen V+).
+Examples of what can be achieved by editing existing battle subscripts or adding new ones are included in the [Case Studies](#example-case-studies) section (e.g. Quiver Dance, Growth Gen V+). You can also reference battle effects created for the [HG-Engine project](https://github.com/BluRosie/hg-engine/tree/main/data/battle_scripts), but keep in mind that many effects are only be possible within the HG-Engine environment. 
 
 <details>
 <summary>The following PokePlatinum references may be helpful when creating new battle effect scripts and battle subscripts</summary>
