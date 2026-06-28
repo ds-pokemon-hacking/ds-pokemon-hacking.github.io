@@ -11,29 +11,39 @@ tags:
 # Editing Moves
 > Author(s): [MrHam88](https://github.com/DevHam88), Lmaokai.  
 > Implementation & Research: Aero, [BlueRose](https://github.com/BluRosie), [DarmaniDan](https://github.com/DarmaniDan), [Drayano](https://pastebin.com/u/DrayHackTutorials), [Fexty](https://github.com/Fexty12573), [Lhea](https://gist.github.com/lhearachel), Lmaokai, MapleDonut, [Mixone](https://github.com/Mixone-FinallyHere), Paille92, [RefinedPlat](https://www.pokecommunity.com/members/refinedplat.1351327/#about), Solace, [TurtleIsaac](https://github.com/turtleisaac), [Yako?](https://github.com/YakoSWG).
+> 
+> This guide is a collation of a number of tutorials and guides shared via other means previously (within the Kingdom of DS Hacking discord server, pastebin, GitHub etc.), with some additional content and context added. Attribution should be given to the researchers and original tutorial writers, these are noted at the beginning of the relevant sections (and collectively above).  
 
-This page is a full guide on making changes to moves and their related data in Generation IV Pokémon games (moves, move effects, animations, learnsets, TMs, move tutors). This guide focuses on editing, re-organising and replacing existing data. There are methods to *add* new moves (without replacing any existing moves) to Generation IV Pokémon games, but these are significantly involved, and require moving data/tables.  
+<br/>
 
-The contents of the guide are proven for Platinum Version, HeartGold Version & SoulSilver Version. Many of the sections are directly applicable to Diamond Version and Pearl Version as well, but there may be differences in specific offsets when hex editing for these versions. **If not stated otherwise, any hex editing offsets or files given in this page are for known good US versions of the relevant ROMs**.  
+:::warning
+Many sections in this guide rely upon a basic understanding of hex editing and context on unpacking and packing NARCs. An initial grounding in these subjects can be formed by reading and following these guides:
+- [Hex Editing Primer](/docs/universal/guides/hex_editing/)
+- [Unpacking NARCs](/docs/universal/guides/unpacking_narcs/)
 
-> This guide is a collation of a number of tutorials and guides shared via other means previously (within the Kingdom of DS Hacking discord server, pastebin, GitHub etc.), with some additional content and context added. Attribution should be given to the researchers and original tutorial writers, these are noted at the beginning of the relevant sections (and collectively at the top of this section).  
+The contents of the guide focus on the Platinum and HeartGold/SoulSilver versions. Many of the sections are applicable to Diamond/Pearl, though limited for certain topics. **If not stated otherwise, any hex editing offsets or files given in this page are for known good US versions of the relevant versions**.  
+:::
 
-The contents of this guide are organised by the area of move editing, with an initial overview of data structure & some prompts/guidance on design considerations when planning move edits. The final section includes a number of case study examples to illustrate how the changes may be implemented.  
+<br/>
 
-The navigation bar at the top of the page, or right-hand side on PC, and the "Return to top of page" button can be used to navigate through the page in detail, below is a high-level overview of the page sections:
+:::info
+This page is a full guide on making changes to moves and their related data in the Generation IV Pokémon games (move data, battle effects, animations, learnsets, TMs, and move tutors). This guide focuses on editing, re-organising and replacing existing data. 
+
+There are methods to *add* new moves (without replacing any existing moves) to the Generation IV Pokémon games, but these are significantly involved, and require moving data and tables.  
+
+The contents of this guide are organised by the area of move editing, starting with an initial overview of data structure & some prompts and guidance on design considerations when planning move edits. The final section includes a number of case study examples to illustrate how the changes may be implemented.  
+:::
+
+The navigation bar at the top of the page, or right-hand side on PC, and the "Return to top of page" button can be used to navigate through the page in detail. Below is a high-level overview of the page sections:
 
 1. [Move (& Associated) Data Structure](#move--associated-data-structure)
 2. [Design Thoughts & External Resources](#design-thoughts--external-resources)
-3. [Basic Move Data (DSPRE)](#basic-move-data-dspre)
-4. [Move Effect Scripts](#move-effect-scripts)
+3. [Basic Move Data](#basic-move-data)
+4. [Battle Effects](#battle-effects)
 5. [Move Animations](#move-animations)
 6. [Move Categories (Battle Engine & AI)](#move-categories-battle-engine--ai)
 7. [Move Compatibility (Distribution)](#move-compatibility-distribution)
 8. [Example Case Studies](#example-case-studies)
-
-A number of the sections in this guide rely upon a basic understanding of hex editing generally, and context on unpacking NARCs. An initial grounding in these subjects can be formed by reading and following these guides:
-- [Hex Editing Primer](/docs/universal/guides/hex_editing/)
-- [Unpacking NARCs](/docs/universal/guides/unpacking_narcs/)
 
 --- 
 
@@ -41,48 +51,60 @@ A number of the sections in this guide rely upon a basic understanding of hex ed
 Every unique move *(identified by move index/ID)* in the game has:
 - One set of **move data**
 - One **move script**
-    - Which may direct to exactly one **move effect script**
-      - Which may contain zero or more **move effect subscripts** and/or **battle subscripts**
-- One **move animation**
-    - Which is made up of one or more **animation components**
+- And one **move animation script**
 
-The exact mapping of how a move is executed can be found [here](https://github.com/pret/pokeplatinum/blob/2bf38f5952b791524b5f767c583e4fe0830a82c5/src/battle/battle_lib.c#L7507) in the Platinum Decompilation project. The specific file locations for each of these elements in HGSS can be found [here](/docs/generation-iv/resources/hgss-file_structure/), and an overview is below including HGSS & Platinum file names:
+Below are the file locations of these elements, in addition to other data elements related to the execution of a move.
 
-| -                     | HGSS File  | Platinum File                     |
-| --------------------- | ---------- | --------------------------------- |
-| Move Data             | `/a/0/1/1` | `/poketool/waza/pl_waza_tbl.narc` |
-| Move Scripts          | `/a/0/0/0` | `/battle/skill/waza_seq.narc`     |
-| Move Effect Scripts   | `/a/0/3/0` | `/battle/skill/be_seq.narc`       |
-| Battle Subscripts     | `/a/0/0/1` | `/battle/skill/sub_seq.narc`      |  
-| Move Animation        | `/a/0/1/0` | `/wazaeffect/we.arc`              |
-| Continuous Animations | `/a/0/6/1` | `/wazaeffect/we_sub.narc`         |
+| -                          | HeartGold/SoulSilver | Platinum                | Diamond/Pearl                  |
+|----------------------------|:----------:|:---------------------------------:|:------------------------------:|
+| **Move Data**              | `/a/0/1/1` | `/poketool/waza/pl_waza_tbl.narc` | `/poketool/waza/waza_tbl.narc` |
+| **Move Scripts**           | `/a/0/0/0` | `/battle/skill/waza_seq.narc`     | `/battle/skill/waza_seq.narc`  |
+| **Battle Effect Scripts**  | `/a/0/3/0` | `/battle/skill/be_seq.narc`       | `/battle/skill/be_seq.narc`    |
+| **Battle Subscripts**      | `/a/0/0/1` | `/battle/skill/sub_seq.narc`      | `/battle/skill/sub_seq.narc`   | 
+| **Move Animation Scripts** | `/a/0/1/0` | `/wazaeffect/we.arc`              | `/wazaeffect/we.arc`           |
+| **Continuous Animations**  | `/a/0/6/1` | `/wazaeffect/we_sub.narc`         | `/wazaeffect/we_sub.narc`      |
 
-- The **move data** NARC contains [basic data](#basic-move-data-dspre) on the move, which can be edited in DSPRE's Move Editor. This includes, for example, the reference to the **move effect script** (labeled as `Effect Sequence` in DSPRE's Move Editor).
-    - The general structure of basic move data can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/src/move_table.c#L37) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/move.h#L6) Decompilation projects.
-    - Basic move data for each move (in Platinum) can be found in the [Platinum Decompilation project](https://github.com/pret/pokeplatinum/tree/main/res/moves).
-- **Move scripts** are strictly per move and may not be shared. They may simply be an instruction to use the **move effect script**, or may have more complexity.
-    - Move scripts for each move can be found in the [Platinum](https://github.com/pret/pokeplatinum/tree/main/res/moves) and [HeartGold](https://github.com/pret/pokeheartgold/tree/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/move_script) Decompilation projects.
-    - Move scripts can be edited using a hex editor.
-- **Move effect scripts** may be shared by multiple moves. Move effect scripts are typically responsible for queueing up relevant **battle subscripts**.
-    - Move effect scripts are labeled as `Effect Sequence` in DSPRE's Move Editor. 
-    - Each move effect script can be found in the [Platinum](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/effects) and [HeartGold](https://github.com/pret/pokeheartgold/tree/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/effect_script) Decompilation projects. 
-    - The basic label description for each move effect script can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_effects.txt) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/move_effects.h) Decompilation projects.
-    - Move effect scripts may contain zero or more **move effect subscripts** and/or **battle subscripts**.
-    - Move effect scripts can be edited using a hex editor.
-- **Move effect subscripts** may be shared by multiple **move effect scripts** and **battle subscripts**.
-    - Move effect subscripts are simply pointers to a certain **battle subscript**. They queue up said battle subscript to execute after the **move effect script** ends.
-    - The basic label description for each move effect subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/generated/battle_move_subscript_ptrs.txt) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) Decompilation projects.
-    - The table that points **move effect subscripts** to **battle subscripts** can be found in the [Platinum Decompilation project](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h).
-- **Battle subscripts** may be called by multiple **move effect scripts** and even other **battle subscripts**. Battle subscripts contain the code to actually execute move effects.
-  - Each battle subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/tree/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/subscripts) and [HeartGold](https://github.com/pret/pokeheartgold/tree/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/subscript) Decompilation projects.
-  - The basic label description for each battle subscript can be found in the [Platinum](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/res/battle/scripts/subscripts/sub_seq.order) and [HeartGold](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L4) Decompilation projects.
-  - Battle subscripts can be edited using a hex editor.
-- **Move animations** are strictly per move and may not be shared.
-    - Move animations consist of **animation components**.
-    - Move animations can be edited using a hex editor, or by using a tool called WazaEffectEditor (see [Move Animations](#move-animations)).
-    - Move animations for each move (in Platinum) can be found in the [Platinum Decompilation project](https://github.com/pret/pokeplatinum/tree/main/res/moves).
-- **Animation components** may be used across many move animations. *There are three main types of animation components/instructions (sprite translations, "particles" & backgrounds).*
-- The **continuous animations** NARC contains animations for moves that persist beyond the turn they are used (e.g. Bind, Fire Spin).
+:::info
+Terms are subject to variations to reflect the constantly changing community-defined naming conventions and knowledge of how the game works. For instance, the Diamond/Pearl/Platinum file `be_seq.narc` can be interpreted as "**b**attle **e**ffect **seq**uence," with each individual file in the NARC being a "battle effect sequence script," and has been previously referred to as "move effect scripts" and such.
+:::
+
+### Move Data
+Every move has their own set of **move data** that include the move's name, type, category, power, accuracy, PP, battle effect, battle effect chance, priority, target range, contest effect, and other special flags. Most of this data can be edited in **DSPRE's Move Editor**. 
+
+See [Basic Move Data](#basic-move-data) for more details and guides on how to edit move data.
+
+### Move Scripts
+Every move is uniquely associated with a **move script**, both sharing the same ID. In other words, a uniquely identified move script is associated strictly with a specific move and may not shared. 
+
+Most move scripts are simple, containing a single instruction to start executing the *battle effect script (described next)* assigned to the associated move. Some move scripts include other instructions, such as buffering a message to be displayed later in the turn or battle (e.g. [Bind](https://github.com/pret/pokeplatinum/blob/main/res/moves/bind/script.s)), or incrementing certain game records (e.g. [Explosion](https://github.com/pret/pokeplatinum/blob/main/res/moves/explosion/script.s)).
+
+Because most move scripts lack significant complexity or elements, this guide will not have a dedicated section for move scripts specifically. However, the [Battle Effects](#battle-effects) section provides relevant information as move scripts and battle effect scripts make use of the same instructions and logic. Additionally, the [Trapping (Binding) Moves](#trapping-binding-moves) section briefly mentions move scripts due to its relevance for that topic. 
+
+Move scripts for each move can be found in the following decompilation projects:
+- [PokePlatinum/res/moves/](https://github.com/pret/pokeplatinum/tree/8b6fa504086925c957b2d514b1f14a57c2d1343d/res/moves) 
+- [PokeHeartGold/files/battledata/script/move_script/](https://github.com/pret/pokeheartgold/tree/ad7a3afa0cfc144fe6837c410cb95b2727217f54/files/battledata/script/move_script) 
+
+### Battle Effect Scripts
+**Battle effect scripts** determine the effect to execute when a move is used. For example, the move *Sleep Powder* has the effect of putting the target to sleep.
+
+Battle effect scripts may be shared by or assigned to multiple moves (e.g. both *Sleep Powder* and *Hypnosis* are assigned the same battle effect script that puts the target to sleep). **DSPRE's Move Editor** can change a move's assigned battle effect script (labeled as `Effect Sequence`, see [Basic Move Data](#basic-move-data)). 
+
+The actual logic of a battle effect script can be edited either by using a hex editor, by setting up a decomp project, or by setting up a [HG-Engine](https://github.com/BluRosie/hg-engine#about) project.
+
+See [Battle Effects](#battle-effects) for more comprehensive details on how battle effect scripts work and guides on how to edit them.
+
+### Battle Subscripts
+**Battle subscripts** are helper scripts that contain logic supporting various aspects of the Gen IV battle system. When it comes to move execution, many *battle effect scripts* will point to a battle subscript that contains the logic to actually execute the overall battle effect (i.e. a move will execute its assigned battle effect script, which may have an instruction that points to a certain battle subscript to carry out the effect).
+
+More comprehensive details on how battle subscripts work and guides on how to edit them are explored alongside battle effect scripts in the [Battle Effects](#battle-effects) section.
+
+### Move Animation Scripts
+**Move animation scripts**, also known as move animations, are the displayed visual effects when a move is used. Every move is uniquely associated with a move animation script. In other words, a uniquely identified move animation script is associated strictly with a specific move and may not shared.
+
+See [Move Animations](#move-animations) for more comprehensive details on how move animation scripts work and guides on how to edit them.
+
+#### Continuous Animations
+**Continuous animations** are animations for moves that persist beyond the turn they are used. They are particularly relevant when modifying the trapping moves (e.g. Bind, Fire Spin, see [Trapping (Binding) Moves](#trapping-binding-moves)).
 
 --- 
 
@@ -94,45 +116,57 @@ When considering replacing some moves in Generation IV Pokémon games, it may be
 4. [Move Animation Options](#move-animation-options)
 
 ### Trainer Move Selection AI
-The trainer selection AI in Generation IV Pokémon games uses a number of sources to determine which moves the opposing trainers should use. A solid understanding of how this works, related to the moves intended to change, is important to ensure changes result in the expected behaviour from opposing trainers. At least a minimal awareness is advised to ensure opponent and ally trainers use the edited moves as expected.
+The trainer move selection AI in Generation IV Pokémon games iterates through a number of cases to determine which move the opposing trainers should use. A solid understanding of how this works, related to the moves intended to change, is important to ensure that changes result in the expected behaviour and use from opposing trainers. At least a minimal awareness is advised to ensure opponent and ally trainers use the edited moves as expected.
 
-A thorough breakdown of the Generation IV trainer move selection AI can be found [here](https://gist.github.com/lhearachel/ff61af1f58c84c96592b0b8184dba096).
+Decompiled data regarding Generation IV trainer move selection AI can be found in the following decompilation projects listed below, and a thorough breakdown of this data can be found [here](https://gist.github.com/lhearachel/ff61af1f58c84c96592b0b8184dba096).
+- [PokePlatinum/src/battle/trainer_ai/script.s](https://github.com/pret/pokeplatinum/blob/8b6fa504086925c957b2d514b1f14a57c2d1343d/src/battle/trainer_ai/script.s)
+- [PokeHeartGold/asm/overlay_10_trainer_ai.s](https://github.com/pret/pokeheartgold/blob/ad7a3afa0cfc144fe6837c410cb95b2727217f54/asm/overlay_10_trainer_ai.s)
+
+Trainer move selection AI is handled in an overlay file, listed below for each game:
+| Game       |  HeartGold/SoulSilver      |        Platinum       |     Diamond/Pearl     |
+|------------|:--------------------------:|:---------------------:|:---------------------:|
+| **File**   | `Decompressed Overlay 10`  |     `Overlay 14`      |     `Overlay 16`      |
 
 ### Move Variations
-A number of Pokémon moves have consistent similarities that can be used to categorise them into groups. When making decisions on replacing moves, either by "backporting" later generation moves, or creating entirely custom ones. It may be useful to consider these move variation groups to either maintain consistency/immersion, or to actively disregard it.  
+A number of Pokémon moves have consistent similarities that can be used to categorise them into groups. When making decisions on replacing moves, either by "backporting" later generation moves, or creating entirely custom ones, it may be useful to consider these move variation groups to either maintain consistency/immersion, or to actively disregard it.  
 
-The groups referred to here are not mechanical groups/categorisations (such as Sound-based moves, or Punching moves), but design & thematic ones.
+The groups referred to here are not mechanical groups/categorisations (such as Sound-based moves or Punching moves), but design & thematic ones.
 
-There are a number of online resources which document these groupings, for example this [Bulbapedia page](https://bulbapedia.bulbagarden.net/wiki/Move_variations). Some examples of move "groups" are in the table below.
+There are a number of online resources which document these groupings, for example this [Bulbapedia page](https://bulbapedia.bulbagarden.net/wiki/Move_variations). Some examples of such "move groups" are listed in the table below.
 
 ![Icy_Wind](resources/Icy_Wind_IV.png)
 ![Low_Kick](resources/Low_Kick_IV.png)
 ![Octazooka](resources/Octazooka_IV.png)
 
-|  | Icy Wind, Mud Shot, Electroweb, Snarl | Low Kick & Grass Knot | Octazooka, Mud Bomb, Mirror Shot |
-| --- | --- | --- | --- |
-| **Power** | 55 | Variable (damage based on the target's weight) | 65 |
-| **Accuracy** | 95% | 100% | 85% |
-| **PP** | 15 | 20 | 10 |
-| **Category** | Special | Special | Special |
-| **Range** | Both | Single | Single |
+|                      | Icy Wind, Mud Shot, Electroweb, Snarl | Low Kick & Grass Knot | Octazooka, Mud Bomb, Mirror Shot |
+| -------------------- | --- | --- | --- |
+| **Power**            | 55 | Variable (damage based on the target's weight) | 65 |
+| **Accuracy**         | 95% | 100% | 85% |
+| **PP**               | 15 | 20 | 10 |
+| **Category**         | Special | Special | Special |
+| **Range**            | Both | Single | Single |
 | **Secondary Effect** | 100% chance to reduce a stat of the opponent by one stage (Speed or Special Attack) | No secondary effect | 30% chance to reduce the Accuracy of the opponent by one stage |
 
 ### Vanilla Move Compatibility
 When deciding which moves to add to the game by replacing existing ones, one of the most important decisions is which move(s) to remove. There are a number of factors that could be considered when determining moves to be replaced.  
+
 Some examples are:
 - Signature moves for Pokémon that will not appear in the ROM hack. These could be for legendary Pokémon, for example Darkrai and the move `Dark Void`.
 - Low-distribution moves, for example `Barrage`, which is learned by level up, only by Exeggcute and Exeggutor.
 - Functional clones, for example `Mind Reader` & `Lock-On` have exactly the same effect (but different names, animations and learnsets).
-- How the move to be replaced is treated by the move selection AI (for example, without further changes, a move that replaces `Roar` will be treated by the AI Basic flag as being a Sound-based move, and not used when the opponent is known to have the ability Soundproof).
+- How the move to be replaced is treated by the move selection AI (for example, without further changes, a move that replaces `Roar` will be treated by the Trainer AI Basic flag as being a Sound-based move, and not used when the opponent is known to have the ability Soundproof).
 
-When looking to replace moves in Generation IV Pokémon games, DSPRE and some simple Excel formulae (`COUNTIF`) can be used to provide an understanding of the overall distribution of moves. This can be useful for identifying candidates for replacement that are narrowly distributed (only a few Pokémon learn them).
+When looking to replace moves in Generation IV Pokémon games, spreadsheet formulae (e.g. `COUNTIF`) can be used to provide an understanding of the overall distribution of moves. This can be useful for identifying candidates for replacement that are narrowly distributed (only a few Pokémon learn them).
 
-In DSPRE, the "Generate CSV" option from the Tools menu can be selected to export a number of `.csv` files from the currently loaded ROM. In version 1.13.1 this includes evolution, learnset, move, TM/HM, Pokémon personal data.
+:::info
+DSPRE 2.0 provides two options for exporting learnset data as a `.csv` file for analysis in a spreadsheet program (some cleanup of the learnset data may be required to remove certain characters): 
+1. *Tools > Generate CSV > Export Docs* generates a `.csv` file for learnset data, in addition to Pokémon personal data, evolutions, move data, and more.
+2. *Pokémon Editor > Learnset Editor > Bulk Edit > Import/Export > Export to CSV* will generate a single `.csv` file for only learnset data (additionally, the list of move data/names can be exported from *Move Editor > Import Export > Export All to CSV*).
+:::
 
-By taking the move data and learnset data it is possible to list the number of times each move appears in the learnset data by using a `COUNTIF` formula from the move data to the learnset data. Some cleanup of the learnset data may be required to remove `[` and `]` characters. A similar approach can be taken with TM learnsets.
+By taking the move data/names and learnset data, it is possible to list the number of times each move appears in the learnset data by using a `COUNTIF` formula. A similar approach can be taken with TM compatibility and egg moves.
 
-An example of a basic level-up learnset count from HGSS is below. Bear in mind that this list does not account for TM/HM learnsets, egg moves or tutorable moves.
+An example of a basic level-up learnset count from vanilla HGSS is below. Bear in mind that this list does not account for TM/HM learnsets, egg moves or tutorable moves.
 
 <details>
 <summary>HGSS: Vanilla Move Level-Up Learnset Distribution (Reverse Ordered by Count)</summary>
@@ -608,60 +642,73 @@ An example of a basic level-up learnset count from HGSS is below. Bear in mind t
 </details>
 
 ### Move Animation Options
-There are a large number of animation components in the game, that are often used in conjunction with each other to create the overall move animations. There are some resources available to view/inspect the vanilla animations to get ideas for how to take elements of them and build custom animations. A [later section (Move Animations)](#move-animations) of the page will deal with editing animations specifically, but these resources can help with viewing vanilla animations in action without having to test individually in-game.
-- **External Resource:** [TwilightPrincess's YouTube video of all Generation IV Move Animations](https://www.youtube.com/watch?v=gukPRu2iZ_w) - See time-index in the comments, ordered by Move ID.
-- **Wiki Resource:** [Generation IV Move Animations list](/docs/generation-iv/resources/move_animations/) - Sourced/linked from Bulbapedia, filterable & sortable table.
+Replacing a move may also warrant modifying the move's associated **move animation script**. 
+
+See the [Move Animations](#move-animations) section for more information on move animation scripts and how to edit them.
 
 ------------------------------
 
-## Basic Move Data (DSPRE)
+## Basic Move Data
+The general structure of basic move data can be found in the following decompilation projects:
+- [PokePlatinum/src/move_table.c](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/src/move_table.c#L37)
+- [PokeHeartGold/include/move.h](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/move.h#L6)
 
-The majority of the basic move data can be edited using DSPRE's "Move Data Editor", while the remainder is edited via Text Archives.
-1. Move Name / Index (changed via Text Archives)
-2. Type, Category, Power, Accuracy, PP (changed via Move Data Editor)
-3. Move Effect Selection (changed via Move Data Editor, labeled as `Effect Sequence`)
-4. Range (changed via Move Data Editor)
-5. Other Flags (changed via Move Data Editor)
+Basic move data for each move in Pokémon Platinum can be found [here](https://github.com/pret/pokeplatinum/tree/8b6fa504086925c957b2d514b1f14a57c2d1343d/res/moves).
 
-![](resources/dspre_move_data_editor.png)  
+### Editing Basic Move Data in DSPRE
+The majority of the basic move data can be edited using **DSPRE's Move Data Editor**. The following move data elements that are displayed in this editor are as follows:
+1. [Move Name and Index](#move-name--description) (move name changed via **DSPRE's Text Editor**)
+2. [Type, Category/Split, Power, Accuracy, PP, Priority, Battle Effect (labeled as *Effect Sequence*), Battle Effect Chance (labeled as *Side Effect Probability*), Contest Condition, and Contest Appeal/Effect](#type-category-power-accuracy-pp-priority-battle-effect-battle-effect-chance-contest-condition-and-contest-appeal)
+3. [Description](#move-name--description) (changed via **DSPRE's Text Editor**)
+4. [Range of Action](#range)
+5. [Other Flags](#other-flags)
 
-### Move Name, Description & Battle Texts
-Move names and descriptions are present in a number of Text Archives accessible via the Text Editor in DSPRE:
+![](resources/dspre_move_data_editor_v2.png)  
+
+### Move Name & Description
+Move names and descriptions are present in a number of Text Archives accessible via **DSPRE's Text Editor**.
 - Move Names, as they appear in:
-   - Move selection in battle
    - Pokémon summary screen
+   - Move selection in battle
+   - Battle texts (e.g. *"Shuckle used Rock Blast!"*)
    - Scripted word/phrase selection (e.g. the Primo phrase selection script in HGSS)
-   - Battle texts (e.g. "x" used "y" move)
+   
 - Move Descriptions, as they appear in:
    - Pokémon summary screen
-   - TM item description (as appropriate)
+   - TM item description
 
-The following are the relevant Text Archives for US versions of the Generation IV Pokémon games. The search function in DSPRE can be used to easily locate the right messages (and archives in other versions of the games).
+The following are the relevant Text Archives for US versions of the Generation IV Pokémon games. The search function in DSPRE can also be used to locate the appropriate Text Archive and messages ID for other versions.
 
 |  | HeartGold/SoulSilver | Platinum | Diamond/Pearl |
 | :--- | :---: | :---: | :---: |
-| Move Names (Move Selection & Pokémon Summary) | `750` | `647` | `588` |
-| Move Names (Battle Texts) | `003` | `000` | `000` |
-| Move Names (Scripted Word Selection) | `751` | `648` | `589` |
-| Move Descriptions (Pokémon Summary) | `749` | `646` | `587` |
-| Move Descriptions (TM Item Description) | `221` | `391` | `343` |
-| Supplementary Battle Texts | `197` | `368` | `324` |
+| **Move Names** <br/> (Pokémon Summary & Move Selection) | `750` | `647` | `588` |
+| **Move Names** <br/> (Battle Texts) | `003` | `000` | `000` |
+| **Move Names** <br/> (Scripted Word Selection) | `751` | `648` | `589` |
+| **Move Descriptions** <br/> (Pokémon Summary) | `749` | `646` | `587` |
+| **Move Descriptions** <br/> (TM Item Description) | `221` | `391` | `343` |
+| **Supplementary Battle Texts** | `197` | `368` | `324` |
 
-### Type, Category, Power, Accuracy, PP
-The majority of attributes of moves are adjusted in this section of the Move Data Editor in DSPRE. Many are self explanatory: Type, Power, Accuracy, PP. Below is a summary of some of the less intuitive attributes:
+:::info
+- **Move Descriptions** in Pokémon summary screen are limited to about 21 characters per line, up to 5 lines.
+- **Move Descriptions** for TM item descriptions are limited to about 37 characters per line, up to 3 lines.
+- This [web-based tool](https://corentinmace.github.io/pokemon-text-formatting/) can help with formatting text.
+:::
+
+### Type, Category, Power, Accuracy, PP, Priority, Battle Effect, Battle Effect Chance, Contest Condition, and Contest Appeal
+The following table lists the move attributes seen in **DSPRE's Move Data Editor**:
 
 | Attribute | Possible Values | Description |
 | :--- | :--- | :--- |
-| Type | `NORMAL` `FIRE` `GRASS` ... etc. | The type of a move: the 18 types in Generation IV includes `???` but not `Fairy` |
-| Split | `PHYSICAL` `SPECIAL` `STATUS` | The difference between physical damaging moves, special damaging moves & status moves that do not inflict direct damage |
-| Contest Condition | `COOL` `BEAUTIFUL` `CUTE` `SMART` `TOUGH` | The five categories of competitions, moves and condition in "Super Contests" in Diamond, Pearl or Platinum. |
-| Priority | `-32` to `+32` | The priority stage of a move, where a higher number indicates a move to be executed earlier. Vanilla Generation IV moves range from `-7` to `+5`. |
-| Effect Sequence | `000 - ...` to `470 - ...` | A numeric value that determines the more complex effects of the move beyond basic data (such as direct or indirect side effects, or damage modifiers; more details in the [Move Effect Scripts](#move-effect-scripts) section below). |
-| PP | `0` to `100` | The base number of Power Points, i.e. the amount of times the move can be executed before PP is restored. |
-| Contest Appeal | `0` to `255` | A numeric value the determines the behaviour of the move in a "Super Contest" in Diamond, Pearl or Platinum. Index to Effect mapping in the table below. |
-| Side Effect Probability | `0` to `255` | The probability in % of an indirect side effect triggering, for example a stat boost or fall as an indirect side effect of a damage-dealing move. |
-| Power | `0` to `255` | The base power of a damage-dealing move. |
-| Accuracy | `0` to `100` | The accuracy in % of a move. A value of `0` is infinite accuracy, i.e. the move never misses. |
+| **Type** | `NORMAL` `FIRE` `GRASS` ... etc. | The move's typing from the 18 types defined in Generation IV (includes `???`, but not `Fairy`) |
+| **Split (Category)** | `PHYSICAL` `SPECIAL` `STATUS` | The difference between physical damaging moves, special damaging moves, and non-direct-damaging status moves |
+| **Power** | `0` to `255` | The base power of a damage-dealing move. |
+| **Accuracy** | `0` to `100` | The accuracy (in %) of a move. A value of `0` is infinite accuracy (i.e. the move always hits). |
+| **PP** | `0` to `100` | The base number of Power Points, which determines the amount of times a move can be used before requiring restoration of some form. |
+| **Priority** | `-32` to `+32` | The priority stage of a move, where a higher number allows a move to be executed earlier. Vanilla Generation IV moves range from `-7` to `+5` priority. |
+| **Effect Sequence (Battle Effect)** | `000` to `470` | An ID that determines the more complex effects of the move beyond basic data (such as causing a stat change; see [Battle Effects](#battle-effects) for more details). |
+| **Side Effect Probability** | `0` to `255` | The probability (in %) of the assigned *Effect Sequence (Battle Effect)* occurring (depending on the specific effect, see [Direct and Indirect Effects](#direct-and-indirect-effects)), for example a stat boost or fall from a damage-dealing move. |
+| **Contest Condition** | `COOL` `BEAUTIFUL` `CUTE` `SMART` `TOUGH` | The five possible categories of Pokémon Super Contests in Diamond, Pearl, and Platinum. |
+| **Contest Appeal** | `0` to `255` | An ID that determines the move's effect in a Pokémon Super Contests in Diamond, Pearl or Platinum (see details in the table below). |
 
 <details>
 <summary>DPPt: Super Contests Appeal Effects</summary>
@@ -692,7 +739,7 @@ The majority of attributes of moves are adjusted in this section of the Move Dat
 </details>
 
 ### Range
-One or less range flags should be set per move. Most moves have no flag, or "normal" range: where the move may affect any target adjacent to the user. Some moves do not target an opponent, self or ally, such as weather-setting moves which target one or both sides of the "field".  
+The **range** of a move determines number and types of battlers a given move can target and affect. Most moves have the `Opponent or Ally` range, where the move may affect any target adjacent to the user. Some moves do not target a specific Pokémon, but rather a "side" or even the whole "field" (e.g. weather-setting moves). Some moves may even have special targeting effects that are actually dictated by the *battle effect script*, rather than the move's assigned range.
 
 The below table explains the use of each range flag.  
 
@@ -703,69 +750,69 @@ The below table explains the use of each range flag.
     <th>Example Moves</th>
   </tr>
   <tr>
-    <td>`-`</td>
-    <td>*Opponent or Ally*: May target one adjacent opponent or ally.</td>
+    <td>`Opponent or Ally`</td>
+    <td>May target one adjacent opponent or ally.</td>
     <td>Tackle, Magical Leaf, Psych Up</td>
   </tr>
   <tr>
-    <td>`BOTH`</td>
-    <td>*All Opponents*: Affects all adjacent opponents, but not allies.</td>
+    <td>`All Opponent`</td>
+    <td>Affects all adjacent opponents, but not allies.</td>
     <td>Tail Whip, Razor Leaf, Bubble</td>
   </tr>
   <tr>
-    <td>`FOES_AND_ALLY`</td>
-    <td>*All Others*: Affects all adjacent opponents and allies.</td>
+    <td>`All Others`</td>
+    <td>Affects all adjacent opponents and allies.</td>
     <td>Surf, Earthquake, Teeter Dance</td>
   </tr>
   <tr>
-    <td>`USER`</td>
-    <td>*User*: Affects the user.</td>
+    <td>`User`</td>
+    <td>Affects the user.</td>
     <td>Swords Dance, Bide, Howl</td>
   </tr>
   <tr>
-    <td>`USER_SIDE`</td>
-    <td>*User Side*: Affects the user's side of the field.</td>
+    <td>`User Side`</td>
+    <td>Affects the user's side of the field.</td>
     <td>Mist, Light Screen, Tailwind</td>
   </tr>
   <tr>
-    <td>`ACTIVE_FIELD`</td>
-    <td>*All Sides*: Affects the user's and opponent's sides of the field.</td>
+    <td>`All Sides`</td>
+    <td>Affects the user's and opponent's sides of the field.</td>
     <td>Haze, Sandstorm, Gravity</td>
   </tr>
   <tr>
-    <td>`OPPONENTS_FIELD`</td>
-    <td>*Opponent Side*: Affects the opponent's side of the field.</td>
+    <td>`Opponent Side`</td>
+    <td>Affects the opponent's side of the field.</td>
     <td>Spikes, Toxic Spikes, Stealth Rock</td>
   </tr>
   <tr>
-    <td>`ALLY`</td>
-    <td>*One Ally*: May target one adjacent ally.</td>
+    <td>`One Ally`</td>
+    <td>May target one adjacent ally.</td>
     <td>Helping Hand</td>
   </tr>
   <tr>
-    <td>`ACUPRESSURE`</td>
-    <td>*User or Ally*: May target the user or one adjacent ally.</td>
+    <td>`User or Ally`</td>
+    <td>May target the user or one adjacent ally.</td>
     <td>Acupressure</td>
   </tr>
   <tr>
-    <td>`ME_FIRST`</td>
-    <td>*One Opponent*: May target any one adjacent opponent, but not allies.</td>
+    <td>`One Opponent`</td>
+    <td>May target any one adjacent opponent, but not allies.</td>
     <td>Me First</td>
   </tr>
   <tr>
-    <td>`RANDOM`</td>
-    <td>*One Random Opponent*: Affects a random opponent.</td>
+    <td>`One Random Opponent`</td>
+    <td>Affects a random opponent.</td>
     <td>Thrash, Petal Dance, Uproar</td>
   </tr>
   <tr>
-    <td>`VARIABLE`</td>
-    <td>*Varies:* Variable based on move effect.</td>
+    <td>`Varies`</td>
+    <td>Variable target based on the battle effect.</td>
     <td>Magic Coat, Counter, Sleep Talk</td>
   </tr>
 </table>
 
 ### Other Flags
-None or many flags may be set in this section, which help determine specific interactions & behaviours.
+None or many flags may be set in this section, which determine specific interactions & behaviours.
 
 The below table explains the use of each flag.
 
@@ -777,7 +824,7 @@ The below table explains the use of each flag.
   </tr>
   <tr>
     <td>`CONTACT`</td>
-    <td>The move makes contact with the opponent, so may trigger contact-based abilities such as Static.</td>
+    <td>The move makes contact with the opponent, so it may trigger contact-based abilities such as Static.</td>
     <td>Fire Punch, Steel Wing</td>
   </tr>
   <tr>
@@ -787,22 +834,22 @@ The below table explains the use of each flag.
   </tr>
   <tr>
     <td>`MAGIC_COAT`</td>
-    <td>The detrimental status move is eligible for being "reflected" by an opponent using the move Magic Coat on the same turn.</td>
+    <td>The (detrimental) *status* move is eligible for being "reflected" by an opponent using the Magic Coat battle effect on the same turn.</td>
     <td>Leech Seed, Spikes</td>
   </tr>
   <tr>
     <td>`SNATCH`</td>
-    <td>The beneficial status move is eligible for being "stolen" by an ally or opponent using the move Snatch on the same turn.</td>
+    <td>The (beneficial) *status* move is eligible for being "stolen" by an ally or opponent using the Snatch battle effect on the same turn.</td>
     <td>Dragon Dance, Mist</td>
   </tr>
   <tr>
     <td>`MIRROR_MOVE`</td>
-    <td>The damage-dealing move is eligible to be copied by Mirror Move.</td>
+    <td>The *damage-dealing* move is eligible to be copied by the Mirror Move battle effect.</td>
     <td>Frenzy Plant, Mud-Slap</td>
   </tr>
   <tr>
     <td>`KINGSROCK`</td>
-    <td>If the user of the damage-dealing move is holding a King's Rock, and the move does not already have a chance to flinch secondary effect, the move gains a secondary effect of a 10% chance to flinch the target. This special-case chance to flinch is not increased by the user having the Serene Grace ability in vanilla Generation IV.</td>
+    <td>If the user of the *damage-dealing* move is holding a King's Rock, and the move does not already have a chance to flinch secondary effect, the move gains a secondary effect of a 10% chance to flinch the target. This special-case chance to flinch is not increased by the user having the Serene Grace ability in vanilla Generation IV.</td>
     <td>Aura Sphere, Gunk Shot</td>
   </tr>
   <tr>
@@ -819,154 +866,553 @@ The below table explains the use of each flag.
 
 ------------------------------
 
-## Move Effect Scripts
-> Source(s): [Drayano](https://pastebin.com/u/DrayHackTutorials), [Lhea](https://gist.github.com/lhearachel) & [Yako?](https://github.com/YakoSWG)  
+## Battle Effects
+> Source(s): [Drayano](https://pastebin.com/u/DrayHackTutorials), [Lhea](https://gist.github.com/lhearachel), [Yako?](https://github.com/YakoSWG), Lmaokai, [HG-Engine](https://github.com/BluRosie/hg-engine/wiki/Move-Scripting-Systems-Documentation)  
 
-The most basic move effect script ("Effect Sequence" in DSPRE's Move Editor), is script `000` (used, for example by the move Tackle), which simply applies the most basic damaging logic:
-1. Determine whether the move is a Critical Hit.
+The Gen IV battle engine uses multiple elements to execute battle effects. The following sections aim to describe each of these elements and provide references to aid with the understanding and modification of battle effects. 
+1. [Battle Effect Scripts](#battle-effect-scripts-1)
+2. [Direct and Indirect Effects](#direct-and-indirect-effects)
+3. [Effect Targeting Flag](#effect-targeting-flag)
+4. [Subscript Pointers](#subscript-pointers-one-step-closer-to-applying-the-actual-effects)
+5. [Battle Subscripts](#battle-subscripts-1)
+6. [One More Example Breakdown](#one-more-example-breakdown)
+7. ["Broken" Battle Effect Scripts](#broken-battle-effect-scripts)
+8. [Unused Battle Effect Scripts](#unused-battle-effect-scripts)
+9. [Creating New Battle Effect Scripts](#creating-new-battle-effect-scripts)
+10. [Creating New Battle Subscripts](#creating-new-battle-subscripts)
+
+In general, the process of applying a battle effect starts with executing a move's uniquely associated **move script** (both sharing the same ID), which typically only contains a single instruction to signal the battle engine to start executing the move's assigned **battle effect script** (an attribute of a move's basic data). In turn, battle effect scripts contain data regarding the effect it will attempt to apply, whether the effect should be considered a direct or an indirect effect, and which battler(s) the effect should target. Furthermore, most battle effect scripts will actually point to a specific **battle subscript** that contains the logic needed to fully apply a battle effect. 
+
+> As mentioned previously, **move scripts** do not contain much varying complexity, so it will not have a dedicated section. However, they make use of the same instructions and logic as battle effect scripts and battle subscripts. Thus, following sections will still provide relevant information, though indirectly, on how to edit move scripts. File locations and decompilation project references for move scripts can be found in the [Move (& Associated) Data Structure](#move--associated-data-structure) section at the top of this page.
+
+### Battle Effect Scripts
+**Battle effect scripts** determine the effect to execute when a move is used. For example, the move *Thunder Wave* has the effect of causing paralysis on the target. Battle effect scripts may be shared by or assigned to multiple moves, and **DSPRE's Move Editor** can be used to change a move's assigned battle effect script (labeled as `Effect Sequence`, see [Basic Move Data](#basic-move-data)).
+
+An indexed list of the basic name description each battle effect script can be found in the following decompilation projects (*DSPRE's Move Editor also lists the basic name description alongside the ID*):
+- [PokePlatinum/generated/move_battle_effects.txt](https://github.com/pret/pokeplatinum/blob/8b6fa504086925c957b2d514b1f14a57c2d1343d/generated/move_battle_effects.txt)
+- [PokeHeartGold/include/constants/move_effects.h](https://github.com/pret/pokeheartgold/blob/ad7a3afa0cfc144fe6837c410cb95b2727217f54/include/constants/move_effects.h)
+
+Decompiled data of each battle effect script can be found in the following decompilation projects:
+- [PokePlatinum/res/battle/scripts/effects](https://github.com/pret/pokeplatinum/tree/8b6fa504086925c957b2d514b1f14a57c2d1343d/res/battle/scripts/effects)
+- [PokeHeartGold/files/battledata/script/effect_script](https://github.com/pret/pokeheartgold/tree/ad7a3afa0cfc144fe6837c410cb95b2727217f54/files/battledata/script/effect_script)
+
+Below are the file locations of the **NARCs** containing battle effect scripts for each game:
+| Game      | HeartGold/SoulSilver | Platinum                    | Diamond/Pearl               |
+|-----------|:--------------------:|:---------------------------:|:---------------------------:|
+| **File**  | `/a/0/3/0`           | `/battle/skill/be_seq.narc` | `/battle/skill/be_seq.narc` |
+
+Battle effect scripts contain varying complexity, so the following sections will start by breaking down the most basic battle effect script before moving on to more complex battle effect scripts, then examples on how to edit battle effect scripts.
+
+#### Finneon, Use Pound! (The Most Basic Battle Effect Script)
+
+![Pound](resources/Pound_IV.png)
+
+The most basic battle effect script is script `000` (used by Pound, Tackle, Vine Whip, Water Gun, etc.), which contains the following logic:
+1. Determine whether the move is a critical hit.
 2. Calculate the damage the move will inflict.
+3. End the battle effect script execution.
 
-In hex, this simple damage-dealing script in HGSS looks like this: `26 00 00 00 0F 00 00 00 E0 00 00 00`
-- `26 00 00 00` - Critical hit determination,
-- `0F 00 00 00` - Damage calculation,
-- `E0 00 00 00` - Ends the script*.  
+In other words, any move assigned with battle effect script `000` simply deals damage. Additionally, more complex battle effect scripts that will both deal damage and (potenially) apply an effect will include this logic in conjunction to other logic for applying a guaranteed or a chance of a stat change to the user or target. Got it memorized?
 
-:::info
-The end script command is different across HeartGold/Soulsilver, Platinum, and Diamond/Pearl
-| HeartGold/SoulSilver   |   Platinum    | Diamond/Pearl   |
-|:----------------------:|:-------------:|:---------------:|
-| `E0 00 00 00`          | `DE 00 00 00` | `DA 00 00 00`   |
+#### Inspecting the Actual Data of Battle Effect Script `000`
+There are two ways to view the contents of battle effect script `000` (as well as other battle effect scripts):
+1. Looking up the decompiled data of battle effect script `000` in the PokePlatinum or PokeHeartGold decompilation projects (linked above)
+2. Unpacking the relevant NARC (file location listed above) and opening file `000` in a hex editor
+
+#### Breaking Down Battle Effect Script `000` (Decomp)
+Taking a look at battle effect script `000` in either the [PokePlatinum](https://github.com/pret/pokeplatinum/blob/8b6fa504086925c957b2d514b1f14a57c2d1343d/res/battle/scripts/effects/effect_script_0000.s) or [PokeHeartGold](https://github.com/pret/pokeheartgold/blob/ad7a3afa0cfc144fe6837c410cb95b2727217f54/files/battledata/script/effect_script/effect_script_0000.s) decompilation project displays the following:
+
+```
+_000:
+    CalcCrit 
+    CalcDamage 
+    End 
+```
+
+The first element, `_000:`, is a label. If you are familiar with scripting, this is similar to the start or name of a function, or a chunk of code in the script. This isn't too important right now, but it is relevant in more complex battle effect scripts that have multiple labels or functions. 
+
+The second element, `CalcCrit`, determines whether the (damage-dealing) move results in a critical hit. The third element, `CalcDamage`, calculates how much damage the (damage-dealing) move will inflict.
+
+The last element, `End`, signals the battle engine to stop execution of this battle effect script.
+
+#### Breaking Down Battle Effect Script `000` (Hex)
+Taking a look at battle effect script `000` in a hex editor looks like this for each of the Gen IV games: 
+
+```
+// HeartGold/SoulSilver
+26 00 00 00 0F 00 00 00 E0 00 00 00
+
+// Platinum
+26 00 00 00 0F 00 00 00 DE 00 00 00
+
+// Diamond/Pearl
+26 00 00 00 0F 00 00 00 DA 00 00 00
+```
+
+The first thing to note is that when viewed in a hex editor, battle effect scripts **do not** have bytes to indicate labels or the start of a function (i.e. the `_000:` when viewing the file in the decompilation projects). The implications of this will be explored in later sections when reviewing more complex battle effect scripts.
+
+The second thing to note is that the instruction for ending the battle effect script has different hex values across the Gen IV games as listed below:
+|                              | HeartGold/SoulSilver  |   Platinum    | Diamond/Pearl   |
+|:----------------------------:|:---------------------:|:-------------:|:---------------:|
+| `End` instruction Hex Values | `E0 00 00 00`         | `DE 00 00 00` | `DA 00 00 00`   |
+
+Now, every 4 bytes is either an instruction or a parameter for an instruction. Depending on the battle effect script's complexity, it may be easier to understand by first separating the hex values for each instruction. This requires cross-referencing with the associated file in the decompilation projects.
+
+For instance, the hex values for battle effect script `000` can broken down as the following (keeping in mind that battle effect script `000` only has instructions that don't use parameters):
+- `26 00 00 00` - Critical hit determination
+- `0F 00 00 00` - Damage calculation
+- `E0 00 00 00` / `DE 00 00 00` / `DA 00 00 00` - Ends the battle effect script execution [HGSS / Plat / DP]
+
+Simple right? Now, moving on to battle effect scripts that actually apply effects! 
+
+### Direct and Indirect Effects
+Let's take a look at two moves that have similar in-game effects. For example, both *Harden* and *Steel Wing* both raise the user's Defense stat. However, there are some identifiable differences between the two moves: (1) the move data of each move, (2) the assigned probability of raising the user's Defense stat, and (3) the in-game "timing" of when the stat is raised.
+
+![Harden](resources/Harden_IV.png)
+![Steel Wing](resources/Steel_Wing_IV.png)
+
+Looking at these two moves in DSPRE's Move Editor reveals that that *Harden* is a *status move* and is assigned battle effect script (labeled as `Effect Sequence`) `011`, while *Steel Wing* is a *(physical) damage-dealing move* and is assigned battle effect script `138`. Next, Harden has a *Side Effect Probability* value of `0`, while Steel Wing has a *Side Effect Probability* value of `10`. Then, when using damage-dealing moves like Steel Wing in-game, the potential stat-changing effect applies **after the move successfully hits the target(s)**.
+
+These distinctions are due to the battle effect scripts specifying whether an effect is designated as a **direct effect** or an **indirect effect**. 
+
+For instance, let's look at the decompiled battle effect scripts assigned to Harden ([battle effect script `011`](https://github.com/pret/pokeplatinum/blob/8b6fa504086925c957b2d514b1f14a57c2d1343d/res/battle/scripts/effects/effect_script_0011.s)) and Steel Wing ([battle effect script `138`](https://github.com/pret/pokeplatinum/blob/8b6fa504086925c957b2d514b1f14a57c2d1343d/res/battle/scripts/effects/effect_script_0138.s)) (both copied from the PokePlatinum, with the relevant parameters in brackets): 
+
+```
+// Battle Effect Script 011 - Assigned to Harden
+_000:
+    UpdateVar OPCODE_SET, [BTLVAR_SIDE_EFFECT_FLAGS_DIRECT], MOVE_SIDE_EFFECT_TO_ATTACKER|MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE
+    End 
+
+
+// Battle Effect Script 138 - Assigned to Steel Wing
+_000:
+    UpdateVar OPCODE_SET, [BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT], MOVE_SIDE_EFFECT_TO_ATTACKER|MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE
+    CalcCrit 
+    CalcDamage 
+    End 
+```
+
+Let's also display the corresponding hex values of these battle effect scripts (for Platinum, with the relevant hex values in brackets):
+
+```
+// Battle Effect Script 011 - Assigned to Harden
+
+   32 00 00 00   07 00 00 00   [02 00 00 00]   10 00 00 40
+   DE 00 00 00 
+
+
+// Battle Effect Script 138 - Assigned to Steel Wing
+
+   32 00 00 00   07 00 00 00   [03 00 00 00]   10 00 00 40
+   26 00 00 00
+   0F 00 00 00
+   DE 00 00 00
+```
+
+We can see two differences here:
+- Battle effect script `011` has the `BTLVAR_SIDE_EFFECT_FLAGS_DIRECT` parameter (i.e. indicating that the effect will be applied as a *direct effect*), which also appears as `02 00 00 00` in hex.
+- Battle effect script `0138` has the `BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT` parameter (i.e. indicating that the effect will be applied as an *indirect effect*), which also appears as `03 00 00 00` in hex, and includes the `CalcCrit` and `CalcDamage` instructions.
+
+Given how Harden and Steel Wing function in-game, the following implications are made regarding **direct and indirect effects**:
+- Battle effects scripts that apply effects as a **direct effect**:
+  - Are usually assigned to *status moves* and do not include the instructions for calculating critical hits or damage,
+  - Will usually occur 100% of the time, regardless of the move's assigned *Side Effect Probability*, as long as the move can successfully execute.
+- Battle effects scripts that apply effects as an **indirect effect**:
+  - Are usually assigned to *damage-dealing physical or special moves* and include the instructions for calculating critical hits or damage,
+  - Will usually occur after a move successfully hits the target(s), with a few exceptions depending on other logic,
+  - And are usually subject to the move's assigned *Side Effect Probability*, with a few exceptions depending on other logic.
+
+Additional research and experimentation of battle effect scripts have indicated the following:
+- The vanilla Gen IV games do not have any battle effect scripts that mix direct and indirect effects in a single script.
+- Despite the first point, it is possible to create battle effect scripts that include both direct and indirect effects, with some quirks as to how they play out (see [Creating New Battle Effect Scripts](#creating-new-battle-effect-scripts)).
+- If a battle effect script were to include and execute both direct and indirect effects...
+  - The *direct effect* will occur first, and if including the damage and critical hit calculation instructions, will occur before damage has been dealt.
+  - The *indirect effect* will occur second, and if including the damage and critical hit calculation instructions, will occur after damage has been dealt, as expected.
+
+For reference, the following table lists the decompilation code name and hex value associated with designating an effect as a direct or an indirect effect.
+| Type of Effect | PokePlatinum Decompilation Code Name | Hex Value (All games)    |
+|:---------------|:-------------------------------------|:--------------:|
+| **Direct**     | `BTLVAR_SIDE_EFFECT_FLAGS_DIRECT`    | `02 00 00 00` |
+| **Indirect**   | `BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT`  | `03 00 00 00` |
+
+Next, let's take a look at how battle effect scripts determine which battler to apply the effect to.
+
+### Effect Targeting Flag
+Battle effect scripts that apply an effect must also specify to which battler the effect should target. This allows a move to (potenially) apply an effect to the user, even if the battler is targeting an opponent with the move (i.e. a damage-dealing move with a chance of a stat boost or fall).
+
+Here's the decompiled code and corresponding hex values with the relevant parameters and hex values in brackets:
+
+```
+// Battle Effect Script 011 - Assigned to Harden
+_000:
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_FLAGS_DIRECT, [MOVE_SIDE_EFFECT_TO_ATTACKER]|MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE
+    End 
+
+
+// Battle Effect Script 138 - Assigned to Steel Wing
+_000:
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT, [MOVE_SIDE_EFFECT_TO_ATTACKER]|MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE
+    CalcCrit 
+    CalcDamage 
+    End 
+```
+
+```
+// Battle Effect Script 011 - Assigned to Harden
+
+   32 00 00 00   07 00 00 00   02 00 00 00   10 00 [00 40]
+   DE 00 00 00 
+
+
+// Battle Effect Script 138 - Assigned to Steel Wing
+
+   32 00 00 00   07 00 00 00   03 00 00 00   10 00 [00 40]
+   26 00 00 00
+   0F 00 00 00
+   DE 00 00 00
+```
+
+In this case, both battle effect scripts use the `MOVE_SIDE_EFFECT_TO_ATTACKER` or `-- -- 00 40` effect targeting flag. This means that the respective effects will be applied to the attacker (i.e. the user of the move).
+
+In context of using the moves Harden and Steel Wing in-game:
+- Harden will apply the *Defense stat boost effect* to the "attacker", or the user of the move. 
+- Steel Wing will potentially apply the *Defense stat boost effect* to the attacker, or the user of the move (after successfully dealing damage to the target).
+
+Take note that the effect targeting flag actually shares a parameter slot or 4-byte space with the "battle effect" parameter (i.e. `MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE` or `10 00 -- --`, explored in the next section). That is something to keep in mind when editing battle effect scripts.
+
+There are multiple effect targeting flags (listed below), and the most common ones are the two that simply specify that the effect should be applied to (1) the defender (the target of the move) or (2) the attacker (the user of the move). Additionally, some battle effect scripts may use a combination of multiple effect targeting flags for more complex effects.
+
+<details>
+<summary>Types of Effect Targeting Flags</summary>
+
+:::note
+The following effect targeting flags are derived from [PokePlatinum/include/constants/battle/side_effects.h](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/include/constants/battle/side_effects.h).
+
+Some effect targeting flags serve other purposes beyond determining which battler the effect should apply to. 
 :::
 
-More complex damaging moves include this basic functionality at the end of their move effect script, but also include more logic, possibly referencing one or more **move effect subscripts** and/or **battle subscripts**, for example to apply guaranteed or chances of stat changes to the user or target.
+| Effect Targeting Flags  | Notes                                       | PokePlatinum Decompilation Code Name       | Hex Value (All games)     |
+|:------------------------|:--------------------------------------------|:-------------------------------------------|:--------------:|
+| Target                  | The effect should be applied to the target  | `MOVE_SIDE_EFFECT_TO_DEFENDER`             | `-- -- 00 80` |
+| User                    | The effect should be applied to the user    | `MOVE_SIDE_EFFECT_TO_ATTACKER`             | `-- -- 00 40` |
+| On-Hit                  | Apply the effect if the move successfully hits the target <br/> Used by battle effect scripts `90` (Encore), `229` (Close Combat), etc. | `MOVE_SIDE_EFFECT_ON_HIT`  | `-- -- 00 20` |
+| Check HP                | Used by battle effect scripts `106` (Mean Look, Block), `178` (Role Play), etc. | `MOVE_SIDE_EFFECT_CHECK_HP` | `-- -- 00 10` |
+| Cannot Prevent          | Unused?                                     | `MOVE_SIDE_EFFECT_CANNOT_PREVENT`          | `-- -- 00 08` |
+| Probabilistic           | Seemingly a backup flag to ensure an indirect effect is boosted by Serene Grace <br/> Used by battle effect scripts `253` (Flare Blitz) & `262` (Volt Tackle) | `MOVE_SIDE_EFFECT_PROBABILISTIC` | `-- -- 00 04` |
+| Check HP and Substitute | The effect is not applied if the move hits a substitute <br/> Used by battle effect scripts `042` (Bind, Fire Spin, etc) & `261` (Whirlpool) | `MOVE_SIDE_EFFECT_CHECK_HP_AND_SUBSTITUTE` | `-- -- 00 02` |
+| Check Substitute        | The effect is not applied if the move hits a substitute <br/> Used by battle effect scripts `34` (Pay Day) & `105` (Covet, Thief) | `MOVE_SIDE_EFFECT_CHECK_SUBSTITUTE` | `-- -- 00 01` |
+| Break Screens           | Removes Light Screen and Reflect from the target's side, even if immune to the move's typing <br/> Used by battle effect script `186` (Brick Break) | `MOVE_SIDE_EFFECT_BREAK_SCREENS`      | `-- -- 80 00` |
 
-Such damaging moves which may increase or decrease a single stat by one or two stages are assigned a move effect script that usually invokes a specific move effect subscript as an **indirect side effect**, which then points to a battle subscript that handles one or two stage single stat changes.
-
-As a general example, a common damaging move with a chance (which might be 100%) to adjust stat-stages in HGSS may look like this in a hex editor:  
-> `26 00 00 00 0F 00 00 00 32 00 00 00 07 00 00 00 AA AA AA AA ## ## ## ## E0 00 00 00`
-
-Where:
-- `## ## ## ##` contains a value that corresponds to a specific move effect subscript (the "side effect").
-- `AA AA AA AA` is `03 00 00 00`, indicating that this is an **indirect side effect**. 
-- `E0 00 00 00` - Ends the script *(different across each game, see above)*.  
-
-Status moves which increase or decrease a single stat by one or two stages are assigned a move effect script that usually invokes a specific move effect subscript as a **direct side effect**, which then points to a battle subscript that handles one or two stage single stat changes. Status moves which change multiple stats (e.g. Calm Mind) are handled by certain battle subscripts that explicitly change those specific stats (for example, see the battle subscript that raises Special Attack and Special Defense by one stage [here](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0151_CalmMind.s) in the HeartGold Decompilation project).
-
-As a general example, a common status-only stat-stage adjusting move effect script in HGSS looks like this in a hex editor:  
-> `32 00 00 00 07 00 00 00 AA AA AA AA ## ## ## ## E0 00 00 00`  
-
-Where:
-- `## ## ## ##` contains a value that corresponds to a specific move effect subscript (the "side effect").
-- `AA AA AA AA` is `02 00 00 00`, indicating that this is a **direct side effect**.  
-- `E0 00 00 00` - Ends the script *(different across each game, see above)*.  
-
-As a more specific example, take a look at the move Harden, a status move that raises the user's Defense by one stage. 
-- In HGSS, Harden is assigned move effect script `11`. This file can be inspected by unpacking `/a/0/3/0` and opening `0_11.bin` in a hexeditor.
-- Move effect script `11` (`0_11.bin`) looks like this when opened in a hex editor: `32 00 00 00 07 00 00 00 02 00 00 00 10 00 00 40 E0 00 00 00`
-- Following the pattern from the general example, `10 00 00 40` would correspond to a move effect subscript, and `02 00 00 00` indicates that this is a direct side effect.
-- More specifically, the first two bytes of `10 00 00 40` corresponds to the move effect subscript (i.e. `10 00`). This is a hexadecimal value in little-endian format, so it should be flipped around (`00 10`) before being converted to decimal (`16`, or move effect subscript `16`).
-- If we take a look at the [list of move effect subscripts](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) found in the HeartGold Decompilation project, we can see that move effect subscript `16` corresponds to `MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE`, the effect that raises the Defense stat by one stage.
-- This info can also be seen when looking at move effect script `11` [here](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/files/battledata/script/effect_script/effect_script_0011.s) in the HeartGold Decompilation project.
-
-**Direct and Indirect Side Effects**
-- **Move effect subscripts** may be invoked as either a **direct** or **indirect side effect**.
-- **Direct side effects** will occur 100% of the time (as long as the move successfully executes). Though direct side effects are typically used only by status moves, they will occur before damage has been dealt if used by a damage-dealing move.
-- **Indirect side effects** occur after damage has been dealt. Though indirect side effects are typically used only by damaging moves and are not mixed with direct side effects, they will also occur after direct side effects have been executed. 
-- **Indirect side effects** are usually subject to the "effect chance" set in the move's basic data (i.e. the "Side Effect Probability" percentage value in DSPRE's Move Editor).
-- The vanilla Generation IV games do not have any moves that mix direct and indirect side effects in a single move effect script, but it is possible to create a move effect script which includes both direct and indirect side effects.
-
-### "Broken" Move Effect Scripts
-> Source(s): [Yako?](https://github.com/YakoSWG)  
-
-Because they are not used in the vanilla Generation IV games, there are a number of **move effect scripts** which do not actually invoke any **move effect subscripts** or side effects. These move effect scripts are named in DSPRE (with a `Dummy` prefix) as the intended use, but require hex edits to function as intended.
-
-The process to fix these move effect scripts is relatively straightforward, involving copying the move effect script of a similar functional move and substituting in the correct parameters. 
-
-For example, move effect script `012` is intended to increase the user's Speed stat by one stage, a side effect that does not occur in the vanilla Generation IV games (in isolation). As with the others, move effect script `012` currently contains only the basic move effects (to determine critical hits and calculate damage).
-
-In HGSS, move effect script `012` can be inspected by unpacking `/a/0/3/0` and opening `0_12.bin` in a hexeditor, which appears as: `26 00 00 00 0F 00 00 00 E0 00 00 00`.
-- Replacing it with the following will set the move effect script to raise the user's Speed stat by one stage (in line with the DSPRE's description): `32 00 00 00 07 00 00 00 02 00 00 00 11 00 00 40 E0 00 00 00`.
-- The `11 00 00 40` section is responsible for invoking the effect that raises the user's Speed by one stage. 
-- The first two bytes (`11 00`) corresponds to the move effect subscript. This is a hexadecimal value in little-endian format, so it should be flipped around (`00 11`) before being converted to decimal (`17`, or move effect subscript `17`).
-- If we take a look at the [list of move effect subscripts](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) found in the HeartGold Decompilation project, we can see that move effect subscript `17` corresponds to `MOVE_SUBSCRIPT_PTR_SPEED_UP_1_STAGE`, the effect that raises the Speed stat by one stage.
-- The other two bytes of that section (`00 40`) determines the target parameter. Usually you will see `00 40` when the effect should apply to the user (such as this case), and `00 80` when the effect should apply to target. Other values may be used but go beyond the scope of this guide; see the table below:
-  
-|  On-Hit |   User  | User (On-Hit) |  Target | Target (On-Hit) |
-|:-------:|:-------:|:-------------:|:-------:|:---------------:|
-| `00 20` | `00 40` |    `00 60`    | `00 80` |     `00 A0`     |
-
-<details>
-<summary>Hex Elements Identifying Stat Changes</summary>
-<table>
-  <tr>
-    <th>Stat</th>
-    <th>Hex (+1)</th>
-    <th>Hex (+2)</th>
-    <th>Hex (-1)</th>
-    <th>Hex (-2)</th>
-  </tr>
-  <tr>
-    <td>**Attack**</td>
-    <td>`0F 00 00 ##`</td>
-    <td>`27 00 00 ##`</td>
-    <td>`16 00 00 ##`</td>
-    <td>`2E 00 00 ##`</td>
-  </tr>
-  <tr>
-    <td>**Defense**</td>
-    <td>`10 00 00 ##`</td>
-    <td>`28 00 00 ##`</td>
-    <td>`17 00 00 ##`</td>
-    <td>`2F 00 00 ##`</td>
-  </tr>
-  <tr>
-    <td>**Speed**</td>
-    <td>`11 00 00 ##`</td>
-    <td>`29 00 00 ##`</td>
-    <td>`18 00 00 ##`</td>
-    <td>`30 00 00 ##`</td>
-  </tr>
-  <tr>
-    <td>**Special Attack**</td>
-    <td>`12 00 00 ##`</td>
-    <td>`2A 00 00 ##`</td>
-    <td>`19 00 00 ##`</td>
-    <td>`31 00 00 ##`</td>
-  </tr>
-  <tr>
-    <td>**Special Defense**</td>
-    <td>`13 00 00 ##`</td>
-    <td>`2B 00 00 ##`</td>
-    <td>`1A 00 00 ##`</td>
-    <td>`32 00 00 ##`</td>
-  </tr>
-  <tr>
-    <td>**Accuracy**</td>
-    <td>`14 00 00 ##`</td>
-    <td>`2C 00 00 ##`</td>
-    <td>`1B 00 00 ##`</td>
-    <td>`33 00 00 ##`</td>
-  </tr>
-  <tr>
-    <td>**Evasion**</td>
-    <td>`15 00 00 ##`</td>
-    <td>`2D 00 00 ##`</td>
-    <td>`1C 00 00 ##`</td>
-    <td>`34 00 00 ##`</td>
-  </tr>
-</table>
 </details>
 
-The expandable section below lists the non-implemented move effect scripts, which can be fixed by replacing their contents with the given hex. Again, keep in mind that the `End` command used in these scripts (denoted by `## ## ## ##`) is different in across each game:
-| HeartGold/SoulSilver   |   Platinum    | Diamond/Pearl   |
-|:----------------------:|:-------------:|:---------------:|
-| `E0 00 00 00`          | `DE 00 00 00` | `DA 00 00 00`   |
+The next section will go over the "battle effect" parameter.
+
+### Subscript Pointers (One Step Closer to Applying the Actual Effects)
+The "battle effect" parameter, or **subscript pointer**, are pointers to a certain *battle subscript* that contains the logic to actually apply a battle effect.
+
+Essentially, the process of applying a battle effect is as follows:
+1. A move is selected.
+2. The move's uniquely associated **move script** is executed, which contains an instruction to then execute the move's assigned battle effect script.
+3. The **battle effect script**, specifically one that contains a **subscript pointer** with the necessary flags and parameters, is executed, which then points to a specific battle subscript to handle applying the battle effect.
+4. The **battle subscript** is executed, finally applying the battle effect.
+
+Information regarding subscript pointers can be found in the following decompilation projects:
+- An indexed list of subscript pointers from [PokePlatinum/generated/battle_move_subscript_ptrs.txt](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/generated/battle_move_subscript_ptrs.txt)
+- An indexed list of subscript pointers from [PokeHeartGold/include/constants/battle_subscript.h](https://github.com/pret/pokeheartgold/blob/ad7a3afa0cfc144fe6837c410cb95b2727217f54/include/constants/battle_subscript.h#L303)
+- A table that maps subscript pointers to battle subscripts from [PokePlatinum/include/data/move_side_effect_subscripts.h](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/include/data/move_side_effect_subscripts.h#L7) 
+
+Here's the decompiled code and corresponding hex values for battle effect scripts `011` and `138` with the relevant parameters and hex values in brackets (and as noted in the previous section, the subscript pointer shares a parameter slot or 4-byte space with the effect targeting flag):
+
+```
+// Battle Effect Script 011 - Assigned to Harden
+_000:
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_FLAGS_DIRECT, MOVE_SIDE_EFFECT_TO_ATTACKER|[MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE]
+    End 
+
+
+// Battle Effect Script 138 - Assigned to Steel Wing
+_000:
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT, MOVE_SIDE_EFFECT_TO_ATTACKER|[MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE]
+    CalcCrit 
+    CalcDamage 
+    End 
+```
+
+```
+// Battle Effect Script 011 - Assigned to Harden
+
+   32 00 00 00   07 00 00 00   02 00 00 00   [10 00] 00 40
+   DE 00 00 00 
+
+
+// Battle Effect Script 138 - Assigned to Steel Wing
+
+   32 00 00 00   07 00 00 00   03 00 00 00   [10 00] 00 40
+   26 00 00 00
+   0F 00 00 00
+   DE 00 00 00
+```
+We can see that both battle effect scripts use the `MOVE_SUBSCRIPT_PTR_DEFENSE_UP_1_STAGE` or `10 00 -- --` subscript pointer, which then points to the `subscript_update_stat_stage` battle subscript (as seen [here](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/include/data/move_side_effect_subscripts.h#L23)) that will finally handle applying the battle effect of raising the Defense stat.
+
+There are over 100 subscript pointers (see the links above), so it's unlikely this guide will explicitly list them all, but some of the more notable ones will be mentioned in later sections. 
+
+Last stop, battle subscripts!
+
+### Battle Subscripts
+**Battle subscripts** are helper scripts that contain varying logic for supporting various aspects of the Gen IV battle system. When it comes to move execution, battle subscripts are responsible for actually applying a battle effect.
+
+Battle subscripts vary and are fairly complex compared to the standard battle effect script. However, it is not entirely necessary to know how any battle subscript works to create your own battle effect! That being said, a later section as well as the [Example Case Studies](#example-case-studies) will cover simple battle subscript modifications.
+
+An indexed list of the basic name description each battle subscript can be found in the following decompilation projects:
+- [PokePlatinum/res/battle/scripts/subscripts/sub_seq.order](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/res/battle/scripts/subscripts/sub_seq.order)
+- [PokeHeartGold/include/constants/battle_subscript.h](https://github.com/pret/pokeheartgold/blob/ad7a3afa0cfc144fe6837c410cb95b2727217f54/include/constants/battle_subscript.h#L4)
+
+Decompiled data of each battle subscript can be found in the following decompilation projects:
+- [PokePlatinum/res/battle/scripts/subscripts/](https://github.com/pret/pokeplatinum/tree/f9e031910823d49d0bcda2db40217e82b9c6def8/res/battle/scripts/subscripts)
+- [PokeHeartGold/files/battledata/script/subscript/](https://github.com/pret/pokeheartgold/tree/ad7a3afa0cfc144fe6837c410cb95b2727217f54/files/battledata/script/subscript)
+
+Below are the file locations of the **NARCs** containing battle subscripts for each game:
+| Game      | HeartGold/SoulSilver | Platinum                    | Diamond/Pearl               |
+|-----------|:--------------------:|:---------------------------:|:---------------------------:|
+| **File**  | `/a/0/0/1`           | `/battle/skill/sub_seq.narc` | `/battle/skill/sub_seq.narc` |
+
+### One More Example Breakdown 
+<details>
+<summary> Raichu, Use Volt Tackle! </summary>
+
+![Volt Tackle](resources/Volt_Tackle_IV.png)
+
+Let's examine one more move, Volt Tackle, a damage-dealing move that causes recoil damage on the user and has chance of paralyzing the target.
+
+:::info
+This section will be based on Platinum, but the general process and data should still be applicable for the HeartGold/SoulSilver and Diamond/Pearl games.
+:::
+
+#### Volt Tackle's Move Data
+If we take a look at Volt Tackle's move data, either with DSPRE's Move Data Editor, or in the decompilation projects, we can gather the following relevant information:
+| Move Data  | ID  | Split    | Range of Action  | Effect Sequence (Battle Effect Script)             | Side Effect Probability | 
+|:-----------|:---:|:--------:|:----------------:|:--------------------------------------------------:|:-----------------------:|
+| **Value**  | 344 | Physical | Opponent or Ally | 262 - 1/3 damage recoil, may cause Paralysis (Hit) | 10                      |
+
+#### Volt Tackle's Move Script
+Because Volt Tackle's move ID is 344, its associated move script ID will also be 344. We can take a look at move script 344 either from [PokePlatinum](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/moves/volt_tackle/script.s) or by unpacking `/battle/skill/waza_seq.narc` and opening file `0334` in a hex editor.
+
+```
+//  Move Script 344 - Decompiled Code
+_000:
+    GoToEffectScript 
+
+
+// Move Script 344 - Hex Values
+
+   24 00 00 00
+```
+Nothing special here, it's just the instruction to signal the battle engine to start executing the battle effect script assigned to Volt Tackle (battle effect script 262).
+
+#### Battle Effect Script 262
+Battle Effect Script 262 is expected to have the following effects:
+1. Cause recoil damage to the user equal to 1/3 of the damage dealt to the target,
+2. Possibly paralyze the target after a successful hit.
+
+Here's the decompiled code and associated hex values (organized for your convenience) of battle effect script 262. You can also view it from [PokePlatinum](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/battle/scripts/effects/effect_script_0262.s) or by unpacking `/battle/skill/be_seq.narc` and opening file `0262` in a hex editor.
+
+```
+// Battle Effect Script 262 - PokePlatinum Decompilation Code
+_000:
+    CheckAbility CHECK_NOT_HAVE, BTLSCR_ATTACKER, ABILITY_RECKLESS, _008
+    UpdateVar OPCODE_SET, BTLVAR_POWER_MULTI, 12
+
+_008:
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT, MOVE_SIDE_EFFECT_PROBABILISTIC|MOVE_SIDE_EFFECT_TO_DEFENDER|MOVE_SUBSCRIPT_PTR_RECOIL_1_3_CHANCE_TO_PARALYZE
+    CalcCrit 
+    CalcDamage 
+    End 
+
+
+// Battle Effect Script 262 - Hex Values (Organized)
+
+   37 00 00 00   01 00 00 00   01 00 00 00   78 00 00 00   04 00 00 00 
+   32 00 00 00   07 00 00 00   08 00 00 00   0C 00 00 00 
+   
+   32 00 00 00   07 00 00 00   03 00 00 00   89 00 00 84 
+   26 00 00 00 
+   0F 00 00 00 
+   DE 00 00 00
+```
+
+First to note, when looking at the decompiled code, there are two labels, `_000:` and `_008:` in this battle effect script. This indicates that there might be some conditional checks, which happens to be the first instruction `CheckAbility` (equivalent to `37 00 00 00` in hex). 
+
+Let's break down the parameters for the `CheckAbility` (`37 00 00 00`) instruction:
+| Parameter Slot | Decomp Code        | Hex Value     | Meaning                                                 |
+|:---------------|:-------------------|:--------------|:--------------------------------------------------------|
+| First          | `CHECK_NOT_HAVE`   | `01 00 00 00` | True/False - Check if does not have                     |
+| Second         | `BTLSCR_ATTACKER`  | `01 00 00 00` | Battler - The attacker                                  |
+| Third          | `ABILITY_RECKLESS` | `78 00 00 00` | Ability ID - Reckless (ID 120 or `0x78` in hex)           |
+| Fourth         | `_008`             | `04 00 00 00` | Jump to label or offset - Jump to `_008` or [Offset of next instruction + [0x4 (the jump amount) x 0x4 bytes (amount of bytes used for each instruction or parameter)]] |
+
+The parameters indicate that the instruction is checking the attacker's ability, and if it *is not* Reckless, then jump ahead to the other chunk of code. 
+
+But what if the attacker does have the ability Reckless? Then we have the following instruction:
+| Parameter Slot | Decomp Code          | Hex Value     | Meaning                                                             |
+|:---------------|:---------------------|:--------------|:--------------------------------------------------------------------|
+| Instruction    | `UpdateVar`          | `32 00 00 00` | Instruction - Update a variable                                     |
+| First          | `OPCODE_SET`         | `07 00 00 00` | Operation code to apply - Set a value (or variable) to the variable | 
+| Second         | `BTLVAR_POWER_MULTI` | `08 00 00 00` | Specified variable - The move power multiplier variable             |
+| Third          | `12`                 | `0C 00 00 00` | Value - 12 or `0x0C` in hex                                           |
+
+Essentially, this instruction sets the move's power multiplier (a variable) to 12 *if* the attacker did have the ability Reckless. Then, when the move's final damage is calculated, the move power is multiplied by the move power multiplier variable and divided by 10 (seen [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/src/battle/battle_lib.c#L6687)) to result in the 20% Reckless power boost for recoil moves. Isn't that neat? (Until you consider that the Reckless power boost is handled separately in each battle effect script associated with recoil and you want to change the power boost amount...)
+
+Continuing to the next chunk of code (which is executed because the script hasn't hit an `End` instruction yet), we have the instruction that handles setting the desired battle effect, followed by the `CalcCrit` and `CalcDamage` instructions that are required for a damage-dealing move. 
+
+Let's break down that instruction responsible for setting the battle effect:
+| Parameter Slot      | Decomp Code          | Hex Value     | Meaning                                                             |
+|:--------------------|:---------------------|:--------------|:--------------------------------------------------------------------|
+| Instruction         | `UpdateVar`          | `32 00 00 00` | Instruction - Update a variable                                     |
+| First               | `OPCODE_SET`         | `07 00 00 00` | Operation code to apply - Set a value (or variable) to the variable | 
+| Second              | `BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT`                            | `03 00 00 00` | Specified variable - The *indirect* battle effect variable |
+| Third (target part) | `MOVE_SIDE_EFFECT_PROBABILISTIC\|MOVE_SIDE_EFFECT_TO_DEFENDER` | `-- -- 00 84` | Value (in this case the effect targeting flag) - Special "Probabilistic" flag (`0x04` in hex) + apply effect to the defender/target (`0x80` in hex) |
+| Third (effect part)  | `MOVE_SUBSCRIPT_PTR_RECOIL_1_3_CHANCE_TO_PARALYZE`             | `89 00 -- --` | Value (in this case the subscript pointer) - Subscript pointer ID 137 or `0x89` in hex |
+
+Because this is a damage-dealing move, the battle effect is designated as an *indirect effect*, as expected, meaning the effect will *potentially* occur after the move successful hits the target (and to reiterate, there are `CalcCrit` and `CalcDamage` instructions following this instruction to actually calculate and apply damage).
+
+When we take a look at the effect targeting flag, there are actually *two* flags. One, `MOVE_SIDE_EFFECT_TO_DEFENDER` (`-- -- 00 80` in hex), indicates that the battle effect should apply to the target, which makes sense given that one of Volt Tackle's effect is to potentially paralyze the target. The second flag, `MOVE_SIDE_EFFECT_PROBABILISTIC` (`-- -- 00 04` in hex), seems to some sort of failsafe flag to ensure that an indirect battle effect (in this case, potentially causing paralysis) is properly affected by the ability Serence Grace (see [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/src/battle/battle_lib.c#L1551)). As a fun fact, the `MOVE_SIDE_EFFECT_PROBABILISTIC` flag is only used by two battle effect scripts, `253` (used by Flare Blitz) and `262` (Volt Tackle).
+
+And lastly, the part you probably care about the most, the *subscript pointer* that points to a *battle subscript* that actually contains the logic for executing Volt Tackles effect!
+
+This battle effect script specifies the following subscript pointer: `MOVE_SUBSCRIPT_PTR_RECOIL_1_3_CHANCE_TO_PARALYZE`. This is subscript pointer [ID 137](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/generated/battle_move_subscript_ptrs.txt#L138) (`0x89` in hex), which [points](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/include/data/move_side_effect_subscripts.h#L144) to `subscript_recoil_1_3_chance_to_paralyze`, or battle subscript `226`, the script that will handle the effects of applying the recoil damage to the user *and* (potentially) applying paralysis to the target, which will be covered in the next section.
+
+#### Battle Subscript 226 (but wait, there's more)
+Let's crack open battle subscript `226`. You can also view it from [PokePlatinum](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/battle/scripts/subscripts/subscript_recoil_1_3_chance_to_paralyze.s) or by unpacking `/battle/skill/sub_seq.narc` and opening file `0226` in a hex editor.
+
+```
+// Battle Subscript `226` - PokePlatinum Decompilation Code
+_000:
+    Call BATTLE_SUBSCRIPT_RECOIL_1_3
+    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_BATTLE_CTX_STATUS, SYSCTL_APPLY_SECONDARY_EFFECT, _008
+    Call BATTLE_SUBSCRIPT_PARALYZE
+
+_008:
+    End 
+
+
+// Battle Subscript 226 - Hex Values (Organized)
+
+   3C 00 00 00   93 00 00 00 
+   20 00 00 00   05 00 00 00   06 00 00 00   00 00 40 00   02 00 00 00 
+   3C 00 00 00   1F 00 00 00 
+   
+   DE 00 00 00
+```
+
+At first glance, there isn't much code in this battle subscript. However, there are `Call` instructions (`3C 00 00 00` in hex) to call and execute *two other* battle subscripts, one that handles applying recoil damage (specifically 1/3 recoil, `93 00 00 00` in hex or battle subscript 147), and another that handles applying paralysis (`1F 00 00 00` in hex or battle subscript 31). 
+
+The first called battle subscript that handles applying recoil damage (specifically 1/3 recoil, see [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/battle/scripts/subscripts/subscript_recoil_1_3.s)) proceeds as follows:
+1. Check if the attacker's ability is either the Rock Head or Magic Guard, to which no recoil damage would be applied if so,
+2. Retrieve the damage dealt to the target,
+3. Divide the amount by 3,
+4. Apply the recoil damage to the attacker, 
+5. Display the recoil message,
+6. And finally end, which in this case would return to the original battle subscript.
+
+Afterwards, we have a conditional instruction, `CompareVarToValue`, that checks the `TRUE/FALSE` result of the `BattleSystem_TriggerSecondaryEffect` function (see [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/src/battle/battle_lib.c#L1519)). In layman terms, this checks whether or not the other effect of causing paralysis should occur, given that the move did successfully hit the target, and is subject to the move's effect probability.
+
+If said check successfully passed, then this battle subscript calls another battle subscript that goes through a plethora of other checks (such as checking for Limber, Shield Dust, Harsh Sunlight weather + Leaf Guard, etc.) to determine if the target of the effect can actually be paralyzed (see [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/battle/scripts/subscripts/subscript_paralyze.s)).
+
+Once all that wraps up, this battle subscript hits an `End` instruction, allowing the battle engine to move on to the next process.
+
+Do note that the overall battle effect used by *Volt Tackle* is a bit more complex compared to the *Harden* and *Steel Wing* effects covered earlier. Creating battle effects more similar to those moves is explored in the following sections, for instance a *status move* that raises the user's Speed stat by one stage, an effect that does not occur in the vanilla Gen IV games in isolation.
+</details>
+
+### "Broken" Battle Effect Scripts
+> Source(s): [Yako?](https://github.com/YakoSWG)  
+
+:::info
+In the vanilla Generation IV games, there are a number of battle effect scripts which do not actually invoke any effects, yet are referenced throughout the game's code (specifically in the trainer move selection AI logic). In DSPRE's Move Editor, these battle effect scripts are labeled with a `Dummy` prefix, in addition to the description of their supposed use, but require modifications to function as supposedly intended.
+
+The process to fix these battle effect scripts is relatively straightforward, involving copying the structure of other battle effect scripts with similar intended functionalities and substituting in the correct parameters. This also serves as a guided entry point in understanding how to create custom battle effect scripts.
+:::
+
+#### Battle Effect Script 012 Isn't Real, It Can't Hurt You
+Let's look at battle effect script `012`, which is intended to increase the user's Speed stat by one stage. However, taking a look at the decompiled code (see [here](https://github.com/pret/pokeplatinum/blob/8b6fa504086925c957b2d514b1f14a57c2d1343d/res/battle/scripts/effects/effect_script_0012.s)) or by opening battle effect script `012` in a hex editor (unpack `/battle/skill/be_seq.narc` or `/a/0/3/0` and open file `0012`) reveals the following:
+
+```
+// Battle Effect Script 012 - PokePlatinum Decompilation Code
+_000:
+    CalcCrit 
+    CalcDamage 
+    End 
+
+
+// Battle Effect Script 012 - Hex Values (Platinum)
+
+   26 00 00 00 
+   0F 00 00 00 
+   DE 00 00 00
+```
+
+Hold up, doesn't this look exactly like [battle effect script `000`](#inspecting-the-actual-data-of-battle-effect-script-000)? (Keeping in mind that the `End` instruction has different hex values across each Gen IV game, see [Breaking Down Battle Effect Script `000` (Hex)](#breaking-down-battle-effect-script-000-hex)). Regardless, this means that battle effect script `012` currently contains only the basic (damaging) move effects of determining critical hits and calculating damage. This is also observed with the other "broken" battle effect scripts, which will be listed later (and again, labeled with a `Dummy` prefix in DSPRE's Move Editor).
+
+#### "Broken" Battle Effect Scripts, We Can Fix Them
+Battle effect script `012` and the other "broken" battle effect scripts can be modified to function as intended! To do so, the following steps will serve as a guide for modifying them, with battle effect script `012` as the example:
+
+**1. Unpack the battle effect scripts NARC and open the relevant battle effect script file using a hex editor** <br/>
+Battle effect scripts can be found in `/a/0/3/0` for HeartGold/SoulSilver or `/battle/skill/be_seq.narc` for Diamond/Pearl/Platinum. Use **DSPRE's Unpack NARC to Folder** tool (*Tools > NARC Utility > Unpack to Folder*) to unpack the NARC file located in your project's DSPRE_contents folder, which will create a separate folder. Make sure to save the resulting folder *outside* of your project's DSPRE_contents folder. Open up file `0012` in any hex editor. 
+
+**2. Replace the contents with the relevant hex values and save the file** <br/>
+You should see the following:
+
+```
+// HeartGold/SoulSilver
+26 00 00 00 0F 00 00 00 E0 00 00 00
+
+// Platinum
+26 00 00 00 0F 00 00 00 DE 00 00 00
+
+// Diamond/Pearl
+26 00 00 00 0F 00 00 00 DA 00 00 00
+```
+
+Again, these are simply the `CalcCrit` and `CalcDamage` instructions, followed by each game's specific hex values for the `End` instruction.
+
+You can delete those the entirety contents and paste the following:
+
+```
+// HeartGold/SoulSilver
+32 00 00 00 07 00 00 00 02 00 00 00 11 00 00 40 E0 00 00 00
+
+// Platinum
+32 00 00 00 07 00 00 00 02 00 00 00 11 00 00 40 DE 00 00 00
+
+// Diamond/Pearl
+32 00 00 00 07 00 00 00 02 00 00 00 11 00 00 40 DA 00 00 00
+```
+
+Here's the breakdown of the logic:
+| Hex Value     | Meaning/Purpose |
+|:-------------:|:----------------|
+| `32 00 00 00` | `UpdateVar` instruction needed to establish a battle effect |
+| `07 00 00 00` | Parameter with the "Set" operation code to set a variable with a value or other variable |
+| `02 00 00 00` | Parameter with the "direct battle effect" variable to indicate that this will be a *direct effect* |
+| `11 00 00 40` | Parameter with the "apply to attacker/user" effect targeting flag (`-- -- 00 40`) and the "raise Speed stat by one stage" subscript pointer (`11 00 -- --`) to set to the variable |
+| `E0 00 00 00` <br/> `DE 00 00 00` <br/> `DA 00 00 00` | `End` instruction (game specific) |
+
+This will modify battle effect script `012` to now have the effect of applying a single-stage increase to the user's Speed stat! Keep in mind that this should be assigned to a *status move*, as it is specified to apply the effect as a *direct effect*, in addition to not including the `CalcCrit` and `CalcDamage` instructions.
+
+Save this file, and if necessary, delete or move any backup files that may have been automatically created by your hex editor (they may be named `0012.bak` for example).
+
+**3. Repack the battle effect scripts NARC and save your project with DSPRE** <br/>
+Repack the battle effect script NARC with **DSPRE's Build NARC from Folder** tool (*Tools > NARC Utility > Build from Folder*) back to the game-specific file path in your project's DSPRE_contents folder. For HeartGold/SoulSilver, you may need to remove the `.narc` suffix if automatically appended by the DSPRE Build NARC from Folder tool. 
+
+Open up **DSPRE's Move Editor** and assign battle effect script `012` (the field labeled as `Effect Sequence`) to a *status move*. Add that move to a Pokémon's learnset or a Trainer's Pokémon's move slot, save your project with DSPRE, and test it in game!
+
+#### For Your Convenience (Open at Your Own Risk!)
+The expandable section below lists the "broken" battle effect scripts, which can be fixed by replacing their contents with the given hex values. Please note that each of these strings end with `## ## ## ##`, which is a placeholder for the `End` instruction as it is different in across each Gen IV game.
 
 <details>
-<summary>Corrections for "non-implemented" but named in DSPRE move effect scripts</summary>
+<summary>Corrections for "non-implemented" but named in DSPRE battle effect scripts</summary>
 <table>
   <tr>
-    <th>Effect Script ID</th>
+    <th>Battle Effect Script ID</th>
     <th>Effect</th>
     <th>Required Hex</th>
   </tr>
@@ -1022,26 +1468,14 @@ The expandable section below lists the non-implemented move effect scripts, whic
   </tr>
   <tr>
     <td>`74`</td>
-    <td>Reduce the target's Evasion stat by one stage (damaging indirect side effect).</td>
-    <td>`26 00 00 00 0F 00 00 00 32 00 00 00 07 00 00 00 03 00 00 00 1C 00 00 80 ## ## ## ##`</td>
+    <td>Reduce the target's Evasion stat by one stage (damaging indirect effect).</td>
+    <td>`32 00 00 00 07 00 00 00 03 00 00 00 1C 00 00 80 26 00 00 00 0F 00 00 00 ## ## ## ##`</td>
   </tr>
 </table>
 </details>
-
-To replace the values for any one or more of these move effect scripts:
-1. Unpack the **move effect scripts** NARC (using the [DSPRE "Unpack NARC to Folder" function](/docs/universal/guides/unpacking_narcs/#dspre)).
-    - HGSS: `/a/0/3/0`
-    - Platinum/Diamond/Pearl: `/battle/skill/be_seq.narc`
-2. Open the relevant move effect script file using a hex editor.
-3. Replace the entire contents of the file with the relevant "Required Hex" string (including the game-specific `End` command).
-4. Save the file.
-5. Move the backup file created by the hex editor to another location (this may be named `###.bak` for example). This is very important, if not done there will be issues with all move effect scripts *after* the modified one.
-6. Re-pack the move effect script NARC (using the DSPRE ["Build NARC from folder"](/docs/universal/guides/unpacking_narcs/#dspre) function).
-    - For HGSS, the NARC will be created with the `.narc` suffix, that should be removed.
-7. Open the `project_DSPRE_contents` folder in DSPRE and save the ROM.
   
-### Unused Move Effect Scripts
-There are a number of **move effect scripts** that appear to have no intended use (named as `### - Unused ###` or `### - Undocumented` in DSPRE's Move Editor). Below are the unused and undocumented move effect scripts which only contain the standard damaging critical hit determination and damage calculation (or don't exist as a file in the move effect scripts NARC).  
+### Unused Battle Effect Scripts
+There are a number of **battle effect scripts** that appear to have no intended use or clear references in the game's code (they may named as `### - Unused ###` or `### - Undocumented` in DSPRE's Move Editor). Below are the unused and undocumented battle effect scripts (which either only contain the standard damaging critical hit determination and damage calculation, or simply don't exist as a file in the battle effect scripts NARC).  
 
 - `96`
 - `110`
@@ -1051,72 +1485,271 @@ There are a number of **move effect scripts** that appear to have no intended us
 - `141`
 - `157`
 - `163`
-- `264` (*Identified as "Unused" in DSPRE, but has [unique code](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/effects/effect_script_0264.s).*)
-- `277` - `470`
+- `264` (*Identified as "Unused" in DSPRE, but has [unique code](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/battle/scripts/effects/effect_script_0264.s).*)
+- `277` - `470` (*Identified as "Undocumented" in DSPRE and do not exist as a file in the battle effect scripts NARC*)
   
-The safest scripts to use are the latter range of `277`-`470`. These data aren't just the standard critical hit and damage calculation (and could be used for some unknown or unclear purpose), they just do not exist.  
+The safest IDs to repurpose are those in the `277`-`470` range. Since these files do not exist at all, they are less likely to have some unknown or unclear purpose or reference in the game's code. 
 
-### Backporting Stat-Changing Moves
-> Source(s): [Drayano](https://pastebin.com/u/DrayHackTutorials)  
+### Creating New Battle Effect Scripts
+> Source(s): [Drayano](https://pastebin.com/u/DrayHackTutorials), Yako, Lmaokai, HG-Engine  
 
-A [tutorial](https://pastebin.com/a5bGatsc) written by Drayano, details how to utilise the **move effect subscripts** already in the game, and abuse the potential of using both direct and indirect side effects in a single **move effect script**, to detail how stat-changing status moves that do not exist in-game (such as Coil) can be created.  
+#### Drayano's Tutorial
+A [tutorial](https://pastebin.com/a5bGatsc) written by Drayano, details how to utilise the (possibly unintended) ability of declaring both direct and indirect effects in a single battle effect script to create stat-changing status moves that do not exist in the Gen IV games (such as Coil or modern Growth effects).  
 
-Because this method uses only existing effects, the appearance is not as clean (for example, a Coil approximation would raise Attack & Defense as a direct side effect, and Accuracy as an indirect side effect, resulting in two stat-increase animations).  
+Because this method uses only existing battle subscripts, the appearance is not as clean. For example, a creating Coil approximation through this method could utilise the direct effect to raise Attack & Defense, and then utilise the indirect effect to raise Accuracy. However, this results in *two* stat-increase animations, but this is also one of the more accessible methods of "backporting" stat-changing moves from later Pokémon games.
 
-It is possible to change existing **battle subscripts** to accomodate more complex stat changes, as well as add new battle subscripts, since files can be added the battle subscripts NARC. 
+The following are the summarized steps for creating new battle effect scripts (based on Drayano's tutorial):
+1. Unpack the battle effect script NARC from your project's DSPRE_contents folder.
+2. Make a copy of file `0000`, and rename it to the next available file ID number (for example `0277` for any Gen IV game if this is the first new battle effect script you're creating).
+3. Open the new file in a hex editor and delete the contents.
+4. ~~Draw the owl~~ Make your effect! Reference Drayano's tutorial and the following sections: [Direct and Indirect Effects](#direct-and-indirect-effects), [Effect Targeting Flag](#effect-targeting-flag), and [Subscript Pointers](#subscript-pointers-one-step-closer-to-applying-the-actual-effects).
+5. Save the file (delete or move any automatically created backup files if necessary).
+6. Repack the battle effect script NARC to your project's DSPRE_contents folder (for HeartGold/SoulSilver, remove the `.narc` suffix if necessary).
+7. Assign the new battle effect script to a move and adjust move data as necessary in DSPRE's Move Editor.
+8. Save your project and test the new effect!
 
-Adding new battle subscript files for this purpose also requires adding entries to the table that points move effect subscripts to battle subscripts (details of this table can be found [here](https://github.com/pret/pokeplatinum/blob/3d24f842f13d18f813cb34abd7962c5985ceacfc/include/data/move_side_effect_subscripts.h) in the Platinum Decompilation project). However, across all Generation IV games, there is no space for additional entries for where the tables are located, meaning the tables would need to be re-pointed (for example, this [section](../type_expansion/pt-type_expansion.md#making-space-for-the-new-type-chart) in the Type Expansion/Fairy Type Platinum guide covers re-pointing the table for Platinum).
+For convenience, the expandable section below lists the hex values for subscript pointers related to stat changes. See [Subscript Pointers](#subscript-pointers-one-step-closer-to-applying-the-actual-effects) for references to the full list of subscript pointers.
 
-The table that points move effect subscripts to battle subscripts can be found in the following locations:
+<details>
+<summary>Hex Elements Identifying Stat Changes</summary>
+<table>
+  <tr>
+    <th>Stat</th>
+    <th>+1 Stage</th>
+    <th>+2 Stages</th>
+    <th>-1 Stage</th>
+    <th>-2 Stages</th>
+  </tr>
+  <tr>
+    <td>**Attack**</td>
+    <td>`0F 00 -- --`</td>
+    <td>`27 00 -- --`</td>
+    <td>`16 00 -- --`</td>
+    <td>`2E 00 -- --`</td>
+  </tr>
+  <tr>
+    <td>**Defense**</td>
+    <td>`10 00 -- --`</td>
+    <td>`28 00 -- --`</td>
+    <td>`17 00 -- --`</td>
+    <td>`2F 00 -- --`</td>
+  </tr>
+  <tr>
+    <td>**Speed**</td>
+    <td>`11 00 -- --`</td>
+    <td>`29 00 -- --`</td>
+    <td>`18 00 -- --`</td>
+    <td>`30 00 -- --`</td>
+  </tr>
+  <tr>
+    <td>**Special Attack**</td>
+    <td>`12 00 -- --`</td>
+    <td>`2A 00 -- --`</td>
+    <td>`19 00 -- --`</td>
+    <td>`31 00 -- --`</td>
+  </tr>
+  <tr>
+    <td>**Special Defense**</td>
+    <td>`13 00 -- --`</td>
+    <td>`2B 00 -- --`</td>
+    <td>`1A 00 -- --`</td>
+    <td>`32 00 -- --`</td>
+  </tr>
+  <tr>
+    <td>**Accuracy**</td>
+    <td>`14 00 -- --`</td>
+    <td>`2C 00 -- --`</td>
+    <td>`1B 00 -- --`</td>
+    <td>`33 00 -- --`</td>
+  </tr>
+  <tr>
+    <td>**Evasion**</td>
+    <td>`15 00 -- --`</td>
+    <td>`2D 00 -- --`</td>
+    <td>`1C 00 -- --`</td>
+    <td>`34 00 -- --`</td>
+  </tr>
+</table>
+</details>
+
+<details>
+<summary>Considerations for Battle Effect Scripts</summary>
+
+When creating new battle effect scripts, consider the following:
+- Using the above method, a battle effect script can apply at most two effects, and must be done so by applying one effect as a direct effect and the second effect as an indirect effect (i.e. you *cannot* apply two direct effects or two indirect effects in a single battle effect script with the above method).
+- The direct effect and indirect effect will occur separately, such that if both effects are stat-changing effects, there will be *two* stat-changing animations.
+- The direct effect will occur first and the indirect effect will occur second.
+- Using the above method to create effects for *damage-dealing moves* will have the following caveats:
+  - You must include the instructions for calculating critical hits and damage.
+  - The direct effect will occur before damage is dealt to the target, and *is not* subject to the move's assigned effect probability.
+  - The indirect effect will occur after damage is dealt to the target, and *is* subject to the move's assigned effect probability (usually).
+- Because the trainer move selection AI is based on a set of hardcoded cases, the trainer AI may not utilise moves with modified or new battle effect scripts as intended (unless the trainer move selection AI logic is modified to handle them).
+
+</details>
+
+### Creating New Battle Subscripts
+It is possible to create **new battle subscripts** to accomodate more complex stat changes and other battle effects not present in the Gen IV games, but adding new battle subscripts involves two major requirements:
+1. Creating new battle subscript files and adding them to the battle subscript NARC (similar process to adding new battle effect scripts).
+2. Moving the **subscript pointer table** and adding entries to it.
+
+#### The Bottleneck: The Subscript Pointer Table
+As mentioned in an earlier section, *subscript pointers* are pointers to a certain *battle subscript* that contains the logic to actually apply a battle effect. This mapping of subscript pointers and battle subscripts is stored in the overlay file that handles battle logic for each Gen IV game. However, creating new battle subscripts will *usually* require adding an entry to the table, to which there is simply no more space for additional entries. Thus, the table needs to be moved to in order to accomodate additional entries.
+
+But before detailing how to move the subscript pointer table, let's discuss more information about it first.
+
+The table that maps subscript pointers to battle subscripts can be found at the following locations **for the US versions of these games** (you can also view the table [here](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/include/data/move_side_effect_subscripts.h#L7) in the PokePlatinum decompilation project):
 | Game       |  HeartGold/SoulSilver |        Platinum       |     Diamond/Pearl     |
 |------------|:---------------------:|:---------------------:|:---------------------:|
 | **File**   |     `Overlay 12`      |     `Overlay 16`      |     `Overlay 11`      |
-| **Offset** | `0x3550C` - `0x3574C` | `0x33CE4` - `0x33F27` | `0x30F08` - `0x3114B` |
+| **Offset** | `0x3550C` - `0x3574F` | `0x33CE4` - `0x33F27` | `0x30F08` - `0x3114B` |
 
-Each entry in the table is four bytes, and the hexadecimal values refer to the battle subscript.
+<details>
+<summary>The table is `580` bytes long (`0x244` in hex) and appears as the following across *all* Gen IV games:</summary>
 
-For example, take a look at the table for HeartGold by opening (decompressed) `Overlay 12` in a hexeditor and going to offset `0x3550C`. 
-- If we take a look at the [list of move effect subscripts](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L303) found in the HeartGold Decompilation project, the **second move effect subscript** (the first "actual" effect in the list) is listed as `MOVE_SUBSCRIPT_PTR_SLEEP`, the effect that attempts to cause the Sleep status. Additionally, because this list is zero-indexed, this move effect subscript will have an ID of `01` when invoked by move effect scripts or battle subscripts.
-- Skip to the second entry of the table (`0x35510`), which should show the following four bytes: `12 00 00 00`.
-- This entry represents the **battle subscript file** that the **second move effect subscript** will point to. The hexadecimal value `12` is `18` in decimal, meaning this move effect subscript points to battle subscript `18`. 
-- If we take a look at the [list of battle subscripts](https://github.com/pret/pokeheartgold/blob/d11b7ef7917d435334d3372edad0792a3bbbb7a3/include/constants/battle_subscript.h#L4) found in the HeartGold Decompilation project, battle subscript `18` is listed as `BATTLE_SUBSCRIPT_FALL_ASLEEP`, which contains the actual logic for attempting to apply the Sleep status to the target (details of this logic can also be found in [here](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0018_FallAsleep.s) the HeartGold Decompilation project). 
+```
+00 00 00 00 12 00 00 00 16 00 00 00 19 00 00 00 1B 00 00 00 1F 00 00 00 2F 00 00 00 25 00 00 00 0E 00 00 00 37 00 00 00 38 00 00 00 30 00 00 00 0D 00 00 00 3A 00 00 00 3F 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 40 00 00 00 42 00 00 00 55 00 00 00 56 00 00 00 5D 00 00 00 77 00 00 00 73 00 00 00 82 00 00 00 8A 00 00 00 93 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 2C 00 00 00 8E 00 00 00 95 00 00 00 96 00 00 00 94 00 00 00 97 00 00 00 98 00 00 00 18 00 00 00 21 00 00 00 22 00 00 00 23 00 00 00 2B 00 00 00 2D 00 00 00 2E 00 00 00 31 00 00 00 34 00 00 00 36 00 00 00 3E 00 00 00 43 00 00 00 44 00 00 00 46 00 00 00 49 00 00 00 4D 00 00 00 4E 00 00 00 4F 00 00 00 50 00 00 00 51 00 00 00 52 00 00 00 54 00 00 00 57 00 00 00 58 00 00 00 59 00 00 00 5B 00 00 00 5C 00 00 00 5F 00 00 00 60 00 00 00 61 00 00 00 7E 00 00 00 64 00 00 00 65 00 00 00 67 00 00 00 69 00 00 00 6A 00 00 00 6D 00 00 00 70 00 00 00 71 00 00 00 72 00 00 00 78 00 00 00 7A 00 00 00 7B 00 00 00 7C 00 00 00 7D 00 00 00 7F 00 00 00 80 00 00 00 81 00 00 00 83 00 00 00 84 00 00 00 86 00 00 00 87 00 00 00 8C 00 00 00 8D 00 00 00 8F 00 00 00 91 00 00 00 9A 00 00 00 9B 00 00 00 9C 00 00 00 9E 00 00 00 9F 00 00 00 A0 00 00 00 A1 00 00 00 A2 00 00 00 A3 00 00 00 A4 00 00 00 A5 00 00 00 A6 00 00 00 A7 00 00 00 A8 00 00 00 AA 00 00 00 AB 00 00 00 AD 00 00 00 AF 00 00 00 DA 00 00 00 DB 00 00 00 DC 00 00 00 E2 00 00 00 F6 00 00 00 F7 00 00 00 F8 00 00 00 F9 00 00 00 04 01 00 00 05 01 00 00 76 00 00 00
+```
 
-Creating battle subscripts which handle different combinations of two or more 1- or 2-stage stat changes is achievable by mirroring battle subscripts for existing effects such as [Calm Mind](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0151_CalmMind.s), [Dragon Dance](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0152_DragonDance.s) and [Curse (non-Ghost)](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0096_CurseNormal.s) as a base. These files can be reviewed by unpacking the battle subscripts NARC (`/a/0/0/1` for HeartGold/SoulSilver or `sub_seq.narc` for Platinum/Diamond/Pearl), analyzing the [Platinum](https://github.com/pret/pokeplatinum/tree/main/res/battle/scripts/subscripts) and [HeartGold](https://github.com/pret/pokeheartgold/tree/master/files/battledata/script/subscript) decompilation projects, and by using reverse engineering tools (such as Ghidra). 
+</details>
+
+Prior research and experimentation have indicated the following:
+1. Each entry in the table is four bytes long.
+2. Those bytes (as hexadecimal values in little-endian format) refer to the battle subscript ID (i.e. `12 00 00 00` is `18` in decimal, and refers to battle subscript `18`).
+3. The order of each entry in the table is implicitly the order of subscript pointer IDs, starting with an ID of `0` (i.e. the first four bytes represent subscript pointer ID `0`, the second four bytes represent subscript pointer ID `1`, etc.)
+4. There are a total of `145` subscript pointers in each vanilla Gen IV game (and to reiterate, this starts at `0`, so from subscript pointer ID `0` to subscript pointer ID `144`).
+
+:::info
+You can find examples of subscript pointers in action in [Subscript Pointers (One Step Closer to Applying the Actual Effects)](#subscript-pointers-one-step-closer-to-applying-the-actual-effects) and [One More Example Breakdown - Raichu, Use Volt Tackle!](#one-more-example-breakdown).
+:::
+
+Now, let's get started with moving it!
+
+#### Moving the Subscript Pointer Table
+
+:::warning
+This process involves applying an **"ARM9 Expansion"** patch, which may not be compatible with your project depending on previous tools used and changes made to your project.
+
+If you've followed the [Fairy Implementation Guides for Platinum or Diamond/Pearl](../type_expansion/type_expansion.md), then the subscript pointer table is already moved and you can continue to the next section: [Steps for Creating New Battle Subscripts](#steps-for-creating-new-battle-subscripts).
+:::
+
+Moving the subscript pointer table comprises of the following steps:
+1. Apply the **ARM9 Expansion** patch
+2. Copy the subscript pointer table and paste it in a new location
+3. Change the value that references the subscript pointer table to reference the new location
+4. Save and test
+
+**Step 1: Apply the ARM9 Expansion patch** <br/>
+1. If you haven't already, use the latest version of [**DSPRE**](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the **ARM9 Expansion** patch.
+2. This will repurpose an unused file (`/unpacked/synthOverlay/0000` for HeartGold/SoulSilver and `/unpacked/synthOverlay/0009` for Diamond/Pearl/Platinum) and increase the file's size to `88` KiB (`90,112` or `0x15FFF` bytes).
+3. This repurposed file should be entirely zeroes and will be referred to as `synthOverlay #` moving forward (i.e. `synthOverlay 0` for HeartGold/SoulSilver and `synthOverlay 9` for Diamond/Pearl/Platinum).
+
+**Step 2: Copy the subscript pointer table and paste it in a new location** <br/>
+1. Refer to the [above section](#the-bottleneck-the-subscript-pointer-table) to open the file that contains the subscript pointer table and go to its location.
+2. Copy the entire table or the provided bytes.
+3. Open the `synthOverlay #` file in a hex editor, go to offset `0x1000` and paste the copied table (make sure the file size remains unchanged).
+   - If you have other data at this offset, either move that data, or find another free location and make note of the offset.
+4. Save the `synthOverlay #` file.
+
+**Step 3: Change the value that references the subscript pointer table to reference the new location** <br/>
+1. Go to the following locations in the table below. There are four bytes that make up a `RAM Address` referencing the subscript pointer table. 
+
+|                                | HeartGold/SoulSilver | Platinum | Diamond/Pearl |
+|:-------------------------------|:-------------:|:-------------:|:-------------:|
+| **File**                       | `Overlay 12`  | `Overlay 16`  | `Overlay 11`  |
+| **Offset**                     | `0x20AF0`     | `0x204F8`     | `0x1F084`     |
+| **Vanilla Bytes<br/>(US version)** | `CC CD 26 02` | `24 EE 26 02` | `C8 E4 25 02` |
+
+<details>
+<summary>How to find the location for non-US versions</summary>
+
+1. Refer to the [above section](#the-bottleneck-the-subscript-pointer-table) and search for the raw bytes that make up the subscript pointer table (which should have the same data across all language versions).
+2. Make note of the starting offset. 
+3. Use **DSPRE's Overlay Editor** tool (*Other Editors > Overlay Editor*) to view the `RAM Address` of the corresponding overlay file (i.e. `Overlay ID 12` for HeartGold/SoulSilver, which has a `RAM Address` of `0x22378C0` for the US versions).
+4. Sum the `RAM Address` of the overlay file and the starting offset of the subscript pointer table (e.g. HeartGold/SoulSilver US versions would be `0x22378C0 + 0x3550C = 0x226CDCC`).
+5. Put the bytes in little-endian format and search for them in the overlay file (e.g. `0x226CDCC` would mean searching for `CC CF 26 02`). There should only be one result.
+
+</details>
+
+2. Change those four bytes to the following: `00 90 3C 02`.
+   - If you placed the table in a different location in the `synthOverlay #` file, then add `0x23C8000` to the starting offset of where you placed the table, and put the bytes in little-endian format (e.g. `0x23C8000 + 0x1000 (new location) = 0x23C9000`, which is `00 90 3C 02` in little-endian).
+3. Save the overlay file.
+
+**Step 4: Save and test** <br/>
+1. Save your project, open your game, and test moves with different battle effects to verify the game does not crash.
+2. If the game does not crash after testing different kinds of moves, then the subscript pointer table has been successfully moved.
+
+#### Steps for Creating New Battle Subscripts
+Creating new battle subscripts which handle different combinations of two or more 1- or 2-stage stat changes is achievable by mirroring battle subscripts for existing effects such as [Calm Mind](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0151_CalmMind.s), [Dragon Dance](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0152_DragonDance.s) and [Curse (non-Ghost)](https://github.com/pret/pokeheartgold/blob/master/files/battledata/script/subscript/subscript_0096_CurseNormal.s). 
+
+The following are the summarized steps for creating new battle subscripts:
+1. Unpack the battle subscript NARC from your project's DSPRE_contents folder.
+2. Make a copy of file `0000`, and rename it to the next available file ID number (for example `0297` for HeartGold/SoulSilver/Platinum or `0293` for Diamond/Pearl if this is the first new battle subscript).
+3. Open the new file in a hex editor and delete the contents.
+4. ~~Draw the owl, again~~ Make your new battle subscript! Reference the [Battle Subscripts](#battle-subscripts-1) section.
+5. Save the file (delete or move any automatically created backup files if necessary).
+6. Repack the battle subscript NARC to your project's DSPRE_contents folder (for HeartGold/SoulSilver, remove the `.narc` suffix if necessary).
+7. Take the number of the new battle subscript file, convert it to hex in little-endian format (e.g. battle subscript file `0297` is `29 01` in hex little-endian).
+   - Add extra `0`'s until the value makes up four bytes (e.g. `29 01 00 00`).
+8. Open the `synthOverlay #` file created by the **ARM9 Expansion** patch and go to the end of the subscript pointer table.
+9. Paste the hex value (four bytes) at the end of the subscript pointer table.
+   - Not every battle subscript needs to be added to this table depending on how it would be used.
+10. If this is the first new entry to the table, then this effectively becomes subscript pointer ID `145`, and so on.
+11. Save the file (delete or move any automatically created backup files if necessary).
+12. Congratulations, you now have a new battle subscript and subscript pointer to use in new battle effect scripts! This enables the creation of moves such as Coil, Shell Smash, and modern Growth. Be sure to test your new battle effects.
 
 Examples of what can be achieved by editing existing battle subscripts or adding new ones are included in the [Case Studies](#example-case-studies) section (e.g. Quiver Dance, Growth Gen V+).
+
+<details>
+<summary>The following PokePlatinum references may be helpful when creating new battle effect scripts and battle subscripts</summary>
+
+- List of battle effect script and battle subscript [commands](https://github.com/pret/pokeplatinum/blob/6e321e13e2c155fa79185a6366a7846cd904f808/include/data/scripts/btlcmd.h) and [command parameters](https://github.com/pret/pokeplatinum/blob/6e321e13e2c155fa79185a6366a7846cd904f808/asm/macros/btlcmd.inc).
+- [List of operation codes](https://github.com/pret/pokeplatinum/blob/6e321e13e2c155fa79185a6366a7846cd904f808/generated/battle_script_opcodes.txt) - For example `Set` a variable.
+- [List of types of battlers](https://github.com/pret/pokeplatinum/blob/6e321e13e2c155fa79185a6366a7846cd904f808/generated/battle_script_battlers.txt) - For example, the `Attacker` or `Defender`.
+- [List of battle variables](https://github.com/pret/pokeplatinum/blob/6e321e13e2c155fa79185a6366a7846cd904f808/generated/battle_script_vars.txt) - For example, the `Power Multiplier` variable.
+- [List of battler characteristics](https://github.com/pret/pokeplatinum/blob/6e321e13e2c155fa79185a6366a7846cd904f808/generated/battle_mon_params.txt) - For example, a battler's current `Attack_Stage`.
+- [List of battle message tags/string buffers](https://github.com/pret/pokeplatinum/blob/6e321e13e2c155fa79185a6366a7846cd904f808/generated/battle_message_tags.txt) - For example, `{Pokémon_Nickname} was badly poisoned!`.
+
+</details>
 
 ------------------------------
 
 ## Move Animations  
-Source(s): Acent, [DavveDP](https://github.com/DavveDP), [Fexty](https://github.com/Fexty12573)  
+> Source(s): Acent, [DavveDP](https://github.com/DavveDP), [Fexty](https://github.com/Fexty12573) 
+
+**Move animations** are the displayed visual (and sound) effects when a battler uses a move. Every move is uniquely associated with a move animation script. In other words, a uniquely identified move animation script is associated strictly with a specific move and may not shared.
+
+Decompiled code of each move animation script can be found in the [Platinum decompilation project](https://github.com/pret/pokeplatinum/tree/6e321e13e2c155fa79185a6366a7846cd904f808/res/moves).
+
+Below are the file locations of the **NARCs** containing move animation scripts for each game:
+| Game      | HeartGold/SoulSilver | Platinum             | Diamond/Pearl        |
+|-----------|:--------------------:|:--------------------:|:--------------------:|
+| **File**  | `/a/0/1/0`           | `/wazaeffect/we.arc` | `/wazaeffect/we.arc` |
+
+Move animation scripts can be edited in a number of ways:
+1. Direct hex editing of the move animation script files,
+2. Through setting up a decompilation project,
+3. Through setting up a HG-Engine project, 
+4. WazaEffectEditor (or WazaEditor), a tool with versions supporting HeartGold/SoulSilver and Platinum.
+
+The following sections will provide resources and guidance on modifying move animations.
+
+### Running WazaEffectEditor
 
 ![](resources/wazaeditor_v1_hgss_and_fexty_anim_cmds.png)
 
-Move animations can be edited in a number of ways (not including using decompilation projects or HG-Engine), primarily:
-1. Direct hex editing of the relevant data,
-2. A tool called WazaEffectEditor (often shortened to WazaEditor) that has a UI.
-
-For the purposes of this guide it is assumed that WazaEffectEditor will be used to edit animations. WazaEffectEditor was initially designed for Pokémon Platinum Version by Acent, and a modified variation is available for HGSS (modified by DavveDP) as well (note, it is unclear if this variation is functionally complete as it appears to be in a work in progress state on the developer's GitHub repository). The different versions can be found here: 
+WazaEffectEditor was initially designed by Acent for Pokémon Platinum. A modified variation is available for HeartGold/SoulSilver (modified by DavveDP) as well (note, it is unclear if this variation is functionally complete as it appears to be in a work in progress state on the developer's GitHub repository). The different versions can be found here: 
 - [WazaEffectEditor (Platinum)](https://drive.google.com/drive/folders/1YcRGuzTaGfNXJpO1rhb4t6GLyE2UVfaA)
-    - [Original Release](https://discord.com/channels/446824489045721090/482242795982159872/799743818797940797)
-- [WazaEffectEditor (HGSS)](https://discord.com/channels/446824489045721090/534415767454875678/1250447089067102300)
+    - [Original Release (Discord link)](https://discord.com/channels/446824489045721090/482242795982159872/799743818797940797)
+- [WazaEffectEditor (HeartGold/SoulSilver, Discord link)](https://discord.com/channels/446824489045721090/534415767454875678/1250447089067102300)
     - [GitHub Repo](https://github.com/DavveDP/Waza-Editor)
 
-There are a number of other resources which may be useful in move animation editing:
-- **Wiki Resource:** [Generation IV Move Animations list](/docs/generation-iv/resources/move_animations/)
-- **Platinum Decompilation Project**
-    - [Fexty's definitions for Move Animation Script commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790)
-    - [Decompiled Move Animation Script for each move](https://github.com/pret/pokeplatinum/tree/main/res/moves)
-- **External Resources:**
-    - [TwilightPrincess's YouTube video of all Generation IV Move Animations](https://www.youtube.com/watch?v=gukPRu2iZ_w) (time-index in the comments)
-    - [Magiscars Database's Youtube channel of Generation I-IX Move Animations](https://www.youtube.com/@magiscars/playlists) (not all moves are published yet)
-    - Nintendo Unity's Youtube [playlist of Generation I-VII Move Animations](https://www.youtube.com/playlist?list=PLsOPwXA-m0-Bk-3P3avQGg-poPESOibEw) and [video of Generation IX New Move Animations](https://www.youtube.com/watch?v=B01cWKbAEw4)
-
-
-### Running WazaEffectEditor
 The first time that WazaEffectEditor is opened a message about downloading libraries/moves from Bulbapedia may be presented, this should be accepted. This may then result in a hanging state after a few minutes. If this is the case, closing and re-opening the application should resolve and allow use of the tool.
 
-WazaEffectEditor works on the same premise as tools like DSPRE, i.e. the user selects a ROM (`.nds` file), and the tool unpacks this (using the ROM's move names and animations). When saving, the ROM is re-packed and saved (with the option to override the existing ROM file, or rename). It is important to be aware of this if edits are being done across multiple tools, as WazaEffectEditor (HGSS) doesn't interact (for example), with the unpacked contents folder that DSPRE creates.
+WazaEffectEditor works on the same premise as tools like DSPRE, i.e. the user selects a ROM (`.nds` file) or project folder, and WazaEffectEditor unpacks it (using the ROM's move names and animations). When saving, the ROM or project folder is re-packed and saved (with the option to override the existing ROM file, or rename). It is important to be aware of this if edits are being done across multiple tools, as the HeartGold/SoulSilver version of WazaEffectEditor doesn't interact with the unpacked contents folder that DSPRE creates.
+
+:::warning
+WazaEffectEditor may not be compatible with projects using **DSPRE versions 2.0+** due to file structure changes. In this case, WazaEffectEditor can either be used as a reference while directly hex editing move animation scripts, or be used with a separate project created with an older DSPRE version and copying over the move animation script NARC after edits have been made. 
+:::
 
 ### Review & Interpret Vanilla Animations
 
@@ -1124,18 +1757,17 @@ WazaEffectEditor works on the same premise as tools like DSPRE, i.e. the user se
 ![Solar Beam](resources/SolarBeam_IV.png)
 ![Hydro Pump](resources/Hydro_Pump_IV.png)
 
-Animations can be viewed in hex by unpacking the relevant NARC (see [here](#move--associated-data-structure) for NARC details), or by viewing in WazaEffectEditor. Once opened, having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) can be invaluable in interpreting what is happening. Only some commands are named in WazaEffectEditor, whereas almost all have been named by Fexty.
+Move animation scripts can be viewed and edited either in hex by unpacking the move animation script NARC, or by using in WazaEffectEditor. When using WazaEffectEditor, having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) can be invaluable in interpreting what is happening as only some commands are fully named.
 
-Lots of animations have common components, and some similar animations have similar patterns (such as charging or recharge moves having different animations on the first and second turn).
+Move animations call from common animation components, and similar animations will have similar patterns (such as charging or recharge moves having different animations on the first and second turn).
 
-There are four main types of animation components/instructions:
-1. **Sprite translations** - where the user or target Pokemon sprite is rotated, scaled or translated (moved).
-2. **"Particles"** - where new visual elements are added "on top" of the view in battle.
-    - "Particles" translations.
-3. **Backgrounds** - where the current background is replaced with a unique colour/design background.
-4. **Sound Effects** - where custom or situational sounds are played.
+There are four main types of animation components:
+1. **Animation Particle Systems** - files containing the literal visual elements to be used in move animation scripts.
+2. **Battle sprite translations and movements** - where a battler's sprite is rotated, scaled or translated (moved).
+3. **Backgrounds** - where the current background is replaced with a unique colour or design.
+4. **Sound Effects** - where sounds are played.
 
-A simple animation (Pound) is shown below in three different formats, to illustrate how interpreting an animation can be done. Line-breaks have been inserted into the hex representation to illustrate the mapping between the different formats:
+The move animation for Pound is shown below in four different formats (Hex, WazaEffectEditor, WazaEffectEditor with Fexty's Command Names, and PokePlatinum decompiled code), to illustrate how interpreting an animation can be done. Line-breaks have been inserted into the hex representation to illustrate the mapping between the different formats:
 
 <details>
 <summary>Pound (Hex)</summary>
@@ -1224,52 +1856,62 @@ BattleAnimScriptCmd_End
 ```
 </details>
 
-With nothing more than these resources, and a basic understanding of what happens (and can happen) in a Pokemon battle generally, and with the specific move, we can infer a few things from Pound (many are applicable to other moves).
+<details>
+<summary>Pound (PokePlatinum Decompiled Code)</summary>
+```
+L_0:
+    LoadParticleResource 0, pound_spa
+    CreateEmitter 0, 1, EMITTER_CB_SET_POS_TO_DEFENDER
+    CreateEmitter 0, 0, EMITTER_CB_SET_POS_TO_DEFENDER
+    Func_Shake 1, 0, 1, 2, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
+    PlaySoundEffectR SEQ_SE_DP_030
+    WaitForAllEmitters
+    UnloadParticleSystem 0
+    End
+```
+</details>
+
+With nothing more than these resources, and a basic understanding of what happens (and can happen) in a Pokémon battle generally, and with the specific move, can be inferred.
 
 The move animation goes through some decipherable steps (with some obscured detail):
-1. Initialise the animation particle system
-2. Load resources and specific sprites
-4. Call some specific functions
-5. Load the animation particle system
-6. Remove sprites
-7. Initiate/play the specific animation particle(s) (in this case concurrently)
-8. Call some specific functions
-9. Play a sound effect
-10. Wait for the animations to end
-11. Unload the animation particle system
-12. End
+1. Initialise and load (dummy?) Pokémon battle sprites
+2. Load an animation particle system
+3. Play certain visual elements from the animation particle system and apply them to certain battlers
+4. Call various functions and apply them to certain battlers
+5. Play a sound effect
+7. Explicitly wait for the animations elements to end
+8. Unload the animation particle system
+9. End
 
-Various other things can be inferred:
-- The animation particle system must be loaded and unloaded before and after the animations play.
-    - The unique animation particle system to load is specified in the second parameter of the `SetPlayAnim` (WazaEffectEditor name) or `LoadParticleSystem` (Fexty's name) command.
-    - The animation particle system is also given a local ID to be referenced by later commands, and is specified in the first parameter of the `SetPlayAnim` or `LoadParticleSystem` command.
-- Each unique animation particle system has a number of actual animation particles within it, which is initiated using the `LoadAnim` (WazaEffectEditor name) or `CreateEmitter` (Fexty's name) command.
-    - The second parameter of the `LoadAnim` or `CreateEmitter` command is what invokes the actual animation particle to play.
-    - The first parameter of the `LoadAnim` or `CreateEmitter` command specifies from which loaded animation particle system (via local ID) to invoke the actual animation particle.
-    - And finally, the third parameter of the `LoadAnim` or `CreateEmitter` command specifies to which battler to apply the actual animation particle.
-- When animations particles are initiated, there will be a wait command to ensure the animation finishes.
-    - The wait command does not necessarily have to follow immediately after initiating the animation particle, but must be present before ending the move animation script.
-
+Various other things can be inferred as well:
+- The animation particle system must be loaded in order to use its visual elements, and must be unloaded at some point before the script ends.
+    - The unique animation particle system to load is specified in the second parameter of the `SetPlayAnim` (WazaEffectEditor name), `LoadParticleSystem` (Fexty's name), or `LoadParticleResource` (PokePlatinum) command (`33 00 00 00` in hex).
+    - The animation particle system is also given a local ID to be referenced by later commands, and is specified in the first parameter of the same load command.
+- Each unique animation particle system has a number of literal visual elements within it, to which a specific visual element is played using the `LoadAnim` (WazaEffectEditor name) or `CreateEmitter` (Fexty's name and PokePlatinum) command (`2E 00 00 00` in hex).
+    - The first parameter of the `LoadAnim` or `CreateEmitter` command specifies from which loaded animation particle system (via local ID) to invoke the visual elements from.    
+    - The second parameter of the same command is what invokes which visual element of said loaded animation particle system to play.
+    - And finally, the third parameter specifies to which battler to apply the actual animation particle.
+- When visual elements are initiated, there will be a wait command to ensure the animation finishes. The wait command does not necessarily have to follow immediately after playing the visual element, but must be present before ending the move animation script.
 
 To learn more, more complex move animations can be reviewed:
 - Such as two-turn moves like SolarBeam, where an initialisation and two sets of animations can be seen, managed with the command:
     - `CheckTurn` (WazaEffectEditor name) / `ov12_02220F30/BtlAnimCmd_013` (unnamed in the Platinum Decompilation project).
-- A move that includes a background being generated, e.g. Hydro Pump, which uses the commands:
+- A move that includes a background transition, e.g. Hydro Pump, which uses the commands:
     -  `ChangeBackG` (WazaEffectEditor name) / `BattleAnimScriptCmd_SwitchBg` (Fexty's name), 
     -  `WaitBack2` / `BattleAnimScriptCmd_WaitForBgSwitch` &
     -  `BackBackG` / `BattleAnimScriptCmd_RestoreBg`.
-- A move that hits both opponents or all battlers on the field, where a particle animation may be applied to a certain side instead of an individual battler, e.g. Twister, which may use the following parameters in the `LoadAnim` or `CreateEmitter` command:
+- A move that hits both opponents or all battlers on the field, where a visual element may be applied to a certain side instead of an individual battler, e.g. Twister, which may use the following targeting parameters in the `LoadAnim` or `CreateEmitter` command:
     - `0x4` (WazaEffectEditor value) / `EMITTER_CB_SET_POS_TO_DEFENDER_SIDE` (Fexty's name) or
     - `0x11` / `EMITTER_CB_GENERIC`.
-- A move that combines multiple animation particle systems and plays their actual particle animations concurrently, e.g. Dig, which is managed by:
+- A move that combines multiple animation particle systems and plays their visual elements concurrently, e.g. Dig, which is managed by:
     - Loading the Dig animation particle system with a local ID of `0`,
-    - Loading the Pound animation particle system with a local ID of `1` &
-    - Specifying the animation particle system (via local ID) in the first parameter of each `LoadAnim` or `CreateEmitter` command.
+    - Loading the Pound animation particle system with a local ID of `1`, 
+    - Then specifying the animation particle system (via local ID) in the first parameter of each `LoadAnim` or `CreateEmitter` command.
 
 ### Replace one Animation for another
 A wholesale replacement of one animation with another is straightforward. Either a hex editor or WazaEffectEditor could be used to copy the entire animation and paste it into the animation file for another move.  
-Since WazaEffectEditor directly interacts with the ROM (`.nds` file), changes can be made in its user interface and saved, and be applied to the ROM.  
-If editing the Move Animations NARC in a hex editor such as HxD:
+  
+If editing the move animation script NARC in a hex editor:
 1. The [NARC must be unpacked](/docs/universal/guides/unpacking_narcs/),
 2. The file(s) [edited in the hex editor](/docs/universal/guides/hex_editing/),
 3. Backup (e.g. `.bak`) files moved out of the folder,
@@ -1277,17 +1919,41 @@ If editing the Move Animations NARC in a hex editor such as HxD:
 5. The ROM re-built using the NARC (e.g. using DSPRE), &
 6. The ROM saved as a `.nds` file.
 
-Some elements of the animation are dependent upon the move effects. For example, if a single-turn move is given the vanilla animation of a two-turn move, only the first turn's animation will play, without further edits.
+Some elements of the animation are dependent upon the move's battle effect. For example, if a single-turn move is given the vanilla animation of a two-turn move, only the first turn's animation will play, without further edits.
 
-### Edit Animation Elements
-Editing individual elements of a move animation is straightforward with the above understanding, but may require some trial and testing to get the desired result. Often the basis for these changes is to identify the elements to change, and identify any existing moves that use the same patterns.  
+### Considerations and References
+Editing a move animation script is straightforward with the above understanding, but may require some trial and testing to get the desired result. Often the basis for these changes is to identify the elements to change, and identify any existing moves that use the same patterns.  
 
 Changes such as the below are all relatively simple:
-- Add/remove/change particle animations from existing options
+- Add/remove/change particle animation systems from existing options
 - Add/remove/change background animations from existing options
 - Add/remove/change sound effects from existing options
 - Change a one-turn animation into a two-turn animation
 - Change a two-turn animation into a one-turn animation
+
+<details>
+<summary>The following are resources for viewing vanilla move animations to get ideas for how to take elements of them and build custom animations.</summary>
+
+- [**This wiki! - Generation IV (HeartGold/SoulSilver Move Animations**](/docs/generation-iv/resources/move_animations/) - Sourced/linked from Bulbapedia, filterable & sortable table.
+- [**TwilightPrincess (YouTube) - Generation IV (Platinum) Move Animations**](https://www.youtube.com/watch?v=gukPRu2iZ_w) - Time-index in the comments, ordered by Move ID.
+- [**Magiscars Database (Youtube) - Generation I-IX Move Animations**](https://www.youtube.com/@magiscars/playlists) - Not all moves are published yet.
+- **Nintendo Unity (Youtube) - [Generation I-VII](https://www.youtube.com/playlist?list=PLsOPwXA-m0-Bk-3P3avQGg-poPESOibEw) and [Generation IX](https://www.youtube.com/watch?v=B01cWKbAEw4) Move Animations**
+
+</details>
+
+<details>
+<summary>The following resources are from the PokePlatinum decompilation project and may be helpful for cross-referencing commands and parameters:</summary>
+
+- Decompiled code of each [move animation script](https://github.com/pret/pokeplatinum/tree/6e321e13e2c155fa79185a6366a7846cd904f808/res/moves)
+- [Indexed list](https://github.com/Fexty12573/pokeplatinum/blob/13213bf0417feef5e058d4e251d24e10bbe8bc9d/src/battle_anim/battle_anim_system.c#L790) of commands that can be used in move animation scripts
+- Move animation [command parameters](https://github.com/pret/pokeplatinum/blob/6e321e13e2c155fa79185a6366a7846cd904f808/include/constants/battle/battle_anim.h), including:
+   - Background transition types
+   - Battler sprite targets (to apply animation particle system visual elements to)
+   - Battler sprite targets (for other various functions to apply their effect to)
+   - Battler sprite translation and movement types
+   - Available colors (i.e. the color to fade a background or sprite to)
+
+</details>
 
 ------------------------------
 
@@ -1761,7 +2427,7 @@ The steps required to turn a move into a trapping move are:
 3. Configuring the 'End of Turn' trapping animation to play each turn that the trapping effect is present.
 
 #### Editing Move Data
-This can be accomplished in DSPRE, and is covered earlier in this guide, under the section titled [Basic Move Data (DSPRE)](#basic-move-data-dspre).
+This can be accomplished in DSPRE, and is covered earlier in this guide, under the section titled [Basic Move Data](#basic-move-data).
 
 #### Initial Trapping Text
 > Source(s): [Aero (2025)](https://discord.com/channels/446824489045721090/920372513488404542/1417851311000387605)  
@@ -3298,7 +3964,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 4. Edit the move animation
 5. Edit the required Pokémon learnsets
 
-> Note: the alternate method to achieve this is described in Drayano's tutorial, [linked above](#backporting-stat-changing-moves).
+> Note: the alternate method to achieve this is described in Drayano's tutorial, [linked above](#creating-new-battle-effect-scripts).
 
 ![](resources/case_study_quiver_dance.gif)  
 
@@ -3956,15 +4622,11 @@ The steps outlined in the [TMs & HMs section](#technical--hidden-machines-tms--h
 
 > Author: Lmaokai
 
-:::warning
-The following steps are for Pokémon Platinum (US).
-:::
-
 In this case study, the move Growth will be updated to match Gen V+ behavior. In Gen IV, Growth only raises the user's Special Attack by 1 stage. Starting in Gen V, Growth raises the user's Attack and Special Attack by 1 stage, and in Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages instead.
 
-Although the vanilla Generation IV games do not have any moves that specifically raises the user's Attack **and** Special Attack stat (by either 1 or 2 stages), this effect can still be achieved with two methods. The first method is simpler and will follow the approach described in Drayano's tutorial, [linked above](#backporting-stat-changing-moves). The second method is more complex, but provides a cleaner effect as shown in the comparison below.
+Although the vanilla Generation IV games do not have any moves that specifically raises the user's Attack **and** Special Attack stat (by either 1 or 2 stages), this effect can still be achieved with two methods. The first method is simpler and will follow the approach described in Drayano's tutorial, [linked above](#creating-new-battle-effect-scripts). The second method is more complex, but provides a cleaner effect as shown in the comparison below.
 
-Then, to add the interaction with Harsh Sunlight, certain logic from the move effect script associated with SolarBeam can be copied, with some adjustments. 
+Then, to add the interaction with Harsh Sunlight, certain logic from the battle effect script associated with SolarBeam can be copied, with some adjustments. 
 
 | Method One (two stat change animations)           | Method Two (single stat change animation)      |
 |:-------------------------------------------------:|:----------------------------------------------:|
@@ -3974,38 +4636,51 @@ Then, to add the interaction with Harsh Sunlight, certain logic from the move ef
 <summary>**Method One (two stat change animations)**</summary>
 
 This method will comprise of the following steps:
-1. Unpack the Move Effect Scripts NARC `be_seq.narc`
-2. Create and edit a new Move Effect Script file
-3. Save the new file and pack the Move Effect Scripts NARC
+1. Unpack the battle effect script NARC
+2. Create and edit a new battle effect script file
+3. Save the new file and pack the battle effect script NARC
 4. Edit Growth's move data
 5. Test the changes and other tasks
 
-##### Step 1: Unpack the Move Effect Scripts NARC `be_seq.narc`
-1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Move Effect Scripts NARC located at `/battle/skill/be_seq.narc`.
+##### Step 1: Unpack the battle effect script NARC
+1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the battle effect script NARC.
 2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
-3. If you've never unpacked `be_seq.narc` before, you should have 277 files in this folder (with the first file numbered as `0000` and last file numbered as `0276` because these files are zero-indexed).
+3. If you've never unpacked this NARC before, there should be 277 files in this folder (for all games, with the first file numbered as `0000` and last file numbered as `0276` because these files are zero-indexed).
 
-##### Step 2: Create and edit a new Move Effect Script file
+##### Step 2: Create and edit a new battle effect script file
 1. Using any hex editor of your choice, create a new blank file.
 2. Paste the following:
-```
-D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00 00 32 00 00 00 07 00 00 00 02 00 00 00 0F 00 00 40 32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 60 DE 00 00 00 32 00 00 00 07 00 00 00 02 00 00 00 27 00 00 40 32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 60 DE 00 00 00
-```
-3. Here is a breakdown of the logic:
-    - `D3 00 00 00 05 00 00 00` - These values are based on move effect script 151 (see more info from the Platinum Decompilation project [here](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/effects/effect_script_0151.s)). They check if **Cloud Nine** or **Air Lock** are in effect, and if so, the next 5 words are skipped (a word is 4 bytes, each hexadecimal pair is a single byte). Essentially, this skips the following bytes that check for Harsh Sunlight, and instead continues with the logic that raises the user's Attack and Special Attack by 1 stage.
-    - `20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00 00` - These values are also based on move effect script 151. They check if the weather is Harsh Sunlight, and if so, the next 9 words are skipped to instead continue with the logic that raises the user's Attack and Special Attack by 2 stages.
-    - `32 00 00 00 07 00 00 00 02 00 00 00 0F 00 00 40` - Sets the **direct side effect** to invoke the move effect subscript that raises Attack by 1 stage, and to apply that effect to the attacker.
-    - `32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 60` - Sets the **indirect side effect** to invoke the move effect subscript that raises Special Attack by 1 stage, and to apply that effect to the attacker if the move successfully executes. 
-        - Alternatively, `32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 80` can be used, but requires setting the move data's `Side Effect Probability` to `100`.
-    - `DE 00 00 00` - This is the `End` command for Platinum, which ends the execution of the move effect script.
-    - `32 00 00 00 07 00 00 00 02 00 00 00 27 00 00 40` - Sets the **direct side effect** to invoke the move effect subscript that raises Attack by 2 stages, and to apply that effect to the attacker.
-    - `32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 60` - Sets the **indirect side effect** to invoke the move effect subscript that raises Special Attack by 2 stages, and to apply that effect to the attacker if the move successfully executes. 
-        - Alternatively, `32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 80` can be used, but requires setting the move data's `Side Effect Probability` to `100`.
-    - `DE 00 00 00` - `End` command for Platinum
 
-##### Step 3: Save the new file and pack the Move Effect Scripts NARC
-1. Save this file as `0277` to your unpacked `be_seq.narc` folder (assuming new files haven't been added already).
-2. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `be_seq.narc` folder back to `/battle/skill/be_seq.narc`.
+```
+D3 00 00 00 05 00 00 00 
+20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00 00 
+32 00 00 00 07 00 00 00 02 00 00 00 0F 00 00 40 
+32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 60 
+DE 00 00 00 
+32 00 00 00 07 00 00 00 02 00 00 00 27 00 00 40 
+32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 60 
+DE 00 00 00
+```
+
+<details>
+<summary>Breakdown of the logic</summary>
+
+- `D3 00 00 00 05 00 00 00` - Check if *Cloud Nine* or *Air Lock* are in effect, and if so, the next 5 words are skipped (a word is 4 bytes, each hexadecimal pair is a single byte). 
+- `20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00 00` - Check if the weather is *Harsh Sunlight*, and if so, the next 9 words are skipped.
+- `32 00 00 00 07 00 00 00 02 00 00 00 0F 00 00 40` - Sets the **direct side effect** to invoke the subscript pointer that raises Attack by 1 stage, and to apply that effect to the attacker.
+- `32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 60` - Sets the **indirect side effect** to invoke the subscript pointer that raises Special Attack by 1 stage, and to apply that effect to the attacker if the move successfully executes. 
+    - Alternatively, `32 00 00 00 07 00 00 00 03 00 00 00 12 00 00 80` can be used, but requires setting the move data's `Side Effect Probability` to `100`.
+- `DE 00 00 00` - `End` command for Platinum (see [Breaking Down Battle Effect Script `000` (Hex)](#breaking-down-battle-effect-script-000-hex)).
+- `32 00 00 00 07 00 00 00 02 00 00 00 27 00 00 40` - Sets the **direct side effect** to invoke the subscript pointer that raises Attack by 2 stages, and to apply that effect to the attacker.
+- `32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 60` - Sets the **indirect side effect** to invoke the subscript pointer that raises Special Attack by 2 stages, and to apply that effect to the attacker if the move successfully executes. 
+    - Alternatively, `32 00 00 00 07 00 00 00 03 00 00 00 2A 00 00 80` can be used, but requires setting the move data's `Side Effect Probability` to `100`.
+- `DE 00 00 00` - `End` command for Platinum.
+
+</details>
+
+##### Step 3: Save the new file and pack the battle effect script NARC
+1. Save this file as `0277` to your unpacked battle effect script NARC folder (assuming new files haven't been added already).
+2. Use DSPRE's `Build NARC from Folder` tool to pack NARC.
 
 ##### Step 4: Edit Growth's move data
 1. Open DSPRE's Move Data Editor and select the move Growth.
@@ -4018,7 +4693,7 @@ D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00
     - Under non-Harsh Sunlight weather conditions, Growth raises the user's Attack and Special Attack by 1 stage.
     - In Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages.
     - In Harsh Sunlight, but with either the abilities Cloud Nine or Air Lock in effect, Growth raises the user's Attack and Special Attack by 1 stage.
-2. If Growth works as expected, great! Make sure to update the Move Description (Platinum - `Text Archive 646`, line 74) as well to reflect these changes.
+2. If Growth works as expected, great! Make sure to update the move description as well to reflect these changes (see [Move Name & Description](#move-name--description)).
 
 | Growth (Normal)                                      | Growth (Sun)                                      |
 |:----------------------------------------------------:|:-------------------------------------------------:|
@@ -4031,93 +4706,87 @@ D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 09 00 00
 
 This method will comprise of the following steps:
 1. Apply the **ARM9 Expansion** patch
-2. Move the Move Effect Subscript Pointer Table
-3. Unpack the Battle Subscripts NARC `sub_seq.narc`
-4. Create and save a new Battle Subscript file
-5. Create and save a second new Battle Subscript file
-6. Pack the Battle Subscripts NARC
-7. Add new entries to the Move Effect Subscript Pointer Table
-8. Unpack the Move Effect Scripts NARC `be_seq.narc`
-9. Create and edit a new Move Effect Script file
-10. Save the new file and pack the Move Effect Scripts NARC
+2. Move the subscript pointer table
+3. Unpack the battle subscripts NARC
+4. Create and save a new battle subscript file
+5. Create and save a second new battle subscript file
+6. Pack the battle subscripts NARC
+7. Add new entries to the subscript pointer table
+8. Unpack the battle effect script NARC
+9. Create and edit a new battle effect script file
+10. Save the new file and pack the battle effect script NARC
 11. Edit Growth's move data
 12. Test the changes and other tasks
 
 ##### Step 1: Apply the ARM9 Expansion patch
-1. If you haven't already, use the latest version of [DSPRE](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the **ARM9 Expansion** patch. 
-2. Verify that the `/unpacked/synthOverlay/0009` file (`synthOverlay 9`) size is 88 KB or 90,112 bytes.
-3. If your file is not the correct size, or if you've applied a different version of the ARM9 Expansion, please ask for assistance in the [Kingdom of DS Hacking Discord support channels](https://discord.com/channels/446824489045721090/446865033310240769).
+1. If you haven't already, use the latest version of [**DSPRE**](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the **ARM9 Expansion** patch.
+2. This will repurpose an unused file (`/unpacked/synthOverlay/0000` for HeartGold/SoulSilver and `/unpacked/synthOverlay/0009` for Diamond/Pearl/Platinum) and increase the file's size to `88` KiB (`90,112` or `0x15FFF` bytes).
+3. This repurposed file should be entirely zeroes and will be referred to as `synthOverlay #` moving forward (i.e. `synthOverlay 0` for HeartGold/SoulSilver and `synthOverlay 9` for Diamond/Pearl/Platinum).
 
-##### Step 2: Move the Move Effect Subscript Pointer Table
-1. If you've followed this [Platinum Fairy Implementation Guide](../type_expansion/pt-type_expansion.md), this step will already be complete, but you can still follow along to verify.
-2. Using any hex editor of your choice, open `/arm9_overlays/ov016.bin` (`Overlay 16`) and go to offset `0x33CE4`. You will see the following bytes:
-```
-00 00 00 00 12 00 00 00 16 00 00 00 19 00 00 00...
-```
-3. This is the start of the move effect subscript pointer table that points move effect subscripts to the relevant battle subscript.
-4. From offset `0x33CE4`, copy the next `0x244` (`580`) bytes. Alternatively, you can copy the following bytes instead:
-```
-00 00 00 00 12 00 00 00 16 00 00 00 19 00 00 00 1B 00 00 00 1F 00 00 00 2F 00 00 00 25 00 00 00 0E 00 00 00 37 00 00 00 38 00 00 00 30 00 00 00 0D 00 00 00 3A 00 00 00 3F 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 40 00 00 00 42 00 00 00 55 00 00 00 56 00 00 00 5D 00 00 00 77 00 00 00 73 00 00 00 82 00 00 00 8A 00 00 00 93 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 0C 00 00 00 2C 00 00 00 8E 00 00 00 95 00 00 00 96 00 00 00 94 00 00 00 97 00 00 00 98 00 00 00 18 00 00 00 21 00 00 00 22 00 00 00 23 00 00 00 2B 00 00 00 2D 00 00 00 2E 00 00 00 31 00 00 00 34 00 00 00 36 00 00 00 3E 00 00 00 43 00 00 00 44 00 00 00 46 00 00 00 49 00 00 00 4D 00 00 00 4E 00 00 00 4F 00 00 00 50 00 00 00 51 00 00 00 52 00 00 00 54 00 00 00 57 00 00 00 58 00 00 00 59 00 00 00 5B 00 00 00 5C 00 00 00 5F 00 00 00 60 00 00 00 61 00 00 00 7E 00 00 00 64 00 00 00 65 00 00 00 67 00 00 00 69 00 00 00 6A 00 00 00 6D 00 00 00 70 00 00 00 71 00 00 00 72 00 00 00 78 00 00 00 7A 00 00 00 7B 00 00 00 7C 00 00 00 7D 00 00 00 7F 00 00 00 80 00 00 00 81 00 00 00 83 00 00 00 84 00 00 00 86 00 00 00 87 00 00 00 8C 00 00 00 8D 00 00 00 8F 00 00 00 91 00 00 00 9A 00 00 00 9B 00 00 00 9C 00 00 00 9E 00 00 00 9F 00 00 00 A0 00 00 00 A1 00 00 00 A2 00 00 00 A3 00 00 00 A4 00 00 00 A5 00 00 00 A6 00 00 00 A7 00 00 00 A8 00 00 00 AA 00 00 00 AB 00 00 00 AD 00 00 00 AF 00 00 00 DA 00 00 00 DB 00 00 00 DC 00 00 00 E2 00 00 00 F6 00 00 00 F7 00 00 00 F8 00 00 00 F9 00 00 00 04 01 00 00 05 01 00 00 76 00 00 00
-```
-5. Open `synthOverlay 9` in your hex editor and go to offset `0x1000`. Make sure there is no actual data here.
-    - If you've followed this [Platinum Fairy Implementation Guide](../type_expansion/pt-type_expansion.md), the correct bytes should already be at this offset.
-    - If you have other data at this offset, either move that data, or find another free location and make note of the offset.
-6. Paste/overwrite the copied bytes at that offset.
-7. Go back to `Overlay 16` in your hex editor and go to offset `0x204F8`. Replace `24 EE 26 02` with `00 90 3C 02`. This tells the game the new location of the move effect subscript pointer table.
-    - If you pasted the table at an offset other than `0x1000`, see [here](https://ds-pokemon-hacking.github.io/docs/generation-iv/guides/type_expansion/pt-type_expansion#making-space-for-the-new-type-chart) on how to calculate the location.
-8. Save the files back to their respective `project_name_DSPRE_contents` folder.
-9. Save your ROM, get in a battle, and test as many moves as possible to make sure the game doesn't crash or produce graphical glitches.
+##### Step 2: Move the subscript pointer table
+1. Refer to the [Moving the Subscript Pointer Table](#moving-the-subscript-pointer-table) section.
 
-##### Step 3: Unpack the Battle Subscripts NARC `sub_seq.narc`
-1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Battle Subscripts NARC located at `/battle/skill/sub_seq.narc`.
+##### Step 3: Unpack the battle subscripts NARC
+1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the battle subscripts NARC.
 2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
-3. If you've never unpacked `sub_seq.narc` before, you should have 297 files in this folder (with the first file numbered as `0000` and last file numbered as `0296` because these files are zero-indexed).
+3. If you've never unpacked this NARC before, you should have 297 files (293 files for Diamond/Pearl) in this folder (with the first file numbered as `0000` and last file numbered as `0296`, or `0292` for Diamond/Pearl, because these files are zero-indexed).
 
-##### Step 4: Create and save a new Battle Subscript file
-1. The first battle subscript will handle raising Attack and Special Attack by 1 stage. Vanilla Platinum has a few existing battle subscripts that raise two different stats by 1 stage, which we can copy and modify.
-2. Open the unpacked `sub_seq.narc` folder, make a copy of file `0152` and rename it `0297` (if you have already added files here, use the next available number). File `0152` is the battle subscript that specifically raises Attack and Speed by 1 stage (see more info from the Platinum Decompilation project [here](https://github.com/pret/pokeplatinum/blob/main/res/battle/scripts/subscripts/subscript_user_atk_and_speed_up_1_stage.s)).
-3. Open up the new `0297` file in any hex editor and go to offset `0x24`. You should see `15 00 00 00` which is part of the command that checks the Pokémon's Speed stat stage. Replace it with `16 00 00 00` to check Special Attack instead.
-4. Go to offset `0x8C`. You should see `11 00 00 00` which is the move effect subscript that raises Speed by 1 stage. Replace it with `12 00 00 00` to change the effect to raise Special Attack by 1 stage.
-5. Save the `0297` file back to the unpacked `sub_seq.narc` folder.
+##### Step 4: Create and save a new battle subscript file
+1. The first battle subscript will handle raising Attack and Special Attack by 1 stage. 
+2. Open the unpacked battle subscripts folder, make a copy of file `0152` and rename it `0297` (or `0293` for Diamond/Pearl, if you have already added files here, use the next available number). File `0152` is the battle subscript that raises Attack and Speed by 1 stage.
+3. Open up the new file in any hex editor and go to offset `0x24`. You should see `15 00 00 00` which is a parameter that checks the Pokémon's Speed stat stage. Replace it with `16 00 00 00` to check Special Attack instead.
+4. Go to offset `0x8C`. You should see `11 00 00 00` which is the susbcript pointer that raises Speed by 1 stage. Replace it with `12 00 00 00` to change the effect to raise Special Attack by 1 stage.
+5. Save the file back to the unpacked battle subscripts folder.
 
-##### Step 5: Create and save a second new Battle Subscript file
+##### Step 5: Create and save a second new battle subscript file
 1. The second battle subscript will handle raising Attack and Special Attack by 2 stages. This will mirror the previous step, but adjusted to raise Attack and Special Attack by 2 stages.
-2. Open the unpacked `sub_seq.narc` folder, make a copy of file `0297` and rename it `0298`.
+2. In the unpacked battle subscript folder, make a copy of file `0297` (or whatever number you gave the previous file) and rename it `0298` (or the next available number).
 3. Open up the new `0298` file in any hex editor and go to offset `0x74`. Replace `0F 00 00 00` with `27 00 00 00` to change the effect to raise Attack by 2 stages.
-4. Open up the new `0298` file in any hex editor and go to offset `0x8C`. Replace `12 00 00 00` with `2A 00 00 00` to change the effect to raise Special Attack by 2 stages.
-5. Save the `0298` file back to the unpacked `sub_seq.narc` folder.
+4. Go to offset `0x8C`. Replace `12 00 00 00` with `2A 00 00 00` to change the effect to raise Special Attack by 2 stages.
+5. Save the file back to the unpacked battle subscripts folder.
 
-##### Step 6: Pack the Battle Subscripts NARC
-1. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `sub_seq.narc` folder back to `/battle/skill/sub_seq.narc`.
+##### Step 6: Pack the battle subscripts NARC
+1. Use DSPRE's `Build NARC from Folder` tool to pack the NARC.
 
-##### Step 7: Add new entries to the Move Effect Subscript Pointer Table
-1. Go back to `synthOverlay 9` in your hex editor and go to offset `0x1244`. This should be right after the end of the table you moved previously.
-2. Assuming you haven't added new entries here already, overwrite the next 8 bytes with `29 01 00 00 2A 01 00 00`. 
-3. This essentially adds two new **move effect subscripts** entries or IDs, `145` and `146`, that will point to the two new **battle subscript** files, respectively. 
-4. Save the file back to `/unpacked/synthOverlay/0009`.
+##### Step 7: Add new entries to the subscript pointer table
+1. Open the `synthOverlay #` file modified by the **ARM9 Expansion** patch in the hex editor and go to offset `0x1244`. This should be right after the end of the subscript pointer table you moved previously.
+2. Assuming you haven't added new entries here already, overwrite the next 8 bytes with `29 01 00 00 2A 01 00 00` (i.e. 297 and 298, the new battle subscript files we created; use the appropriate numbers otherwise). 
+3. This adds two new subscript pointer IDs, `145` and `146` (assuming these are the first new entries to the table), that will point to the two new battle subscript files, respectively. 
+4. Save the file.
 
-##### Step 8: Unpack the Move Effect Scripts NARC `be_seq.narc`
-1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the Move Effect Scripts NARC located at `/battle/skill/be_seq.narc.`
+##### Step 8: Unpack the battle effect script NARC
+1. Use DSPRE's `Unpack NARC to Folder` tool to unpack the battle effect script NARC.
 2. Make sure to save the resulting unpacked folder outside of the `project_name_DSPRE_contents` folder
-3. If you've never unpacked `be_seq.narc` before, you should have 277 files in this folder (with the first file numbered as `0000` and last file numbered as `0276` because these files are zero-indexed).
+3. If you've never unpacked this NARC before, you should have 277 files in this folder (for all games, with the first file numbered as `0000` and last file numbered as `0276` because these files are zero-indexed).
 
-##### Step 9: Create and edit a new Move Effect Script file
+##### Step 9: Create and edit a new battle effect script file
 1. Using any hex editor of your choice, create a new blank file.
 2. Copy and paste the following bytes:
-```
-D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00 00 32 00 00 00 07 00 00 00 02 00 00 00 91 00 00 40 DE 00 00 00 32 00 00 00 07 00 00 00 02 00 00 00 92 00 00 40 DE 00 00 00
-```
-3. Here is a breakdown of the logic:
-    - `D3 00 00 00 05 00 00 00` - Check if **Cloud Nine** or **Air Lock** are in effect, and if so, skip to the logic that raises the user's Attack and Special Attack by 1 stage.
-    - `20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00 00` - Check if the weather is Harsh Sunlight, and if so, skip to the logic that raises the user's Attack and Special Attack by 2 stages.
-    - `32 00 00 00 07 00 00 00 02 00 00 00 91 00 00 40` - Sets the **direct side effect** to invoke the newly added move effect subscript (entry `145`, or `91` in hexadecimal), which will point to the new battle subscript that raises Attack and Special Attack by 1 stage. This command also specifies that the effect should apply to the attacker.
-    - `DE 00 00 00` - `End` command for Platinum.
-    - `32 00 00 00 07 00 00 00 02 00 00 00 92 00 00 40` - Sets the **direct side effect** to invoke the newly added move effect subscript (entry `146`, or `92` in hexadecimal), which will point to the new battle subscript that raises Attack and Special Attack by 2 stages. The command also specifies that the effect should apply to the attacker.
-    - `DE 00 00 00` - `End` command
 
-##### Step 10: Save the new file and pack the Move Effect Scripts NARC
-1. Save this file as `0277` to your unpacked `be_seq.narc` folder (assuming new files haven't been added already).
-2. Use DSPRE's `Build NARC from Folder` tool to pack the unpacked `be_seq.narc` folder back to `/battle/skill/be_seq.narc`.
+```
+D3 00 00 00 05 00 00 00 
+20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00 00 
+32 00 00 00 07 00 00 00 02 00 00 00 91 00 00 40 
+DE 00 00 00 
+32 00 00 00 07 00 00 00 02 00 00 00 92 00 00 40 
+DE 00 00 00
+```
+
+<details>
+<summary>Breakdown of the logic</summary>
+
+- `D3 00 00 00 05 00 00 00` - Check if *Cloud Nine** or **Air Lock* are in effect, and if so, skip to the logic that raises the user's Attack and Special Attack by 1 stage.
+- `20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00 00` - Check if the weather is *Harsh Sunlight*, and if so, skip to the logic that raises the user's Attack and Special Attack by 2 stages.
+- `32 00 00 00 07 00 00 00 02 00 00 00 91 00 00 40` - Sets the **direct side effect** to invoke the newly added subscript pointer (entry `145`, or `0x91` in hexadecimal), which will point to the new battle subscript that raises Attack and Special Attack by 1 stage. This command also specifies that the effect should apply to the attacker.
+- `DE 00 00 00` - `End` command for Platinum (see [Breaking Down Battle Effect Script `000` (Hex)](#breaking-down-battle-effect-script-000-hex))..
+- `32 00 00 00 07 00 00 00 02 00 00 00 92 00 00 40` - Sets the **direct side effect** to invoke the newly added subscript pointer (entry `146`, or `0x92` in hexadecimal), which will point to the new battle subscript that raises Attack and Special Attack by 2 stages. The command also specifies that the effect should apply to the attacker.
+- `DE 00 00 00` - `End` command
+
+</details>
+
+##### Step 10: Save the new file and pack the battle effect script NARC
+1. Save this file as `0277` to your unpacked battle effect script folder (assuming new battle effect script files haven't been added already).
+2. Use DSPRE's `Build NARC from Folder` tool to pack the NARC.
 
 ##### Step 11: Edit Growth's move data
 1. Open DSPRE's Move Data Editor and select the move Growth.
@@ -4131,7 +4800,7 @@ D3 00 00 00 05 00 00 00 20 00 00 00 04 00 00 00 07 00 00 00 30 00 00 00 05 00 00
     - In Harsh Sunlight, Growth raises the user's Attack and Special Attack by 2 stages.
     - In Harsh Sunlight, but with either the abilities Cloud Nine or Air Lock in effect, Growth raises the user's Attack and Special Attack by 1 stage.
     - There should only be one animation to indicate that both Attack and Special Attack rose.
-2. If Growth works as expected, great! Make sure to update the Move Description (Platinum - `Text Archive 646`, line 74) as well to reflect these changes.
+2. If Growth works as expected, great! Make sure to update the move description as well to reflect these changes (see [Move Name & Description](#move-name--description)).
 
 | Growth (Normal)                                   | Growth (Sun)                                   |
 |:-------------------------------------------------:|:----------------------------------------------:|
