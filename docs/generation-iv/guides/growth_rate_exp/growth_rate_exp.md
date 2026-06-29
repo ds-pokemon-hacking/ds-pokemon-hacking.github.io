@@ -90,6 +90,6 @@ To save your changes, save the file in the hex editor, repack the NARC using **D
 
 ## Considerations
 If testing the changes with an existing save file, consider the following:
-- All Pokémon will reference the modified tables upon loading a save. **However**, impacted Pokémon will not have their level (or stats) updated automatically. Instead, their level will update the next time the Pokémon were to level up.
+- All Pokémon will reference the modified tables upon loading a save. **However**, impacted Pokémon will not have their level (or stats) updated automatically. Instead, their level will update the next time the Pokémon were to level up or when placed in the Pokémon Storage System.
 - When an impacted Pokémon gains experience in battle, the EXP bar may appear to fill completely, regardless of the actual amount of experience received, then appear to reset in the next battle. This is purely visual and has no effect on the received experience or already accumulated experience.
 - For both new and existing saves, Egg Pokémon may be cooked.
