@@ -1640,7 +1640,7 @@ Moving the subscript pointer table comprises of the following steps:
 
 **Step 1: Apply the ARM9 Expansion patch** <br/>
 1. If you haven't already, use the latest version of [**DSPRE**](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the **ARM9 Expansion** patch.
-2. This will repurpose an unused file (`/unpacked/synthOverlay/0000` for HeartGold/SoulSilver and `/unpacked/synthOverlay/0009` for Diamond/Pearl/Platinum) and increase the file's size to `88` KiB (`90,112` or `0x15FFF` bytes).
+2. This will repurpose an unused file (`/unpacked/synthOverlay/0000` for HeartGold/SoulSilver and `/unpacked/synthOverlay/0009` for Diamond/Pearl/Platinum) and increase the file's size to `88` KiB (`90,112` or `0x16000` bytes).
 3. This repurposed file should be entirely zeroes and will be referred to as `synthOverlay #` moving forward (i.e. `synthOverlay 0` for HeartGold/SoulSilver and `synthOverlay 9` for Diamond/Pearl/Platinum).
 
 **Step 2: Copy the subscript pointer table and paste it in a new location** <br/>
@@ -4724,7 +4724,7 @@ This method will comprise of the following steps:
 
 ##### Step 1: Apply the ARM9 Expansion patch
 1. If you haven't already, use the latest version of [**DSPRE**](https://github.com/DS-Pokemon-Rom-Editor/DSPRE/releases/latest) to apply the **ARM9 Expansion** patch.
-2. This will repurpose an unused file (`/unpacked/synthOverlay/0000` for HeartGold/SoulSilver and `/unpacked/synthOverlay/0009` for Diamond/Pearl/Platinum) and increase the file's size to `88` KiB (`90,112` or `0x15FFF` bytes).
+2. This will repurpose an unused file (`/unpacked/synthOverlay/0000` for HeartGold/SoulSilver and `/unpacked/synthOverlay/0009` for Diamond/Pearl/Platinum) and increase the file's size to `88` KiB (`90,112` or `0x16000` bytes).
 3. This repurposed file should be entirely zeroes and will be referred to as `synthOverlay #` moving forward (i.e. `synthOverlay 0` for HeartGold/SoulSilver and `synthOverlay 9` for Diamond/Pearl/Platinum).
 
 ##### Step 2: Move the subscript pointer table
