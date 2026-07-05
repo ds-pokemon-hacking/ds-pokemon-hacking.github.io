@@ -832,7 +832,7 @@ Here is the table of the HP ratio (based on the vanilla multiplier of **64**) to
 
 
 
-### Bypass Trick 'Always Fail' Logic
+### Bypass Trick/Switcheroo 'Always Fail' Logic
 > Sources and Credits: [MrHam88](https://github.com/DevHam88), [Plat Decomp](https://github.com/pret/pokeplatinum/blob/3296fa8df7f09aeab1a44b12f52f4e456fce8836/src/battle/battle_script.c#L6347)
 
 Open the relevant file and change the byte at the provided offset:
@@ -853,8 +853,40 @@ In standard battles (wild battles and normal trainer battles), held items cannot
 
 By modifying this bitmask to `0x85` (adding `BATTLE_TYPE_TRAINER`), we can enable NPC trainers in normal in-game battles to successfully use Trick and Switcheroo as well (while still ensuring that if the moves are used by wild Pokémon, the move fails)!
 
-> [!NOTE]
-> This edit does not implement post-battle item restoration for normal trainer battles. Any items swapped during a standard battle will remain swapped permanently after the battle concludes.
+:::warning
+This edit does not implement post-battle item restoration for normal trainer battles. Any items swapped during a standard battle will remain swapped permanently after the battle concludes.
+:::
+
+To implement this edit, change the bitmask byte from `84` to `85`.
+<br/>
+
+
+
+### Bypass Thief/Covet 'No Item Steal' Logic
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/3296fa8df7f09aeab1a44b12f52f4e456fce8836/src/battle/battle_script.c#L5094)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x9A10`  | `84`         |
+| **Platinum**             | `Overlay 16`                | `0x97E8`  | `84`         |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x8E84`  | `84`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes                                            |
+  |:-------------:|:--------------------------------------------------------:|
+  | **HeartGold/SoulSilver/Platinum** | `84 21 08 42 04 D1 28 1C`            |
+  | **Diamond/Pearl**                 | `84 21 08 42 04 D1 20 1C 31 1C 03 F0`|  
+</details>
+
+In standard battles (wild battles and normal trainer battles), held items cannot be stolen by the AI. This is an anti-griefing feature that prevents wild Pokémon or normal trainers from permanently taking the player's held items using moves like Thief or Covet by ensuring that the item stealing effect always fails (but the damage still occurs). The battle engine checks if the battle type is a Link Battle or a Battle Frontier battle using the bitmask `0x84` (`BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER`) and only allows item stealing if this check is successful. 
+
+By modifying this bitmask to `0x85` (adding `BATTLE_TYPE_TRAINER`), we can enable NPC trainers in normal in-game battles to successfully steal items using Thief and Covet (while still ensuring that if the moves are used by wild Pokémon, the move fails to steal items)!
+
+:::warning
+This edit does not implement post-battle item restoration for normal trainer battles. Any items stolen during a standard battle will be permanently lost after the battle concludes.
+:::
 
 To implement this edit, change the bitmask byte from `84` to `85`.
 <br/>
