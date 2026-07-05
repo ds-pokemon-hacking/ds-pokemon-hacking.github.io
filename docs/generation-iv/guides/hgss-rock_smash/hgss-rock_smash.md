@@ -112,11 +112,3 @@ Below is the layout of the 8 slots in the three hardcoded item tables, showing t
 | 5 | 10% | Green Shard | **HG**: Green Shard <br /> **SS**: Yellow Shard | **HG**: Claw Fossil <br /> **SS**: Root Fossil |
 | 6 | 10% | Yellow Shard | Old Amber | **HG**: Claw Fossil <br /> **SS**: Root Fossil |
 | 7 | 5% | Star Piece | Max Revive | Rare Bone |
-
-
----
-
-## See Also
-
-- [Wiki: HGSS File Structure](../../resources/hgss-file_structure) - Technical reference for HGSS archives.
-- [pret/pokeheartgold - overlay_01_rock_smash_item.c](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_01_rock_smash_item.c) - Technical implementation details.
