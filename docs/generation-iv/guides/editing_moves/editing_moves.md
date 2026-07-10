@@ -99,7 +99,7 @@ See [Battle Effects](#battle-effects) for more comprehensive details on how batt
 More comprehensive details on how battle subscripts work and guides on how to edit them are explored alongside battle effect scripts in the [Battle Effects](#battle-effects) section.
 
 ### Move Animation Scripts
-**Move animation scripts**, also known as move animations, are the displayed visual effects when a move is used. Every move is uniquely associated with a move animation script. In other words, a uniquely identified move animation script is associated strictly with a specific move and may not shared.
+**Move animation scripts**, also known as move animations, contain commands to execute visual and audio effects when a move is used. Every move is uniquely associated with a move animation script. In other words, a uniquely identified move animation script is associated strictly with a specific move and may not shared.
 
 See [Move Animations](#move-animations) for more comprehensive details on how move animation scripts work and guides on how to edit them.
 
@@ -1714,16 +1714,22 @@ Examples of what can be achieved by editing existing battle subscripts or adding
 ------------------------------
 
 ## Move Animations  
-> Source(s): Acent, [DavveDP](https://github.com/DavveDP), [Fexty](https://github.com/Fexty12573) 
+> Source(s): Acent, [DavveDP](https://github.com/DavveDP), [Fexty](https://github.com/Fexty12573). [HG-Engine](https://github.com/BluRosie/hg-engine/wiki/Move-Animation-Scripting-System-Documentation)
 
-**Move animations** are the displayed visual (and sound) effects when a battler uses a move. Every move is uniquely associated with a move animation script. In other words, a uniquely identified move animation script is associated strictly with a specific move and may not shared.
+**Move animations** are the displayed visual (and audio) effects when a battler uses a move. Move animations are executed by *move animation scripts* that call and manipulate various components such as particle emitters, sprite translations, background effects, and sound effects. 
 
-Decompiled code of each move animation script can be found in the [Platinum decompilation project](https://github.com/pret/pokeplatinum/tree/6e321e13e2c155fa79185a6366a7846cd904f808/res/moves).
+There are four main types of components utilized by move animation scripts:
+1. **Animation Particle Systems** - files containing the literal visual elements ("particle emitters").
+2. **Battle sprite translations and movements** - where a battler's sprite is rotated, scaled or translated (moved).
+3. **Backgrounds** - where the current background is replaced with a unique colour or design.
+4. **Sound Effects** - where sounds are played.
+
+Every move is uniquely associated with a move animation script. Decompiled code of each move animation script can be found in the [Platinum decompilation project](https://github.com/pret/pokeplatinum/tree/6e321e13e2c155fa79185a6366a7846cd904f808/res/moves).
 
 Below are the file locations of the **NARCs** containing move animation scripts for each game:
-| Game      | HeartGold/SoulSilver | Platinum             | Diamond/Pearl        |
-|-----------|:--------------------:|:--------------------:|:--------------------:|
-| **File**  | `/a/0/1/0`           | `/wazaeffect/we.arc` | `/wazaeffect/we.arc` |
+| Game      | HeartGold/SoulSilver | Platinum/Diamond/Pearl |
+|-----------|:--------------------:|:----------------------:|
+| **File**  | `/a/0/1/0`           | `/wazaeffect/we.arc`   |
 
 Move animation scripts can be edited in a number of ways:
 1. Direct hex editing of the move animation script files,
@@ -1734,8 +1740,9 @@ Move animation scripts can be edited in a number of ways:
 The following sections will provide resources and guidance on modifying move animations:
 1. [Running WazaEffectEditor](#running-wazaeffecteditor)
 2. [Review & Interpret Vanilla Animations](#review--interpret-vanilla-animations)
-3. [Replace One Animation for Another](#replace-one-animation-for-another)
-4. [Considerations and References](#considerations-and-references)
+3. [Particle Animation Systems and Particle Emitters](#particle-animation-systems-and-particle-emitters)
+4. [Replace One Animation for Another](#replace-one-animation-for-another)
+5. [Considerations and References](#considerations-and-references)
 
 ### Running WazaEffectEditor
 
@@ -1761,20 +1768,12 @@ WazaEffectEditor may not be compatible with projects using **DSPRE versions 2.0+
 ![Solar Beam](resources/SolarBeam_IV.png)
 ![Hydro Pump](resources/Hydro_Pump_IV.png)
 
-Move animation scripts can be viewed and edited either in hex by unpacking the move animation script NARC, or by using in WazaEffectEditor. When using WazaEffectEditor, having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) can be invaluable in interpreting what is happening as only some commands are fully named.
+The raw commands of **move animation scripts** can be viewed and edited either in a hex editor or by using in WazaEffectEditor. Having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) or referencing the associated decompiled code for the move animation script can be invaluable in interpreting the corresponding commands.
 
-Move animations call from common animation components, and similar animations will have similar patterns (such as charging or recharge moves having different animations on the first and second turn).
-
-There are four main types of animation components:
-1. **Animation Particle Systems** - files containing the literal visual elements to be used in move animation scripts.
-2. **Battle sprite translations and movements** - where a battler's sprite is rotated, scaled or translated (moved).
-3. **Backgrounds** - where the current background is replaced with a unique colour or design.
-4. **Sound Effects** - where sounds are played.
-
-The move animation for Pound is shown below in four different formats (Hex, WazaEffectEditor, WazaEffectEditor with Fexty's Command Names, and PokePlatinum decompiled code), to illustrate how interpreting an animation can be done. Line-breaks have been inserted into the hex representation to illustrate the mapping between the different formats:
+The move animation script for Pound is shown below in four different formats (HGSS Hex, HGSS WazaEffectEditor, HGSS WazaEffectEditor with Fexty's Command Names, and PokePlatinum decompiled code), to illustrate how interpreting an animation can be done. Line-breaks have been inserted into the hex representation to illustrate the mapping between the different formats:
 
 <details>
-<summary>Pound (Hex)</summary>
+<summary>Pound (HGSS Hex)</summary>
 ```
 38 00 00 00
 39 00 00 00 00 00 00 00
@@ -1803,7 +1802,7 @@ The move animation for Pound is shown below in four different formats (Hex, Waza
 </details>
 
 <details>
-<summary>Pound (WazaEffectEditor)</summary>
+<summary>Pound (HGSS WazaEffectEditor)</summary>
 ```
 Init
 Cmd_39 0x0
@@ -1832,7 +1831,7 @@ End
 </details>
 
 <details>
-<summary>Pound (WazaEffectEditor with Fexty Command Names)</summary>
+<summary>Pound (HGSS WazaEffectEditor with Fexty Command Names)</summary>
 ```
 BattleAnimScriptCmd_InitPokemonSpriteManager
 BattleAnimScriptCmd_LoadPokemonSpriteDummyResources 0x0
@@ -1888,7 +1887,7 @@ The move animation goes through some decipherable steps (with some obscured deta
 9. End
 
 Various other things can be inferred as well:
-- The animation particle system must be loaded in order to use its visual elements, and must be unloaded at some point before the script ends.
+- A animation particle system must be loaded in order to use its visual elements ("particle emitters"), and must be unloaded at some point before the script ends.
     - The unique animation particle system to load is specified in the second parameter of the `SetPlayAnim` (WazaEffectEditor name), `LoadParticleSystem` (Fexty's name), or `LoadParticleResource` (PokePlatinum) command (`33 00 00 00` in hex).
     - The animation particle system is also given a local ID to be referenced by later commands, and is specified in the first parameter of the same load command.
 - Each unique animation particle system has a number of literal visual elements within it, to which a specific visual element is played using the `LoadAnim` (WazaEffectEditor name) or `CreateEmitter` (Fexty's name and PokePlatinum) command (`2E 00 00 00` in hex).
@@ -1912,6 +1911,32 @@ To learn more, more complex move animations can be reviewed:
     - Loading the Pound animation particle system with a local ID of `1`, 
     - Then specifying the animation particle system (via local ID) in the first parameter of each `LoadAnim` or `CreateEmitter` command.
 
+### Particle Animation Systems and Particle Emitters
+The main component of move animations are particle animation systems and their particle emitters, which as described in the previous sections, are loaded and called in move animation scripts. These particle animation systems are also used for other aspects of the battle system beyond moves, such as the cut-in grass or water effects when loading the battle UI. This section will provide a quick overview on viewing particle animation systems and their particle emitters.
+
+Below are the file locations of the **NARCs** containing the particle animation systems for each game:
+| Game      | HeartGold/SoulSilver | Platinum/Diamond/Pearl                      |
+|-----------|:--------------------:|:-------------------------------------------:|
+| **File**  | `/a/0/2/9`           | `/wazaeffect/effectdata/waza_particle.narc` |
+
+[NitroEFX](https://github.com/Fexty12573/nitroefx) is a tool created by [Fexty](https://github.com/Fexty12573) for viewing and editing these particle animation systems.
+
+When opening NitroEFX, select *File > Open > SPL File* and open your project's respective particle animation system file. You can select any `.bin` file in the top left panel, then select a component (the specific "particle emitter") in the bottom left panel, and in the top right panel choose either the *Play All Emitters* option or the *Play Emitter* option (which plays only the selected component).
+
+:::info
+For **HeartGold/SoulSilver**, `/a/0/2/9` needs to be temporarily renamed to `/a/0/2/9.narc` in order to be opened in NitroEFX
+:::
+
+For example, let's take a quick look at Karate Chop's move animation and the particle emitters it uses in *Pokémon Platinum*. 
+
+First, we'll need to use either WazaEditor or a hex editor to identify the particle animation system that the move animation script loads (unfortunately, the PokePlatinum decompiled code uses an actual name instead of an ID, which isn't helpful in this case). In WazaEditor, the `SetPlayAnm 0x0 0x20 0x1` command indicates that particle animation system number `0x20` (`32` in decimal) is used. 
+
+Next, use NitroEFX to open `/wazaeffect/effectdata/waza_particle.narc` and select `32.bin` from the top left panel. In the bottom left panel, we can see three components, or particle emitters, contained in this particle animation system. These three components are called in the move animation script, as seen by the `LoadAnm 0x0 0x2 0x4`, `LoadAnm 0x0 0x0 0x4`, and `LoadAnm 0x0 0x1 0x4` commands in WazaEditor (keeping in mind that the first parameter of the `LoadAnm` command is the local ID of the currently loaded animation particle system(s) and the second parameter is the specific particle emitter to play). 
+
+Select a specific particle emitter. The top right panel should now have the options to *Play Emitter* or *Play All Emitters*. Note that the *Play All Emitters* option may not necessarily play the emitters in the same sequence or timing as the actual move animation, as that is instead typically managed by the order of commands in the move animation script.
+
+![](resources/nitroefx_pt_spa32.png)
+
 ### Replace One Animation for Another
 A wholesale replacement of one animation with another is straightforward. Either a hex editor or WazaEffectEditor could be used to copy the entire animation and paste it into the animation file for another move.  
   
@@ -1926,7 +1951,7 @@ If editing the move animation script NARC in a hex editor:
 Some elements of the animation are dependent upon the move's battle effect. For example, if a single-turn move is given the vanilla animation of a two-turn move, only the first turn's animation will play, without further edits.
 
 ### Considerations and References
-Editing a move animation script is straightforward with the above understanding, but may require some trial and testing to get the desired result. Often the basis for these changes is to identify the elements to change, and identify any existing moves that use the same patterns.  
+Editing a move animation script is straightforward with the above understanding, but may require some trial and testing to get the desired result. Often the basis for these changes is to identify the elements to change, and identify any existing moves that use the same patterns.
 
 Changes such as the below are all relatively simple:
 - Add/remove/change particle animation systems from existing options
