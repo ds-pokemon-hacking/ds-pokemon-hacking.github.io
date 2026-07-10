@@ -1912,7 +1912,7 @@ To learn more, more complex move animations can be reviewed:
     - Then specifying the animation particle system (via local ID) in the first parameter of each `LoadAnim` or `CreateEmitter` command.
 
 ### Particle Animation Systems and Particle Emitters
-The main component of move animations are particle animation systems and their particle emitters, which as described in the previous sections, are loaded and called in move animation scripts. These particle animation systems are also used for other aspects of the battle system beyond moves, such as the cut-in grass or water effects when loading the battle UI. This section will provide a quick overview on viewing particle animation systems and their particle emitters.
+The main component of move animations are particle animation systems and their particle emitters, which as described in the previous sections, are the literal visual elements that are loaded and called in move animation scripts. These particle animation systems are also used for other aspects of the battle system beyond moves, such as the cut-in grass or water effects when loading the battle UI. This section will provide a quick overview on viewing particle animation systems and their particle emitters, with the goal of providing a starting point in fine-tuning more complex move animations.
 
 Below are the file locations of the **NARCs** containing the particle animation systems for each game:
 | Game      | HeartGold/SoulSilver | Platinum/Diamond/Pearl                      |
