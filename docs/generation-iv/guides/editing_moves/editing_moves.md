@@ -1741,7 +1741,7 @@ The following sections will provide resources and guidance on modifying move ani
 1. [Running WazaEffectEditor](#running-wazaeffecteditor)
 2. [Review & Interpret Vanilla Animations](#review--interpret-vanilla-animations)
 3. [Particle Animation Systems and Particle Emitters](#particle-animation-systems-and-particle-emitters)
-4. [Replace One Animation for Another](#replace-one-animation-for-another)
+4. [Replace One Move Animation Script for Another](#replace-one-move-animation-script-for-another)
 5. [Considerations and References](#considerations-and-references)
 
 ### Running WazaEffectEditor
@@ -1912,7 +1912,9 @@ To learn more, more complex move animations can be reviewed:
     - Then specifying the animation particle system (via local ID) in the first parameter of each `LoadAnim` or `CreateEmitter` command.
 
 ### Particle Animation Systems and Particle Emitters
-The main component of move animations are particle animation systems and their particle emitters, which as described in the previous sections, are the literal visual elements that are loaded and called in move animation scripts. These particle animation systems are also used for other aspects of the battle system beyond moves, such as the cut-in grass or water effects when loading the battle UI. This section will provide a quick overview on viewing particle animation systems and their particle emitters, with the goal of providing a starting point in fine-tuning more complex move animations.
+The main component of move animations are particle animation systems and their particle emitters, which as described in the previous sections, are the literal visual elements that are loaded and called in move animation scripts. These particle animation systems are also used for other aspects of the battle system beyond moves, such as the cut-in grass or water effects when loading the battle UI. 
+
+This section will provide a quick overview on viewing particle animation systems and their particle emitters, with the goal of providing a means for isolating the individual elements of an animation to futher aid in the creation of move animations.
 
 Below are the file locations of the **NARCs** containing the particle animation systems for each game:
 | Game      | HeartGold/SoulSilver | Platinum/Diamond/Pearl                      |
@@ -1927,7 +1929,7 @@ When opening NitroEFX, select *File > Open > SPL File* and open your project's r
 For **HeartGold/SoulSilver**, `/a/0/2/9` needs to be temporarily renamed to `/a/0/2/9.narc` in order to be opened in NitroEFX
 :::
 
-For example, let's take a quick look at Karate Chop's move animation and the particle emitters it uses in *Pokémon Platinum*. 
+As an example, let's take a quick look at Karate Chop's move animation and the particle emitters it uses in *Pokémon Platinum*. 
 
 First, we'll need to use either WazaEditor or a hex editor to identify the particle animation system that the move animation script loads (unfortunately, the PokePlatinum decompiled code uses an actual name instead of an ID, which isn't helpful in this case). In WazaEditor, the `SetPlayAnm 0x0 0x20 0x1` command indicates that particle animation system number `0x20` (`32` in decimal) is used. 
 
@@ -1935,10 +1937,12 @@ Next, use NitroEFX to open `/wazaeffect/effectdata/waza_particle.narc` and selec
 
 Select a specific particle emitter. The top right panel should now have the options to *Play Emitter* or *Play All Emitters*. Note that the *Play All Emitters* option may not necessarily play the emitters in the same sequence or timing as the actual move animation, as that is instead typically managed by the order of commands in the move animation script.
 
+For example, if you play the second particle emitter (ID of `[1]`), you'll see that it is specifically the "chopping hand" component of this whole animation. As such, this process may be helpful in identifying specific components of an animation to utilize when creating new move animation scripts.
+
 ![](resources/nitroefx_pt_spa32.png)
 
-### Replace One Animation for Another
-A wholesale replacement of one animation with another is straightforward. Either a hex editor or WazaEffectEditor could be used to copy the entire animation and paste it into the animation file for another move.  
+### Replace One Move Animation Script for Another
+A wholesale replacement of one move animation script with another is straightforward. Either a hex editor or WazaEffectEditor could be used to copy the entire script and paste it into another file.  
   
 If editing the move animation script NARC in a hex editor:
 1. The [NARC must be unpacked](/docs/universal/guides/unpacking_narcs/),
@@ -1948,7 +1952,7 @@ If editing the move animation script NARC in a hex editor:
 5. The ROM re-built using the NARC (e.g. using DSPRE), &
 6. The ROM saved as a `.nds` file.
 
-Some elements of the animation are dependent upon the move's battle effect. For example, if a single-turn move is given the vanilla animation of a two-turn move, only the first turn's animation will play, without further edits.
+Some elements of the move animation script are dependent upon the move's battle effect. For example, if a single-turn move is given the vanilla animation of a two-turn move, only the first turn's animation will play, without further edits.
 
 ### Considerations and References
 Editing a move animation script is straightforward with the above understanding, but may require some trial and testing to get the desired result. Often the basis for these changes is to identify the elements to change, and identify any existing moves that use the same patterns.
