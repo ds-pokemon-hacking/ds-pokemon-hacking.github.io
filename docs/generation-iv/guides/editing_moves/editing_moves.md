@@ -1735,7 +1735,7 @@ Move animation scripts can be edited in a number of ways:
 1. Direct hex editing of the move animation script files,
 2. Through setting up a decompilation project,
 3. Through setting up a HG-Engine project, 
-4. WazaEffectEditor (or WazaEditor), a tool with versions supporting HeartGold/SoulSilver and Platinum.
+4. WazaEffectEditor (or WazaEditor), a tool with versions supporting HeartGold and Platinum.
 
 The following sections will provide resources and guidance on modifying move animations:
 1. [Running WazaEffectEditor](#running-wazaeffecteditor)
@@ -1748,15 +1748,15 @@ The following sections will provide resources and guidance on modifying move ani
 
 ![](resources/wazaeditor_v1_hgss_and_fexty_anim_cmds.png)
 
-WazaEffectEditor was initially designed by Acent for Pokémon Platinum. A modified variation is available for HeartGold/SoulSilver (modified by DavveDP) as well (note, it is unclear if this variation is functionally complete as it appears to be in a work in progress state on the developer's GitHub repository). The different versions can be found here: 
+WazaEffectEditor was initially designed by Acent for Pokémon Platinum. A modified variation is available for HeartGold (modified by DavveDP) as well (note, it is unclear if this variation is functionally complete as it appears to be in a work in progress state on the developer's GitHub repository). The different versions can be found here: 
 - [WazaEffectEditor (Platinum)](https://drive.google.com/drive/folders/1YcRGuzTaGfNXJpO1rhb4t6GLyE2UVfaA)
     - [Original Release (Discord link)](https://discord.com/channels/446824489045721090/482242795982159872/799743818797940797)
-- [WazaEffectEditor (HeartGold/SoulSilver, Discord link)](https://discord.com/channels/446824489045721090/534415767454875678/1250447089067102300)
+- [WazaEffectEditor (HeartGold - Discord link)](https://discord.com/channels/446824489045721090/534415767454875678/1250447089067102300)
     - [GitHub Repo](https://github.com/DavveDP/Waza-Editor)
 
 The first time that WazaEffectEditor is opened a message about downloading libraries/moves from Bulbapedia may be presented, this should be accepted. This may then result in a hanging state after a few minutes. If this is the case, closing and re-opening the application should resolve and allow use of the tool.
 
-WazaEffectEditor works on the same premise as tools like DSPRE, i.e. the user selects a ROM (`.nds` file) or project folder, and WazaEffectEditor unpacks it (using the ROM's move names and animations). When saving, the ROM or project folder is re-packed and saved (with the option to override the existing ROM file, or rename). It is important to be aware of this if edits are being done across multiple tools, as the HeartGold/SoulSilver version of WazaEffectEditor doesn't interact with the unpacked contents folder that DSPRE creates.
+WazaEffectEditor works on the same premise as tools like DSPRE, i.e. the user selects a ROM (`.nds` file) or project folder, and WazaEffectEditor unpacks it (using the ROM's move names and animations). When saving, the ROM or project folder is re-packed and saved (with the option to override the existing ROM file, or rename). It is important to be aware of this if edits are being done across multiple tools, as the HeartGold version of WazaEffectEditor doesn't interact with the unpacked contents folder that DSPRE creates.
 
 :::warning
 WazaEffectEditor may not be compatible with projects using **DSPRE versions 2.0+** due to file structure changes. In this case, WazaEffectEditor can either be used as a reference while directly hex editing move animation scripts, or be used with a separate project created with an older DSPRE version and copying over the move animation script NARC after edits have been made. 
@@ -1770,10 +1770,10 @@ WazaEffectEditor may not be compatible with projects using **DSPRE versions 2.0+
 
 The raw commands of **move animation scripts** can be viewed and edited either in a hex editor or by using in WazaEffectEditor. Having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) or referencing the associated decompiled code for the move animation script can be invaluable in interpreting the corresponding commands.
 
-The move animation script for Pound is shown below in four different formats (HGSS Hex, HGSS WazaEffectEditor, HGSS WazaEffectEditor with Fexty's Command Names, and PokePlatinum decompiled code), to illustrate how interpreting an animation can be done. Line-breaks have been inserted into the hex representation to illustrate the mapping between the different formats:
+The move animation script for Pound is shown below in four different formats (HG Hex, HG WazaEffectEditor, HG WazaEffectEditor with Fexty's Command Names, and PokePlatinum decompiled code), to illustrate how interpreting an animation can be done. Line-breaks have been inserted into the hex representation to illustrate the mapping between the different formats:
 
 <details>
-<summary>Pound (HGSS Hex)</summary>
+<summary>Pound (HG Hex)</summary>
 ```
 38 00 00 00
 39 00 00 00 00 00 00 00
@@ -1802,7 +1802,7 @@ The move animation script for Pound is shown below in four different formats (HG
 </details>
 
 <details>
-<summary>Pound (HGSS WazaEffectEditor)</summary>
+<summary>Pound (HG WazaEffectEditor)</summary>
 ```
 Init
 Cmd_39 0x0
@@ -1831,7 +1831,7 @@ End
 </details>
 
 <details>
-<summary>Pound (HGSS WazaEffectEditor with Fexty Command Names)</summary>
+<summary>Pound (HG WazaEffectEditor with Fexty Command Names)</summary>
 ```
 BattleAnimScriptCmd_InitPokemonSpriteManager
 BattleAnimScriptCmd_LoadPokemonSpriteDummyResources 0x0
