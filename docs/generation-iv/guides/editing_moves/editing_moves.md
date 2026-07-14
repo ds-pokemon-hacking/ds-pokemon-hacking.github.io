@@ -901,7 +901,7 @@ Below are the file locations of the **NARCs** containing battle effect scripts f
 |-----------|:--------------------:|:---------------------------:|:---------------------------:|
 | **File**  | `/a/0/3/0`           | `/battle/skill/be_seq.narc` | `/battle/skill/be_seq.narc` |
 
-Battle effect scripts contain varying complexity, so the following sections will start by breaking down the most basic battle effect script before moving on to more complex battle effect scripts, then examples on how to edit battle effect scripts.
+Battle effect scripts contain varying complexity, so the following sections will start by breaking down the most basic battle effect script before moving on to more complex ones, then ending with examples on how to edit them.
 
 #### Finneon, Use Pound! (The Most Basic Battle Effect Script)
 
@@ -971,7 +971,7 @@ Let's take a look at two moves that have similar in-game effects. For example, b
 ![Harden](resources/Harden_IV.png)
 ![Steel Wing](resources/Steel_Wing_IV.png)
 
-Looking at these two moves in DSPRE's Move Editor reveals that that *Harden* is a *status move* and is assigned battle effect script (labeled as `Effect Sequence`) `011`, while *Steel Wing* is a *(physical) damage-dealing move* and is assigned battle effect script `138`. Next, Harden has a *Side Effect Probability* value of `0`, while Steel Wing has a *Side Effect Probability* value of `10`. Then, when using damage-dealing moves like Steel Wing in-game, the potential stat-changing effect applies **after the move successfully hits the target(s)**.
+Looking at these two moves in DSPRE's Move Editor reveals that *Harden* is a *status move* and is assigned battle effect script (labeled as `Effect Sequence`) `011`, while *Steel Wing* is a *(physical) damage-dealing move* and is assigned battle effect script `138`. Next, Harden has a *Side Effect Probability* value of `0`, while Steel Wing has a *Side Effect Probability* value of `10`. Then, when using damage-dealing moves like Steel Wing in-game, the potential stat-changing effect applies **after the move successfully hits the target**.
 
 These distinctions are due to the battle effect scripts specifying whether an effect is designated as a **direct effect** or an **indirect effect**. 
 
@@ -1207,7 +1207,7 @@ _000:
 
    24 00 00 00
 ```
-Nothing special here, it's just the instruction to signal the battle engine to start executing the battle effect script assigned to Volt Tackle (battle effect script 262).
+Nothing special here, it's just the instruction to signal the battle engine to start executing the battle effect script assigned to Volt Tackle's move data.
 
 #### Battle Effect Script 262
 Battle Effect Script 262 is expected to have the following effects:
@@ -1304,17 +1304,17 @@ _008:
    DE 00 00 00
 ```
 
-At first glance, there isn't much code in this battle subscript. However, there are `Call` instructions (`3C 00 00 00` in hex) to call and execute *two other* battle subscripts, one that handles applying recoil damage (specifically 1/3 recoil, `93 00 00 00` in hex or battle subscript 147), and another that handles applying paralysis (`1F 00 00 00` in hex or battle subscript 31). 
+At first glance, there isn't much code in this battle subscript. However, there are `Call` instructions (`3C 00 00 00` in hex) to call and execute *two other battle subscripts*, one that handles applying recoil damage (specifically 1/3 recoil, `93 00 00 00` in hex or battle subscript 147), and another that handles applying paralysis (`1F 00 00 00` in hex or battle subscript 31). 
 
 The first called battle subscript that handles applying recoil damage (specifically 1/3 recoil, see [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/battle/scripts/subscripts/subscript_recoil_1_3.s)) proceeds as follows:
 1. Check if the attacker's ability is either the Rock Head or Magic Guard, to which no recoil damage would be applied if so,
 2. Retrieve the damage dealt to the target,
 3. Divide the amount by 3,
-4. Apply the recoil damage to the attacker, 
+4. Apply the resulting amount as recoil damage to the attacker, 
 5. Display the recoil message,
 6. And finally end, which in this case would return to the original battle subscript.
 
-Afterwards, we have a conditional instruction, `CompareVarToValue`, that checks the `TRUE/FALSE` result of the `BattleSystem_TriggerSecondaryEffect` function (see [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/src/battle/battle_lib.c#L1519)). In layman terms, this checks whether or not the other effect of causing paralysis should occur, given that the move did successfully hit the target, and is subject to the move's effect probability.
+Afterwards, we have a conditional instruction, `CompareVarToValue`, that checks the `TRUE/FALSE` result of the `BattleSystem_TriggerSecondaryEffect` function (see [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/src/battle/battle_lib.c#L1519)). In layman terms, this checks whether or not the other effect of causing paralysis should occur, given that the move did successfully hit the target, and is subject to the move's assigned effect probability.
 
 If said check successfully passed, then this battle subscript calls another battle subscript that goes through a plethora of other checks (such as checking for Limber, Shield Dust, Harsh Sunlight weather + Leaf Guard, etc.) to determine if the target of the effect can actually be paralyzed (see [here](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/battle/scripts/subscripts/subscript_paralyze.s)).
 
@@ -1685,7 +1685,7 @@ The following are the summarized steps for creating new battle subscripts:
 1. Unpack the battle subscript NARC from your project's DSPRE_contents folder.
 2. Make a copy of file `0000`, and rename it to the next available file ID number (for example `0297` for HeartGold/SoulSilver/Platinum or `0293` for Diamond/Pearl if this is the first new battle subscript).
 3. Open the new file in a hex editor and delete the contents.
-4. ~~Draw the owl, again~~ Make your new battle subscript! Reference the [Battle Subscripts](#battle-subscripts-1) section.
+4. ~~Draw the owl, again~~ Make your new battle subscript! Reference the [Battle Subscripts](#battle-subscripts-1) and [Example Case Studies](#example-case-studies) sections.
 5. Save the file (delete or move any automatically created backup files if necessary).
 6. Repack the battle subscript NARC to your project's DSPRE_contents folder (for HeartGold/SoulSilver, remove the `.narc` suffix if necessary).
 7. Take the number of the new battle subscript file, convert it to hex in little-endian format (e.g. battle subscript file `0297` is `29 01` in hex little-endian).
@@ -1697,7 +1697,7 @@ The following are the summarized steps for creating new battle subscripts:
 11. Save the file (delete or move any automatically created backup files if necessary).
 12. Congratulations, you now have a new battle subscript and subscript pointer to use in new battle effect scripts! This enables the creation of moves such as Coil, Shell Smash, and modern Growth. Be sure to test your new battle effects.
 
-Examples of what can be achieved by editing existing battle subscripts or adding new ones are included in the [Case Studies](#example-case-studies) section (e.g. Quiver Dance, Growth Gen V+). You can also reference battle effects created for the [HG-Engine project](https://github.com/BluRosie/hg-engine/tree/main/data/battle_scripts), but keep in mind that many effects are only be possible within the HG-Engine environment. 
+Examples of what can be achieved by editing existing battle subscripts or adding new ones are included in the [Example Case Studies](#example-case-studies) section (e.g. Quiver Dance, Growth Gen V+). You can also reference battle effects created for the [HG-Engine project](https://github.com/BluRosie/hg-engine/tree/main/data/battle_scripts), but keep in mind that many effects may only be possible within the HG-Engine environment. 
 
 <details>
 <summary>The following PokePlatinum references may be helpful when creating new battle effect scripts and battle subscripts</summary>
