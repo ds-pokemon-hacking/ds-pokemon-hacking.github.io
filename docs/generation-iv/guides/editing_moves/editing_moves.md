@@ -1731,12 +1731,12 @@ Below are the file locations of the **NARCs** containing move animation scripts 
 | **File**  | `/a/0/1/0`           | `/wazaeffect/we.arc`   |
 
 Move animation scripts can be edited in a number of ways:
-1. Direct hex editing of the move animation script files,
-2. Through setting up a decompilation project,
-3. Through setting up a HG-Engine project, 
-4. WazaEffectEditor (or WazaEditor), a tool with versions supporting HeartGold and Platinum.
+1. WazaEffectEditor (or WazaEditor), a tool with versions supporting HeartGold and Platinum,
+2. Direct hex editing of the move animation script files,
+3. Through setting up a decompilation project,
+4. Or through setting up a HG-Engine project. 
 
-The following sections will provide resources and guidance on modifying move animations:
+The following sections will provide resources and guidance on modifying move animation scripts:
 1. [Running WazaEffectEditor](#running-wazaeffecteditor)
 2. [Review & Interpret Vanilla Animations](#review--interpret-vanilla-animations)
 3. [Particle Animation Systems and Particle Emitters](#particle-animation-systems-and-particle-emitters)
@@ -1747,19 +1747,57 @@ The following sections will provide resources and guidance on modifying move ani
 
 ![](resources/wazaeditor_v1_hgss_and_fexty_anim_cmds.png)
 
-WazaEffectEditor was initially designed by Acent for Pokémon Platinum. A modified variation is available for HeartGold (modified by DavveDP) as well (note, it is unclear if this variation is functionally complete as it appears to be in a work in progress state on the developer's GitHub repository). The different versions can be found here: 
+WazaEffectEditor is a work-in-progress tool for editing move animation scripts. It was initially designed by Acent for Pokémon Platinum, with a later modified variation (by DavveDP) that also supports HeartGold. The different versions can be found here:
 - [WazaEffectEditor (Platinum)](https://drive.google.com/drive/folders/1YcRGuzTaGfNXJpO1rhb4t6GLyE2UVfaA)
     - [Original Release (Discord link)](https://discord.com/channels/446824489045721090/482242795982159872/799743818797940797)
-- [WazaEffectEditor (HeartGold - Discord link)](https://discord.com/channels/446824489045721090/534415767454875678/1250447089067102300)
-    - [GitHub Repo](https://github.com/DavveDP/Waza-Editor)
+- [WazaEffectEditor (Platinum & HeartGold - Discord link)](https://discord.com/channels/446824489045721090/534415767454875678/1250447089067102300)
+    - [GitHub Repo](https://github.com/Mixone-FinallyHere/Waza-Editor)
+
+The following content will be based on the version of WazaEffectEditor that supports both Platinum and HeartGold.
 
 The first time that WazaEffectEditor is opened a message about downloading libraries/moves from Bulbapedia may be presented, this should be accepted. This may then result in a hanging state after a few minutes. If this is the case, closing and re-opening the application should resolve and allow use of the tool.
 
-WazaEffectEditor works on the same premise as tools like DSPRE, i.e. the user selects a ROM (`.nds` file) or project folder, and WazaEffectEditor unpacks it (using the ROM's move names and animations). When saving, the ROM or project folder is re-packed and saved (with the option to override the existing ROM file, or rename). It is important to be aware of this if edits are being done across multiple tools, as the HeartGold version of WazaEffectEditor doesn't interact with the unpacked contents folder that DSPRE creates.
+WazaEffectEditor works on a similar premise as tools like DSPRE, i.e. the user selects a ROM (`.nds` file) and WazaEffectEditor unpacks the ROM (*using ndstool*) into a temporary `_ext` folder within the WazaEffectEditor application folder, with the move animation scripts narc being further unpacked to `_ext\data\wazaeffect\wearc\` or `_ext\data\a\0\1\0_ext\` for Platinum and HeartGold, respectively. 
 
-:::warning
-WazaEffectEditor may not be compatible with projects using **DSPRE versions 2.0+** due to file structure changes. In this case, WazaEffectEditor can either be used as a reference while directly hex editing move animation scripts, or be used with a separate project created with an older DSPRE version and copying over the move animation script NARC after edits have been made. 
-:::
+There are a few options for the workflow of modifying move animation scripts with WazaEffectEditor and saving changes to your project:
+
+<details>
+<summary>A. Changing and replacing individual move animation scripts</summary>
+
+1. Open a Platinum or HeartGold ROM in WazaEffectEditor (either your project's ROM or an unmodified base ROM).
+2. Make changes to a specific move animation script and use the `Save Current` button at the bottom right of the window.
+3. Locate the modified move animation script file in `WazaEditor\_ext\data\wazaeffect\wearc\` or `WazaEditor\_ext\data\a\0\1\0_ext\` for Platinum and HeartGold, respectively. 
+4. Copy that modified file.
+5. If you haven't done so previously, unpack your project's move animation scripts narc (with DSPRE's *Unpack NARC to Folder* tool for example).
+6. Replace the corresponding file in your project's unpacked move animation scripts narc with the modified move animation script file.
+7. Pack the move animation scripts narc back to your project's DSPRE_contents folder (with DSPRE's *Build NARC from Folder* tool for example).
+8. Save your project's ROM with **DSPRE** and test the new move animation.
+
+</details>
+
+<details>
+<summary>B. Changing and replacing the entire move animation scripts narc</summary>
+
+1. Save your project's ROM with DSPRE.
+2. Open that ROM in WazaEffectEditor.
+3. Make changes to any move animation script(s) and use the `Save Current` button at the bottom right of the window for each edit.
+4. Once finished, select *File > Pack Only Narc*.
+5. Locate the modified move animation scripts narc at `WazaEditor\_ext\data\wazaeffect\we.arc` or `WazaEditor\_ext\data\a\0\1\0` for Platinum and HeartGold, respectively.
+6. Copy that modified narc and replace the corresponding move animation scripts narc in your project's DSPRE_contents folder.
+7. Save your project's ROM with **DSPRE** and test the new move animation.
+
+</details>
+
+<details>
+<summary>C. Saving the entire ROM</summary>
+
+1. Save your project's ROM with DSPRE.
+2. Open that ROM in WazaEffectEditor.
+3. Make changes to any move animation script(s) and use the `Save Current` button on the bottom right of the window for each edit.
+4. Once finished, select *File > Save ROM* (save with a new name to avoid overwriting existing ROMs/backups).
+5. Use that ROM as a new base or project in DSPRE.
+
+</details>
 
 ### Review & Interpret Vanilla Animations
 
@@ -1767,7 +1805,7 @@ WazaEffectEditor may not be compatible with projects using **DSPRE versions 2.0+
 ![Solar Beam](resources/SolarBeam_IV.png)
 ![Hydro Pump](resources/Hydro_Pump_IV.png)
 
-The raw commands of **move animation scripts** can be viewed and edited either in a hex editor or by using in WazaEffectEditor. Having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) or referencing the associated decompiled code for the move animation script can be invaluable in interpreting the corresponding commands.
+WazaEffectEditor displays the raw commands used in **move animation scripts**. Having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) or referencing the associated decompiled code for the move animation script can be invaluable in interpreting the corresponding commands.
 
 The move animation script for Pound is shown below in four different formats (HG Hex, HG WazaEffectEditor, HG WazaEffectEditor with Fexty's Command Names, and PokePlatinum decompiled code), to illustrate how interpreting an animation can be done. Line-breaks have been inserted into the hex representation to illustrate the mapping between the different formats:
 
