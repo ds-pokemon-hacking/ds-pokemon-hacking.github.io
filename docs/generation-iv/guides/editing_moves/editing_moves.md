@@ -69,7 +69,7 @@ Terms are subject to variations to reflect the constantly changing community-def
 :::
 
 ### Move Data
-Every move has their own set of **move data** that include the move's name, type, category, power, accuracy, PP, battle effect, battle effect chance, priority, target range, contest effect, and other special flags. Most of this data can be edited in **DSPRE's Move Editor**. 
+Every move has their own set of **move data** that includes the move's name, type, category, power, accuracy, PP, battle effect, battle effect chance (specifically the chance for an *indirect effect* to occur), priority, target range, contest effect, and other special flags. Most of this data can be edited in **DSPRE's Move Editor**. 
 
 See [Basic Move Data](#basic-move-data) for more details and guides on how to edit move data.
 
@@ -873,7 +873,7 @@ The Gen IV battle engine uses multiple elements to execute battle effects. The f
 1. [Battle Effect Scripts](#battle-effect-scripts-1)
 2. [Direct and Indirect Effects](#direct-and-indirect-effects)
 3. [Effect Targeting Flag](#effect-targeting-flag)
-4. [Subscript Pointers](#subscript-pointers-one-step-closer-to-applying-the-actual-effects)
+4. [Subscript Pointers](#subscript-pointers)
 5. [Battle Subscripts](#battle-subscripts-1)
 6. [One More Example Breakdown](#one-more-example-breakdown)
 7. ["Broken" Battle Effect Scripts](#broken-battle-effect-scripts)
@@ -1107,7 +1107,7 @@ Some effect targeting flags serve other purposes beyond determining which battle
 
 The next section will go over the "battle effect" parameter.
 
-### Subscript Pointers (One Step Closer to Applying the Actual Effects)
+### Subscript Pointers
 The "battle effect" parameter, or **subscript pointer**, are pointers to a certain *battle subscript* that contains the logic to actually apply a battle effect.
 
 Essentially, the process of applying a battle effect is as follows:
@@ -1280,7 +1280,7 @@ And lastly, the *subscript pointer* that points to a *battle subscript* that act
 
 This battle effect script specifies the following subscript pointer: `MOVE_SUBSCRIPT_PTR_RECOIL_1_3_CHANCE_TO_PARALYZE`. This is subscript pointer [ID 137](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/generated/battle_move_subscript_ptrs.txt#L138) (`0x89` in hex), which [points](https://github.com/pret/pokeplatinum/blob/f9e031910823d49d0bcda2db40217e82b9c6def8/include/data/move_side_effect_subscripts.h#L144) to `subscript_recoil_1_3_chance_to_paralyze`, or battle subscript `226`, the script that will handle the effects of applying the recoil damage to the user *and* (potentially) applying paralysis to the target, which will be covered in the next section.
 
-#### Battle Subscript 226 (but wait, there's more)
+#### Battle Subscript 226
 Let's crack open battle subscript `226`. You can also view it from [PokePlatinum](https://github.com/pret/pokeplatinum/blob/b2cd286f3d431cf6226c55139b58e6b140a5c827/res/battle/scripts/subscripts/subscript_recoil_1_3_chance_to_paralyze.s) or by unpacking `/battle/skill/sub_seq.narc` and opening file `0226` in a hex editor.
 
 ```
@@ -1331,7 +1331,7 @@ In the vanilla Generation IV games, there are a number of battle effect scripts 
 The process to fix these battle effect scripts is relatively straightforward, involving copying the structure of other battle effect scripts with similar intended functionalities and substituting in the correct parameters. This also serves as a guided entry point in understanding how to create custom battle effect scripts.
 :::
 
-#### Battle Effect Script 012 Isn't Real, It Can't Hurt You
+#### Example - Battle Effect Script 012
 Let's look at battle effect script `012`, which is intended to increase the user's Speed stat by one stage. However, taking a look at the decompiled code (see [here](https://github.com/pret/pokeplatinum/blob/8b6fa504086925c957b2d514b1f14a57c2d1343d/res/battle/scripts/effects/effect_script_0012.s)) or by opening battle effect script `012` in a hex editor (unpack `/battle/skill/be_seq.narc` or `/a/0/3/0` and open file `0012`) reveals the following:
 
 ```
@@ -1351,7 +1351,7 @@ _000:
 
 This looks exactly like [battle effect script `000`](#inspecting-the-actual-data-of-battle-effect-script-000) (keeping in mind that the `End` instruction has different hex values across each Gen IV game, see [Breaking Down Battle Effect Script `000` (Hex)](#breaking-down-battle-effect-script-000-hex)). Regardless, this means that battle effect script `012` currently contains only the basic (damaging) move effects of determining critical hits and calculating damage. This is also observed with the other "broken" battle effect scripts, which will be listed later (and again, labelled with a `Dummy` prefix in DSPRE's Move Editor).
 
-#### "Broken" Battle Effect Scripts, We Can Fix Them
+#### Fixing "Broken" Battle Effect Scripts
 Battle effect script `012` and the other "broken" battle effect scripts can be modified to function as intended! To do so, the following steps will serve as a guide for modifying them, with battle effect script `012` as the example:
 
 **1. Unpack the battle effect scripts NARC and open the relevant battle effect script file using a hex editor** <br/>
@@ -1502,13 +1502,13 @@ The following are the summarised steps for creating new battle effect scripts (b
 1. Unpack the battle effect script NARC from your project's DSPRE_contents folder.
 2. Make a copy of file `0000`, and rename it to the next available file ID number (for example `0277` for any Gen IV game if this is the first new battle effect script you're creating).
 3. Open the new file in a hex editor and delete the contents.
-4. Make your effect! Reference Drayano's tutorial and the following sections: [Direct and Indirect Effects](#direct-and-indirect-effects), [Effect Targeting Flag](#effect-targeting-flag), and [Subscript Pointers](#subscript-pointers-one-step-closer-to-applying-the-actual-effects).
+4. Make your effect! Reference Drayano's tutorial and the following sections: [Direct and Indirect Effects](#direct-and-indirect-effects), [Effect Targeting Flag](#effect-targeting-flag), and [Subscript Pointers](#subscript-pointers).
 5. Save the file (delete or move any automatically created backup files if necessary).
 6. Repack the battle effect script NARC to your project's DSPRE_contents folder (for HeartGold/SoulSilver, remove the `.narc` suffix if necessary).
 7. Assign the new battle effect script to a move and adjust move data as necessary in DSPRE's Move Editor.
 8. Save your project and test the new effect!
 
-For convenience, the expandable section below lists the hex values for subscript pointers related to stat changes. See [Subscript Pointers](#subscript-pointers-one-step-closer-to-applying-the-actual-effects) for references to the full list of subscript pointers.
+For convenience, the expandable section below lists the hex values for subscript pointers related to stat changes. See [Subscript Pointers](#subscript-pointers) for references to the full list of subscript pointers.
 
 <details>
 <summary>Hex Elements Identifying Stat Changes</summary>
@@ -1618,7 +1618,7 @@ Prior research and experimentation have indicated the following:
 4. There are a total of `145` subscript pointers in each vanilla Gen IV game (and to reiterate, this starts at `0`, so from subscript pointer ID `0` to subscript pointer ID `144`).
 
 :::info
-You can find examples of subscript pointers in action in [Subscript Pointers (One Step Closer to Applying the Actual Effects)](#subscript-pointers-one-step-closer-to-applying-the-actual-effects) and [One More Example Breakdown - Raichu, Use Volt Tackle!](#one-more-example-breakdown).
+You can find examples of subscript pointers in action in [Subscript Pointers](#subscript-pointers) and [One More Example Breakdown - Raichu, Use Volt Tackle!](#one-more-example-breakdown).
 :::
 
 Now, let's get started with moving it!
@@ -1932,7 +1932,7 @@ As an example, let's take a quick look at Karate Chop's move animation and the p
 
 First, we'll need to use either WazaEffectEditor or a hex editor to identify the particle animation system that the move animation script loads (unfortunately, the PokePlatinum decompiled code uses an actual name instead of an ID, which isn't helpful in this case). In WazaEffectEditor, the `SetPlayAnm 0x0 0x20 0x1` command indicates that particle animation system number `0x20` (`32` in decimal) is used. 
 
-Next, use NitroEFX to open `/wazaeffect/effectdata/waza_particle.narc` and select `32.bin` from the top left panel. In the bottom left panel, we can see three components, or particle emitters, contained in this particle animation system. These three components are called in the move animation script, as seen by the `LoadAnm 0x0 0x2 0x4`, `LoadAnm 0x0 0x0 0x4`, and `LoadAnm 0x0 0x1 0x4` commands in WazaEditor (keeping in mind that the first parameter of the `LoadAnm` command is the local ID of the currently loaded animation particle system(s) and the second parameter is the specific particle emitter to play). 
+Next, use NitroEFX to open `/wazaeffect/effectdata/waza_particle.narc` and select `32.bin` from the top left panel. In the bottom left panel, we can see three components, or particle emitters, contained in this particle animation system. These three components are called in the move animation script, as seen by the `LoadAnim 0x0 0x2 0x4`, `LoadAnim 0x0 0x0 0x4`, and `LoadAnim 0x0 0x1 0x4` commands in WazaEffectEditor (keeping in mind that the first parameter of the `LoadAnim` command is the local ID of the currently loaded animation particle system(s) and the second parameter is the specific particle emitter to play). 
 
 Select a specific particle emitter. The top right panel should now have the options to *Play Emitter* or *Play All Emitters*. Note that the *Play All Emitters* option may not necessarily play the emitters in the same sequence or timing as the actual move animation, as that is instead typically managed by the order of commands in the move animation script.
 
@@ -3809,7 +3809,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 ![](resources/case_study_sharp_eyes.gif)  
 
 ##### Step 1: Fix Unused Stat-Changing Move Effect Scripts
-1. Follow the steps [here](#broken-move-effect-scripts) to correct the "non-implemented" move effect scripts (specifically move effect script `55`).
+1. Follow the steps [here](#broken-battle-effect-scripts) to correct the "non-implemented" move effect scripts (specifically move effect script `55`).
 
 ##### Step 2: Move Effect & Attributes
 1. Open DSPRE & load the ROM
@@ -3955,7 +3955,7 @@ This will be completed in a Pokémon HeartGold Version ROM, and will comprise of
 ![](resources/case_study_constrict.gif)  
 
 ##### Step 1: Fix Unused Stat-Changing Move Effect Scripts
-1. Follow the steps [here](#broken-move-effect-scripts) to correct the "non-implemented" move effect scripts (specifically move effect script `74`).
+1. Follow the steps [here](#broken-battle-effect-scripts) to correct the "non-implemented" move effect scripts (specifically move effect script `74`).
 
 ##### Step 2: Move Effect & Attributes
 1. Open DSPRE & load the ROM
