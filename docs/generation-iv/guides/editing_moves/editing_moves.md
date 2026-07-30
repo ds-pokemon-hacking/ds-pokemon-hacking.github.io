@@ -1373,7 +1373,7 @@ You should see the following:
 
 Again, these are simply the `CalcCrit` and `CalcDamage` instructions, followed by each game's specific hex values for the `End` instruction.
 
-You can delete those the entirety contents and paste the following:
+You can delete the entirety of those contents and paste the following:
 
 ```
 // HeartGold/SoulSilver
@@ -1404,7 +1404,7 @@ Repack the battle effect script NARC with **DSPRE's Build NARC from Folder** too
 
 Open up **DSPRE's Move Editor** and assign battle effect script `012` (the field labeled as `Effect Sequence`) to a *status move*. Add that move to a Pokémon's learnset or a Trainer's Pokémon's move slot, save your project with DSPRE, and test it in game!
 
-#### For Your Convenience (Open at Your Own Risk!)
+#### The List of "Broken" Battle Effect Scripts
 The expandable section below lists the "broken" battle effect scripts, which can be fixed by replacing their contents with the given hex values. Please note that each of these strings end with `## ## ## ##`, which is a placeholder for the `End` instruction as it is different in across each Gen IV game.
 
 <details>
@@ -1621,8 +1621,6 @@ Prior research and experimentation have indicated the following:
 You can find examples of subscript pointers in action in [Subscript Pointers](#subscript-pointers) and [One More Example Breakdown - Raichu, Use Volt Tackle!](#one-more-example-breakdown).
 :::
 
-Now, let's get started with moving it!
-
 #### Moving the Subscript Pointer Table
 
 :::warning
@@ -1776,7 +1774,7 @@ There are a few options for the workflow of modifying move animation scripts wit
 </details>
 
 <details>
-<summary>B. Changing and replacing the entire move animation scripts narc</summary>
+<summary>B. Replacing the entire move animation scripts narc</summary>
 
 1. Save your project's ROM with DSPRE.
 2. Open that ROM in WazaEffectEditor.
@@ -1805,7 +1803,7 @@ There are a few options for the workflow of modifying move animation scripts wit
 ![Solar Beam](resources/SolarBeam_IV.png)
 ![Hydro Pump](resources/Hydro_Pump_IV.png)
 
-WazaEffectEditor displays the raw commands used in **move animation scripts**. Having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) or referencing the associated decompiled code for the move animation script can be invaluable in interpreting the corresponding commands.
+WazaEffectEditor displays the raw commands used in move animation scripts. Having the [translation of the animation commands](https://github.com/Fexty12573/pokeplatinum/blob/ef0faaf5835f820d95754f6a3e434dcfdecb5348/src/battle_anim/battle_anim_system.c#L790) or referencing the associated decompiled code for the move animation script can be invaluable in interpreting the corresponding commands.
 
 The move animation script for Pound is shown below in four different formats (HG Hex, HG WazaEffectEditor, HG WazaEffectEditor with Fexty's Command Names, and PokePlatinum decompiled code), to illustrate how interpreting an animation can be done. Line-breaks have been inserted into the hex representation to illustrate the mapping between the different formats:
 
@@ -1951,7 +1949,7 @@ To learn more, more complex move animations can be reviewed:
 ### Particle Animation Systems and Particle Emitters
 The main component of move animations are particle animation systems and their particle emitters, which as described in the previous sections, are the literal visual elements that are loaded and called in move animation scripts. These particle animation systems are also used for other aspects of the battle system beyond moves, such as the cut-in grass or water effects when loading the battle UI. 
 
-This section will provide a quick overview on viewing particle animation systems and their particle emitters, with the goal of providing a means for isolating the individual elements of an animation to futher aid in the creation of move animations.
+This section will provide a quick overview on viewing particle animation systems and their particle emitters, with the goal of providing a means for isolating the individual elements of an animation to futher aid in the modification of move animation scripts.
 
 Below are the file locations of the **NARCs** containing the particle animation systems for each game:
 | Game      | HeartGold/SoulSilver | Platinum/Diamond/Pearl                      |
@@ -1972,9 +1970,7 @@ First, we'll need to use either WazaEffectEditor or a hex editor to identify the
 
 Next, use NitroEFX to open `/wazaeffect/effectdata/waza_particle.narc` and select `32.bin` from the top left panel. In the bottom left panel, we can see three components, or particle emitters, contained in this particle animation system. These three components are called in the move animation script, as seen by the `LoadAnim 0x0 0x2 0x4`, `LoadAnim 0x0 0x0 0x4`, and `LoadAnim 0x0 0x1 0x4` commands in WazaEffectEditor (keeping in mind that the first parameter of the `LoadAnim` command is the local ID of the currently loaded animation particle system(s) and the second parameter is the specific particle emitter to play). 
 
-Select a specific particle emitter. The top right panel should now have the options to *Play Emitter* or *Play All Emitters*. Note that the *Play All Emitters* option may not necessarily play the emitters in the same sequence or timing as the actual move animation, as that is instead typically managed by the order of commands in the move animation script.
-
-For example, if you play the second particle emitter (ID of `[1]`), you'll see that it is specifically the "chopping hand" component of this whole animation. As such, this process may be helpful in identifying specific components of an animation to utilise when creating new move animation scripts.
+Select a specific particle emitter. The top right panel should now have the options to *Play Emitter* or *Play All Emitters*. For example, if you play the second particle emitter (ID of `[1]`), you'll see that it is specifically the "chopping hand" component of this whole animation. As such, this process may be helpful in identifying specific components of an animation to utilise when creating new move animation scripts. Note that the *Play All Emitters* option may not necessarily play the emitters in the same sequence or timing as the actual move animation, as that is instead typically managed by the order of commands in the move animation script.
 
 ![](resources/nitroefx_pt_spa32.png)
 
@@ -2004,8 +2000,8 @@ Changes such as the below are all relatively simple:
 <details>
 <summary>The following are resources for viewing vanilla move animations to get ideas for how to take elements of them and build custom animations.</summary>
 
-- [**This wiki! - Generation IV (HeartGold/SoulSilver Move Animations**](/docs/generation-iv/resources/move_animations/) - Sourced/linked from Bulbapedia, filterable & sortable table.
-- [**TwilightPrincess (YouTube) - Generation IV (Platinum) Move Animations**](https://www.youtube.com/watch?v=gukPRu2iZ_w) - Time-index in the comments, ordered by Move ID.
+- [**This wiki! - Generation IV Move Animations (HeartGold/SoulSilver)**](/docs/generation-iv/resources/move_animations/) - Sourced/linked from Bulbapedia, filterable & sortable table.
+- [**TwilightPrincess (YouTube) - Generation IV Move Animations (Platinum)**](https://www.youtube.com/watch?v=gukPRu2iZ_w) - Time-index in the comments, ordered by Move ID.
 - [**Magiscars Database (Youtube) - Generation I-IX Move Animations**](https://www.youtube.com/@magiscars/playlists) - Not all moves are published yet.
 - **Nintendo Unity (Youtube) - [Generation I-VII](https://www.youtube.com/playlist?list=PLsOPwXA-m0-Bk-3P3avQGg-poPESOibEw) and [Generation IX](https://www.youtube.com/watch?v=B01cWKbAEw4) Move Animations**
 
