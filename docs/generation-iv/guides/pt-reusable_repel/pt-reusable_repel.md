@@ -192,7 +192,8 @@ Function 182:
 	Message 75
 	WaitButton
 	CloseMessage
-Return
+	ReleaseAll
+End
 
 Function 183:
 	AdrsValueSet 0x23DFF28 150
@@ -203,7 +204,8 @@ Function 183:
 	Message 75
 	WaitButton
 	CloseMessage
-Return
+	ReleaseAll
+End
 
 Function 184:
 	AdrsValueSet 0x23DFF28 250
@@ -214,7 +216,8 @@ Function 184:
 	Message 75
 	WaitButton
 	CloseMessage
-Return
+	ReleaseAll
+End
 ```
 
 </details>
