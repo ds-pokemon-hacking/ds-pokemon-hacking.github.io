@@ -154,7 +154,7 @@ The following tools are recommended to use when modifying the game files.
     </tr>
     <tr>
         <td>Graphic Editing</td>
-        <td>Overworld Sprite Editing <ul><li>[BTX Editor 2](https://drive.google.com/drive/folders/1CeM3U9x7NnZO5rqe3xx1VQZqMWsq0qaX?usp=sharing)</li></ul> Indexing Sprites (to be accepted by ROMs): <ul><li> [Graphics Gale](https://drive.google.com/drive/folders/1kUp2eqzO0Kz-6pr05XWynUhNGYVUTzmp?usp=sharing)</li></ul> Edit Palette Colours: <ul><li> [Console Tool](https://drive.google.com/drive/folders/1Zse00msjpUmKg73ruGC8xHjDX0yC_3sK?usp=sharing)</li></ul> Battle Sprite Editing: <ul><li> [PokéDSPic](https://drive.google.com/drive/folders/1HDeyHShMBfz-Kz5UwelNSEzADlBYog-D?usp=drive_link)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul> Tileset Editing: <ul><li> [NitroPaint](https://github.com/Garhoogin/NitroPaint)</li><li>[Tilemap Studio](https://github.com/Rangi42/tilemap-studio)</li></ul> Sprite Drawing (with Indexing): <ul><li> [Aseprite (paid)](https://www.aseprite.org/)</li><li>[Aseprite (free)](https://github.com/aseprite/aseprite) (requires knowledge on compilation) </li></ul></td>
+        <td>Overworld Sprite Editing <ul><li>[BTX Editor 2](https://drive.google.com/drive/folders/1CeM3U9x7NnZO5rqe3xx1VQZqMWsq0qaX?usp=sharing)</li></ul> Indexing Sprites (to be accepted by ROMs): <ul><li> [Graphics Gale](https://drive.google.com/drive/folders/1kUp2eqzO0Kz-6pr05XWynUhNGYVUTzmp?usp=sharing)</li></ul> Edit Palette Colours: <ul><li> [Console Tool](https://drive.google.com/drive/folders/1Zse00msjpUmKg73ruGC8xHjDX0yC_3sK?usp=sharing)</li></ul> Battle Sprite Editing: <ul><li> [PokéDSPic](https://drive.google.com/drive/folders/1HDeyHShMBfz-Kz5UwelNSEzADlBYog-D?usp=drive_link)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul> Tileset Editing: <ul><li> [NitroPaint](https://github.com/Garhoogin/NitroPaint)</li><li>[Tilemap Studio](https://github.com/Rangi42/tilemap-studio)</li></ul> Sprite Drawing (with Indexing): <ul><li> [Aseprite (paid)](https://www.aseprite.org/)</li><li>[Aseprite (free)](https://github.com/aseprite/aseprite) (requires knowledge on compilation) </li></ul> Title & icon editing: <ul><li> [NitroViewer](https://nitroviewer.com/)</li></ul></td>
         <td><ul><li>[Editing Overworld Sprites](https://youtu.be/kGw7wzpO1cw)</li><li>[Quick Colour Changes](https://www.youtube.com/watch?v=ESQjr7OB1pA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=19)</li><li>[Advanced Pokémon Edits](https://www.youtube.com/watch?v=Qqow_RBh3G8&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=6)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul></td>
     </tr>
     <tr>
@@ -164,7 +164,7 @@ The following tools are recommended to use when modifying the game files.
     </tr>
     <tr>
         <td>[Mapping](/docs/generation-iv/guides/mapping/)</td>
-        <td>PDSMS (Pokemon DS Map Studio): Tile-based custom map creation/editing tool<ul><li>[Trifindo's current release](https://github.com/Trifindo/Pokemon-DS-Map-Studio)</li><li>[AdAstra's fork](https://github.com/AdAstra-LD/Pokemon-DS-Map-Studio) (additional QoL features)</li><li>[Trifindo's v1.19](https://github.com/Trifindo/Pokemon-DS-Map-Studio/releases/tag/1.19) (working Animation Editor)</li></ul> Texture Editing: <ul><li> [NitroPaint](https://github.com/Garhoogin/NitroPaint)</li></ul> Importing Maps to ROM: <ul><li> [DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/DS-Pokemon-Rom-Editor/DSPRE)</li></ul></td>
+        <td>PDSMS (Pokemon DS Map Studio): Tile-based custom map creation/editing tool<ul><li>[Trifindo's current release](https://github.com/Trifindo/Pokemon-DS-Map-Studio)</li><li>[AdAstra's fork](https://github.com/AdAstra-LD/Pokemon-DS-Map-Studio) (additional QoL features)</li><li>[Trinsic's fork](https://github.com/Trinsic64/Pokemon-DS-Map-Studio/releases) (additional QoL features)</li></ul> Texture Editing: <ul><li> [NitroPaint](https://github.com/Garhoogin/NitroPaint)</li></ul> Importing Maps to ROM: <ul><li> [DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/DS-Pokemon-Rom-Editor/DSPRE)</li></ul></td>
         <td><ul><li>[Making First Map](https://www.youtube.com/watch?v=Xnj8cWDRbaA&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=21)</li><li>[Importing Custom Maps](https://www.youtube.com/watch?v=fcGjxI7oWsI&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=23)</li><li>[Mapping Overview Wiki Page](/docs/generation-iv/guides/mapping/)</li></ul></td>
     </tr>
     <tr>
@@ -179,7 +179,7 @@ The following tools are recommended to use when modifying the game files.
     </tr>
     <tr>
         <td>ROM Tools</td>
-        <td>File Explorer:<ul><li>[Tinke v0.9.2](https://github.com/pleonex/tinke/releases)</li></ul> Patching Tools:<ul><li>[Delta Patcher](https://github.com/marco-calautti/DeltaPatcher)</li><li>[XDelta](https://www.romhacking.net/utilities/598/)</li></ul></td>
+        <td>File Explorer:<ul><li>[NitroViewer](https://nitroviewer.com/)</li><li>[Tinke v0.9.2](https://github.com/pleonex/tinke/releases)</li></ul> Patching Tools:<ul><li>[Delta Patcher](https://github.com/marco-calautti/DeltaPatcher)</li><li>[XDelta](https://www.romhacking.net/utilities/598/)</li></ul></td>
         <td></td>
     </tr>
     <tr>
@@ -209,7 +209,7 @@ The following tools are recommended to use when modifying the game files.
     </tr>
     <tr>
         <td>Wild Encounters Editing</td>
-        <td>Edit Wild Encounter Tables <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/DS-Pokemon-Rom-Editor/DSPRE) (Headbutt Trees & Safari Zone for HGSS only)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul></td>
+        <td>Edit Wild Encounter Tables <ul><li>[DSPRE (DS Pokémon ROM Editor) Reloaded](https://github.com/DS-Pokemon-Rom-Editor/DSPRE) (Inlcuding: Headbutt Trees & Safari Zone for HGSS; Honey Tree, Trophy Garden for DPPt)</li><li>[PokEditor (v2)](https://github.com/turtleisaac/PokEditor-v2/releases)</li></ul></td>
         <td><ul><li>[DSPRE Encounters Editing](https://www.youtube.com/watch?v=-an8U5tpbNo&list=PLKTW2ZuQjbEEVYHhxRZF9N8v_9AUneJq1&index=20)</li><li>[PokEditor Tutorials](https://docs.google.com/document/d/1F9Hotlf8CQj685xtVU3UIdWXBVIyMyddsfq0Kau6F40/edit?usp=sharing)</li></ul></td>
     </tr>
   </tbody>
