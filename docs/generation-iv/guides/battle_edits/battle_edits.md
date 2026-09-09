@@ -1275,7 +1275,7 @@ To fix the issue, change the byte from `97` to `98`.
 
 
 
-### Trainer AI Expert Flag Discharge Scoring in Double Battle Fix
+### Trainer AI Tag Strategy Flag Discharge Scoring in Double Battle Fix
 > Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/bca37652996330898fdd2408281ea419b8c995c7/src/battle/trainer_ai/script.s#L7235), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1546939356684492870)
 
 Open the relevant file and change the bytes at the provided offset:
