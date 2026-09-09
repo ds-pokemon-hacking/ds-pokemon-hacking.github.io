@@ -59,6 +59,8 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Gyro Ball Move Power Calculation Multiplier](#gyro-ball-move-power-calculation-multiplier)
   - [Flail and Reversal Move Power](#flail-and-reversal-move-power)
   - [Bypass Trick 'Always Fail' Logic](#bypass-trick-always-fail-logic)
+  - [Disable and Encore Duration](#disable-and-encore-duration)
+  - [Taunt Duration](#taunt-duration)
 
 - [Weather](#weather)
   - [Hail End-of-Turn Damage for Non-Ice Types](#hail-end-of-turn-damage-for-non-ice-types)
@@ -69,6 +71,7 @@ This information comes from tutorials, guides, and research shared via other mea
 
 - [Bug Fixes](#bug-fixes)
   - [Fire Fang vs Wonder Guard](#fire-fang-vs-wonder-guard)
+  - [Rage Glitch](#rage-glitch)
   - [Trainer AI Basic Flag Water Immunity Check vs Dry Skin](#trainer-ai-basic-flag-water-immunity-check-vs-dry-skin)
   - [Trainer AI Basic Flag Sunny Day Check](#trainer-ai-basic-flag-sunny-day-check)
   - [Trainer AI Expert Flag Foresight and Odor Sleuth Ghost Type Check](#trainer-ai-expert-flag-foresight-and-odor-sleuth-ghost-type-check)
@@ -76,6 +79,8 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Trainer AI Expert Flag Leaf Guard Sunny Day Logic](#trainer-ai-expert-flag-leaf-guard-sunny-day-logic)
   - [Trainer AI Expert Flag Water Spout and Eruption HP Check](#trainer-ai-expert-flag-water-spout-and-eruption-hp-check)
   - [Trainer AI Expert Flag Charge-Turn Move Scoring Fix](#trainer-ai-expert-flag-charge-turn-move-scoring-fix)
+  - [Trainer AI Expert Flag Thunder Scoring Fix](#trainer-ai-expert-flag-thunder-scoring-fix)
+  - [Trainer AI Expert Flag Discharge Scoring in Double Battle Fix](#trainer-ai-expert-flag-discharge-scoring-in-double-battle-fix)
 
 
 ---
@@ -891,6 +896,62 @@ This edit does not implement post-battle item restoration for normal trainer bat
 To implement this edit, change the bitmask byte from `84` to `85`.
 <br/>
 
+
+
+### Disable and Encore Duration
+
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L4594), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1543752689219797042)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     |    File                     | Offset (Disable)| Vanilla Byte | Offset (Encore)   | Vanilla Bytes |
+|:------------------------:|:---------------------------:|:---------------:|:------------:|:-----------------:|:-------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x90DA`        | `20 40`      |     `0x939A`      |    `05`       |
+| **Platinum**             | `Overlay 16`                | `0x8EB2`        | `20 40`      |     `0x9172`      |    `05`       |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x855E`        | `20 40`      |     `0x881E`      |    `05`       |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  | Move    | Vanilla Bytes |
+  |:-------:|:-------------:|
+  | Disable | `C4 1C 07 20 20 40 08 43 98 50` |
+  | Encore  | `6C 18 C0 21 15 1C 4D 43 05 21` |
+</details>
+
+In Gen IV, Disable lasts **3-6 turns**, while Encore lasts **3-7 turns**. However, due to how the battle logic handles these durations, they effectively last **4-7 turns** and **4-8 turns**, respectively.
+
+From Gen V onwards, Disable always lasts **4 turns** and Encore always lasts **3 turns**, even if the user of the move is slower than the target. In Gen IV, if you use either of these moves after the opponent has already moved, you get less effective turns to take advantage of than if you moved first.
+
+As an example, to make Disable always last **5 turns** and Encore **4 turns**, make the following changes:
+
+For Disable, change `20 40` to `04 20` at the provided offset. Disable will then last **5 turns** if the user moves before the opponent and **4 turns** if the user moves after.
+
+For Encore, change `05` to `01` at the provided offset. Encore will then last **4 turns** if the user moves before the opponent and **3 turns** if the user moves after.
+
+Using **5 turns** for Disable and **4 turns** for Encore as the base values ensures that slower Pokémon always get **4 turns** and **3 turns** of effect, respectively. Faster Pokémon will still get more turns, but this behavior cannot be avoided without changing the underlying Gen IV battle logic.
+<br/>
+
+
+
+### Taunt Duration
+
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/3f799c5a16398832df84a9c2b6e66836ca553076/res/battle/scripts/subscripts/subscript_taunt_start.s#L8), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1543798392935809125)
+
+Unpack the relevant NARC, open the specified file, and change the byte at the provided offset:
+| Game                     | NARC to unpack               | File              | Offset  |
+|:------------------------:|:----------------------------:|:-----------------:|:-------:|
+| **HeartGold/SoulSilver** | `/a/0/0/1`                   | `1_132.bin`       | `0x38`  |
+| **Platinum**             | `/battle/skill/sub_seq.narc` | `sub_seq_132.bin` | `0x38`  |
+| **Diamond/Pearl**        | `/battle/skill/sub_seq.narc` | `sub_seq_132.bin` | `0x38`  |
+
+|               | Vanilla Bytes            |
+|:-------------:|:------------------------:|
+| **All Games** | `02 00 00 00 03 00 00 00`|
+
+In Gen IV Taunt's duration lasts from 3 to 5 turns.
+To make Taunt always last a fixed duration of **4 turns** change the vanilla bytes to `00 00 00 00 04 00 00 00`.
+Taunt will now last **4 turns** if the user moves before the opponent and **3 turns** if the user moves after.
+<br/>
+
 ---
 
 ## Weather
@@ -990,6 +1051,29 @@ Open the relevant file and change the byte at the provided offset:
 Fire Fang (*specifically the move effect assigned to only Fire Fang*) is able to hit through Wonder Guard, even if the target does not have a weakness to Fire-Type moves. More information about the bug can be found on [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/List_of_battle_glitches_in_Generation_IV#Fire_Fang_Wonder_Guard_glitch) or searching `Fire Fang Wonder Guard` on the Kingdom of DS Hacking Discord.
 
 To fix the issue, change the byte from `11` to `10`.
+<br/>
+
+
+### Rage Glitch
+> Sources and Credits: [Aurum](https://discord.com/channels/446824489045721090/477197363954581542/1537507810416525492), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1544775191157022883)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x11B3C` | `01`         |
+| **Platinum**             | `Overlay 16`                | `0x11574` | `01`         |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x10850` | `01`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes        |
+  |:-------------:|:--------------------:|
+  | **All Games** | `01 40 16 48 29 50`  |
+</details>
+
+If a Pokémon uses Rage, then subsequently changes to a different move, it removes all volatile status conditions from that Pokémon, except Rage. More information on [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Rage_glitch).
+
+To fix the issue, change the byte from `01` to `41`.
 <br/>
 
 
@@ -1162,4 +1246,71 @@ Open the relevant file and change the bytes at the provided offset:
 When evaluating charge-turn semi-invulnerable moves (such as Fly or Dig), the Expert Trainer AI includes logic that triggers if the opponent is immune or resistant to the move. However, instead of penalizing this move, a bug in the scoring block adds `+1` to the move score. This causes the AI to erroneously favor using Ground-type Dig against immune Flying-type opponents, or using Flying-type Fly against Electric-types.
 
 To fix the issue, change the score bonus bytes from `01 00 00 00` (+1) to `FF FF FF FF` (-1).
+<br/>
+
+
+
+### Trainer AI Expert Flag Thunder Scoring Fix
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/bca37652996330898fdd2408281ea419b8c995c7/src/battle/trainer_ai/script.s#L3972), [Aurum](https://discord.com/channels/446824489045721090/446824489993502721/1546125369499713566), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1546902068415959040)
+
+Open the relevant file and change the bytes at the provided offset:
+| Game                     | File                        | Offset    | Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0x788C`  | `97`         |
+| **Platinum**             | `Overlay 14`                | `0x7884`  | `97`         |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x20554` | `97`         |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |                                       | Vanilla Bytes                    |
+  |:-------------------------------------:|:--------------------------------:|
+  | **HeartGold/SoulSilver and Platinum** | `97 00 00 00 27 0B 00 00`        |
+  | **Diamond/Pearl**                     | `97 00 00 00 1D 0B 00 00`        |
+</details>
+
+There's code for the Expert AI to score the move Thunder based on the weather but it's not used due to an off-by-one error.
+
+To fix the issue, change the byte from `97` to `98`.
+<br/>
+
+
+
+### Trainer AI Expert Flag Discharge Scoring in Double Battle Fix
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/bca37652996330898fdd2408281ea419b8c995c7/src/battle/trainer_ai/script.s#L7235), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1546939356684492870)
+
+Open the relevant file and change the bytes at the provided offset:
+| Game                     | File                        | Offset    |
+|:------------------------:|:---------------------------:|:---------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 10`   | `0xE190`  |
+| **Platinum**             | `Overlay 14`                | `0xE188`  |
+| **Diamond/Pearl**        | `Overlay 16`                | `0x26E30` |
+
+|                          | Vanilla Bytes                          |
+|:------------------------:|:--------------------------------------:|
+| **HeartGold/SoulSilver** | `52 00 00 00 03 00 00 00 0B 00 00 00 13 00 00 00 01 00 00 00 93 E4 FF FF 52 00 00 00 03 00 00 00 02 00 00 00 13 00 00 00 01 00 00 00 8D E4 FF FF 52 00 00 00 03 00 00 00 04 00 00 00 13 00 00 00 01 00 00 00 96 E4 FF FF`  |
+| **Patinum**              | `52 00 00 00 03 00 00 00 0B 00 00 00 13 00 00 00 01 00 00 00 93 E4 FF FF 52 00 00 00 03 00 00 00 02 00 00 00 13 00 00 00 01 00 00 00 8D E4 FF FF 52 00 00 00 03 00 00 00 04 00 00 00 13 00 00 00 01 00 00 00 96 E4 FF FF`  |
+| **Diamond/Pearl**        | `52 00 00 00 03 00 00 00 0B 00 00 00 13 00 00 00 01 00 00 00 9D E4 FF FF 52 00 00 00 03 00 00 00 02 00 00 00 13 00 00 00 01 00 00 00 97 E4 FF FF 52 00 00 00 03 00 00 00 04 00 00 00 13 00 00 00 01 00 00 00 A0 E4 FF FF`  |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes               |
+  |:-------------:|:---------------------------:|
+  | **All Games** | `52 00 00 00 03 00 00 00 0B`|
+</details>
+
+The Trainer AI checks if its partner has a Ground, Water, or Flying typing to decide if it will use Electric type spread moves or not.
+Due to the order of these checks, the AI will never use Discharge if its partner is a dual-type Pokémon with Ground and Water/Flying typing, even though if it would be immune to it (Gliscor or Swampert, for example).
+
+To fix the issue, make the following changes:
+|                          | New Bytes                                                                                    |
+|:------------------------:|:--------------------------------------------------------------------------------------------:|
+| **HeartGold/SoulSilver** | `52 00 00 00 03 00 00 00 04 00 00 00 13 00 00 00 01 00 00 00 A2 E4 FF FF 52 00 00 00 03 00 00 00 0B 00 00 00 13 00 00 00 01 00 00 00 8D E4 FF FF 52 00 00 00 03 00 00 00 02 00 00 00 13 00 00 00 01 00 00 00 87 E4 FF FF`  |
+| **Patinum**              | `52 00 00 00 03 00 00 00 04 00 00 00 13 00 00 00 01 00 00 00 A2 E4 FF FF 52 00 00 00 03 00 00 00 0B 00 00 00 13 00 00 00 01 00 00 00 8D E4 FF FF 52 00 00 00 03 00 00 00 02 00 00 00 13 00 00 00 01 00 00 00 87 E4 FF FF`  |
+| **Diamond/Pearl**        | `52 00 00 00 03 00 00 00 04 00 00 00 13 00 00 00 01 00 00 00 AC E4 FF FF 52 00 00 00 03 00 00 00 0B 00 00 00 13 00 00 00 01 00 00 00 97 E4 FF FF 52 00 00 00 03 00 00 00 02 00 00 00 13 00 00 00 01 00 00 00 91 E4 FF FF`  |
+
+The bytes being this large is due to the fact that, in order to fix the script's logic, the order of the three checks needs to be changed.
+
+Vanilla: Partner has Water type -> Partner has Flying type -> Partner has Ground type
+
+New: Partner has Ground type -> Partner has Water type -> Partner has Flying type
 <br/>
