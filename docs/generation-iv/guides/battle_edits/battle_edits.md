@@ -80,7 +80,7 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Trainer AI Expert Flag Water Spout and Eruption HP Check](#trainer-ai-expert-flag-water-spout-and-eruption-hp-check)
   - [Trainer AI Expert Flag Charge-Turn Move Scoring Fix](#trainer-ai-expert-flag-charge-turn-move-scoring-fix)
   - [Trainer AI Expert Flag Thunder Scoring Fix](#trainer-ai-expert-flag-thunder-scoring-fix)
-  - [Trainer AI Expert Flag Discharge Scoring in Double Battle Fix](#trainer-ai-expert-flag-discharge-scoring-in-double-battle-fix)
+  - [Trainer AI Tag Strategy Flag Discharge Scoring in Double Battle Fix](#trainer-ai-tag-strategy-flag-discharge-scoring-in-double-battle-fix)
 
 
 ---
