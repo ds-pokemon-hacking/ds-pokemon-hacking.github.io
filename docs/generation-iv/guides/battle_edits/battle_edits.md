@@ -1268,7 +1268,7 @@ Open the relevant file and change the bytes at the provided offset:
   | **Diamond/Pearl**                     | `97 00 00 00 1D 0B 00 00`        |
 </details>
 
-There's code for the Expert AI to score the move Thunder based on the weather but it's not used due to an off-by-one error.
+The Expert AI contains a weather-based scoring routine intended for Thunder, but a duplicated SolarBeam effect ID makes that routine unreachable. Changing the second ID to Thunder restores the intended dispatch.
 
 To fix the issue, change the byte from `97` to `98`.
 <br/>
