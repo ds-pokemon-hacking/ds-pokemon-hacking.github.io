@@ -59,7 +59,8 @@ This information comes from tutorials, guides, and research shared via other mea
   - [Gyro Ball Move Power Calculation Multiplier](#gyro-ball-move-power-calculation-multiplier)
   - [Flail and Reversal Move Power](#flail-and-reversal-move-power)
   - [Bypass Trick 'Always Fail' Logic](#bypass-trick-always-fail-logic)
-  - [Disable and Encore Duration](#disable-and-encore-duration)
+  - [Disable Duration](#disable-duration)
+  - [Encore Duration](#encore-duration)
   - [Taunt Duration](#taunt-duration)
 
 - [Weather](#weather)
@@ -898,36 +899,63 @@ To implement this edit, change the bitmask byte from `84` to `85`.
 
 
 
-### Disable and Encore Duration
+### Disable Duration
 
 > Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L4594), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1543752689219797042)
 
 Open the relevant file and change the byte at the provided offset:
-| Game                     |    File                     | Offset (Disable)| Vanilla Byte | Offset (Encore)   | Vanilla Bytes |
-|:------------------------:|:---------------------------:|:---------------:|:------------:|:-----------------:|:-------------:|
-| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x90DA`        | `20 40`      |     `0x939A`      |    `05`       |
-| **Platinum**             | `Overlay 16`                | `0x8EB2`        | `20 40`      |     `0x9172`      |    `05`       |
-| **Diamond/Pearl**        | `Overlay 11`                | `0x855E`        | `20 40`      |     `0x881E`      |    `05`       |
+| Game                     |    File                     | Offset (Disable)| Vanilla Byte |
+|:------------------------:|:---------------------------:|:---------------:|:------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   | `0x90DA`        | `20 40`      |
+| **Platinum**             | `Overlay 16`                | `0x8EB2`        | `20 40`      |
+| **Diamond/Pearl**        | `Overlay 11`                | `0x855E`        | `20 40`      |
 
 <details>
   <summary>You can also search for these bytes instead</summary>
-  | Move    | Vanilla Bytes |
-  |:-------:|:-------------:|
-  | Disable | `C4 1C 07 20 20 40 08 43 98 50` |
-  | Encore  | `6C 18 C0 21 15 1C 4D 43 05 21` |
+  |               | Vanilla Bytes                   |
+  |:-------------:|:-------------------------------:|
+  | **All Games** | `C4 1C 07 20 20 40 08 43 98 50` |
 </details>
 
-In Gen IV, Disable lasts **3-6 turns**, while Encore lasts **3-7 turns**. However, due to how the battle logic handles these durations, they effectively last **4-7 turns** and **4-8 turns**, respectively.
+In Gen IV, Disable lasts **3-6 turns**. However, due to how the battle logic handles this duration, it effectively lasts **4-7 turns**.
 
-From Gen V onwards, Disable always lasts **4 turns** and Encore always lasts **3 turns**, even if the user of the move is slower than the target. In Gen IV, if you use either of these moves after the opponent has already moved, you get less effective turns to take advantage of than if you moved first.
+From Gen V onwards, Disable always lasts **4 turns**,  even if the user of the move is slower than the target. In Gen IV, if you use Disable after the opponent has already moved, you get less effective turns to take advantage of than if you moved first.
 
-As an example, to make Disable always last **5 turns** and Encore **4 turns**, make the following changes:
+As an example, to make Disable always last **5 turns**, make the following changes:
 
-For Disable, change `20 40` to `04 20` at the provided offset. Disable will then last **5 turns** if the user moves before the opponent and **4 turns** if the user moves after.
+Change `20 40` to `04 20` at the provided offset. Disable will then last **5 turns** if the user moves before the opponent and **4 turns** if the user moves after.
 
-For Encore, change `05` to `01` at the provided offset. Encore will then last **4 turns** if the user moves before the opponent and **3 turns** if the user moves after.
+Using **5 turns** as the base value ensures that slower Pokémon always get **4 turns** of effect. Faster Pokémon will still get more turns, but this behavior cannot be avoided without changing the underlying Gen IV battle logic.
+<br/>
 
-Using **5 turns** for Disable and **4 turns** for Encore as the base values ensures that slower Pokémon always get **4 turns** and **3 turns** of effect, respectively. Faster Pokémon will still get more turns, but this behavior cannot be avoided without changing the underlying Gen IV battle logic.
+
+
+### Encore Duration
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/main/src/battle/battle_script.c#L4742), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1543752689219797042)
+
+Open the relevant file and change the byte at the provided offset:
+| Game                     |    File                     | Offset (Encore)   | Vanilla Bytes |
+|:------------------------:|:---------------------------:|:-----------------:|:-------------:|
+| **HeartGold/SoulSilver** | `Decompressed Overlay 12`   |     `0x939A`      |    `05`       |
+| **Platinum**             | `Overlay 16`                |     `0x9172`      |    `05`       |
+| **Diamond/Pearl**        | `Overlay 11`                |     `0x881E`      |    `05`       |
+
+<details>
+  <summary>You can also search for these bytes instead</summary>
+  |               | Vanilla Bytes                   |
+  |:-------------:|:-------------------------------:|
+  | **All Games** | `6C 18 C0 21 15 1C 4D 43 05 21` |
+</details>
+
+In Gen IV, Encore lasts **3-7 turns**. However, due to how the battle logic handles this duration, it effectively lasts **4-8 turns**.
+
+From Gen V onwards, Encore always lasts **3 turns**,  even if the user of the move is slower than the target. In Gen IV, if you use Encore after the opponent has already moved, you get less effective turns to take advantage of than if you moved first.
+
+As an example, to make Encore always last **4 turns**, make the following changes:
+
+Change `05` to `01` at the provided offset. Encore will then last **4 turns** if the user moves before the opponent and **3 turns** if the user moves after.
+
+Using **4 turns** as the base value ensures that slower Pokémon always get **3 turns** of effect. Faster Pokémon will still get more turns, but this behavior cannot be avoided without changing the underlying Gen IV battle logic.
 <br/>
 
 
@@ -947,8 +975,8 @@ Unpack the relevant NARC, open the specified file, and change the byte at the pr
 |:-------------:|:------------------------:|
 | **All Games** | `02 00 00 00 03 00 00 00`|
 
-In Gen IV Taunt's duration lasts from 3 to 5 turns.
-To make Taunt always last a fixed duration of **4 turns** change the vanilla bytes to `00 00 00 00 04 00 00 00`.
+In Gen IV, Taunt's duration lasts from 3 to 5 turns.
+To make Taunt always last a fixed duration of **4 turns**, change the vanilla bytes to `00 00 00 00 04 00 00 00`.
 Taunt will now last **4 turns** if the user moves before the opponent and **3 turns** if the user moves after.
 <br/>
 
@@ -1055,7 +1083,7 @@ To fix the issue, change the byte from `11` to `10`.
 
 
 ### Rage Glitch
-> Sources and Credits: [Aurum](https://discord.com/channels/446824489045721090/477197363954581542/1537507810416525492), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1544775191157022883)
+> Sources and Credits: [Plat Decomp](https://github.com/pret/pokeplatinum/blob/9aa6f285de9d09e73f3c128026ac5385b93b0d6e/src/battle/battle_controller_player.c#L846), [Aurum](https://discord.com/channels/446824489045721090/477197363954581542/1537507810416525492), [MeKomoATuPrima](https://discord.com/channels/446824489045721090/477197363954581542/1544775191157022883)
 
 Open the relevant file and change the byte at the provided offset:
 | Game                     | File                        | Offset    | Vanilla Byte |
