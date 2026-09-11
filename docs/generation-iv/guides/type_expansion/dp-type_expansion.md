@@ -8,7 +8,7 @@ sidebar_position: 2
 
 # Fairy Type <br/> <sup>*(Diamond/Pearl)*</sup>
 > Author: Lmaokai <br/>
-> Credits: Yako ([Platinum Guide](pt-type_expansion.md)), Mikelan98 and BagBoy ([Original guide](https://pokehacking.com/tutorials/fairypt/)), Drayano ([Another guide](https://pastebin.com/hTeS5EkD)), Mikelan98 and Nomura (ARM9 Expansion), DSPRE developers, pokeplatinum contributors, BagBoy ([Move Tester Pokétch app](https://discord.com/channels/446824489045721090/468060243688161300/1242976241347330048))
+> Credits: Yako ([Platinum Guide](pt-type_expansion.md)), Mikelan98 and BagBoy ([Original guide](https://pokehacking.com/tutorials/fairypt/)), Drayano ([Another guide](https://pastebin.com/hTeS5EkD)), Mikelan98 and Nomura (ARM9 Expansion), DSPRE developers, pokeplatinum contributors, BagBoy ([Move Tester Pokétch app](https://discord.com/channels/446824489045721090/468060243688161300/1242976241347330048)), PokePlatinum ([Move Tester Poketch App](https://github.com/pret/pokeplatinum/blob/4171c7a8effc85637d2c2f0406ccfd57f284ed94/src/applications/poketch/move_tester/main.c#L49))
 
 This is a guide on how to add the Fairy Type (replacing the Mystery Type) in Diamond and Pearl, based on the [Lite Version](pt-type_expansion.md#lite-version) of Yako's Platinum Guide. I recommend you read through Yako's guide for more context regarding the edits, as this guide is more of a bare-bones version to inform of the equivalent Diamond/Pearl files and offsets.
 
@@ -210,7 +210,7 @@ Save your project with DSPRE and check the Pokédex entry for the Pokémon you c
 
 ## Bonus - Updating the Move Tester Pokétch app
 
-The Move Tester Pokétch app displays a type's effectiveness against a Pokémon with a particular type combination. However, this display uses a different table from the one used to determine effectiveness in battles. This means that the Move Tester Pokétch app must be manually updated as well.
+The Move Tester Pokétch app displays a type's effectiveness against a Pokémon with a particular type combination. However, the Move Tester Pokétch app uses a different table from the one used to determine effectiveness in battles. Additionally, the app also does not include the ???/Mystery/Fairy type in the display. The following steps shows how to add the Fairy type to the Move Tester Pokétch app.
 
 **Update the Move Tester Type Chart** <br/>
 Navigate to `game_DSPRE_contents/arm9_overlays/ov038.bin` (`Overlay 38`). Open the file in a hex editor and navigate to offset `0x8F4`. You should see the following 0x144 (324) bytes:
@@ -244,7 +244,7 @@ The attacking effectiveness is represented by the following hexadecimal values:
 - `FF` - Not very effective
 - `F6` - Not effective/immune
 
-For your convenience, here are the bytes that includes the Fairy Type attacking effectiveness. This also includes the changes to Ghost and Dark Type moves being neutral instead of not very effective against Steel Pokémon (`0x97A` and `0xA2E`).
+For your convenience, here are the bytes that includes the Fairy Type attacking effectiveness (replacing the Mystery/??? Type ID). This also includes the changes to Ghost and Dark Type moves being neutral instead of not very effective against Steel Pokémon (`0x97A` and `0xA2E`).
 
 ```
 00 00 00 00 00 FF 00 F6 FF 00 00 00 00 00 00 00 00 00
@@ -267,15 +267,16 @@ F6 00 00 00 00 00 00 01 00 00 00 00 00 00 01 00 00 FF
 00 FF 00 00 00 00 00 01 00 FF 00 00 00 00 01 00 00 FF
 ```
 
-**Add the Fairy Type** <br/>
+**Add the Fairy Type to the Display List** <br/>
 Go to the following offsets and make the changes:
 - `0x33C` - Replace `11 2C` with `12 2C`
 - `0x340` - Replace `11 2C` with `12 2C`
+- `0x34E` - Replace `08 20` with `09 20`
 - `0x356` - Replace `11 2C` with `12 2C`
 - `0x374` - Replace `10 24` with `11 24`
 - `0xA49` - Replace `00` with `09`
 
-This will add the Fairy Type to the end of the list after the Dark Type. Save this file back to `game_DSPRE_contents/arm9_overlays/`. Save your project with DSPRE and check your Move Tester Pokétch app! *Also, consider changing it to be received a bit earlier than the Icicle Badge...*
+This will append the Fairy Type to be displayed after the Steel Type. Save this file back to `game_DSPRE_contents/arm9_overlays/`. Save your project with DSPRE and check your Move Tester Pokétch app! *Also, consider changing it to be received a bit earlier than the Icicle Badge...*
 
 ---
 
