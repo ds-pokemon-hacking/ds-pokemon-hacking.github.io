@@ -3180,6 +3180,8 @@ Since these tables only exist in Platinum, Heartgold & Soulsilver versions, thes
 
 There are some variations between versions, below will outline where edits are needed and how to define the desired results. All of these will require at least rudimentary hex editing skill. See [this documentation](/docs/universal/guides/hex_editing/) to learn enough to proceed.
 
+These instructions were written for the US versions of Platinum, HeartGold and SoulSilver.
+
 The below download link is for a Microsoft Excel file which can be used to easily produce the required hex strings to change the **Tutorable Moves (incl. Costs & Tutor IDs)** & the **Tutorable Moves (Pokémon Compatibility)** data in both Platinum & HGSS. The following sections describe where these changes should be done and any other context.
 
 [Download the GenIV Move Tutor Hex Creator Spreadsheet](https://github.com/DevHam88/pt-hgss-move-tutor-hex-creator/releases)
@@ -3188,43 +3190,47 @@ The below download link is for a Microsoft Excel file which can be used to easil
 
 ##### Type 2A (Platinum): Compatibility & Special Currency (*Shards*)
 
-> Source(s): [MapleDonut, TurtleIsaac & Solace (2021)](https://pastebin.com/eaYtGpTw)
+> Source(s): [MapleDonut, TurtleIsaac & Solace (2021)](https://pastebin.com/eaYtGpTw); [decomp data layout](https://github.com/pret/pokeplatinum/blob/3a85029d78d42a809125076e1cf2752f15739adb/include/tutor_movesets.h#L7)
 
-All of the data exists in `Overlay 5.bin`, and edits can be made from an extracted file (as produced by DSPRE during unpacking, or via a program such as Tinke).
+All of the data exists in decompressed `Overlay 5.bin`, and edits can be made from an extracted file (as produced by DSPRE during unpacking, or via a program such as Tinke).
 
 **Move pool definition**  
-The available pool of moves that can be tutored can be found at offest `0x2FF64` (and up to and including offset `0x3012B`).  
+The available pool of moves that can be tutored can be found at offset `0x2FF64` (and up to and including offset `0x3012B`).
+
 In platinum there are 38 used moves, each takes 12 bytes of space (plus two unused sets of bytes). A list of the moves available in the pool can be found in online sources such as [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Move_Tutor#Generation_IV).
 
 The format of the bytes is as follows:
-`XX XX RR BB GG YY 00 00 LL 00 00 00`  
+`XX XX RR BB YY GG 00 00 LL LL LL LL`
+
 Where:
 - `XX XX` : Move ID in hex (little endian, ie Move 1C3 would be `C3 01`)
 - `RR` : Number of red shards required to tutor this move (red shards are used for Physical moves)
 - `BB` : Number of blue shards required to tutor this move (blue shards are used for Special moves)
 - `YY` : Number of yellow shards required to tutor this move (yellow shards are used for damaging or non-damaging moves with Status effects)
 - `GG` : Number of green shards required to tutor this move (green shards have no specific correlation with move attributes)
-- `LL` : Tutor ID. `00` is the tutor on Route 212, `01` is the tutor in the Survival Area, and `02` is the tutor in Snowpoint City.
+- `LL LL LL LL` : Tutor ID as a four-byte little-endian value. `00 00 00 00` is the tutor on Route 212, `01 00 00 00` is the tutor in the Survival Area, and `02 00 00 00` is the tutor in Snowpoint City.
 
 As an example, the first tutorable move is:  
 `23 01 02 04 02 00 00 00 00 00 00 00`
-Meaning this is move ID `291` (Dive), costs 2 Red Shards, 4 Blue Shards, 2 Green Shards & 0 Yellow Shards, and is available at the tutor on Route 212.
+Meaning this is move ID `291` (Dive), costs 2 Red Shards, 4 Blue Shards, 2 Yellow Shards & 0 Green Shards, and is available at the tutor on Route 212.
 
 To check understanding, look at the last tutorable move, and identify the required information:  
 `FD 00 00 00 06 02 00 00 02 00 00 00`
 
 <details>
   <summary>Interpretation of the hex above</summary>
-  <p>This is move ID `253` (Uproar), costs 0 Red Shards, 0 Blue Shards, 6 Green Shards & 2 Yellow Shards, and is available at the tutor in Snowpoint City.</p>
+  <p>This is move ID `253` (Uproar), costs 0 Red Shards, 0 Blue Shards, 6 Yellow Shards & 2 Green Shards, and is available at the tutor in Snowpoint City.</p>
 </details>
 
 This knowledge can be used to change any of the moves that the tutors can (collectively) teach, the costs for the move in shards, and the specific tutor who can teach it.
 
-Note that the Tutor ID simply relates to an input to the `CheckLearnableTutorMoves` script command. This means that the moves aren't tied to specific NPCs, locations etc., and it means that new Tutors could be defined by editing the Tutor ID parts of the available pool of moves. It is also worth noting that the pool could theoretically have multiple of the same move present, for example if you wanted Tutor ID `00` and a new Tutor ID `03` to both teach Ominous Wind, you could replace an unwanted move in the table with a second for Omnious Wind with a different or same cost, and a different Tutor ID.
+Note that the Tutor ID simply relates to an input to the `CheckLearnableTutorMoves` script command. This means that the moves aren't tied to specific NPCs, locations etc., and it means that new Tutors could be defined by editing the Tutor ID parts of the available pool of moves. It is also worth noting that the pool could theoretically have multiple of the same move present, for example if you wanted Tutor ID `00` and a new Tutor ID `03` to both teach Ominous Wind, you could replace an unwanted move in the table with a second for Ominous Wind and a different Tutor ID.
+
+For duplicate moves, the vanilla shard-payment command uses the cost from the first entry with that move ID, regardless of Tutor ID ([decomp](https://github.com/pret/pokeplatinum/blob/3a85029d78d42a809125076e1cf2752f15739adb/src/overlay005/scrcmd_move_tutor.c#L163)).
 
 **Pokémon compatibility**
 
-The compatibility table can be found at offest `0x3012C`. In Platinum each Pokémon ID uses 5 bytes.  
+The compatibility table starts at offset `0x3012C`. Each Pokémon uses 5 bytes; special forms use the IDs listed below ([decomp](https://github.com/pret/pokeplatinum/blob/3a85029d78d42a809125076e1cf2752f15739adb/src/overlay005/scrcmd_move_tutor.c#L211)).
 
 The format of the bytes is as follows:
 `AA BB CC DD EE`
@@ -3239,12 +3245,12 @@ The individual bytes must be interpreted seperately for accuracy.
 
 As an example, if a Pokémon should be able to learn the 2nd & 3rd moves in the tutorable table `AA` must be `06`, and not `60` as the "positions" are read right to left in binary. An example below, shows this in action:
 
-- **Compatible Moves:** Mud-Slap (ID `2`), Fury Cutter (ID `3`)  
+- **Compatible Moves:** Mud-Slap (catalog position `2`), Fury Cutter (catalog position `3`)
 - **Binary:** `0000 0110`  
 - **Hex:** `06`  
 - A binary to hex converter could be used to work this out, or the `BIN2HEX` function in Microsoft Excel.  
 
-To find the offset of any given Pokémon to edit, paste the following formula into cell `B1` of an Excel document (`=(DEC2HEX(((A1-1)*8)+196908))`), and put the National Dex ID of the Pokémon in cell `A1`.  
+To find a Pokémon's offset in Excel, enter its National Dex ID (or special-form ID from the table below) in `A1` and use `=DEC2HEX(((A1-1)*5)+196908)` in `B1`.
 
 <details>
   <summary>Pokémon IDs (Special Forms)</summary>
@@ -3268,10 +3274,11 @@ To find the offset of any given Pokémon to edit, paste the following formula in
 ##### Type 2B (HGSS): Compatibility & Special Currency (*Battle Points*)
 
 **Move pool definition**  
-> Thanks to Fantafaust for related research which identifies the location of the move pool definition table in HGSS (`Overlay 1`).
+> Thanks to Fantafaust for related research which identifies the location of the move pool definition table in HGSS (`Overlay 1`). See also the [decomp table](https://github.com/pret/pokeheartgold/blob/0985e8718df4f25e64d6507d89c0c97c0d288981/src/field/scrcmd_move_tutor.c#L25).
 
-The available pool of moves that can be tutored can be found at offest `0x23AE0` (and up to and including offset `0x23BC7`) in an **decompressed** `Overlay 1` (DSPRE can be used to decompress this overlay).  
-In HGSS there are 52 used moves, each takes four bytes of space. There is space in `Overlay 1` for six more moves to be defined (which are just present as `00 10 00 00` in the vanilla game) A list of the moves available in the pool can be found in online sources such as [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Move_Tutor#Generation_IV).
+The available pool of moves that can be tutored can be found at offset `0x23AE0` (and up to and including offset `0x23BC7`) in a **decompressed** `Overlay 1` (DSPRE can be used to decompress this overlay).
+
+In HGSS there are 52 used moves, each takes four bytes of space. There is space in `Overlay 1` for six more moves to be defined (which are just present as `00 10 00 00` in the vanilla game). A list of the moves available in the pool can be found in online sources such as [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Move_Tutor#Generation_IV).
 
 The format of the bytes is as follows:
 `XX XX BB TT`
@@ -3294,14 +3301,16 @@ To check understanding, look at the second-to-last (used) tutorable move, and id
 
 This knowledge can be used to change any of the moves that the tutors can (collectively) teach, the costs for the move in BP, and the specific tutor who can teach it.
 
-Note that the Tutor ID simply relates to an input to the `CheckLearnableTutorMoves` script command. This means that the moves aren't tied to specific NPCs, locations etc., and it means that new Tutors could be defined by editing the Tutor ID parts of the available pool of moves. It is also worth noting that the pool could theoretically have multiple of the same move present, for example if you wanted Tutor ID `00` and a new Tutor ID `04` to both teach Ominous Wind, you could replace an unwanted move in the table with a second for Omnious Wind with a different or same cost, and a different Tutor ID.
+Note that the Tutor ID simply relates to an input to the `CheckLearnableTutorMoves` script command. This means that the moves aren't tied to specific NPCs, locations etc., and it means that new Tutors could be defined by editing the Tutor ID parts of the available pool of moves. It is also worth noting that the pool could theoretically have multiple of the same move present, for example if you wanted Tutor ID `00` and a new Tutor ID `04` to both teach Ominous Wind, you could replace an unwanted move in the table with a second for Ominous Wind and a different Tutor ID.
+
+For duplicate moves, the vanilla BP-price lookup uses the cost from the first entry with that move ID, regardless of Tutor ID ([decomp](https://github.com/pret/pokeheartgold/blob/0985e8718df4f25e64d6507d89c0c97c0d288981/src/field/scrcmd_move_tutor.c#L128)).
 
 When considering adding new Tutor IDs in HGSS, bear in mind that tutor ID `03` is used (the Headbutt tutor).
 
 **Pokémon compatibility**
-> Source(s): [Mixone (2024)](https://discord.com/channels/446824489045721090/468060243688161300/1268200787251564584)
+> Source(s): [Mixone (2024)](https://discord.com/channels/446824489045721090/468060243688161300/1268200787251564584); [decomp data format](https://github.com/pret/pokeheartgold/blob/0985e8718df4f25e64d6507d89c0c97c0d288981/files/fielddata/wazaoshie/waza_oshie.json.txt)
 
-The compatibility table can be found in `waza_oshie.bin` at offest `0x0` (this is the entire file). In HGSS each Pokémon ID uses 8 bytes.
+The compatibility table is in `fielddata/wazaoshie/waza_oshie.bin`, starting at offset `0x0` and covering the entire file. Each Pokémon uses 8 bytes; special forms use the IDs listed below.
 
 The format of the bytes is as follows: `AA BB CC DD EE FF GG HH`, where:
 - `AA` : Binary true/false definition for tutorable moves 01-08
@@ -3317,12 +3326,12 @@ The individual bytes must be interpreted seperately for accuracy.
 
 As an example, if a Pokémon should be able to learn the 2nd & 3rd moves in the tutorable table `AA` must be `06`, and not `60` as the "positions" are read right to left in binary. The example below, taken from Mixone's reseach shows this in action:
 
-- **Compatible Moves:** Mud-Slap (ID `2`), Fury Cutter (ID `3`)  
+- **Compatible Moves:** Mud-Slap (catalog position `2`), Fury Cutter (catalog position `3`)
 - **Binary:** `0000 0110`  
 - **Hex:** `06`  
 - A binary to hex converter could be used to work this out, or the `BIN2HEX` function in Microsoft Excel.  
 
-To find the offset of any given Pokémon to edit, paste the following formula into cell `B1` of an Excel document (`=(DEC2HEX((A1-1)*8))`), and put the National Dex ID of the Pokémon in cell `A1`.  
+To find a Pokémon's offset in Excel, enter its National Dex ID (or special-form ID from the table below) in `A1` and use `=DEC2HEX((A1-1)*8)` in `B1`.
 
 <details>
   <summary>Pokémon IDs (Special Forms)</summary>
@@ -3345,7 +3354,7 @@ To find the offset of any given Pokémon to edit, paste the following formula in
 
 ##### Type 2C: Compatibility & Special Currency (*Free*)
 
-This type of move tutor is a variation on Type 2 where the tutor can only teach a single move, and that move is one that has a Tutor ID of `3` (in the case of the vanilla HGSS game: `52` Headbutt). It checks the compatibility table discussed in the previous section on [Type 2B](#type-2b-compatibility--special-currency-battle-points) to confirm if the selected Pokémon can learn the more or not.
+The Ilex Forest tutor teaches Headbutt (move ID `29`, position `52` in the move pool, tutor ID `3`). It uses the compatibility table described in [Type 2B](#type-2b-hgss-compatibility--special-currency-battle-points). To make it teach a different move, its script must also be edited; changing the move pool alone is not enough ([decomp](https://github.com/pret/pokeheartgold/blob/0985e8718df4f25e64d6507d89c0c97c0d288981/files/fielddata/script/scr_seq/scr_seq_0092_D36R0101.s#L1115)).
 
 This is achieved through a very specific command `CheckHeadbuttCompatibility` which inherently checks for tutorable moves with tutor ID = `03`. It is possible to use the same command along with the `AdrsValueSet` command to create other one move tutors, or even different uses. An example of this implementation is [Fantafaust's HM Integration](https://pastebin.com/Ym5xKt8b), which is used to perform compatibility checks for a HM-replacement system.
 
