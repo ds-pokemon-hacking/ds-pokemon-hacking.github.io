@@ -13,320 +13,144 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 
 Locations refer to the US ROM. Some locations may vary with ROM language.
 
-## Back Sprites:
+## Game Start & End
+### Opening Graphics
+**Location**: `demo/title/op_demo`
 
-<p>Split between poketool / trga / trbgra and battle / graphic / batt_obj. Starting at 195.</p>
+### Title Screen Graphics
+**Location**: `demo/title/titledemo`
 
-### Palettes:
+### New Game Options (Intro)
+**Location**: `demo/intro/intro`
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Hero / trbgra_1.RLCN</td></tr>
-<tr><td>Heroine / trbgra_3.RLCN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+### New Game Player Name Menu/Sprites
+**Location**: `data/namein`
 
-### Battle Object File:
+- Palettes: namein_1.RLCN (Palette #4)
+- Sprite: namein10.bin
+- Cells: namein12.bin
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Hero / Batt_obj_195.bin</td></tr>
-<tr><td>Heroine / Batt_obj_196.bin</td></tr>
-<tr><td>View Batt_obj_203.bin to modify them.</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+### Ending Credits
+**Location**: `graphic/ending`
 
-## Front Sprites:
+---
+
+## Trainer Battles
+### Back Sprites
+**Location**: `poketool/trga/trbgra` and `battle/graphic/batt_obj`
+Starting at 195.
 
-<p><code>poketool / trga / trfgra</code></p>
+- Palettes:
+  - Hero / trbgra_1.RLCN
+  - Heroine / trbgra_3.RLCN
 
-## HM Summon Sprites:
+- Battle Object File:
+  - Hero / Batt_obj_195.bin
+  - Heroine / Batt_obj_196.bin
+  - View Batt_obj_203.bin to modify them.
 
-<p><code>data / field_cutin</code></p>
+### Front Sprites
+**Location**: `poketool/trga/trfgra`
 
-## VS Faces:
+### VS Cut-ini Sprites
+**Location**: `poketool/trga/trfgra`
 
-<p><code>poketool / trga / trfgra</code></p>
+### Pokemon Sprites
+**Location**: `poketool/pokegra/pokegra`
 
-## Pokemon Sprites:
+### Pokemon Sprites (Forms)
+**Location**: `poketool/pokegra/otherpoke`
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Regular Pokemon: poketool / pokegra / pokegra</td></tr>
-<tr><td>Pokemon with forms: poketool / pokegra / otherpoke</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+*You must use PokeDSpic for the otherpoke narc*
 
-<p>(You must use PokeDSpic for  the otherpoke narc)</p>
+---
 
-## Pokemon Icons:
+## Field Sprites
+### Overworld Sprites
+**Location**: `data/mmodel`
 
-<p><code>poketool / icongra / poke_icon</code></p>
+- Hero
+  - 90 - Walking/Running
+  - 92 - Bike
+  - 155 - Pull out Pokeball
+  - 157 - Water flower
+  - 159 - Surf
+  - 164 - Tux
+  - 166 - Fishing
+  - 363 - Aerobics
+  - 365 - Save
+  - 367 - Pokecenter
 
-## Trainer Card:
+- Heroine
+  - 91 - Walking/Running
+  - 93 - Bike
+  - 156 - Pull out Pokeball
+  - 158 - Water flower
+  - 160 - Surf
+  - 165 - Dress
+  - 167 - Fishing
+  - 364 - Aerobics
+  - 366 - Save
+  - 368 - Pokecenter
 
-<p><code>graphic / trainer_case</code></p>
+### HM Cut-in Sprites
+**Location**: `field_cutin`
 
-### Sprite:
+---
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>trainer_case_27.RGCN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+## Menus & User Interface
+### Pokemon Icons
+**Location**: `poketool/icongra/poke_icon`
 
-### Palettes:
+### Trainer Card
+**Location**: `graphic/trainer_case`
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>From trainer_case_0.RLCN to trainer_case_6.RLCN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+- Sprite: trainer_case_27.RGCN
+- Palettes: trainer_case_0.RLCN to trainer_case_6.RLCN
 
-## Map Icon:
+### Map Icon
+**Location**: `graphic/tmap_gra`
 
-<p><code>graphic / tmap_gra</code></p>
+- Palettes: Tmap_gra_2.RLCN
+- Sprite: Tmap_gra_10.RGCN
+- Cells: Tmap_gra_11.RECN
 
-### Palette:
+### Pokedex Size Comparison
+**Location**: `resources/eng/zukan/zukan`
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Hero &amp; Heroine / Tmap_gra_2.RLCN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+- Palettes: RLCN 14 (Palette #4)
+- Sprite: File 93
+- Cells: File 91
 
-### Icons:
+---
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Hero &amp; Heroine / Tmap_gra_10.RGCN</td></tr>
-<tr><td>Hero &amp; Heroine / Tmap_gra_11.RECN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+## Miscellaneous
+### Underground Entry Sprite
+**Location**: `data/ugeffect_obj_graphic`
 
-## Pokedex Size Comparison:
-
-<p><code>resources / eng / zukan / zukan</code></p>
+- Palettes: RLCN 14 (Palette #4)
+  - Hero / ugeffect_obj_graphic_1.RGCN
+  - Heroine / ugeffect_obj_graphic_3.RGCN
+- Sprite: File 93
+  - Hero / ugeffect_obj_graphic_0.RGCN
+  - Heroine / ugeffect_obj_graphic_2.RGCN
+  - Hole / ugeffect_obj_graphic_8.RGCN
 
-### Sprites:
+*(Hole shares the palettes with the player sprite, you'll need to edit it the same way as the flying HM sprite.)*
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>File 93, the NCGR.</td></tr>
-<tr><td>File 91, the cells file.</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+### Hall of Fame
+**Location**: `poketool/trgra/trbgra`
 
-<p>(You can try replacing the cells one by one instead of the whole RGCN at once.)</p>
+- Palettes:
+  - Hero / trfgra_1.RLCN
+  - Heroine / trfgra_6.RLCN
+- Sprite: File 93
+  - Hero / trfgra_4.RGCN
+  - Heroine / trfgra_9.RGCN
 
-### Palette:
+*(You will need to follow [this guide](/docs/generation-iv/guides/ncer_sprite_editing/) to modify it.)*
 
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>RLCN 14 (Palette #4)</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
+### Legendary Pokemon Cutscene
+**Location**: `data/demo_climax`
 
-## Text File:
-
-<p><code>msgdata / msgdata</code></p>
-
-## Arm9.bin:
-
-<p><code>ftc / arm9</code></p>
-
-## Sound File:
-
-<p><code>data / sound / sound_data</code></p>
-
-## Underground Entry Sprite:
-
-<p><code>data / ugeffect_obj_graphic</code></p>
-
-### Sprites:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Hero / ugeffect_obj_graphic_0.RGCN</td></tr>
-<tr><td>Heroine / ugeffect_obj_graphic_2.RGCN</td></tr>
-<tr><td>Hole / ugeffect_obj_graphic_8.RGCN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
-### Palettes:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Hero / ugeffect_obj_graphic_1.RGCN</td></tr>
-<tr><td>Heroine / ugeffect_obj_graphic_3.RGCN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
-<p>(Hole shares the palettes with the player sprite, you’ll need to edit it the same way as the flying HM sprite.)</p>
-
-## Hall of Fame:
-
-<p>(You will need to follow a <a href="https://docs.google.com/document/d/1jVhGWjgRlyW3cuwWjEQMN0PTWFU7camc1V6-NckfGic/edit?usp=sharing">tutorial</a> to modify it.)</p>
-
-<p><code>poketool / trgra / trbgra</code></p>
-
-### Sprite:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Hero / trfgra_4.RGCN</td></tr>
-<tr><td>Heroine / trfgra_9.RGCN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
-### Palette:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>Hero / trfgra_1.RLCN</td></tr>
-<tr><td>Heroine / trfgra_6.RLCN</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
-## Legendary Pokemon Cutscene:
-
-<p><code>data / demo_climax</code></p>
-
-<p>(Unlike in Platinum, there are no BDM0 files for DP, the OW sprites should be the ones being used.)</p>
-
-## Name Entry Walking Sprite:
-
-<p><code>data / namein</code></p>
-
-### Sprites:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>namein10.bin</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
-### Palette:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>namein_1.RLCN (Palette #4)</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
-### Cells:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>namein12.bin</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
-## Title Screen:
-
-<p><code>demo / title / titledemo</code></p>
-
-## Opening Video:
-
-<p><code>demo / title / op_demo</code></p>
-
-## Intro Professor Talk:
-
-<p><code>demo / intro / intro</code></p>
-
-## Ending Credits:
-
-<p><code>graphic / ending</code></p>
-
-## Overworld Sprites:
-
-<p><code>data / mmodel</code></p>
-
-### Hero:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>90 - Walking/Running</td></tr>
-<tr><td>92 - Bike</td></tr>
-<tr><td>155 - Pull out Pokeball</td></tr>
-<tr><td>157 - Water flower</td></tr>
-<tr><td>159 - Surf</td></tr>
-<tr><td>164 - Tux</td></tr>
-<tr><td>166 - Fishing</td></tr>
-<tr><td>363 - Aerobics</td></tr>
-<tr><td>365 - Save</td></tr>
-<tr><td>367 - Pokecenter</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
-### Heroine:
-
-<FilterableSortableTable>
-<table>
-<thead><tr><th>Reference</th></tr></thead>
-<tbody>
-<tr><td>91 - Walking/Running</td></tr>
-<tr><td>93 - Bike</td></tr>
-<tr><td>156 - Pull out Pokeball</td></tr>
-<tr><td>158 - Water flower</td></tr>
-<tr><td>160 - Surf</td></tr>
-<tr><td>165 - Dress</td></tr>
-<tr><td>167 - Fishing</td></tr>
-<tr><td>364 - Aerobics</td></tr>
-<tr><td>366 - Save</td></tr>
-<tr><td>368 - Pokecenter</td></tr>
-</tbody>
-</table>
-</FilterableSortableTable>
-
+*(Unlike in Platinum, there are no BDM0 files for DP, the OW sprites should be the ones being used.)*
