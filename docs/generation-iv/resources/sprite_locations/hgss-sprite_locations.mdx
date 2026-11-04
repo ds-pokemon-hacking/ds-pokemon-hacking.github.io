@@ -651,14 +651,17 @@ For **background IDs 0–5**, palette variant **0** is used in morning/day, **1*
 ### Overworld Sprites
 **Location**: `/a/0/8/1`
 
-The vanilla HeartGold archive contains **863 members**: **832 NSBTX sprite sheets**, **14 NSBMD models**, and **17 other data members**. Sprite-sheet textures include their palettes; they are not separate RGCN/RLCN pairs.
+:::warning
+Actor (Event file "Overworld" IDs) and graphics (narc-file) indices do not directly align.  
+For example:
+- Bulbasaur actor **428** uses file **`1_297`**;
+- Kyogre actors **843** and **1043** both use **`1_712`**.  
 
-**Actor IDs and graphics-file indices are different.** For example, Bulbasaur actor **428** uses file **`1_297`**. Kyogre actors **843** and **1043** both use **`1_712`**. Each row below groups all ordinary actor definitions that share one sprite sheet. Editing that sheet affects every listed actor using it.
-
-File references use zero-based decimal member indices: `1_297` means member 297 of this archive. Names are retained from the decompilation's `MMODEL_` and `SPRITE_` constants, with those prefixes omitted. Pokémon form and gender suffixes are preserved.
+Each row below groups all ordinary actor definitions that share one sprite sheet. Editing that sheet affects every listed actor using it.
+:::
 
 <details>
-<summary>Click to view character and object sprite sheets (261 files)</summary>
+<summary>Click to view details (NPCs & objects)</summary>
 
 <FilterableSortableTable>
 
@@ -931,7 +934,7 @@ File references use zero-based decimal member indices: `1_297` means member 297 
 </details>
 
 <details>
-<summary>Click to view Pokémon sprite sheets (571 files)</summary>
+<summary>Click to view details (Pokémon)</summary>
 
 <FilterableSortableTable>
 
@@ -1513,10 +1516,12 @@ File references use zero-based decimal member indices: `1_297` means member 297 
 
 </details>
 
-These tables cover **888 ordinary actor definitions**, grouped into **832 sprite-sheet files**. The native table also contains **13 special definitions**, including camera and gate actors, whose graphics field is a dummy reference; these are excluded from the ordinary sprite mappings. Event sprite IDs **101–117** are resolved dynamically and do not identify fixed files in this table.
+:::warning
+Event overworld IDs **101-117** are resolved dynamically and do not identify fixed files in this table.
+:::
 
 <details>
-<summary>Click to view additional 3D model members (14 files)</summary>
+<summary>Click to view details (3D models)</summary>
 
 <FilterableSortableTable>
 
@@ -1541,7 +1546,7 @@ These tables cover **888 ordinary actor definitions**, grouped into **832 sprite
 
 </details>
 
-The model members **266–279** and the other data members **280–296** are outside the ordinary actor-to-sprite-sheet mapping above.
+The model members **266-279** and the other data members **280-296** are outside the ordinary actor-to-sprite-sheet mapping above.
 
 ### WiFi Overworld Sprites
 **Location**: `/a/2/1/3`
