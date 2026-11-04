@@ -600,7 +600,7 @@ Editing ciphered sprites (such as backsprites) can be done by following [this gu
 
 </FilterableSortableTable>
 
-The battle background determines the time-of-day palette variant. For **background IDs 0–5**, palette **0** is used in morning/day, **1** in evening, and **2** at night/late night. Other background IDs use palette **0**.
+The battle background determines the time-of-day palette variant. For **background IDs 0-5**, palette **0** is used in morning/day, **1** in evening, and **2** at night/late night. Other background IDs use palette **0**.
 
 </details>
 
@@ -640,7 +640,7 @@ The battle background determines the time-of-day palette variant. For **backgrou
 
 </FilterableSortableTable>
 
-For **background IDs 0–5**, palette variant **0** is used in morning/day, **1** in evening, and **2** at night/late night. Other background IDs use variant **0**. This same background-dependent rule selects the platform palette variant; terrain alone does not determine which of its three palettes is used. Preserve palette-index relationships when combining images, palettes and layouts.
+For **background IDs 0-5**, palette variant **0** is used in morning/day, **1** in evening, and **2** at night/late night. Other background IDs use variant **0**. This same background-dependent rule selects the platform palette variant; terrain alone does not determine which of its three palettes is used. Preserve palette-index relationships when combining images, palettes and layouts.
 
 </details>
 
@@ -651,283 +651,267 @@ For **background IDs 0–5**, palette variant **0** is used in morning/day, **1*
 ### Overworld Sprites
 **Location**: `/a/0/8/1`
 
-:::warning
-Actor (Event file "Overworld" IDs) and graphics (narc-file) indices do not directly align.  
-For example:
-- Bulbasaur actor **428** uses file **`1_297`**;
-- Kyogre actors **843** and **1043** both use **`1_712`**.  
-
-Each row below groups all ordinary actor definitions that share one sprite sheet. Editing that sheet affects every listed actor using it.
-:::
+Each row lists one graphics file and the overworld IDs that use it. Trainer class IDs are listed separately for the Battle Frontier and eyes-met trainer objects in map event files.
 
 <details>
 <summary>Click to view details (NPCs & objects)</summary>
 
 <FilterableSortableTable>
 
-| Sprite / resource (decomp name) | Graphics (NSBTX) | Actor IDs (decomp names) |
-| --- | --- | --- |
-| `BABYBOY1` | 1_0 | 1 (`BABYBOY1`) |
-| `BABYGIRL1` | 1_1 | 2 (`BABYGIRL1`) |
-| `BOY1` | 1_2 | 3 (`BOY1`) |
-| `BOY2` | 1_3 | 4 (`BOY2`) |
-| `BOY3` | 1_4 | 5 (`BOY3`) |
-| `GIRL1` | 1_5 | 6 (`GIRL1`) |
-| `GIRL2` | 1_6 | 7 (`GIRL2`) |
-| `GIRL3` | 1_7 | 8 (`GIRL3`) |
-| `MAN1` | 1_8 | 9 (`MAN1`) |
-| `MAN2` | 1_9 | 10 (`MAN2`) |
-| `MAN3` | 1_10 | 11 (`MAN3`) |
-| `MAN5` | 1_11 | 68 (`MAN5`) |
-| `WOMAN1` | 1_12 | 12 (`WOMAN1`) |
-| `WOMAN2` | 1_13 | 13 (`WOMAN2`) |
-| `WOMAN3` | 1_14 | 14 (`WOMAN3`) |
-| `WOMAN5` | 1_15 | 69 (`WOMAN5`) |
-| `MIDDLEMAN1` | 1_16 | 15 (`MIDDLEMAN1`) |
-| `MIDDLEWOMAN1` | 1_17 | 16 (`MIDDLEWOMAN1`) |
-| `OLDMAN1` | 1_18 | 17 (`OLDMAN1`) |
-| `OLDWOMAN1` | 1_19 | 18 (`OLDWOMAN1`) |
-| `CYCLEM` | 1_20 | 38 (`CYCLEM`) |
-| `CYCLEW` | 1_21 | 39 (`CYCLEW`) |
-| `SKIERW` | 1_22 | 33 (`SKIERW`) |
-| `SHOPM1` | 1_23 | 24 (`SHOPM1`) |
-| `SHOPW1` | 1_24 | 25 (`SHOPW1`) |
-| `ASSISTANTM` | 1_25 | 29 (`ASSISTANTM`) |
-| `ASSISTANTW` | 1_26 | 30 (`ASSISTANTW`) |
-| `GORGGEOUSM` | 1_27 | 62 (`GORGGEOUSM`) |
-| `GORGGEOUSW` | 1_28 | 63 (`GORGGEOUSW`) |
-| `WAITER` | 1_29 | 59 (`WAITER`) |
-| `WAITRESS` | 1_30 | 60 (`WAITRESS`) |
-| `REPORTER` | 1_31 | 22 (`REPORTER`) |
-| `CAMERAMAN` | 1_32 | 23 (`CAMERAMAN`) |
-| `MYSTERY` | 1_33 | 70 (`MYSTERY`) |
-| `BIGMAN` | 1_34 | 19 (`BIGMAN`) |
-| `MOUNT` | 1_35 | 20 (`MOUNT`) |
-| `BADMAN` | 1_36 | 31 (`BADMAN`) |
-| `POLICEMAN` | 1_37 | 34 (`POLICEMAN`) |
-| `IDOL` | 1_38 | 35 (`IDOL`) |
-| `GENTLEMAN` | 1_39 | 36 (`GENTLEMAN`) |
-| `LADY` | 1_40 | 37 (`LADY`) |
-| `WORKMAN` | 1_41 | 40 (`WORKMAN`) |
-| `FARMER` | 1_42 | 41 (`FARMER`) |
-| `COWGIRL` | 1_43 | 42 (`COWGIRL`) |
-| `CLOWN` | 1_44 | 43 (`CLOWN`) |
-| `ARTIST` | 1_45 | 44 (`ARTIST`) |
-| `SPORTSMAN` | 1_46 | 45 (`SPORTSMAN`) |
-| `EXPLORE` | 1_47 | 50 (`EXPLORE`) |
-| `FIGHTER` | 1_48 | 51 (`FIGHTER`) |
-| `CAMPBOY` | 1_49 | 52 (`CAMPBOY`) |
-| `PICNICGIRL` | 1_50 | 53 (`PICNICGIRL`) |
-| `FISHING` | 1_51 | 54 (`FISHING`) |
-| `AMBRELLA` | 1_52 | 55 (`AMBRELLA`) |
-| `SEAMAN` | 1_53 | 56 (`SEAMAN`) |
-| `DOCTOR` | 1_54 | 99 (`DOCTOR`) |
-| `MAID` | 1_55 | 175 (`MAID`) |
-| `DELIVERY` | 1_56 | 193 (`DELIVERY`) |
-| `SUNGLASSES` | 1_57 | 168 (`SUNGLASSES`) |
-| `GSRIVEL` | 1_58 | 148 (`GSRIVEL`) |
-| `DAIGO` | 1_59 | 421 (`DAIGO`) |
-| `CHAMPION` | 1_60 | 422 (`CHAMPION`) |
-| `TOWERBOSS` | 1_61 | 169 (`TOWERBOSS`) |
-| `SEVEN1` | 1_62 | 141 (`SEVEN1`) |
-| `SEVEN2` | 1_63 | 142 (`SEVEN2`) |
-| `SEVEN3` | 1_64 | 143 (`SEVEN3`) |
-| `SEVEN4` | 1_65 | 144 (`SEVEN4`) |
-| `SEVEN5` | 1_66 | 145 (`SEVEN5`) |
-| `GSBOY1` | 1_67 | 146 (`GSBOY1`) |
-| `PIKACHU` | 1_68 | 71 (`PIKACHU`) |
-| `HERO` | 1_69 | 0 (`HERO`) |
-| `HEROINE` | 1_70 | 97 (`HEROINE`) |
-| `CYCLEHERO` | 1_71 | 21 (`CYCLEHERO`) |
-| `CYCLEHEROINE` | 1_72 | 98 (`CYCLEHEROINE`) |
-| `SWIMHERO` | 1_73 | 178 (`SWIMHERO`) |
-| `SWIMHEROINE` | 1_74 | 179 (`SWIMHEROINE`) |
-| `SPHERO` | 1_75 | 176 (`SPHERO`) |
-| `SPHEROINE` | 1_76 | 177 (`SPHEROINE`) |
-| `WATERHERO` | 1_77 | 180 (`WATERHERO`) |
-| `WATERHEROINE` | 1_78 | 181 (`WATERHEROINE`) |
-| `FISHINGHERO` | 1_79 | 188 (`FISHINGHERO`) |
-| `FISH_HEROINE` | 1_80 | 189 (`FISH_HEROINE`) |
-| `LADDERHERO` | 1_81 | 248 (`LADDERHERO`) |
-| `LADDERHEROINE` | 1_82 | 249 (`LADDERHEROINE`) |
-| `ITAKO` | 1_83 | 219 (`ITAKO`) |
-| `ITAKO_` | 1_84 | 250 (`ITAKO_`) |
-| `POKEHERO` | 1_85 | 196 (`POKEHERO`) |
-| `POKEHEROINE` | 1_86 | 197 (`POKEHEROINE`) |
-| `SAVEHERO` | 1_87 | 198 (`SAVEHERO`) |
-| `SAVEHEROINE` | 1_88 | 199 (`SAVEHEROINE`) |
-| `BANZAIHERO` | 1_89 | 200 (`BANZAIHERO`) |
-| `BANZAIHEROINE` | 1_90 | 201 (`BANZAIHEROINE`) |
-| `ROCK` | 1_91 | 84 (`ROCK`) |
-| `BREAKROCK` | 1_92 | 85 (`BREAKROCK`) |
-| `TREE` | 1_93 | 86 (`TREE`) |
-| `MONSTARBALL` | 1_94 | 87 (`MONSTARBALL`) |
-| `RHERO` | 1_95 | 258 (`RHERO`) |
-| `RHEROINE` | 1_96 | 259 (`RHEROINE`) |
-| `RBANZAIHERO` | 1_97 | 260 (`RBANZAIHERO`) |
-| `RBANZAIINE` | 1_98 | 261 (`RBANZAIINE`) |
-| `PKTHHERO` | 1_99 | 407 (`PKTHHERO`) |
-| `PKTHHEROINE` | 1_100 | 408 (`PKTHHEROINE`) |
-| `WIFISM` | 1_101 | 285 (`WIFISM`) |
-| `WIFISF` | 1_102 | 286 (`WIFISF`) |
-| `BRAINS1` | 1_103 | 277 (`BRAINS1`) |
-| `BRAINS2` | 1_104 | 278 (`BRAINS2`) |
-| `BRAINS3` | 1_105 | 279 (`BRAINS3`) |
-| `BRAINS4` | 1_106 | 280 (`BRAINS4`) |
-| `PRINCESS` | 1_107 | 281 (`PRINCESS`) |
-| `BFSM` | 1_108 | 282 (`BFSM`) |
-| `BFSW1` | 1_109 | 283 (`BFSW1`) |
-| `BFSW2` | 1_110 | 284 (`BFSW2`) |
-| `AJI_PERU` | 1_111 | 287 (`AJI_PERU`) |
-| `LEAG_DOOR2` | 1_112 | 290 (`LEAG_DOOR2`) |
-| `GSBABYBOY1` | 1_113 | 315 (`GSBABYBOY1`) |
-| `GSBABYGIRL1` | 1_114 | 316 (`GSBABYGIRL1`) |
-| `GSBOY2` | 1_115 | 317 (`GSBOY2`) |
-| `GSBOY3` | 1_116 | 318 (`GSBOY3`) |
-| `GSGIRL1` | 1_117 | 319 (`GSGIRL1`) |
-| `GSGIRL2` | 1_118 | 320 (`GSGIRL2`) |
-| `GSGIRL3` | 1_119 | 321 (`GSGIRL3`) |
-| `GSMAN1` | 1_120 | 322 (`GSMAN1`) |
-| `GSMAN2` | 1_121 | 323 (`GSMAN2`) |
-| `GSMAN3` | 1_122 | 324 (`GSMAN3`) |
-| `GSWOMAN1` | 1_123 | 325 (`GSWOMAN1`) |
-| `GSWOMAN2` | 1_124 | 326 (`GSWOMAN2`) |
-| `GSWOMAN3` | 1_125 | 327 (`GSWOMAN3`) |
-| `GSMIDDLEMAN1` | 1_126 | 328 (`GSMIDDLEMAN1`) |
-| `MIDDLEWOMAN1_2` | 1_127 | 329 (`MIDDLEWOMAN1_2`) |
-| `GSOLDMAN1` | 1_128 | 330 (`GSOLDMAN1`) |
-| `GSOLDWOMAN1` | 1_129 | 331 (`GSOLDWOMAN1`) |
-| `GSBIGMAN` | 1_130 | 332 (`GSBIGMAN`) |
-| `MOUNT_2` | 1_131 | 333 (`MOUNT_2`) |
-| `SHOPM1_2` | 1_132 | 334 (`SHOPM1_2`) |
-| `PCWOMAN1` | 1_133 | 335 (`PCWOMAN1`) |
-| `PCWOMAN2` | 1_134 | 336 (`PCWOMAN2`) |
-| `PCWOMAN3` | 1_135 | 337 (`PCWOMAN3`) |
-| `GSASSISTANTM` | 1_136 | 338 (`GSASSISTANTM`) |
-| `GSGENTLEMAN` | 1_137 | 341 (`GSGENTLEMAN`) |
-| `GSSWIMMERM` | 1_138 | 342 (`GSSWIMMERM`) |
-| `GSSWIMMERW` | 1_139 | 343 (`GSSWIMMERW`) |
-| `GSFIGHTER` | 1_140 | 344 (`GSFIGHTER`) |
-| `CAMPBOY_2` | 1_141 | 345 (`CAMPBOY_2`) |
-| `PICNICGIRL_2` | 1_142 | 346 (`PICNICGIRL_2`) |
-| `FISHING_2` | 1_143 | 347 (`FISHING_2`) |
-| `SEAMAN_2` | 1_144 | 348 (`SEAMAN_2`) |
-| `MYSTERY_2` | 1_145 | 351 (`MYSTERY_2`) |
-| `GSLEADER1` | 1_146 | 352 (`GSLEADER1`) |
-| `GSLEADER2` | 1_147 | 353 (`GSLEADER2`) |
-| `GSLEADER3` | 1_148 | 354 (`GSLEADER3`) |
-| `GSLEADER4` | 1_149 | 355 (`GSLEADER4`) |
-| `GSLEADER5` | 1_150 | 356 (`GSLEADER5`) |
-| `GSLEADER6` | 1_151 | 357 (`GSLEADER6`) |
-| `GSLEADER7` | 1_152 | 358 (`GSLEADER7`) |
-| `GSLEADER8` | 1_153 | 359 (`GSLEADER8`) |
-| `GSBIGFOUR1` | 1_154 | 360 (`GSBIGFOUR1`) |
-| `GSBIGFOUR2` | 1_155 | 361 (`GSBIGFOUR2`) |
-| `GSBIGFOUR3` | 1_156 | 362 (`GSBIGFOUR3`) |
-| `GSBIGFOUR4` | 1_157 | 363 (`GSBIGFOUR4`) |
-| `WATARU` | 1_158 | 364 (`WATARU`) |
-| `GSMAMA` | 1_159 | 365 (`GSMAMA`) |
-| `OOKIDO` | 1_160 | 366 (`OOKIDO`) |
-| `GSDSBOY` | 1_161 | 367 (`GSDSBOY`) |
-| `GSLEADER9` | 1_162 | 368 (`GSLEADER9`) |
-| `GSLEADER10` | 1_163 | 369 (`GSLEADER10`) |
-| `GSLEADER11` | 1_164 | 370 (`GSLEADER11`) |
-| `GSLEADER12` | 1_165 | 371 (`GSLEADER12`) |
-| `GSLEADER13` | 1_166 | 372 (`GSLEADER13`) |
-| `GSLEADER14` | 1_167 | 373 (`GSLEADER14`) |
-| `GSLEADER15` | 1_168 | 374 (`GSLEADER15`) |
-| `GSLEADER16` | 1_169 | 375 (`GSLEADER16`) |
-| `RED` | 1_170 | 211 (`RED`) |
-| `THIEF` | 1_171 | 218 (`THIEF`) |
-| `BOZU` | 1_172 | 220 (`BOZU`) |
-| `ROCKETW` | 1_173 | 221 (`ROCKETW`) |
-| `ROCKETM` | 1_174 | 222 (`ROCKETM`) |
-| `RKANBUW` | 1_175 | 223 (`RKANBUW`) |
-| `RKANBUM` | 1_176 | 224 (`RKANBUM`) |
-| `BOARDER` | 1_177 | 225 (`BOARDER`) |
-| `FIRE` | 1_178 | 227 (`FIRE`) |
-| `GANG` | 1_179 | 229 (`GANG`) |
-| `DANCER` | 1_180 | 232 (`DANCER`) |
-| `MASAKI` | 1_181 | 235 (`MASAKI`) |
-| `CAPTAIN` | 1_182 | 236 (`CAPTAIN`) |
-| `RGYARADOSU` | 1_183 | 237 (`RGYARADOSU`) |
-| `MANIA` | 1_184 | 377 (`MANIA`) |
-| `JUGGRER` | 1_185 | 378 (`JUGGRER`) |
-| `USOKKY` | 1_186 | 381 (`USOKKY`) |
-| `MINAKI` | 1_187 | 382 (`MINAKI`) |
-| `THLONOWNER` | 1_188 | 383 (`THLONOWNER`) |
-| `INSTRUCTOR` | 1_189 | 384 (`INSTRUCTOR`) |
-| `KURUMI` | 1_190 | 389 (`KURUMI`) |
-| `NANAMI` | 1_191 | 392 (`NANAMI`) |
-| `REDMAMA` | 1_192 | 393 (`REDMAMA`) |
-| `COUNTERM` | 1_193 | 394 (`COUNTERM`) |
-| `KABIGON` | 1_194 | 395 (`KABIGON`) |
-| `ICE` | 1_195 | 406 (`ICE`) |
-| `ROTOMG` | 1_196 | 413 (`ROTOMG`) |
-| `ROTOMI` | 1_197 | 411 (`ROTOMI`) |
-| `ROTOMS` | 1_198 | 410 (`ROTOMS`) |
-| `ROTOMW` | 1_199 | 412 (`ROTOMW`) |
-| `ROTOMF` | 1_200 | 409 (`ROTOMF`) |
-| `FOLLOWER_MON` | 1_201 | 415 (`FOLLOWER_MON`) |
-| `SHAKEHERO` | 1_207 | 423 (`SHAKEHERO`) |
-| `SHAKEHEROINE` | 1_208 | 424 (`SHAKEHEROINE`) |
-| `YADON` | 1_209 | 414 (`YADON`) |
-| `HOU_OBJ01` | 1_210 | 425 (`HOU_OBJ01`) |
-| `LUG_OBJ01` | 1_211 | 426 (`LUG_OBJ01`) |
-| `GSWOMAN6` | 1_212 | 427 (`GSWOMAN6`) |
-| `HERO_2` | 1_213 | 238 (`HERO_2`) |
-| `HEROINE_2` | 1_214 | 239 (`HEROINE_2`) |
-| `LEADER1` | 1_215 | 126 (`LEADER1`) |
-| `LEADER2` | 1_216 | 127 (`LEADER2`) |
-| `LEADER3` | 1_217 | 128 (`LEADER3`) |
-| `LEADER4` | 1_218 | 129 (`LEADER4`) |
-| `LEADER5` | 1_219 | 130 (`LEADER5`) |
-| `LEADER6` | 1_220 | 131 (`LEADER6`) |
-| `LEADER7` | 1_221 | 132 (`LEADER7`) |
-| `LEADER8` | 1_222 | 133 (`LEADER8`) |
-| `GANTETSU` | 1_223 | 233 (`GANTETSU`) |
-| `JUPETTA` | 1_224 | 380 (`JUPETTA`) |
-| `SAKAKI` | 1_225 | 385 (`SAKAKI`) |
-| `SUIT` | 1_226 | 386 (`SUIT`) |
-| `CHOUROU` | 1_227 | 387 (`CHOUROU`) |
-| `RAPURASU` | 1_228 | 390 (`RAPURASU`) |
-| `GTOROPHY` | 1_229 | 350 (`GTOROPHY`) |
-| `STOROPHY` | 1_230 | 376 (`STOROPHY`) |
-| `BTOROPHY` | 1_231 | 379 (`BTOROPHY`) |
-| `STATUEHERO` | 1_232 | 403 (`STATUEHERO`) |
-| `STATUEHEROINE` | 1_233 | 404 (`STATUEHEROINE`) |
-| `SIGNCLOTHES` | 1_234 | 399 (`SIGNCLOTHES`) |
-| `SIGNFLAG` | 1_235 | 400 (`SIGNFLAG`) |
-| `SIGNPOKEGEAR` | 1_236 | 401 (`SIGNPOKEGEAR`) |
-| `SIGNSHOES` | 1_237 | 398 (`SIGNSHOES`) |
-| `SIGNBALL` | 1_238 | 402 (`SIGNBALL`) |
-| `POKEWALL` | 1_239 | 210 (`POKEWALL`) |
-| `SCROLL` | 1_240 | 397 (`SCROLL`) |
-| `MEDAL` | 1_241 | 396 (`MEDAL`) |
-| `MONO_PIP` | 1_242 | 234 (`MONO_PIP`) |
-| `STOP` | 1_243 | 349 (`STOP`) |
-| `RKANBUM2` | 1_244 | 293 (`RKANBUM2`) |
-| `RKANBUM3` | 1_245 | 294 (`RKANBUM3`) |
-| `PL_BOY01C` | 1_246 | 295 (`PL_BOY01C`) |
-| `PL_GIRL01C` | 1_247 | 296 (`PL_GIRL01C`) |
-| `SAVERHERO` | 1_248 | 297 (`SAVERHERO`) |
-| `SAVERHEROINE` | 1_249 | 298 (`SAVERHEROINE`) |
-| `DELIVERY2` | 1_250 | 299 (`DELIVERY2`) |
-| `BONGURI` | 1_251 | 262 (`BONGURI`) |
-| `BONGURI_B` | 1_252 | 265 (`BONGURI_B`) |
-| `BONGURI_BK` | 1_253 | 269 (`BONGURI_BK`) |
-| `BONGURI_G` | 1_254 | 266 (`BONGURI_G`) |
-| `BONGURI_R` | 1_255 | 263 (`BONGURI_R`) |
-| `BONGURI_W` | 1_256 | 268 (`BONGURI_W`) |
-| `BONGURI_P` | 1_257 | 267 (`BONGURI_P`) |
-| `BONGURI_Y` | 1_258 | 264 (`BONGURI_Y`) |
-| `BONMI_B` | 1_259 | 272 (`BONMI_B`) |
-| `BONMI_BK` | 1_260 | 276 (`BONMI_BK`) |
-| `BONMI_G` | 1_261 | 273 (`BONMI_G`) |
-| `BONMI_R` | 1_262 | 270 (`BONMI_R`) |
-| `BONMI_W` | 1_263 | 275 (`BONMI_W`) |
-| `BONMI_P` | 1_264 | 274 (`BONMI_P`) |
-| `BONMI_Y` | 1_265 | 271 (`BONMI_Y`) |
+| Sprite | Graphics (NSBTX) | Overworld IDs | Frontier trainer class | Eyes-met trainer class |
+| --- | --- | --- | --- | --- |
+| Ace Trainer (female, also Double Team) | 1_125 | 327 | - | 25, 121 |
+| Ace Trainer (male, also Double Team) | 1_122 | 324 | - | 24, 121 |
+| Ace Trainer Snowy (female) | 1_15 | 69 | 54 | - |
+| Ace Trainer Snowy (male) | 1_11 | 68 | 53 | - |
+| Apricorn (Black) | 1_260 | 276 | - | - |
+| Apricorn (Blue) | 1_259 | 272 | - | - |
+| Apricorn (Green) | 1_261 | 273 | - | - |
+| Apricorn (Pink) | 1_264 | 274 | - | - |
+| Apricorn (Red) | 1_262 | 270 | - | - |
+| Apricorn (White) | 1_263 | 275 | - | - |
+| Apricorn (Yellow) | 1_265 | 271 | - | - |
+| Apricorn tree (Black) | 1_253 | 269 | - | - |
+| Apricorn tree (Blue) | 1_252 | 265 | - | - |
+| Apricorn tree (empty) | 1_251 | 262 | - | - |
+| Apricorn tree (Green) | 1_254 | 266 | - | - |
+| Apricorn tree (Pink) | 1_257 | 267 | - | - |
+| Apricorn tree (Red) | 1_255 | 263 | - | - |
+| Apricorn tree (White) | 1_256 | 268 | - | - |
+| Apricorn tree (Yellow) | 1_258 | 264 | - | - |
+| Arcade Star Dahlia | 1_106 | 280 | - | - |
+| Artist (male) | 1_45 | 44 | 15 | - |
+| Baby Boy | 1_113 | 315 | - | - |
+| Baby Girl | 1_1 | 2 | 45 | - |
+| Battle Frontier Assistant (female) | 1_109 | 283 | - | - |
+| Battle Frontier Assistant (male) | 1_108 | 282 | - | - |
+| Battle Frontier Receptionist (female) | 1_110 | 284 | - | - |
+| Battle Girl | 1_6 | 7 | 10 | - |
+| Beauty | 1_13 | 13 | 36 | - |
+| Beauty (also Young Couple) | 1_124 | 326 | - | 36, 122 |
+| Biker (male) | 1_179 | 229 | - | 65 |
+| Bill | 1_181 | 235 | - | - |
+| Black Belt | 1_48 | 51 | 14 | - |
+| Black Belt | 1_140 | 344 | - | 14 |
+| Boarder (male) | 1_177 | 225 | - | 115 |
+| Breakable Rock | 1_92 | 85 | - | - |
+| Bronze Trophy | 1_231 | 379 | - | - |
+| Buck | 1_64 | 143 | 92 | - |
+| Bug Catcher | 1_4 | 5 | 6 | - |
+| Bug Catcher | 1_116 | 318 | - | 6 |
+| Burglar | 1_171 | 218 | - | 63 |
+| Cameraman | 1_32 | 23 | 83 | - |
+| Camper | 1_141 | 345 | - | 4 |
+| Camper (male) | 1_49 | 52 | 4 | - |
+| Castle Valet Darach | 1_105 | 279 | - | - |
+| Champion Cynthia | 1_60 | 422 | - | - |
+| Champion Lance | 1_158 | 364 | - | - |
+| Champion Steven Stone | 1_59 | 421 | - | - |
+| Cheryl | 1_62 | 141 | 90 | - |
+| Clefairy Doll | 1_242 | 234 | - | - |
+| Clown | 1_44 | 43 | 58 | - |
+| Collector (male) | 1_34 | 19 | 37 | - |
+| Cowgirl | 1_43 | 42 | 18 | - |
+| Cuttable Tree | 1_93 | 86 | - | - |
+| Cyclist (female) | 1_21 | 39 | 13 | - |
+| Cyclist (male) | 1_20 | 38 | 12 | - |
+| Daisy Oak | 1_191 | 392 | - | - |
+| Dawn | 1_86 | 197 | - | - |
+| Dawn (D/P) | 1_214 | 239 | - | - |
+| Dawn (HM Summon) | 1_76 | 177 | - | - |
+| Dawn (Pt) | 1_247 | 296 | - | - |
+| Dawn Watering Can/Sprayduck | 1_78 | 181 | - | - |
+| Deliveryman (Green) | 1_56 | 193 | - | - |
+| Deliveryman (Orange) | 1_250 | 299 | - | - |
+| Deliveryman (Red) | 1_193 | 394 | - | - |
+| Department Store Clerk (female) | 1_212 | 427 | - | - |
+| DJ Mary (Goldenrod Radio Tower) | 1_190 | 389 | - | - |
+| Elder Li | 1_227 | 387 | - | - |
+| Elite Four Bruno | 1_156 | 362 | - | - |
+| Elite Four Karen | 1_157 | 363 | - | - |
+| Elite Four Koga | 1_155 | 361 | - | - |
+| Elite Four Will | 1_154 | 360 | - | - |
+| Ethan (Bike) | 1_71 | 21 | - | - |
+| Ethan (Contest Uniform) | 1_99 | 407 | - | - |
+| Ethan (Fishing) | 1_79 | 188 | - | - |
+| Ethan (Heal) | 1_89 | 200 | - | - |
+| Ethan (Ladder) | 1_81 | 248 | - | - |
+| Ethan (Save) | 1_87 | 198 | - | - |
+| Ethan (Shake Apricorn) | 1_207 | 423 | - | - |
+| Ethan (Statue) / Male Player Statue (Pokéathlon Dome) | 1_232 | 403 | - | - |
+| Ethan (Surf) | 1_73 | 178 | - | - |
+| Ethan (Team Rocket Heal) | 1_97 | 260 | - | - |
+| Ethan (Team Rocket Uniform Saving) | 1_248 | 297 | - | - |
+| Ethan (Team Rocket Uniform) | 1_95 | 258 | - | - |
+| Ethan (Walking / Running) | 1_69 | 0 | - | - |
+| Eusine | 1_187 | 382 | - | - |
+| Factory Head Thorton | 1_103 | 277 | - | - |
+| Firebreather | 1_178 | 227 | - | 64 |
+| Fisherman | 1_51 | 54 | 11 | - |
+| Fisherman | 1_143 | 347 | - | 11 |
+| Gentleman | 1_39 | 36 | 34 | - |
+| Gentleman | 1_137 | 341 | - | 34 |
+| Girl | 1_119 | 321 | - | - |
+| Girl (Pigtails) | 1_118 | 320 | - | - |
+| Gold Trophy | 1_229 | 350 | - | - |
+| Golden Clothes | 1_234 | 399 | - | - |
+| Golden Flag | 1_235 | 400 | - | - |
+| Golden PokéGear | 1_236 | 401 | - | - |
+| Golden Running Shoes | 1_237 | 398 | - | - |
+| Guitarist | 1_9 | 10 | 52 | - |
+| Guitarist / Bird Keeper (also Young Couple) | 1_121 | 323 | - | 52, 69, 122 |
+| Gym Guide | 1_57 | 168 | - | - |
+| Hall Matron Argenta | 1_104 | 278 | - | - |
+| Handheld Gamer Boy | 1_161 | 367 | - | - |
+| Hazard Barrier | 1_243 | 349 | - | - |
+| Hiker | 1_35 | 20 | 9 | - |
+| Hiker | 1_131 | 333 | - | 9 |
+| Ice Block | 1_195 | 406 | - | - |
+| Idol (female) | 1_38 | 35 | 85 | - |
+| Jogger (male) | 1_46 | 45 | 19 | - |
+| Juggler | 1_185 | 378 | - | 31 |
+| Kimono Girl | 1_180 | 232 | - | - |
+| Kurt | 1_223 | 233 | - | - |
+| Lady Caitlin | 1_107 | 281 | - | - |
+| Large Man (Move Reminder) | 1_130 | 332 | - | - |
+| Lass | 1_5 | 6 | 3 | - |
+| Lass | 1_117 | 319 | - | 3 |
+| Leader Blaine | 1_168 | 374 | - | - |
+| Leader Blue | 1_169 | 375 | - | - |
+| Leader Brock | 1_167 | 373 | - | - |
+| Leader Bugsy | 1_147 | 353 | - | - |
+| Leader Byron | 1_221 | 132 | - | - |
+| Leader Candice | 1_220 | 131 | - | - |
+| Leader Chuck | 1_150 | 356 | - | - |
+| Leader Clair | 1_153 | 359 | - | - |
+| Leader Crasher Wake | 1_217 | 128 | - | - |
+| Leader Erika | 1_165 | 371 | - | - |
+| Leader Falkner | 1_146 | 352 | - | - |
+| Leader Fantina | 1_219 | 130 | - | - |
+| Leader Gardenia | 1_216 | 127 | - | - |
+| Leader Janine | 1_166 | 372 | - | - |
+| Leader Jasmine | 1_151 | 357 | - | - |
+| Leader Lt. Surge | 1_162 | 368 | - | - |
+| Leader Maylene | 1_218 | 129 | - | - |
+| Leader Misty | 1_164 | 370 | - | - |
+| Leader Morty | 1_149 | 355 | - | - |
+| Leader Pryce | 1_152 | 358 | - | - |
+| Leader Roark | 1_215 | 126 | - | - |
+| Leader Sabrina | 1_163 | 369 | - | - |
+| Leader Volkner | 1_222 | 133 | - | - |
+| Leader Whitney | 1_148 | 354 | - | - |
+| Lucas | 1_85 | 196 | - | - |
+| Lucas (D/P) | 1_213 | 238 | - | - |
+| Lucas (HM Summon) | 1_75 | 176 | - | - |
+| Lucas (Pt) | 1_246 | 295 | - | - |
+| Lucas Watering Can/Sprayduck | 1_77 | 180 | - | - |
+| Lyra (Bike) | 1_72 | 98 | - | - |
+| Lyra (Contest Uniform) | 1_100 | 408 | - | - |
+| Lyra (Fishing) | 1_80 | 189 | - | - |
+| Lyra (Heal) | 1_90 | 201 | - | - |
+| Lyra (Ladder) | 1_82 | 249 | - | - |
+| Lyra (Save) | 1_88 | 199 | - | - |
+| Lyra (Shake Apricorn) | 1_208 | 424 | - | - |
+| Lyra (Statue) / Female Player Statue (Pokéathlon Dome) | 1_233 | 404 | - | - |
+| Lyra (Surf) | 1_74 | 179 | - | - |
+| Lyra (Team Rocket Heal) | 1_98 | 261 | - | - |
+| Lyra (Team Rocket Uniform Saving) | 1_249 | 298 | - | - |
+| Lyra (Team Rocket Uniform) | 1_96 | 259 | - | - |
+| Lyra (Walking / Running) | 1_70 | 97 | - | - |
+| Magnus (Pokéathlon Owner) | 1_188 | 383 | - | - |
+| Maid | 1_55 | 175 | - | - |
+| Man | 1_120 | 322 | - | - |
+| Marley | 1_66 | 145 | 94 | - |
+| Medal (Solidarity Room) | 1_241 | 396 | - | - |
+| Medium (Candles extinguished) | 1_84 | 250 | - | - |
+| Medium (Candles lit) | 1_83 | 219 | - | 82 |
+| Mira | 1_65 | 144 | 93 | - |
+| Mr. Game | 1_226 | 386 | - | - |
+| Ninja Boy | 1_0 | 1 | 44, 28 | - |
+| Nurse Joy | 1_133 | 335 | - | - |
+| Old Man (Ultimate Move Tutor) | 1_128 | 330 | - | - |
+| Old Woman | 1_19 | 18 | - | - |
+| Old Woman (Dragon Tutor) | 1_129 | 331 | - | - |
+| Parasol Lady | 1_52 | 55 | 80 | - |
+| Persian Statue (Rocket Hideout) | 1_111 | 287 | - | - |
+| Picnicker | 1_142 | 346 | - | 5 |
+| Picnicker (female) | 1_50 | 53 | 5 | - |
+| Player's mother | 1_159 | 365 | - | - |
+| Poké Kid (Pikachu Costume) | 1_68 | 71 | 22 | - |
+| Pokéball | 1_94 | 87 | - | - |
+| Pokéball in glass | 1_238 | 402 | - | - |
+| Pokéfan (female) | 1_17 | 16 | 21 | - |
+| Pokéfan (male) | 1_16 | 15 | 20 | - |
+| Pokéfan (male) | 1_126 | 328 | - | 20 |
+| PokéManiac (male) | 1_184 | 377 | - | 68 |
+| Pokémon Breeder (female) / Aroma Lady | 1_12 | 12 | 17, 7 | - |
+| Pokémon Breeder (male) | 1_8 | 9 | 16 | - |
+| Pokémon Center NPC (Blue-haired) | 1_135 | 337 | - | - |
+| Pokémon Center NPC (Brown-haired) | 1_134 | 336 | - | - |
+| Pokemon League Door | 1_112 | 290 | - | - |
+| Pokémon Ranger (female) / Ace Trainer (female) / Bird Keeper (female) | 1_14 | 14 | 40, 25, 69 | - |
+| Pokémon Ranger (male) / Ace Trainer (male) / Dragon Tamer | 1_10 | 11 | 39, 24, 29 | - |
+| Policeman | 1_37 | 34 | 38 | 38 |
+| Primo | 1_189 | 384 | - | - |
+| Professor Elm | 1_54 | 99 | - | - |
+| Professor Oak | 1_160 | 366 | - | - |
+| Psychic (female) | 1_145 | 351 | - | 49 |
+| Psychic (male) | 1_33 | 70 | 49, 50 | - |
+| Pushable Rock | 1_91 | 84 | - | - |
+| Rancher (male) | 1_42 | 41 | 71 | - |
+| Red | 1_170 | 211 | - | - |
+| Red's Mom | 1_192 | 393 | - | - |
+| Reporter (female) | 1_31 | 22 | 84 | - |
+| Rich Boy | 1_27 | 62 | 32, 51 | - |
+| Rich Lady | 1_28 | 63 | 33 | - |
+| Riley | 1_63 | 142 | 91 | - |
+| Rocket Boss Giovanni | 1_225 | 385 | - | - |
+| Rocket Executive Archer | 1_176 | 224 | - | - |
+| Rocket Executive Ariana | 1_175 | 223 | - | 114 |
+| Rocket Executive Petrel | 1_244 | 293 | - | - |
+| Rocket Executive Proton | 1_245 | 294 | - | 117 |
+| Rocket Grunt (female) | 1_173 | 221 | - | 62 |
+| Rocket Grunt (male) | 1_174 | 222 | - | 55 |
+| Rotom's Room Fan | 1_198 | 410 | - | - |
+| Rotom's Room Lawn Mower | 1_196 | 413 | - | - |
+| Rotom's Room Microwave Oven | 1_200 | 409 | - | - |
+| Rotom's Room Refrigerator | 1_197 | 411 | - | - |
+| Rotom's Room Washing Machine | 1_199 | 412 | - | - |
+| Roughneck | 1_36 | 31 | 57 | - |
+| Ruin Maniac | 1_47 | 50 | 48 | - |
+| Sage | 1_172 | 220 | - | 79 |
+| Sailor | 1_53 | 56 | 46 | - |
+| Sailor | 1_144 | 348 | - | 46 |
+| School Kid (female) | 1_7 | 8 | 61 | - |
+| School Kid (male) | 1_2 | 3 | 60 | - |
+| School Kid (male) | 1_67 | 146 | - | 60 |
+| Scientist (female) | 1_26 | 30 | - | - |
+| Scientist (male) / Super Nerd | 1_25 | 29 | 78 | 113 |
+| Scroll (Solidarity Room) | 1_240 | 397 | - | - |
+| Ship Captain | 1_182 | 236 | - | - |
+| Shop Assistant (female) | 1_24 | 25 | - | - |
+| Shop Assistant (male) | 1_23 | 24 | - | - |
+| Shop Clerk (PokéMart) | 1_132 | 334 | - | - |
+| Silver (rival) | 1_58 | 148 | - | - |
+| Silver Trophy | 1_230 | 376 | - | - |
+| Skier (female) | 1_22 | 33 | - | 56 |
+| Socialite | 1_40 | 37 | 35 | - |
+| Stone Tablet (Solidarity Room) | 1_239 | 210 | - | - |
+| Super Nerd | 1_136 | 338 | - | 78 |
+| Swimmer (female) | 1_139 | 343 | - | 43 |
+| Swimmer (male) | 1_138 | 342 | - | 42 |
+| Teacher/Pokéfan Female/Chuck's Wife | 1_127 | 329 | - | 21, 77 |
+| Tower Tycoon Palmer | 1_61 | 169 | - | - |
+| Twins | 1_114 | 316 | - | 8 |
+| Veteran (male) | 1_18 | 17 | 27 | - |
+| Waiter | 1_29 | 59 | 81 | - |
+| Waitress | 1_30 | 60 | 26 | - |
+| Wi-Fi Plaza Female NPC (Pokémon Center) | 1_102 | 286 | - | - |
+| Wi-Fi Plaza Male NPC (Pokémon Center) | 1_101 | 285 | - | - |
+| Woman | 1_123 | 325 | - | - |
+| Worker (male) | 1_41 | 40 | 59 | - |
+| Youngster | 1_3 | 4 | 2 | - |
+| Youngster | 1_115 | 317 | - | 2 |
 
 </FilterableSortableTable>
 
@@ -938,598 +922,644 @@ Each row below groups all ordinary actor definitions that share one sprite sheet
 
 <FilterableSortableTable>
 
-| Sprite / resource (decomp name) | Graphics (NSBTX) | Actor IDs (decomp names) |
+| Sprite | Graphics (NSBTX) | Overworld IDs |
 | --- | --- | --- |
-| `FOLLOWER_MON_2` | 1_202 | 416 (`FOLLOWER_MON_2`) |
-| `FOLLOWER_MON_3` | 1_203 | 417 (`FOLLOWER_MON_3`) |
-| `FOLLOWER_MON_4` | 1_204 | 418 (`FOLLOWER_MON_4`) |
-| `FOLLOWER_MON_5` | 1_205 | 419 (`FOLLOWER_MON_5`) |
-| `FOLLOWER_MON_6` | 1_206 | 420 (`FOLLOWER_MON_6`) |
-| `FOLLOWER_MON_BULBASAUR` | 1_297 | 428 (`FOLLOWER_MON_BULBASAUR`) |
-| `FOLLOWER_MON_IVYSAUR` | 1_298 | 429 (`FOLLOWER_MON_IVYSAUR`) |
-| `FOLLOWER_MON_VENUSAUR` | 1_299 | 430 (`FOLLOWER_MON_VENUSAUR`) |
-| `FOLLOWER_MON_VENUSAUR_F` | 1_300 | 431 (`FOLLOWER_MON_VENUSAUR_F`) |
-| `FOLLOWER_MON_CHARMANDER` | 1_301 | 432 (`FOLLOWER_MON_CHARMANDER`) |
-| `FOLLOWER_MON_CHARMELEON` | 1_302 | 433 (`FOLLOWER_MON_CHARMELEON`) |
-| `FOLLOWER_MON_CHARIZARD` | 1_303 | 434 (`FOLLOWER_MON_CHARIZARD`) |
-| `FOLLOWER_MON_SQUIRTLE` | 1_304 | 435 (`FOLLOWER_MON_SQUIRTLE`) |
-| `FOLLOWER_MON_WARTORTLE` | 1_305 | 436 (`FOLLOWER_MON_WARTORTLE`) |
-| `FOLLOWER_MON_BLASTOISE` | 1_306 | 437 (`FOLLOWER_MON_BLASTOISE`) |
-| `FOLLOWER_MON_CATERPIE` | 1_307 | 438 (`FOLLOWER_MON_CATERPIE`) |
-| `FOLLOWER_MON_METAPOD` | 1_308 | 439 (`FOLLOWER_MON_METAPOD`) |
-| `FOLLOWER_MON_BUTTERFREE` | 1_309 | 440 (`FOLLOWER_MON_BUTTERFREE`); 994 (`FOLLOWER_MON_STATIC_BUTTERFREE`) |
-| `FOLLOWER_MON_WEEDLE` | 1_310 | 441 (`FOLLOWER_MON_WEEDLE`) |
-| `FOLLOWER_MON_KAKUNA` | 1_311 | 442 (`FOLLOWER_MON_KAKUNA`) |
-| `FOLLOWER_MON_BEEDRILL` | 1_312 | 443 (`FOLLOWER_MON_BEEDRILL`) |
-| `FOLLOWER_MON_PIDGEY` | 1_313 | 444 (`FOLLOWER_MON_PIDGEY`); 995 (`FOLLOWER_MON_STATIC_PIDGEY`) |
-| `FOLLOWER_MON_PIDGEOTTO` | 1_314 | 445 (`FOLLOWER_MON_PIDGEOTTO`) |
-| `FOLLOWER_MON_PIDGEOT` | 1_315 | 446 (`FOLLOWER_MON_PIDGEOT`) |
-| `FOLLOWER_MON_RATTATA` | 1_316 | 447 (`FOLLOWER_MON_RATTATA`); 996 (`FOLLOWER_MON_STATIC_RATTATA`) |
-| `FOLLOWER_MON_RATICATE` | 1_317 | 448 (`FOLLOWER_MON_RATICATE`) |
-| `FOLLOWER_MON_SPEAROW` | 1_318 | 449 (`FOLLOWER_MON_SPEAROW`); 997 (`FOLLOWER_MON_STATIC_SPEAROW`) |
-| `FOLLOWER_MON_FEAROW` | 1_319 | 450 (`FOLLOWER_MON_FEAROW`); 998 (`FOLLOWER_MON_STATIC_FEAROW`) |
-| `FOLLOWER_MON_EKANS` | 1_320 | 451 (`FOLLOWER_MON_EKANS`) |
-| `FOLLOWER_MON_ARBOK` | 1_321 | 452 (`FOLLOWER_MON_ARBOK`) |
-| `FOLLOWER_MON_PIKACHU` | 1_322 | 453 (`FOLLOWER_MON_PIKACHU`); 999 (`FOLLOWER_MON_STATIC_PIKACHU`) |
-| `FOLLOWER_MON_PIKACHU_F` | 1_323 | 454 (`FOLLOWER_MON_PIKACHU_F`) |
-| `FOLLOWER_MON_RAICHU` | 1_324 | 455 (`FOLLOWER_MON_RAICHU`) |
-| `FOLLOWER_MON_SANDSHREW` | 1_325 | 456 (`FOLLOWER_MON_SANDSHREW`) |
-| `FOLLOWER_MON_SANDSLASH` | 1_326 | 457 (`FOLLOWER_MON_SANDSLASH`) |
-| `FOLLOWER_MON_NIDORAN_F` | 1_327 | 458 (`FOLLOWER_MON_NIDORAN_F`); 1000 (`FOLLOWER_MON_STATIC_NIDORAN_F`) |
-| `FOLLOWER_MON_NIDORINA` | 1_328 | 459 (`FOLLOWER_MON_NIDORINA`) |
-| `FOLLOWER_MON_NIDOQUEEN` | 1_329 | 460 (`FOLLOWER_MON_NIDOQUEEN`) |
-| `FOLLOWER_MON_NIDORAN_M` | 1_330 | 461 (`FOLLOWER_MON_NIDORAN_M`); 1001 (`FOLLOWER_MON_STATIC_NIDORAN_M`) |
-| `FOLLOWER_MON_NIDORINO` | 1_331 | 462 (`FOLLOWER_MON_NIDORINO`); 1002 (`FOLLOWER_MON_STATIC_NIDORINO`) |
-| `FOLLOWER_MON_NIDOKING` | 1_332 | 463 (`FOLLOWER_MON_NIDOKING`) |
-| `FOLLOWER_MON_CLEFAIRY` | 1_333 | 464 (`FOLLOWER_MON_CLEFAIRY`); 1003 (`FOLLOWER_MON_STATIC_CLEFAIRY`) |
-| `FOLLOWER_MON_CLEFABLE` | 1_334 | 465 (`FOLLOWER_MON_CLEFABLE`) |
-| `FOLLOWER_MON_VULPIX` | 1_335 | 466 (`FOLLOWER_MON_VULPIX`) |
-| `FOLLOWER_MON_NINETALES` | 1_336 | 467 (`FOLLOWER_MON_NINETALES`) |
-| `FOLLOWER_MON_JIGGLYPUFF` | 1_337 | 468 (`FOLLOWER_MON_JIGGLYPUFF`); 1004 (`FOLLOWER_MON_STATIC_JIGGLYPUFF`) |
-| `FOLLOWER_MON_WIGGLYTUFF` | 1_338 | 469 (`FOLLOWER_MON_WIGGLYTUFF`) |
-| `FOLLOWER_MON_ZUBAT` | 1_339 | 470 (`FOLLOWER_MON_ZUBAT`); 1005 (`FOLLOWER_MON_STATIC_ZUBAT`) |
-| `FOLLOWER_MON_GOLBAT` | 1_340 | 471 (`FOLLOWER_MON_GOLBAT`) |
-| `FOLLOWER_MON_ODDISH` | 1_341 | 472 (`FOLLOWER_MON_ODDISH`); 1006 (`FOLLOWER_MON_STATIC_ODDISH`) |
-| `FOLLOWER_MON_GLOOM` | 1_342 | 473 (`FOLLOWER_MON_GLOOM`) |
-| `FOLLOWER_MON_VILEPLUME` | 1_343 | 474 (`FOLLOWER_MON_VILEPLUME`) |
-| `FOLLOWER_MON_PARAS` | 1_344 | 475 (`FOLLOWER_MON_PARAS`) |
-| `FOLLOWER_MON_PARASECT` | 1_345 | 476 (`FOLLOWER_MON_PARASECT`) |
-| `FOLLOWER_MON_VENONAT` | 1_346 | 477 (`FOLLOWER_MON_VENONAT`) |
-| `FOLLOWER_MON_VENOMOTH` | 1_347 | 478 (`FOLLOWER_MON_VENOMOTH`) |
-| `FOLLOWER_MON_DIGLETT` | 1_348 | 479 (`FOLLOWER_MON_DIGLETT`); 1007 (`FOLLOWER_MON_STATIC_DIGLETT`) |
-| `FOLLOWER_MON_DUGTRIO` | 1_349 | 480 (`FOLLOWER_MON_DUGTRIO`) |
-| `FOLLOWER_MON_MEOWTH` | 1_350 | 481 (`FOLLOWER_MON_MEOWTH`); 1008 (`FOLLOWER_MON_STATIC_MEOWTH`) |
-| `FOLLOWER_MON_PERSIAN` | 1_351 | 482 (`FOLLOWER_MON_PERSIAN`); 1009 (`FOLLOWER_MON_STATIC_PERSIAN`) |
-| `FOLLOWER_MON_PSYDUCK` | 1_352 | 483 (`FOLLOWER_MON_PSYDUCK`); 1010 (`FOLLOWER_MON_STATIC_PSYDUCK`) |
-| `FOLLOWER_MON_GOLDUCK` | 1_353 | 484 (`FOLLOWER_MON_GOLDUCK`) |
-| `FOLLOWER_MON_MANKEY` | 1_354 | 485 (`FOLLOWER_MON_MANKEY`) |
-| `FOLLOWER_MON_PRIMEAPE` | 1_355 | 486 (`FOLLOWER_MON_PRIMEAPE`) |
-| `FOLLOWER_MON_GROWLITHE` | 1_356 | 487 (`FOLLOWER_MON_GROWLITHE`) |
-| `FOLLOWER_MON_ARCANINE` | 1_357 | 488 (`FOLLOWER_MON_ARCANINE`) |
-| `FOLLOWER_MON_POLIWAG` | 1_358 | 489 (`FOLLOWER_MON_POLIWAG`) |
-| `FOLLOWER_MON_POLIWHIRL` | 1_359 | 490 (`FOLLOWER_MON_POLIWHIRL`) |
-| `FOLLOWER_MON_POLIWRATH` | 1_360 | 491 (`FOLLOWER_MON_POLIWRATH`); 1011 (`FOLLOWER_MON_STATIC_POLIWRATH`) |
-| `FOLLOWER_MON_ABRA` | 1_361 | 492 (`FOLLOWER_MON_ABRA`); 1012 (`FOLLOWER_MON_STATIC_ABRA`) |
-| `FOLLOWER_MON_KADABRA` | 1_362 | 493 (`FOLLOWER_MON_KADABRA`) |
-| `FOLLOWER_MON_ALAKAZAM` | 1_363 | 494 (`FOLLOWER_MON_ALAKAZAM`) |
-| `FOLLOWER_MON_MACHOP` | 1_364 | 495 (`FOLLOWER_MON_MACHOP`); 1013 (`FOLLOWER_MON_STATIC_MACHOP`) |
-| `FOLLOWER_MON_MACHOKE` | 1_365 | 496 (`FOLLOWER_MON_MACHOKE`); 1014 (`FOLLOWER_MON_STATIC_MACHOKE`) |
-| `FOLLOWER_MON_MACHAMP` | 1_366 | 497 (`FOLLOWER_MON_MACHAMP`) |
-| `FOLLOWER_MON_BELLSPROUT` | 1_367 | 498 (`FOLLOWER_MON_BELLSPROUT`) |
-| `FOLLOWER_MON_WEEPINBELL` | 1_368 | 499 (`FOLLOWER_MON_WEEPINBELL`) |
-| `FOLLOWER_MON_VICTREEBEL` | 1_369 | 500 (`FOLLOWER_MON_VICTREEBEL`) |
-| `FOLLOWER_MON_TENTACOOL` | 1_370 | 501 (`FOLLOWER_MON_TENTACOOL`) |
-| `FOLLOWER_MON_TENTACRUEL` | 1_371 | 502 (`FOLLOWER_MON_TENTACRUEL`) |
-| `FOLLOWER_MON_GEODUDE` | 1_372 | 503 (`FOLLOWER_MON_GEODUDE`) |
-| `FOLLOWER_MON_GRAVELER` | 1_373 | 504 (`FOLLOWER_MON_GRAVELER`) |
-| `FOLLOWER_MON_GOLEM` | 1_374 | 505 (`FOLLOWER_MON_GOLEM`) |
-| `FOLLOWER_MON_PONYTA` | 1_375 | 506 (`FOLLOWER_MON_PONYTA`) |
-| `FOLLOWER_MON_RAPIDASH` | 1_376 | 507 (`FOLLOWER_MON_RAPIDASH`) |
-| `FOLLOWER_MON_SLOWPOKE` | 1_377 | 508 (`FOLLOWER_MON_SLOWPOKE`); 1015 (`FOLLOWER_MON_STATIC_SLOWPOKE`) |
-| `FOLLOWER_MON_SLOWBRO` | 1_378 | 509 (`FOLLOWER_MON_SLOWBRO`); 1016 (`FOLLOWER_MON_STATIC_SLOWBRO`) |
-| `FOLLOWER_MON_MAGNEMITE` | 1_379 | 510 (`FOLLOWER_MON_MAGNEMITE`) |
-| `FOLLOWER_MON_MAGNETON` | 1_380 | 511 (`FOLLOWER_MON_MAGNETON`) |
-| `FOLLOWER_MON_FARFETCHD` | 1_381 | 512 (`FOLLOWER_MON_FARFETCHD`); 1017 (`FOLLOWER_MON_STATIC_FARFETCHD`) |
-| `FOLLOWER_MON_DODUO` | 1_382 | 513 (`FOLLOWER_MON_DODUO`) |
-| `FOLLOWER_MON_DODRIO` | 1_383 | 514 (`FOLLOWER_MON_DODRIO`); 1018 (`FOLLOWER_MON_STATIC_DODRIO`) |
-| `FOLLOWER_MON_SEEL` | 1_384 | 515 (`FOLLOWER_MON_SEEL`) |
-| `FOLLOWER_MON_DEWGONG` | 1_385 | 516 (`FOLLOWER_MON_DEWGONG`) |
-| `FOLLOWER_MON_GRIMER` | 1_386 | 517 (`FOLLOWER_MON_GRIMER`) |
-| `FOLLOWER_MON_MUK` | 1_387 | 518 (`FOLLOWER_MON_MUK`) |
-| `FOLLOWER_MON_SHELLDER` | 1_388 | 519 (`FOLLOWER_MON_SHELLDER`) |
-| `FOLLOWER_MON_CLOYSTER` | 1_389 | 520 (`FOLLOWER_MON_CLOYSTER`) |
-| `FOLLOWER_MON_GASTLY` | 1_390 | 521 (`FOLLOWER_MON_GASTLY`) |
-| `FOLLOWER_MON_HAUNTER` | 1_391 | 522 (`FOLLOWER_MON_HAUNTER`) |
-| `FOLLOWER_MON_GENGAR` | 1_392 | 523 (`FOLLOWER_MON_GENGAR`) |
-| `FOLLOWER_MON_ONIX` | 1_393 | 524 (`FOLLOWER_MON_ONIX`) |
-| `FOLLOWER_MON_DROWZEE` | 1_394 | 525 (`FOLLOWER_MON_DROWZEE`) |
-| `FOLLOWER_MON_HYPNO` | 1_395 | 526 (`FOLLOWER_MON_HYPNO`) |
-| `FOLLOWER_MON_KRABBY` | 1_396 | 527 (`FOLLOWER_MON_KRABBY`) |
-| `FOLLOWER_MON_KINGLER` | 1_397 | 528 (`FOLLOWER_MON_KINGLER`) |
-| `FOLLOWER_MON_VOLTORB` | 1_398 | 529 (`FOLLOWER_MON_VOLTORB`) |
-| `FOLLOWER_MON_ELECTRODE` | 1_399 | 530 (`FOLLOWER_MON_ELECTRODE`); 1019 (`FOLLOWER_MON_STATIC_ELECTRODE`) |
-| `FOLLOWER_MON_EXEGGCUTE` | 1_400 | 531 (`FOLLOWER_MON_EXEGGCUTE`) |
-| `FOLLOWER_MON_EXEGGUTOR` | 1_401 | 532 (`FOLLOWER_MON_EXEGGUTOR`) |
-| `FOLLOWER_MON_CUBONE` | 1_402 | 533 (`FOLLOWER_MON_CUBONE`) |
-| `FOLLOWER_MON_MAROWAK` | 1_403 | 534 (`FOLLOWER_MON_MAROWAK`) |
-| `FOLLOWER_MON_HITMONLEE` | 1_404 | 535 (`FOLLOWER_MON_HITMONLEE`) |
-| `FOLLOWER_MON_HITMONCHAN` | 1_405 | 536 (`FOLLOWER_MON_HITMONCHAN`) |
-| `FOLLOWER_MON_LICKITUNG` | 1_406 | 537 (`FOLLOWER_MON_LICKITUNG`) |
-| `FOLLOWER_MON_KOFFING` | 1_407 | 538 (`FOLLOWER_MON_KOFFING`) |
-| `FOLLOWER_MON_WEEZING` | 1_408 | 539 (`FOLLOWER_MON_WEEZING`) |
-| `FOLLOWER_MON_RHYHORN` | 1_409 | 540 (`FOLLOWER_MON_RHYHORN`) |
-| `FOLLOWER_MON_RHYDON` | 1_410 | 541 (`FOLLOWER_MON_RHYDON`); 1020 (`FOLLOWER_MON_STATIC_RHYDON`) |
-| `FOLLOWER_MON_CHANSEY` | 1_411 | 542 (`FOLLOWER_MON_CHANSEY`); 1021 (`FOLLOWER_MON_STATIC_CHANSEY`) |
-| `FOLLOWER_MON_TANGELA` | 1_412 | 543 (`FOLLOWER_MON_TANGELA`) |
-| `FOLLOWER_MON_KANGASKHAN` | 1_413 | 544 (`FOLLOWER_MON_KANGASKHAN`); 1022 (`FOLLOWER_MON_STATIC_KANGASKHAN`) |
-| `FOLLOWER_MON_HORSEA` | 1_414 | 545 (`FOLLOWER_MON_HORSEA`) |
-| `FOLLOWER_MON_SEADRA` | 1_415 | 546 (`FOLLOWER_MON_SEADRA`) |
-| `FOLLOWER_MON_GOLDEEN` | 1_416 | 547 (`FOLLOWER_MON_GOLDEEN`) |
-| `FOLLOWER_MON_SEAKING` | 1_417 | 548 (`FOLLOWER_MON_SEAKING`) |
-| `FOLLOWER_MON_STARYU` | 1_418 | 549 (`FOLLOWER_MON_STARYU`) |
-| `FOLLOWER_MON_STARMIE` | 1_419 | 550 (`FOLLOWER_MON_STARMIE`) |
-| `FOLLOWER_MON_MR_MIME` | 1_420 | 551 (`FOLLOWER_MON_MR_MIME`) |
-| `FOLLOWER_MON_SCYTHER` | 1_421 | 552 (`FOLLOWER_MON_SCYTHER`) |
-| `FOLLOWER_MON_JYNX` | 1_422 | 553 (`FOLLOWER_MON_JYNX`) |
-| `FOLLOWER_MON_ELECTABUZZ` | 1_423 | 554 (`FOLLOWER_MON_ELECTABUZZ`) |
-| `FOLLOWER_MON_MAGMAR` | 1_424 | 555 (`FOLLOWER_MON_MAGMAR`) |
-| `FOLLOWER_MON_PINSIR` | 1_425 | 556 (`FOLLOWER_MON_PINSIR`) |
-| `FOLLOWER_MON_TAUROS` | 1_426 | 557 (`FOLLOWER_MON_TAUROS`) |
-| `FOLLOWER_MON_MAGIKARP` | 1_427 | 558 (`FOLLOWER_MON_MAGIKARP`) |
-| `FOLLOWER_MON_GYARADOS` | 1_428 | 559 (`FOLLOWER_MON_GYARADOS`) |
-| `FOLLOWER_MON_LAPRAS` | 1_429 | 560 (`FOLLOWER_MON_LAPRAS`); 1023 (`FOLLOWER_MON_STATIC_LAPRAS`) |
-| `FOLLOWER_MON_DITTO` | 1_430 | 561 (`FOLLOWER_MON_DITTO`) |
-| `FOLLOWER_MON_EEVEE` | 1_431 | 562 (`FOLLOWER_MON_EEVEE`) |
-| `FOLLOWER_MON_VAPOREON` | 1_432 | 563 (`FOLLOWER_MON_VAPOREON`) |
-| `FOLLOWER_MON_JOLTEON` | 1_433 | 564 (`FOLLOWER_MON_JOLTEON`) |
-| `FOLLOWER_MON_FLAREON` | 1_434 | 565 (`FOLLOWER_MON_FLAREON`) |
-| `FOLLOWER_MON_PORYGON` | 1_435 | 566 (`FOLLOWER_MON_PORYGON`) |
-| `FOLLOWER_MON_OMANYTE` | 1_436 | 567 (`FOLLOWER_MON_OMANYTE`) |
-| `FOLLOWER_MON_OMASTAR` | 1_437 | 568 (`FOLLOWER_MON_OMASTAR`) |
-| `FOLLOWER_MON_KABUTO` | 1_438 | 569 (`FOLLOWER_MON_KABUTO`) |
-| `FOLLOWER_MON_KABUTOPS` | 1_439 | 570 (`FOLLOWER_MON_KABUTOPS`) |
-| `FOLLOWER_MON_AERODACTYL` | 1_440 | 571 (`FOLLOWER_MON_AERODACTYL`) |
-| `FOLLOWER_MON_SNORLAX` | 1_441 | 572 (`FOLLOWER_MON_SNORLAX`) |
-| `FOLLOWER_MON_ARTICUNO` | 1_442 | 573 (`FOLLOWER_MON_ARTICUNO`); 1024 (`FOLLOWER_MON_STATIC_ARTICUNO`) |
-| `FOLLOWER_MON_ZAPDOS` | 1_443 | 574 (`FOLLOWER_MON_ZAPDOS`); 1025 (`FOLLOWER_MON_STATIC_ZAPDOS`) |
-| `FOLLOWER_MON_MOLTRES` | 1_444 | 575 (`FOLLOWER_MON_MOLTRES`); 1026 (`FOLLOWER_MON_STATIC_MOLTRES`) |
-| `FOLLOWER_MON_DRATINI` | 1_445 | 576 (`FOLLOWER_MON_DRATINI`); 1027 (`FOLLOWER_MON_STATIC_DRATINI`) |
-| `FOLLOWER_MON_DRAGONAIR` | 1_446 | 577 (`FOLLOWER_MON_DRAGONAIR`) |
-| `FOLLOWER_MON_DRAGONITE` | 1_447 | 578 (`FOLLOWER_MON_DRAGONITE`); 1028 (`FOLLOWER_MON_STATIC_DRAGONITE`) |
-| `FOLLOWER_MON_MEWTWO` | 1_448 | 579 (`FOLLOWER_MON_MEWTWO`); 1029 (`FOLLOWER_MON_STATIC_MEWTWO`) |
-| `FOLLOWER_MON_MEW` | 1_449 | 580 (`FOLLOWER_MON_MEW`) |
-| `FOLLOWER_MON_CHIKORITA` | 1_450 | 581 (`FOLLOWER_MON_CHIKORITA`) |
-| `FOLLOWER_MON_BAYLEEF` | 1_451 | 582 (`FOLLOWER_MON_BAYLEEF`); 1030 (`FOLLOWER_MON_STATIC_BAYLEEF`) |
-| `FOLLOWER_MON_MEGANIUM` | 1_452 | 583 (`FOLLOWER_MON_MEGANIUM`); 1047 (`FOLLOWER_MON_STATIC_MEGANIUM`) |
-| `FOLLOWER_MON_MEGANIUM_F` | 1_453 | 584 (`FOLLOWER_MON_MEGANIUM_F`) |
-| `FOLLOWER_MON_CYNDAQUIL` | 1_454 | 585 (`FOLLOWER_MON_CYNDAQUIL`) |
-| `FOLLOWER_MON_QUILAVA` | 1_455 | 586 (`FOLLOWER_MON_QUILAVA`) |
-| `FOLLOWER_MON_TYPHLOSION` | 1_456 | 587 (`FOLLOWER_MON_TYPHLOSION`); 1048 (`FOLLOWER_MON_STATIC_TYPHLOSION`) |
-| `FOLLOWER_MON_TOTODILE` | 1_457 | 588 (`FOLLOWER_MON_TOTODILE`) |
-| `FOLLOWER_MON_CROCONAW` | 1_458 | 589 (`FOLLOWER_MON_CROCONAW`) |
-| `FOLLOWER_MON_FERALIGATR` | 1_459 | 590 (`FOLLOWER_MON_FERALIGATR`); 1049 (`FOLLOWER_MON_STATIC_FERALIGATR`) |
-| `FOLLOWER_MON_SENTRET` | 1_460 | 591 (`FOLLOWER_MON_SENTRET`) |
-| `FOLLOWER_MON_FURRET` | 1_461 | 592 (`FOLLOWER_MON_FURRET`) |
-| `FOLLOWER_MON_HOOTHOOT` | 1_462 | 593 (`FOLLOWER_MON_HOOTHOOT`) |
-| `FOLLOWER_MON_NOCTOWL` | 1_463 | 594 (`FOLLOWER_MON_NOCTOWL`) |
-| `FOLLOWER_MON_LEDYBA` | 1_464 | 595 (`FOLLOWER_MON_LEDYBA`) |
-| `FOLLOWER_MON_LEDIAN` | 1_465 | 596 (`FOLLOWER_MON_LEDIAN`) |
-| `FOLLOWER_MON_SPINARAK` | 1_466 | 597 (`FOLLOWER_MON_SPINARAK`) |
-| `FOLLOWER_MON_ARIADOS` | 1_467 | 598 (`FOLLOWER_MON_ARIADOS`) |
-| `FOLLOWER_MON_CROBAT` | 1_468 | 599 (`FOLLOWER_MON_CROBAT`) |
-| `FOLLOWER_MON_CHINCHOU` | 1_469 | 600 (`FOLLOWER_MON_CHINCHOU`) |
-| `FOLLOWER_MON_LANTURN` | 1_470 | 601 (`FOLLOWER_MON_LANTURN`) |
-| `FOLLOWER_MON_PICHU` | 1_471 | 602 (`FOLLOWER_MON_PICHU`) |
-| `FOLLOWER_MON_PICHU_SPIKY` | 1_472 | 603 (`FOLLOWER_MON_PICHU_SPIKY`); 1046 (`FOLLOWER_MON_STATIC_PICHU_SPIKY`) |
-| `FOLLOWER_MON_CLEFFA` | 1_473 | 604 (`FOLLOWER_MON_CLEFFA`) |
-| `FOLLOWER_MON_IGGLYBUFF` | 1_474 | 605 (`FOLLOWER_MON_IGGLYBUFF`) |
-| `FOLLOWER_MON_TOGEPI` | 1_475 | 606 (`FOLLOWER_MON_TOGEPI`) |
-| `FOLLOWER_MON_TOGETIC` | 1_476 | 607 (`FOLLOWER_MON_TOGETIC`) |
-| `FOLLOWER_MON_NATU` | 1_477 | 608 (`FOLLOWER_MON_NATU`) |
-| `FOLLOWER_MON_XATU` | 1_478 | 609 (`FOLLOWER_MON_XATU`) |
-| `FOLLOWER_MON_MAREEP` | 1_479 | 610 (`FOLLOWER_MON_MAREEP`) |
-| `FOLLOWER_MON_FLAAFFY` | 1_480 | 611 (`FOLLOWER_MON_FLAAFFY`) |
-| `FOLLOWER_MON_AMPHAROS` | 1_481 | 612 (`FOLLOWER_MON_AMPHAROS`); 1031 (`FOLLOWER_MON_STATIC_AMPHAROS`) |
-| `FOLLOWER_MON_BELLOSSOM` | 1_482 | 613 (`FOLLOWER_MON_BELLOSSOM`) |
-| `FOLLOWER_MON_MARILL` | 1_483 | 614 (`FOLLOWER_MON_MARILL`); 1032 (`FOLLOWER_MON_STATIC_MARILL`) |
-| `FOLLOWER_MON_AZUMARILL` | 1_484 | 615 (`FOLLOWER_MON_AZUMARILL`) |
-| `FOLLOWER_MON_SUDOWOODO` | 1_485 | 616 (`FOLLOWER_MON_SUDOWOODO`) |
-| `FOLLOWER_MON_POLITOED` | 1_486 | 617 (`FOLLOWER_MON_POLITOED`) |
-| `FOLLOWER_MON_HOPPIP` | 1_487 | 618 (`FOLLOWER_MON_HOPPIP`) |
-| `FOLLOWER_MON_SKIPLOOM` | 1_488 | 619 (`FOLLOWER_MON_SKIPLOOM`) |
-| `FOLLOWER_MON_JUMPLUFF` | 1_489 | 620 (`FOLLOWER_MON_JUMPLUFF`) |
-| `FOLLOWER_MON_AIPOM` | 1_490 | 621 (`FOLLOWER_MON_AIPOM`); 1033 (`FOLLOWER_MON_STATIC_AIPOM`) |
-| `FOLLOWER_MON_SUNKERN` | 1_491 | 622 (`FOLLOWER_MON_SUNKERN`) |
-| `FOLLOWER_MON_SUNFLORA` | 1_492 | 623 (`FOLLOWER_MON_SUNFLORA`) |
-| `FOLLOWER_MON_YANMA` | 1_493 | 624 (`FOLLOWER_MON_YANMA`) |
-| `FOLLOWER_MON_WOOPER` | 1_494 | 625 (`FOLLOWER_MON_WOOPER`) |
-| `FOLLOWER_MON_QUAGSIRE` | 1_495 | 626 (`FOLLOWER_MON_QUAGSIRE`) |
-| `FOLLOWER_MON_ESPEON` | 1_496 | 627 (`FOLLOWER_MON_ESPEON`) |
-| `FOLLOWER_MON_UMBREON` | 1_497 | 628 (`FOLLOWER_MON_UMBREON`) |
-| `FOLLOWER_MON_MURKROW` | 1_498 | 629 (`FOLLOWER_MON_MURKROW`); 1034 (`FOLLOWER_MON_STATIC_MURKROW`) |
-| `FOLLOWER_MON_SLOWKING` | 1_499 | 630 (`FOLLOWER_MON_SLOWKING`) |
-| `FOLLOWER_MON_MISDREAVUS` | 1_500 | 631 (`FOLLOWER_MON_MISDREAVUS`) |
-| `FOLLOWER_MON_UNOWN_A` | 1_501 | 632 (`FOLLOWER_MON_UNOWN_A`) |
-| `FOLLOWER_MON_UNOWN_B` | 1_502 | 633 (`FOLLOWER_MON_UNOWN_B`) |
-| `FOLLOWER_MON_UNOWN_C` | 1_503 | 634 (`FOLLOWER_MON_UNOWN_C`) |
-| `FOLLOWER_MON_UNOWN_D` | 1_504 | 635 (`FOLLOWER_MON_UNOWN_D`) |
-| `FOLLOWER_MON_UNOWN_E` | 1_505 | 636 (`FOLLOWER_MON_UNOWN_E`) |
-| `FOLLOWER_MON_UNOWN_F` | 1_506 | 637 (`FOLLOWER_MON_UNOWN_F`) |
-| `FOLLOWER_MON_UNOWN_G` | 1_507 | 638 (`FOLLOWER_MON_UNOWN_G`) |
-| `FOLLOWER_MON_UNOWN_H` | 1_508 | 639 (`FOLLOWER_MON_UNOWN_H`) |
-| `FOLLOWER_MON_UNOWN_I` | 1_509 | 640 (`FOLLOWER_MON_UNOWN_I`) |
-| `FOLLOWER_MON_UNOWN_J` | 1_510 | 641 (`FOLLOWER_MON_UNOWN_J`) |
-| `FOLLOWER_MON_UNOWN_K` | 1_511 | 642 (`FOLLOWER_MON_UNOWN_K`) |
-| `FOLLOWER_MON_UNOWN_L` | 1_512 | 643 (`FOLLOWER_MON_UNOWN_L`) |
-| `FOLLOWER_MON_UNOWN_M` | 1_513 | 644 (`FOLLOWER_MON_UNOWN_M`) |
-| `FOLLOWER_MON_UNOWN_N` | 1_514 | 645 (`FOLLOWER_MON_UNOWN_N`) |
-| `FOLLOWER_MON_UNOWN_O` | 1_515 | 646 (`FOLLOWER_MON_UNOWN_O`) |
-| `FOLLOWER_MON_UNOWN_P` | 1_516 | 647 (`FOLLOWER_MON_UNOWN_P`) |
-| `FOLLOWER_MON_UNOWN_Q` | 1_517 | 648 (`FOLLOWER_MON_UNOWN_Q`) |
-| `FOLLOWER_MON_UNOWN_R` | 1_518 | 649 (`FOLLOWER_MON_UNOWN_R`) |
-| `FOLLOWER_MON_UNOWN_S` | 1_519 | 650 (`FOLLOWER_MON_UNOWN_S`) |
-| `FOLLOWER_MON_UNOWN_T` | 1_520 | 651 (`FOLLOWER_MON_UNOWN_T`) |
-| `FOLLOWER_MON_UNOWN_U` | 1_521 | 652 (`FOLLOWER_MON_UNOWN_U`) |
-| `FOLLOWER_MON_UNOWN_V` | 1_522 | 653 (`FOLLOWER_MON_UNOWN_V`) |
-| `FOLLOWER_MON_UNOWN_W` | 1_523 | 654 (`FOLLOWER_MON_UNOWN_W`) |
-| `FOLLOWER_MON_UNOWN_X` | 1_524 | 655 (`FOLLOWER_MON_UNOWN_X`) |
-| `FOLLOWER_MON_UNOWN_Y` | 1_525 | 656 (`FOLLOWER_MON_UNOWN_Y`) |
-| `FOLLOWER_MON_UNOWN_Z` | 1_526 | 657 (`FOLLOWER_MON_UNOWN_Z`) |
-| `FOLLOWER_MON_UNOWN_QMARK` | 1_527 | 658 (`FOLLOWER_MON_UNOWN_QMARK`) |
-| `FOLLOWER_MON_UNOWN_EXCL` | 1_528 | 659 (`FOLLOWER_MON_UNOWN_EXCL`) |
-| `FOLLOWER_MON_WOBBUFFET` | 1_529 | 660 (`FOLLOWER_MON_WOBBUFFET`) |
-| `FOLLOWER_MON_WOBBUFFET_F` | 1_530 | 661 (`FOLLOWER_MON_WOBBUFFET_F`) |
-| `FOLLOWER_MON_GIRAFARIG` | 1_531 | 662 (`FOLLOWER_MON_GIRAFARIG`) |
-| `FOLLOWER_MON_PINECO` | 1_532 | 663 (`FOLLOWER_MON_PINECO`) |
-| `FOLLOWER_MON_FORRETRESS` | 1_533 | 664 (`FOLLOWER_MON_FORRETRESS`) |
-| `FOLLOWER_MON_DUNSPARCE` | 1_534 | 665 (`FOLLOWER_MON_DUNSPARCE`) |
-| `FOLLOWER_MON_GLIGAR` | 1_535 | 666 (`FOLLOWER_MON_GLIGAR`) |
-| `FOLLOWER_MON_STEELIX` | 1_536 | 667 (`FOLLOWER_MON_STEELIX`) |
-| `FOLLOWER_MON_STEELIX_F` | 1_537 | 668 (`FOLLOWER_MON_STEELIX_F`) |
-| `FOLLOWER_MON_SNUBBULL` | 1_538 | 669 (`FOLLOWER_MON_SNUBBULL`) |
-| `FOLLOWER_MON_GRANBULL` | 1_539 | 670 (`FOLLOWER_MON_GRANBULL`) |
-| `FOLLOWER_MON_QWILFISH` | 1_540 | 671 (`FOLLOWER_MON_QWILFISH`) |
-| `FOLLOWER_MON_SCIZOR` | 1_541 | 672 (`FOLLOWER_MON_SCIZOR`) |
-| `FOLLOWER_MON_SHUCKLE` | 1_542 | 673 (`FOLLOWER_MON_SHUCKLE`) |
-| `FOLLOWER_MON_HERACROSS` | 1_543 | 674 (`FOLLOWER_MON_HERACROSS`) |
-| `FOLLOWER_MON_HERACROSS_F` | 1_544 | 675 (`FOLLOWER_MON_HERACROSS_F`) |
-| `FOLLOWER_MON_SNEASEL` | 1_545 | 676 (`FOLLOWER_MON_SNEASEL`) |
-| `FOLLOWER_MON_TEDDIURSA` | 1_546 | 677 (`FOLLOWER_MON_TEDDIURSA`) |
-| `FOLLOWER_MON_URSARING` | 1_547 | 678 (`FOLLOWER_MON_URSARING`) |
-| `FOLLOWER_MON_SLUGMA` | 1_548 | 679 (`FOLLOWER_MON_SLUGMA`) |
-| `FOLLOWER_MON_MAGCARGO` | 1_549 | 680 (`FOLLOWER_MON_MAGCARGO`) |
-| `FOLLOWER_MON_SWINUB` | 1_550 | 681 (`FOLLOWER_MON_SWINUB`) |
-| `FOLLOWER_MON_PILOSWINE` | 1_551 | 682 (`FOLLOWER_MON_PILOSWINE`) |
-| `FOLLOWER_MON_CORSOLA` | 1_552 | 683 (`FOLLOWER_MON_CORSOLA`) |
-| `FOLLOWER_MON_REMORAID` | 1_553 | 684 (`FOLLOWER_MON_REMORAID`) |
-| `FOLLOWER_MON_OCTILLERY` | 1_554 | 685 (`FOLLOWER_MON_OCTILLERY`) |
-| `FOLLOWER_MON_DELIBIRD` | 1_555 | 686 (`FOLLOWER_MON_DELIBIRD`) |
-| `FOLLOWER_MON_MANTINE` | 1_556 | 687 (`FOLLOWER_MON_MANTINE`) |
-| `FOLLOWER_MON_SKARMORY` | 1_557 | 688 (`FOLLOWER_MON_SKARMORY`) |
-| `FOLLOWER_MON_HOUNDOUR` | 1_558 | 689 (`FOLLOWER_MON_HOUNDOUR`) |
-| `FOLLOWER_MON_HOUNDOOM` | 1_559 | 690 (`FOLLOWER_MON_HOUNDOOM`) |
-| `FOLLOWER_MON_KINGDRA` | 1_560 | 691 (`FOLLOWER_MON_KINGDRA`) |
-| `FOLLOWER_MON_PHANPY` | 1_561 | 692 (`FOLLOWER_MON_PHANPY`) |
-| `FOLLOWER_MON_DONPHAN` | 1_562 | 693 (`FOLLOWER_MON_DONPHAN`) |
-| `FOLLOWER_MON_PORYGON2` | 1_563 | 694 (`FOLLOWER_MON_PORYGON2`) |
-| `FOLLOWER_MON_STANTLER` | 1_564 | 695 (`FOLLOWER_MON_STANTLER`) |
-| `FOLLOWER_MON_SMEARGLE` | 1_565 | 696 (`FOLLOWER_MON_SMEARGLE`) |
-| `FOLLOWER_MON_TYROGUE` | 1_566 | 697 (`FOLLOWER_MON_TYROGUE`) |
-| `FOLLOWER_MON_HITMONTOP` | 1_567 | 698 (`FOLLOWER_MON_HITMONTOP`) |
-| `FOLLOWER_MON_SMOOCHUM` | 1_568 | 699 (`FOLLOWER_MON_SMOOCHUM`) |
-| `FOLLOWER_MON_ELEKID` | 1_569 | 700 (`FOLLOWER_MON_ELEKID`) |
-| `FOLLOWER_MON_MAGBY` | 1_570 | 701 (`FOLLOWER_MON_MAGBY`) |
-| `FOLLOWER_MON_MILTANK` | 1_571 | 702 (`FOLLOWER_MON_MILTANK`); 1035 (`FOLLOWER_MON_STATIC_MILTANK`) |
-| `FOLLOWER_MON_BLISSEY` | 1_572 | 703 (`FOLLOWER_MON_BLISSEY`); 1036 (`FOLLOWER_MON_STATIC_BLISSEY`) |
-| `FOLLOWER_MON_RAIKOU` | 1_573 | 704 (`FOLLOWER_MON_RAIKOU`); 1037 (`FOLLOWER_MON_STATIC_RAIKOU`) |
-| `FOLLOWER_MON_ENTEI` | 1_574 | 705 (`FOLLOWER_MON_ENTEI`); 1038 (`FOLLOWER_MON_STATIC_ENTEI`) |
-| `FOLLOWER_MON_SUICUNE` | 1_575 | 706 (`FOLLOWER_MON_SUICUNE`); 1039 (`FOLLOWER_MON_STATIC_SUICUNE`) |
-| `FOLLOWER_MON_LARVITAR` | 1_576 | 707 (`FOLLOWER_MON_LARVITAR`) |
-| `FOLLOWER_MON_PUPITAR` | 1_577 | 708 (`FOLLOWER_MON_PUPITAR`) |
-| `FOLLOWER_MON_TYRANITAR` | 1_578 | 709 (`FOLLOWER_MON_TYRANITAR`) |
-| `FOLLOWER_MON_LUGIA` | 1_579 | 710 (`FOLLOWER_MON_LUGIA`) |
-| `FOLLOWER_MON_HO_OH` | 1_580 | 711 (`FOLLOWER_MON_HO_OH`) |
-| `FOLLOWER_MON_CELEBI` | 1_581 | 712 (`FOLLOWER_MON_CELEBI`); 1040 (`FOLLOWER_MON_STATIC_CELEBI`) |
-| `FOLLOWER_MON_TREECKO` | 1_582 | 713 (`FOLLOWER_MON_TREECKO`) |
-| `FOLLOWER_MON_GROVYLE` | 1_583 | 714 (`FOLLOWER_MON_GROVYLE`) |
-| `FOLLOWER_MON_SCEPTILE` | 1_584 | 715 (`FOLLOWER_MON_SCEPTILE`) |
-| `FOLLOWER_MON_TORCHIC` | 1_585 | 716 (`FOLLOWER_MON_TORCHIC`) |
-| `FOLLOWER_MON_COMBUSKEN` | 1_586 | 717 (`FOLLOWER_MON_COMBUSKEN`) |
-| `FOLLOWER_MON_BLAZIKEN` | 1_587 | 718 (`FOLLOWER_MON_BLAZIKEN`) |
-| `FOLLOWER_MON_MUDKIP` | 1_588 | 719 (`FOLLOWER_MON_MUDKIP`) |
-| `FOLLOWER_MON_MARSHTOMP` | 1_589 | 720 (`FOLLOWER_MON_MARSHTOMP`) |
-| `FOLLOWER_MON_SWAMPERT` | 1_590 | 721 (`FOLLOWER_MON_SWAMPERT`) |
-| `FOLLOWER_MON_POOCHYENA` | 1_591 | 722 (`FOLLOWER_MON_POOCHYENA`) |
-| `FOLLOWER_MON_MIGHTYENA` | 1_592 | 723 (`FOLLOWER_MON_MIGHTYENA`) |
-| `FOLLOWER_MON_ZIGZAGOON` | 1_593 | 724 (`FOLLOWER_MON_ZIGZAGOON`) |
-| `FOLLOWER_MON_LINOONE` | 1_594 | 725 (`FOLLOWER_MON_LINOONE`) |
-| `FOLLOWER_MON_WURMPLE` | 1_595 | 726 (`FOLLOWER_MON_WURMPLE`) |
-| `FOLLOWER_MON_SILCOON` | 1_596 | 727 (`FOLLOWER_MON_SILCOON`) |
-| `FOLLOWER_MON_BEAUTIFLY` | 1_597 | 728 (`FOLLOWER_MON_BEAUTIFLY`) |
-| `FOLLOWER_MON_CASCOON` | 1_598 | 729 (`FOLLOWER_MON_CASCOON`) |
-| `FOLLOWER_MON_DUSTOX` | 1_599 | 730 (`FOLLOWER_MON_DUSTOX`) |
-| `FOLLOWER_MON_LOTAD` | 1_600 | 731 (`FOLLOWER_MON_LOTAD`) |
-| `FOLLOWER_MON_LOMBRE` | 1_601 | 732 (`FOLLOWER_MON_LOMBRE`) |
-| `FOLLOWER_MON_LUDICOLO` | 1_602 | 733 (`FOLLOWER_MON_LUDICOLO`) |
-| `FOLLOWER_MON_SEEDOT` | 1_603 | 734 (`FOLLOWER_MON_SEEDOT`) |
-| `FOLLOWER_MON_NUZLEAF` | 1_604 | 735 (`FOLLOWER_MON_NUZLEAF`) |
-| `FOLLOWER_MON_SHIFTRY` | 1_605 | 736 (`FOLLOWER_MON_SHIFTRY`) |
-| `FOLLOWER_MON_TAILLOW` | 1_606 | 737 (`FOLLOWER_MON_TAILLOW`) |
-| `FOLLOWER_MON_SWELLOW` | 1_607 | 738 (`FOLLOWER_MON_SWELLOW`) |
-| `FOLLOWER_MON_WINGULL` | 1_608 | 739 (`FOLLOWER_MON_WINGULL`) |
-| `FOLLOWER_MON_PELIPPER` | 1_609 | 740 (`FOLLOWER_MON_PELIPPER`) |
-| `FOLLOWER_MON_RALTS` | 1_610 | 741 (`FOLLOWER_MON_RALTS`) |
-| `FOLLOWER_MON_KIRLIA` | 1_611 | 742 (`FOLLOWER_MON_KIRLIA`) |
-| `FOLLOWER_MON_GARDEVOIR` | 1_612 | 743 (`FOLLOWER_MON_GARDEVOIR`) |
-| `FOLLOWER_MON_SURSKIT` | 1_613 | 744 (`FOLLOWER_MON_SURSKIT`) |
-| `FOLLOWER_MON_MASQUERAIN` | 1_614 | 745 (`FOLLOWER_MON_MASQUERAIN`) |
-| `FOLLOWER_MON_SHROOMISH` | 1_615 | 746 (`FOLLOWER_MON_SHROOMISH`) |
-| `FOLLOWER_MON_BRELOOM` | 1_616 | 747 (`FOLLOWER_MON_BRELOOM`) |
-| `FOLLOWER_MON_SLAKOTH` | 1_617 | 748 (`FOLLOWER_MON_SLAKOTH`) |
-| `FOLLOWER_MON_VIGOROTH` | 1_618 | 749 (`FOLLOWER_MON_VIGOROTH`) |
-| `FOLLOWER_MON_SLAKING` | 1_619 | 750 (`FOLLOWER_MON_SLAKING`) |
-| `FOLLOWER_MON_NINCADA` | 1_620 | 751 (`FOLLOWER_MON_NINCADA`) |
-| `FOLLOWER_MON_NINJASK` | 1_621 | 752 (`FOLLOWER_MON_NINJASK`) |
-| `FOLLOWER_MON_SHEDINJA` | 1_622 | 753 (`FOLLOWER_MON_SHEDINJA`) |
-| `FOLLOWER_MON_WHISMUR` | 1_623 | 754 (`FOLLOWER_MON_WHISMUR`) |
-| `FOLLOWER_MON_LOUDRED` | 1_624 | 755 (`FOLLOWER_MON_LOUDRED`) |
-| `FOLLOWER_MON_EXPLOUD` | 1_625 | 756 (`FOLLOWER_MON_EXPLOUD`) |
-| `FOLLOWER_MON_MAKUHITA` | 1_626 | 757 (`FOLLOWER_MON_MAKUHITA`) |
-| `FOLLOWER_MON_HARIYAMA` | 1_627 | 758 (`FOLLOWER_MON_HARIYAMA`) |
-| `FOLLOWER_MON_AZURILL` | 1_628 | 759 (`FOLLOWER_MON_AZURILL`) |
-| `FOLLOWER_MON_NOSEPASS` | 1_629 | 760 (`FOLLOWER_MON_NOSEPASS`) |
-| `FOLLOWER_MON_SKITTY` | 1_630 | 761 (`FOLLOWER_MON_SKITTY`) |
-| `FOLLOWER_MON_DELCATTY` | 1_631 | 762 (`FOLLOWER_MON_DELCATTY`) |
-| `FOLLOWER_MON_SABLEYE` | 1_632 | 763 (`FOLLOWER_MON_SABLEYE`) |
-| `FOLLOWER_MON_MAWILE` | 1_633 | 764 (`FOLLOWER_MON_MAWILE`) |
-| `FOLLOWER_MON_ARON` | 1_634 | 765 (`FOLLOWER_MON_ARON`) |
-| `FOLLOWER_MON_LAIRON` | 1_635 | 766 (`FOLLOWER_MON_LAIRON`) |
-| `FOLLOWER_MON_AGGRON` | 1_636 | 767 (`FOLLOWER_MON_AGGRON`) |
-| `FOLLOWER_MON_MEDITITE` | 1_637 | 768 (`FOLLOWER_MON_MEDITITE`) |
-| `FOLLOWER_MON_MEDICHAM` | 1_638 | 769 (`FOLLOWER_MON_MEDICHAM`) |
-| `FOLLOWER_MON_ELECTRIKE` | 1_639 | 770 (`FOLLOWER_MON_ELECTRIKE`) |
-| `FOLLOWER_MON_MANECTRIC` | 1_640 | 771 (`FOLLOWER_MON_MANECTRIC`) |
-| `FOLLOWER_MON_PLUSLE` | 1_641 | 772 (`FOLLOWER_MON_PLUSLE`) |
-| `FOLLOWER_MON_MINUN` | 1_642 | 773 (`FOLLOWER_MON_MINUN`) |
-| `FOLLOWER_MON_VOLBEAT` | 1_643 | 774 (`FOLLOWER_MON_VOLBEAT`) |
-| `FOLLOWER_MON_ILLUMISE` | 1_644 | 775 (`FOLLOWER_MON_ILLUMISE`) |
-| `FOLLOWER_MON_ROSELIA` | 1_645 | 776 (`FOLLOWER_MON_ROSELIA`) |
-| `FOLLOWER_MON_GULPIN` | 1_646 | 777 (`FOLLOWER_MON_GULPIN`) |
-| `FOLLOWER_MON_SWALOT` | 1_647 | 778 (`FOLLOWER_MON_SWALOT`) |
-| `FOLLOWER_MON_CARVANHA` | 1_648 | 779 (`FOLLOWER_MON_CARVANHA`) |
-| `FOLLOWER_MON_SHARPEDO` | 1_649 | 780 (`FOLLOWER_MON_SHARPEDO`) |
-| `FOLLOWER_MON_WAILMER` | 1_650 | 781 (`FOLLOWER_MON_WAILMER`) |
-| `FOLLOWER_MON_WAILORD` | 1_651 | 782 (`FOLLOWER_MON_WAILORD`) |
-| `FOLLOWER_MON_NUMEL` | 1_652 | 783 (`FOLLOWER_MON_NUMEL`) |
-| `FOLLOWER_MON_CAMERUPT` | 1_653 | 784 (`FOLLOWER_MON_CAMERUPT`) |
-| `FOLLOWER_MON_TORKOAL` | 1_654 | 785 (`FOLLOWER_MON_TORKOAL`) |
-| `FOLLOWER_MON_SPOINK` | 1_655 | 786 (`FOLLOWER_MON_SPOINK`) |
-| `FOLLOWER_MON_GRUMPIG` | 1_656 | 787 (`FOLLOWER_MON_GRUMPIG`) |
-| `FOLLOWER_MON_SPINDA` | 1_657 | 788 (`FOLLOWER_MON_SPINDA`) |
-| `FOLLOWER_MON_TRAPINCH` | 1_658 | 789 (`FOLLOWER_MON_TRAPINCH`) |
-| `FOLLOWER_MON_VIBRAVA` | 1_659 | 790 (`FOLLOWER_MON_VIBRAVA`) |
-| `FOLLOWER_MON_FLYGON` | 1_660 | 791 (`FOLLOWER_MON_FLYGON`) |
-| `FOLLOWER_MON_CACNEA` | 1_661 | 792 (`FOLLOWER_MON_CACNEA`) |
-| `FOLLOWER_MON_CACTURNE` | 1_662 | 793 (`FOLLOWER_MON_CACTURNE`) |
-| `FOLLOWER_MON_SWABLU` | 1_663 | 794 (`FOLLOWER_MON_SWABLU`) |
-| `FOLLOWER_MON_ALTARIA` | 1_664 | 795 (`FOLLOWER_MON_ALTARIA`) |
-| `FOLLOWER_MON_ZANGOOSE` | 1_665 | 796 (`FOLLOWER_MON_ZANGOOSE`) |
-| `FOLLOWER_MON_SEVIPER` | 1_666 | 797 (`FOLLOWER_MON_SEVIPER`) |
-| `FOLLOWER_MON_LUNATONE` | 1_667 | 798 (`FOLLOWER_MON_LUNATONE`) |
-| `FOLLOWER_MON_SOLROCK` | 1_668 | 799 (`FOLLOWER_MON_SOLROCK`) |
-| `FOLLOWER_MON_BARBOACH` | 1_669 | 800 (`FOLLOWER_MON_BARBOACH`) |
-| `FOLLOWER_MON_WHISCASH` | 1_670 | 801 (`FOLLOWER_MON_WHISCASH`) |
-| `FOLLOWER_MON_CORPHISH` | 1_671 | 802 (`FOLLOWER_MON_CORPHISH`) |
-| `FOLLOWER_MON_CRAWDAUNT` | 1_672 | 803 (`FOLLOWER_MON_CRAWDAUNT`) |
-| `FOLLOWER_MON_BALTOY` | 1_673 | 804 (`FOLLOWER_MON_BALTOY`) |
-| `FOLLOWER_MON_CLAYDOL` | 1_674 | 805 (`FOLLOWER_MON_CLAYDOL`) |
-| `FOLLOWER_MON_LILEEP` | 1_675 | 806 (`FOLLOWER_MON_LILEEP`) |
-| `FOLLOWER_MON_CRADILY` | 1_676 | 807 (`FOLLOWER_MON_CRADILY`) |
-| `FOLLOWER_MON_ANORITH` | 1_677 | 808 (`FOLLOWER_MON_ANORITH`) |
-| `FOLLOWER_MON_ARMALDO` | 1_678 | 809 (`FOLLOWER_MON_ARMALDO`) |
-| `FOLLOWER_MON_FEEBAS` | 1_679 | 810 (`FOLLOWER_MON_FEEBAS`) |
-| `FOLLOWER_MON_MILOTIC` | 1_680 | 811 (`FOLLOWER_MON_MILOTIC`) |
-| `FOLLOWER_MON_CASTFORM` | 1_681 | 812 (`FOLLOWER_MON_CASTFORM`) |
-| `FOLLOWER_MON_KECLEON` | 1_682 | 813 (`FOLLOWER_MON_KECLEON`) |
-| `FOLLOWER_MON_SHUPPET` | 1_683 | 814 (`FOLLOWER_MON_SHUPPET`) |
-| `FOLLOWER_MON_BANETTE` | 1_684 | 815 (`FOLLOWER_MON_BANETTE`) |
-| `FOLLOWER_MON_DUSKULL` | 1_685 | 816 (`FOLLOWER_MON_DUSKULL`) |
-| `FOLLOWER_MON_DUSCLOPS` | 1_686 | 817 (`FOLLOWER_MON_DUSCLOPS`) |
-| `FOLLOWER_MON_TROPIUS` | 1_687 | 818 (`FOLLOWER_MON_TROPIUS`) |
-| `FOLLOWER_MON_CHIMECHO` | 1_688 | 819 (`FOLLOWER_MON_CHIMECHO`) |
-| `FOLLOWER_MON_ABSOL` | 1_689 | 820 (`FOLLOWER_MON_ABSOL`) |
-| `FOLLOWER_MON_WYNAUT` | 1_690 | 821 (`FOLLOWER_MON_WYNAUT`) |
-| `FOLLOWER_MON_SNORUNT` | 1_691 | 822 (`FOLLOWER_MON_SNORUNT`) |
-| `FOLLOWER_MON_GLALIE` | 1_692 | 823 (`FOLLOWER_MON_GLALIE`) |
-| `FOLLOWER_MON_SPHEAL` | 1_693 | 824 (`FOLLOWER_MON_SPHEAL`) |
-| `FOLLOWER_MON_SEALEO` | 1_694 | 825 (`FOLLOWER_MON_SEALEO`) |
-| `FOLLOWER_MON_WALREIN` | 1_695 | 826 (`FOLLOWER_MON_WALREIN`) |
-| `FOLLOWER_MON_CLAMPERL` | 1_696 | 827 (`FOLLOWER_MON_CLAMPERL`) |
-| `FOLLOWER_MON_HUNTAIL` | 1_697 | 828 (`FOLLOWER_MON_HUNTAIL`) |
-| `FOLLOWER_MON_GOREBYSS` | 1_698 | 829 (`FOLLOWER_MON_GOREBYSS`) |
-| `FOLLOWER_MON_RELICANTH` | 1_699 | 830 (`FOLLOWER_MON_RELICANTH`) |
-| `FOLLOWER_MON_LUVDISC` | 1_700 | 831 (`FOLLOWER_MON_LUVDISC`) |
-| `FOLLOWER_MON_BAGON` | 1_701 | 832 (`FOLLOWER_MON_BAGON`) |
-| `FOLLOWER_MON_SHELGON` | 1_702 | 833 (`FOLLOWER_MON_SHELGON`) |
-| `FOLLOWER_MON_SALAMENCE` | 1_703 | 834 (`FOLLOWER_MON_SALAMENCE`) |
-| `FOLLOWER_MON_BELDUM` | 1_704 | 835 (`FOLLOWER_MON_BELDUM`) |
-| `FOLLOWER_MON_METANG` | 1_705 | 836 (`FOLLOWER_MON_METANG`) |
-| `FOLLOWER_MON_METAGROSS` | 1_706 | 837 (`FOLLOWER_MON_METAGROSS`) |
-| `FOLLOWER_MON_REGIROCK` | 1_707 | 838 (`FOLLOWER_MON_REGIROCK`) |
-| `FOLLOWER_MON_REGICE` | 1_708 | 839 (`FOLLOWER_MON_REGICE`) |
-| `FOLLOWER_MON_REGISTEEL` | 1_709 | 840 (`FOLLOWER_MON_REGISTEEL`) |
-| `FOLLOWER_MON_LATIAS` | 1_710 | 841 (`FOLLOWER_MON_LATIAS`); 1041 (`FOLLOWER_MON_STATIC_LATIAS`) |
-| `FOLLOWER_MON_LATIOS` | 1_711 | 842 (`FOLLOWER_MON_LATIOS`); 1042 (`FOLLOWER_MON_STATIC_LATIOS`) |
-| `FOLLOWER_MON_KYOGRE` | 1_712 | 843 (`FOLLOWER_MON_KYOGRE`); 1043 (`FOLLOWER_MON_STATIC_KYOGRE`) |
-| `FOLLOWER_MON_GROUDON` | 1_713 | 844 (`FOLLOWER_MON_GROUDON`); 1044 (`FOLLOWER_MON_STATIC_GROUDON`) |
-| `FOLLOWER_MON_RAYQUAZA` | 1_714 | 845 (`FOLLOWER_MON_RAYQUAZA`); 1045 (`FOLLOWER_MON_STATIC_RAYQUAZA`) |
-| `FOLLOWER_MON_JIRACHI` | 1_715 | 846 (`FOLLOWER_MON_JIRACHI`) |
-| `FOLLOWER_MON_DEOXYS` | 1_716 | 847 (`FOLLOWER_MON_DEOXYS`) |
-| `FOLLOWER_MON_DEOXYS_ATK` | 1_717 | 848 (`FOLLOWER_MON_DEOXYS_ATK`) |
-| `FOLLOWER_MON_DEOXYS_DEF` | 1_718 | 849 (`FOLLOWER_MON_DEOXYS_DEF`) |
-| `FOLLOWER_MON_DEOXYS_SPD` | 1_719 | 850 (`FOLLOWER_MON_DEOXYS_SPD`) |
-| `FOLLOWER_MON_TURTWIG` | 1_720 | 851 (`FOLLOWER_MON_TURTWIG`) |
-| `FOLLOWER_MON_GROTLE` | 1_721 | 852 (`FOLLOWER_MON_GROTLE`) |
-| `FOLLOWER_MON_TORTERRA` | 1_722 | 853 (`FOLLOWER_MON_TORTERRA`) |
-| `FOLLOWER_MON_CHIMCHAR` | 1_723 | 854 (`FOLLOWER_MON_CHIMCHAR`) |
-| `FOLLOWER_MON_MONFERNO` | 1_724 | 855 (`FOLLOWER_MON_MONFERNO`) |
-| `FOLLOWER_MON_INFERNAPE` | 1_725 | 856 (`FOLLOWER_MON_INFERNAPE`) |
-| `FOLLOWER_MON_PIPLUP` | 1_726 | 857 (`FOLLOWER_MON_PIPLUP`) |
-| `FOLLOWER_MON_PRINPLUP` | 1_727 | 858 (`FOLLOWER_MON_PRINPLUP`) |
-| `FOLLOWER_MON_EMPOLEON` | 1_728 | 859 (`FOLLOWER_MON_EMPOLEON`) |
-| `FOLLOWER_MON_STARLY` | 1_729 | 860 (`FOLLOWER_MON_STARLY`) |
-| `FOLLOWER_MON_STARAVIA` | 1_730 | 861 (`FOLLOWER_MON_STARAVIA`) |
-| `FOLLOWER_MON_STARAPTOR` | 1_731 | 862 (`FOLLOWER_MON_STARAPTOR`) |
-| `FOLLOWER_MON_BIDOOF` | 1_732 | 863 (`FOLLOWER_MON_BIDOOF`) |
-| `FOLLOWER_MON_BIBAREL` | 1_733 | 864 (`FOLLOWER_MON_BIBAREL`) |
-| `FOLLOWER_MON_KRICKETOT` | 1_734 | 865 (`FOLLOWER_MON_KRICKETOT`) |
-| `FOLLOWER_MON_KRICKETUNE` | 1_735 | 866 (`FOLLOWER_MON_KRICKETUNE`) |
-| `FOLLOWER_MON_SHINX` | 1_736 | 867 (`FOLLOWER_MON_SHINX`) |
-| `FOLLOWER_MON_LUXIO` | 1_737 | 868 (`FOLLOWER_MON_LUXIO`) |
-| `FOLLOWER_MON_LUXRAY` | 1_738 | 869 (`FOLLOWER_MON_LUXRAY`) |
-| `FOLLOWER_MON_BUDEW` | 1_739 | 870 (`FOLLOWER_MON_BUDEW`) |
-| `FOLLOWER_MON_ROSERADE` | 1_740 | 871 (`FOLLOWER_MON_ROSERADE`) |
-| `FOLLOWER_MON_CRANIDOS` | 1_741 | 872 (`FOLLOWER_MON_CRANIDOS`) |
-| `FOLLOWER_MON_RAMPARDOS` | 1_742 | 873 (`FOLLOWER_MON_RAMPARDOS`) |
-| `FOLLOWER_MON_SHIELDON` | 1_743 | 874 (`FOLLOWER_MON_SHIELDON`) |
-| `FOLLOWER_MON_BASTIODON` | 1_744 | 875 (`FOLLOWER_MON_BASTIODON`) |
-| `FOLLOWER_MON_BURMY` | 1_745 | 876 (`FOLLOWER_MON_BURMY`) |
-| `FOLLOWER_MON_BURMY_SANDY` | 1_746 | 877 (`FOLLOWER_MON_BURMY_SANDY`) |
-| `FOLLOWER_MON_BURMY_TRASH` | 1_747 | 878 (`FOLLOWER_MON_BURMY_TRASH`) |
-| `FOLLOWER_MON_WORMADAM` | 1_748 | 879 (`FOLLOWER_MON_WORMADAM`) |
-| `FOLLOWER_MON_WORMADAM_SANDY` | 1_749 | 880 (`FOLLOWER_MON_WORMADAM_SANDY`) |
-| `FOLLOWER_MON_WORMADAM_TRASH` | 1_750 | 881 (`FOLLOWER_MON_WORMADAM_TRASH`) |
-| `FOLLOWER_MON_MOTHIM` | 1_751 | 882 (`FOLLOWER_MON_MOTHIM`) |
-| `FOLLOWER_MON_COMBEE` | 1_752 | 883 (`FOLLOWER_MON_COMBEE`) |
-| `FOLLOWER_MON_COMBEE_F` | 1_753 | 884 (`FOLLOWER_MON_COMBEE_F`) |
-| `FOLLOWER_MON_VESPIQUEN` | 1_754 | 885 (`FOLLOWER_MON_VESPIQUEN`) |
-| `FOLLOWER_MON_PACHIRISU` | 1_755 | 886 (`FOLLOWER_MON_PACHIRISU`) |
-| `FOLLOWER_MON_BUIZEL` | 1_756 | 887 (`FOLLOWER_MON_BUIZEL`) |
-| `FOLLOWER_MON_FLOATZEL` | 1_757 | 888 (`FOLLOWER_MON_FLOATZEL`) |
-| `FOLLOWER_MON_CHERUBI` | 1_758 | 889 (`FOLLOWER_MON_CHERUBI`) |
-| `FOLLOWER_MON_CHERRIM` | 1_759 | 890 (`FOLLOWER_MON_CHERRIM`) |
-| `FOLLOWER_MON_SHELLOS_WEST` | 1_760 | 891 (`FOLLOWER_MON_SHELLOS_WEST`) |
-| `FOLLOWER_MON_SHELLOS_EAST` | 1_761 | 892 (`FOLLOWER_MON_SHELLOS_EAST`) |
-| `FOLLOWER_MON_GASTRODON_WEST` | 1_762 | 893 (`FOLLOWER_MON_GASTRODON_WEST`) |
-| `FOLLOWER_MON_GASTRODON_EAST` | 1_763 | 894 (`FOLLOWER_MON_GASTRODON_EAST`) |
-| `FOLLOWER_MON_AMBIPOM` | 1_764 | 895 (`FOLLOWER_MON_AMBIPOM`) |
-| `FOLLOWER_MON_DRIFLOON` | 1_765 | 896 (`FOLLOWER_MON_DRIFLOON`) |
-| `FOLLOWER_MON_DRIFBLIM` | 1_766 | 897 (`FOLLOWER_MON_DRIFBLIM`) |
-| `FOLLOWER_MON_BUNEARY` | 1_767 | 898 (`FOLLOWER_MON_BUNEARY`) |
-| `FOLLOWER_MON_LOPUNNY` | 1_768 | 899 (`FOLLOWER_MON_LOPUNNY`) |
-| `FOLLOWER_MON_MISMAGIUS` | 1_769 | 900 (`FOLLOWER_MON_MISMAGIUS`) |
-| `FOLLOWER_MON_HONCHKROW` | 1_770 | 901 (`FOLLOWER_MON_HONCHKROW`) |
-| `FOLLOWER_MON_GLAMEOW` | 1_771 | 902 (`FOLLOWER_MON_GLAMEOW`) |
-| `FOLLOWER_MON_PURUGLY` | 1_772 | 903 (`FOLLOWER_MON_PURUGLY`) |
-| `FOLLOWER_MON_CHINGLING` | 1_773 | 904 (`FOLLOWER_MON_CHINGLING`) |
-| `FOLLOWER_MON_STUNKY` | 1_774 | 905 (`FOLLOWER_MON_STUNKY`) |
-| `FOLLOWER_MON_SKUNTANK` | 1_775 | 906 (`FOLLOWER_MON_SKUNTANK`) |
-| `FOLLOWER_MON_BRONZOR` | 1_776 | 907 (`FOLLOWER_MON_BRONZOR`) |
-| `FOLLOWER_MON_BRONZONG` | 1_777 | 908 (`FOLLOWER_MON_BRONZONG`) |
-| `FOLLOWER_MON_BONSLY` | 1_778 | 909 (`FOLLOWER_MON_BONSLY`) |
-| `FOLLOWER_MON_MIME_JR` | 1_779 | 910 (`FOLLOWER_MON_MIME_JR`) |
-| `FOLLOWER_MON_HAPPINY` | 1_780 | 911 (`FOLLOWER_MON_HAPPINY`) |
-| `FOLLOWER_MON_CHATOT` | 1_781 | 912 (`FOLLOWER_MON_CHATOT`) |
-| `FOLLOWER_MON_SPIRITOMB` | 1_782 | 913 (`FOLLOWER_MON_SPIRITOMB`) |
-| `FOLLOWER_MON_GIBLE` | 1_783 | 914 (`FOLLOWER_MON_GIBLE`) |
-| `FOLLOWER_MON_GIBLE_F` | 1_784 | 915 (`FOLLOWER_MON_GIBLE_F`) |
-| `FOLLOWER_MON_GABITE` | 1_785 | 916 (`FOLLOWER_MON_GABITE`) |
-| `FOLLOWER_MON_GABITE_F` | 1_786 | 917 (`FOLLOWER_MON_GABITE_F`) |
-| `FOLLOWER_MON_GARCHOMP` | 1_787 | 918 (`FOLLOWER_MON_GARCHOMP`) |
-| `FOLLOWER_MON_GARCHOMP_F` | 1_788 | 919 (`FOLLOWER_MON_GARCHOMP_F`) |
-| `FOLLOWER_MON_MUNCHLAX` | 1_789 | 920 (`FOLLOWER_MON_MUNCHLAX`) |
-| `FOLLOWER_MON_RIOLU` | 1_790 | 921 (`FOLLOWER_MON_RIOLU`) |
-| `FOLLOWER_MON_LUCARIO` | 1_791 | 922 (`FOLLOWER_MON_LUCARIO`) |
-| `FOLLOWER_MON_HIPPOPOTAS` | 1_792 | 923 (`FOLLOWER_MON_HIPPOPOTAS`) |
-| `FOLLOWER_MON_HIPPOPOTAS_F` | 1_793 | 924 (`FOLLOWER_MON_HIPPOPOTAS_F`) |
-| `FOLLOWER_MON_HIPPOWDON` | 1_794 | 925 (`FOLLOWER_MON_HIPPOWDON`) |
-| `FOLLOWER_MON_HIPPOWDON_F` | 1_795 | 926 (`FOLLOWER_MON_HIPPOWDON_F`) |
-| `FOLLOWER_MON_SKORUPI` | 1_796 | 927 (`FOLLOWER_MON_SKORUPI`) |
-| `FOLLOWER_MON_DRAPION` | 1_797 | 928 (`FOLLOWER_MON_DRAPION`) |
-| `FOLLOWER_MON_CROAGUNK` | 1_798 | 929 (`FOLLOWER_MON_CROAGUNK`) |
-| `FOLLOWER_MON_TOXICROAK` | 1_799 | 930 (`FOLLOWER_MON_TOXICROAK`) |
-| `FOLLOWER_MON_CARNIVINE` | 1_800 | 931 (`FOLLOWER_MON_CARNIVINE`) |
-| `FOLLOWER_MON_FINNEON` | 1_801 | 932 (`FOLLOWER_MON_FINNEON`) |
-| `FOLLOWER_MON_LUMINEON` | 1_802 | 933 (`FOLLOWER_MON_LUMINEON`) |
-| `FOLLOWER_MON_MANTYKE` | 1_803 | 934 (`FOLLOWER_MON_MANTYKE`) |
-| `FOLLOWER_MON_SNOVER` | 1_804 | 935 (`FOLLOWER_MON_SNOVER`) |
-| `FOLLOWER_MON_ABOMASNOW` | 1_805 | 936 (`FOLLOWER_MON_ABOMASNOW`) |
-| `FOLLOWER_MON_WEAVILE` | 1_806 | 937 (`FOLLOWER_MON_WEAVILE`) |
-| `FOLLOWER_MON_MAGNEZONE` | 1_807 | 938 (`FOLLOWER_MON_MAGNEZONE`) |
-| `FOLLOWER_MON_LICKILICKY` | 1_808 | 939 (`FOLLOWER_MON_LICKILICKY`) |
-| `FOLLOWER_MON_RHYPERIOR` | 1_809 | 940 (`FOLLOWER_MON_RHYPERIOR`) |
-| `FOLLOWER_MON_TANGROWTH` | 1_810 | 941 (`FOLLOWER_MON_TANGROWTH`) |
-| `FOLLOWER_MON_ELECTIVIRE` | 1_811 | 942 (`FOLLOWER_MON_ELECTIVIRE`) |
-| `FOLLOWER_MON_MAGMORTAR` | 1_812 | 943 (`FOLLOWER_MON_MAGMORTAR`) |
-| `FOLLOWER_MON_TOGEKISS` | 1_813 | 944 (`FOLLOWER_MON_TOGEKISS`) |
-| `FOLLOWER_MON_YANMEGA` | 1_814 | 945 (`FOLLOWER_MON_YANMEGA`) |
-| `FOLLOWER_MON_LEAFEON` | 1_815 | 946 (`FOLLOWER_MON_LEAFEON`) |
-| `FOLLOWER_MON_GLACEON` | 1_816 | 947 (`FOLLOWER_MON_GLACEON`) |
-| `FOLLOWER_MON_GLISCOR` | 1_817 | 948 (`FOLLOWER_MON_GLISCOR`) |
-| `FOLLOWER_MON_MAMOSWINE` | 1_818 | 949 (`FOLLOWER_MON_MAMOSWINE`) |
-| `FOLLOWER_MON_PORYGON_Z` | 1_819 | 950 (`FOLLOWER_MON_PORYGON_Z`) |
-| `FOLLOWER_MON_GALLADE` | 1_820 | 951 (`FOLLOWER_MON_GALLADE`) |
-| `FOLLOWER_MON_PROBOPASS` | 1_821 | 952 (`FOLLOWER_MON_PROBOPASS`) |
-| `FOLLOWER_MON_DUSKNOIR` | 1_822 | 953 (`FOLLOWER_MON_DUSKNOIR`) |
-| `FOLLOWER_MON_FROSLASS` | 1_823 | 954 (`FOLLOWER_MON_FROSLASS`) |
-| `FOLLOWER_MON_ROTOM` | 1_824 | 955 (`FOLLOWER_MON_ROTOM`) |
-| `FOLLOWER_MON_ROTOM_HEAT` | 1_825 | 956 (`FOLLOWER_MON_ROTOM_HEAT`) |
-| `FOLLOWER_MON_ROTOM_WASH` | 1_826 | 957 (`FOLLOWER_MON_ROTOM_WASH`) |
-| `FOLLOWER_MON_ROTOM_FROST` | 1_827 | 958 (`FOLLOWER_MON_ROTOM_FROST`) |
-| `FOLLOWER_MON_ROTOM_FAN` | 1_828 | 959 (`FOLLOWER_MON_ROTOM_FAN`) |
-| `FOLLOWER_MON_ROTOM_MOW` | 1_829 | 960 (`FOLLOWER_MON_ROTOM_MOW`) |
-| `FOLLOWER_MON_UXIE` | 1_830 | 961 (`FOLLOWER_MON_UXIE`) |
-| `FOLLOWER_MON_MESPRIT` | 1_831 | 962 (`FOLLOWER_MON_MESPRIT`) |
-| `FOLLOWER_MON_AZELF` | 1_832 | 963 (`FOLLOWER_MON_AZELF`) |
-| `FOLLOWER_MON_DIALGA` | 1_833 | 964 (`FOLLOWER_MON_DIALGA`) |
-| `FOLLOWER_MON_PALKIA` | 1_834 | 965 (`FOLLOWER_MON_PALKIA`) |
-| `FOLLOWER_MON_HEATRAN` | 1_835 | 966 (`FOLLOWER_MON_HEATRAN`) |
-| `FOLLOWER_MON_REGIGIGAS` | 1_836 | 967 (`FOLLOWER_MON_REGIGIGAS`) |
-| `FOLLOWER_MON_GIRATINA` | 1_837 | 968 (`FOLLOWER_MON_GIRATINA`) |
-| `FOLLOWER_MON_GIRATINA_ORIGIN` | 1_838 | 969 (`FOLLOWER_MON_GIRATINA_ORIGIN`) |
-| `FOLLOWER_MON_CRESSELIA` | 1_839 | 970 (`FOLLOWER_MON_CRESSELIA`) |
-| `FOLLOWER_MON_PHIONE` | 1_840 | 971 (`FOLLOWER_MON_PHIONE`) |
-| `FOLLOWER_MON_MANAPHY` | 1_841 | 972 (`FOLLOWER_MON_MANAPHY`) |
-| `FOLLOWER_MON_DARKRAI` | 1_842 | 973 (`FOLLOWER_MON_DARKRAI`) |
-| `FOLLOWER_MON_SHAYMIN` | 1_843 | 974 (`FOLLOWER_MON_SHAYMIN`) |
-| `FOLLOWER_MON_SHAYMIN_SKY` | 1_844 | 975 (`FOLLOWER_MON_SHAYMIN_SKY`) |
-| `FOLLOWER_MON_ARCEUS_NORMAL` | 1_845 | 976 (`FOLLOWER_MON_ARCEUS_NORMAL`) |
-| `FOLLOWER_MON_ARCEUS_FIGHTING` | 1_846 | 977 (`FOLLOWER_MON_ARCEUS_FIGHTING`) |
-| `FOLLOWER_MON_ARCEUS_FLYING` | 1_847 | 978 (`FOLLOWER_MON_ARCEUS_FLYING`) |
-| `FOLLOWER_MON_ARCEUS_POISON` | 1_848 | 979 (`FOLLOWER_MON_ARCEUS_POISON`) |
-| `FOLLOWER_MON_ARCEUS_GROUND` | 1_849 | 980 (`FOLLOWER_MON_ARCEUS_GROUND`) |
-| `FOLLOWER_MON_ARCEUS_ROCK` | 1_850 | 981 (`FOLLOWER_MON_ARCEUS_ROCK`) |
-| `FOLLOWER_MON_ARCEUS_BUG` | 1_851 | 982 (`FOLLOWER_MON_ARCEUS_BUG`) |
-| `FOLLOWER_MON_ARCEUS_GHOST` | 1_852 | 983 (`FOLLOWER_MON_ARCEUS_GHOST`) |
-| `FOLLOWER_MON_ARCEUS_STEEL` | 1_853 | 984 (`FOLLOWER_MON_ARCEUS_STEEL`) |
-| `FOLLOWER_MON_ARCEUS_MYSTERY` | 1_854 | 985 (`FOLLOWER_MON_ARCEUS_MYSTERY`) |
-| `FOLLOWER_MON_ARCEUS_FIRE` | 1_855 | 986 (`FOLLOWER_MON_ARCEUS_FIRE`) |
-| `FOLLOWER_MON_ARCEUS_WATER` | 1_856 | 987 (`FOLLOWER_MON_ARCEUS_WATER`) |
-| `FOLLOWER_MON_ARCEUS_GRASS` | 1_857 | 988 (`FOLLOWER_MON_ARCEUS_GRASS`) |
-| `FOLLOWER_MON_ARCEUS_ELECTRIC` | 1_858 | 989 (`FOLLOWER_MON_ARCEUS_ELECTRIC`) |
-| `FOLLOWER_MON_ARCEUS_PSYCHIC` | 1_859 | 990 (`FOLLOWER_MON_ARCEUS_PSYCHIC`) |
-| `FOLLOWER_MON_ARCEUS_ICE` | 1_860 | 991 (`FOLLOWER_MON_ARCEUS_ICE`) |
-| `FOLLOWER_MON_ARCEUS_DRAGON` | 1_861 | 992 (`FOLLOWER_MON_ARCEUS_DRAGON`) |
-| `FOLLOWER_MON_ARCEUS_DARK` | 1_862 | 993 (`FOLLOWER_MON_ARCEUS_DARK`) |
+| Red Gyarados (Lake of Rage) | 1_183 | 237 (static) |
+| Sudowoodo (Route 36) | 1_186 | 381 (static) |
+| Snorlax (Route 11/12) | 1_194 | 395 (static) |
+| `FOLLOWER_MON` (Bulbasaur) | 1_201 | 415 |
+| `FOLLOWER_MON_2` (Bulbasaur) | 1_202 | 416 |
+| `FOLLOWER_MON_3` (Bulbasaur) | 1_203 | 417 |
+| `FOLLOWER_MON_4` (Ho-oh) | 1_204 | 418 |
+| `FOLLOWER_MON_5` (Ho-oh) | 1_205 | 419 |
+| `FOLLOWER_MON_6` (Ho-oh) | 1_206 | 420 |
+| Slowpoke (Slowpoke Well, amputated tail) | 1_209 | 414 (static) |
+| Ho-Oh (Bell Tower) | 1_210 | 425 (static) |
+| Lugia (Whirl Islands) | 1_211 | 426 (static) |
+| Shuppet (Copycat's House) | 1_224 | 380 (static) |
+| Lapras (Union Cave) | 1_228 | 390 (static) |
+| Bulbasaur | 1_297 | 428 |
+| Ivysaur | 1_298 | 429 |
+| Venusaur | 1_299 | 430 |
+| Venusaur (female) | 1_300 | 431 |
+| Charmander | 1_301 | 432 |
+| Charmeleon | 1_302 | 433 |
+| Charizard | 1_303 | 434 |
+| Squirtle | 1_304 | 435 |
+| Wartortle | 1_305 | 436 |
+| Blastoise | 1_306 | 437 |
+| Caterpie | 1_307 | 438 |
+| Metapod | 1_308 | 439 |
+| Butterfree | 1_309 | 440 (follower), 994 (static) |
+| Weedle | 1_310 | 441 |
+| Kakuna | 1_311 | 442 |
+| Beedrill | 1_312 | 443 |
+| Pidgey | 1_313 | 444 (follower), 995 (static) |
+| Pidgeotto | 1_314 | 445 |
+| Pidgeot | 1_315 | 446 |
+| Rattata | 1_316 | 447 (follower), 996 (static) |
+| Raticate | 1_317 | 448 |
+| Spearow | 1_318 | 449 (follower), 997 (static) |
+| Fearow | 1_319 | 450 (follower), 998 (static) |
+| Ekans | 1_320 | 451 |
+| Arbok | 1_321 | 452 |
+| Pikachu | 1_322 | 453 (follower), 999 (static) |
+| Pikachu (female) | 1_323 | 454 |
+| Raichu | 1_324 | 455 |
+| Sandshrew | 1_325 | 456 |
+| Sandslash | 1_326 | 457 |
+| Nidoran♀ | 1_327 | 458 (follower), 1000 (static) |
+| Nidorina | 1_328 | 459 |
+| Nidoqueen | 1_329 | 460 |
+| Nidoran♂ | 1_330 | 461 (follower), 1001 (static) |
+| Nidorino | 1_331 | 462 (follower), 1002 (static) |
+| Nidoking | 1_332 | 463 |
+| Clefairy | 1_333 | 464 (follower), 1003 (static) |
+| Clefable | 1_334 | 465 |
+| Vulpix | 1_335 | 466 |
+| Ninetales | 1_336 | 467 |
+| Jigglypuff | 1_337 | 468 (follower), 1004 (static) |
+| Wigglytuff | 1_338 | 469 |
+| Zubat | 1_339 | 470 (follower), 1005 (static) |
+| Golbat | 1_340 | 471 |
+| Oddish | 1_341 | 472 (follower), 1006 (static) |
+| Gloom | 1_342 | 473 |
+| Vileplume | 1_343 | 474 |
+| Paras | 1_344 | 475 |
+| Parasect | 1_345 | 476 |
+| Venonat | 1_346 | 477 |
+| Venomoth | 1_347 | 478 |
+| Diglett | 1_348 | 479 (follower), 1007 (static) |
+| Dugtrio | 1_349 | 480 |
+| Meowth | 1_350 | 481 (follower), 1008 (static) |
+| Persian | 1_351 | 482 (follower), 1009 (static) |
+| Psyduck | 1_352 | 483 (follower), 1010 (static) |
+| Golduck | 1_353 | 484 |
+| Mankey | 1_354 | 485 |
+| Primeape | 1_355 | 486 |
+| Growlithe | 1_356 | 487 |
+| Arcanine | 1_357 | 488 |
+| Poliwag | 1_358 | 489 |
+| Poliwhirl | 1_359 | 490 |
+| Poliwrath | 1_360 | 491 (follower), 1011 (static) |
+| Abra | 1_361 | 492 (follower), 1012 (static) |
+| Kadabra | 1_362 | 493 |
+| Alakazam | 1_363 | 494 |
+| Machop | 1_364 | 495 (follower), 1013 (static) |
+| Machoke | 1_365 | 496 (follower), 1014 (static) |
+| Machamp | 1_366 | 497 |
+| Bellsprout | 1_367 | 498 |
+| Weepinbell | 1_368 | 499 |
+| Victreebel | 1_369 | 500 |
+| Tentacool | 1_370 | 501 |
+| Tentacruel | 1_371 | 502 |
+| Geodude | 1_372 | 503 |
+| Graveler | 1_373 | 504 |
+| Golem | 1_374 | 505 |
+| Ponyta | 1_375 | 506 |
+| Rapidash | 1_376 | 507 |
+| Slowpoke | 1_377 | 508 (follower), 1015 (static) |
+| Slowbro | 1_378 | 509 (follower), 1016 (static) |
+| Magnemite | 1_379 | 510 |
+| Magneton | 1_380 | 511 |
+| Farfetch'd | 1_381 | 512 (follower), 1017 (static) |
+| Doduo | 1_382 | 513 |
+| Dodrio | 1_383 | 514 (follower), 1018 (static) |
+| Seel | 1_384 | 515 |
+| Dewgong | 1_385 | 516 |
+| Grimer | 1_386 | 517 |
+| Muk | 1_387 | 518 |
+| Shellder | 1_388 | 519 |
+| Cloyster | 1_389 | 520 |
+| Gastly | 1_390 | 521 |
+| Haunter | 1_391 | 522 |
+| Gengar | 1_392 | 523 |
+| Onix | 1_393 | 524 |
+| Drowzee | 1_394 | 525 |
+| Hypno | 1_395 | 526 |
+| Krabby | 1_396 | 527 |
+| Kingler | 1_397 | 528 |
+| Voltorb | 1_398 | 529 |
+| Electrode | 1_399 | 530 (follower), 1019 (static) |
+| Exeggcute | 1_400 | 531 |
+| Exeggutor | 1_401 | 532 |
+| Cubone | 1_402 | 533 |
+| Marowak | 1_403 | 534 |
+| Hitmonlee | 1_404 | 535 |
+| Hitmonchan | 1_405 | 536 |
+| Lickitung | 1_406 | 537 |
+| Koffing | 1_407 | 538 |
+| Weezing | 1_408 | 539 |
+| Rhyhorn | 1_409 | 540 |
+| Rhydon | 1_410 | 541 (follower), 1020 (static) |
+| Chansey | 1_411 | 542 (follower), 1021 (static) |
+| Tangela | 1_412 | 543 |
+| Kangaskhan | 1_413 | 544 (follower), 1022 (static) |
+| Horsea | 1_414 | 545 |
+| Seadra | 1_415 | 546 |
+| Goldeen | 1_416 | 547 |
+| Seaking | 1_417 | 548 |
+| Staryu | 1_418 | 549 |
+| Starmie | 1_419 | 550 |
+| Mr. Mime | 1_420 | 551 |
+| Scyther | 1_421 | 552 |
+| Jynx | 1_422 | 553 |
+| Electabuzz | 1_423 | 554 |
+| Magmar | 1_424 | 555 |
+| Pinsir | 1_425 | 556 |
+| Tauros | 1_426 | 557 |
+| Magikarp | 1_427 | 558 |
+| Gyarados | 1_428 | 559 |
+| Lapras | 1_429 | 560 (follower), 1023 (static) |
+| Ditto | 1_430 | 561 |
+| Eevee | 1_431 | 562 |
+| Vaporeon | 1_432 | 563 |
+| Jolteon | 1_433 | 564 |
+| Flareon | 1_434 | 565 |
+| Porygon | 1_435 | 566 |
+| Omanyte | 1_436 | 567 |
+| Omastar | 1_437 | 568 |
+| Kabuto | 1_438 | 569 |
+| Kabutops | 1_439 | 570 |
+| Aerodactyl | 1_440 | 571 |
+| Snorlax | 1_441 | 572 |
+| Articuno | 1_442 | 573 (follower), 1024 (static) |
+| Zapdos | 1_443 | 574 (follower), 1025 (static) |
+| Moltres | 1_444 | 575 (follower), 1026 (static) |
+| Dratini | 1_445 | 576 (follower), 1027 (static) |
+| Dragonair | 1_446 | 577 |
+| Dragonite | 1_447 | 578 (follower), 1028 (static) |
+| Mewtwo | 1_448 | 579 (follower), 1029 (static) |
+| Mew | 1_449 | 580 |
+| Chikorita | 1_450 | 581 |
+| Bayleef | 1_451 | 582 (follower), 1030 (static) |
+| Meganium | 1_452 | 583 (follower), 1047 (static) |
+| Meganium (female) | 1_453 | 584 |
+| Cyndaquil | 1_454 | 585 |
+| Quilava | 1_455 | 586 |
+| Typhlosion | 1_456 | 587 (follower), 1048 (static) |
+| Totodile | 1_457 | 588 |
+| Croconaw | 1_458 | 589 |
+| Feraligatr | 1_459 | 590 (follower), 1049 (static) |
+| Sentret | 1_460 | 591 |
+| Furret | 1_461 | 592 |
+| Hoothoot | 1_462 | 593 |
+| Noctowl | 1_463 | 594 |
+| Ledyba | 1_464 | 595 |
+| Ledian | 1_465 | 596 |
+| Spinarak | 1_466 | 597 |
+| Ariados | 1_467 | 598 |
+| Crobat | 1_468 | 599 |
+| Chinchou | 1_469 | 600 |
+| Lanturn | 1_470 | 601 |
+| Pichu | 1_471 | 602 |
+| Pichu (Spiky) | 1_472 | 603 (follower), 1046 (static) |
+| Cleffa | 1_473 | 604 |
+| Igglybuff | 1_474 | 605 |
+| Togepi | 1_475 | 606 |
+| Togetic | 1_476 | 607 |
+| Natu | 1_477 | 608 |
+| Xatu | 1_478 | 609 |
+| Mareep | 1_479 | 610 |
+| Flaaffy | 1_480 | 611 |
+| Ampharos | 1_481 | 612 (follower), 1031 (static) |
+| Bellossom | 1_482 | 613 |
+| Marill | 1_483 | 614 (follower), 1032 (static) |
+| Azumarill | 1_484 | 615 |
+| Sudowoodo | 1_485 | 616 |
+| Politoed | 1_486 | 617 |
+| Hoppip | 1_487 | 618 |
+| Skiploom | 1_488 | 619 |
+| Jumpluff | 1_489 | 620 |
+| Aipom | 1_490 | 621 (follower), 1033 (static) |
+| Sunkern | 1_491 | 622 |
+| Sunflora | 1_492 | 623 |
+| Yanma | 1_493 | 624 |
+| Wooper | 1_494 | 625 |
+| Quagsire | 1_495 | 626 |
+| Espeon | 1_496 | 627 |
+| Umbreon | 1_497 | 628 |
+| Murkrow | 1_498 | 629 (follower), 1034 (static) |
+| Slowking | 1_499 | 630 |
+| Misdreavus | 1_500 | 631 |
+| Unown (A) | 1_501 | 632 |
+| Unown (B) | 1_502 | 633 |
+| Unown (C) | 1_503 | 634 |
+| Unown (D) | 1_504 | 635 |
+| Unown (E) | 1_505 | 636 |
+| Unown (female) | 1_506 | 637 |
+| Unown (G) | 1_507 | 638 |
+| Unown (H) | 1_508 | 639 |
+| Unown (I) | 1_509 | 640 |
+| Unown (J) | 1_510 | 641 |
+| Unown (K) | 1_511 | 642 |
+| Unown (L) | 1_512 | 643 |
+| Unown (male) | 1_513 | 644 |
+| Unown (N) | 1_514 | 645 |
+| Unown (O) | 1_515 | 646 |
+| Unown (P) | 1_516 | 647 |
+| Unown (Q) | 1_517 | 648 |
+| Unown (R) | 1_518 | 649 |
+| Unown (S) | 1_519 | 650 |
+| Unown (T) | 1_520 | 651 |
+| Unown (U) | 1_521 | 652 |
+| Unown (V) | 1_522 | 653 |
+| Unown (W) | 1_523 | 654 |
+| Unown (X) | 1_524 | 655 |
+| Unown (Y) | 1_525 | 656 |
+| Unown (Z) | 1_526 | 657 |
+| Unown (Qmark) | 1_527 | 658 |
+| Unown (Excl) | 1_528 | 659 |
+| Wobbuffet | 1_529 | 660 |
+| Wobbuffet (female) | 1_530 | 661 |
+| Girafarig | 1_531 | 662 |
+| Pineco | 1_532 | 663 |
+| Forretress | 1_533 | 664 |
+| Dunsparce | 1_534 | 665 |
+| Gligar | 1_535 | 666 |
+| Steelix | 1_536 | 667 |
+| Steelix (female) | 1_537 | 668 |
+| Snubbull | 1_538 | 669 |
+| Granbull | 1_539 | 670 |
+| Qwilfish | 1_540 | 671 |
+| Scizor | 1_541 | 672 |
+| Shuckle | 1_542 | 673 |
+| Heracross | 1_543 | 674 |
+| Heracross (female) | 1_544 | 675 |
+| Sneasel | 1_545 | 676 |
+| Teddiursa | 1_546 | 677 |
+| Ursaring | 1_547 | 678 |
+| Slugma | 1_548 | 679 |
+| Magcargo | 1_549 | 680 |
+| Swinub | 1_550 | 681 |
+| Piloswine | 1_551 | 682 |
+| Corsola | 1_552 | 683 |
+| Remoraid | 1_553 | 684 |
+| Octillery | 1_554 | 685 |
+| Delibird | 1_555 | 686 |
+| Mantine | 1_556 | 687 |
+| Skarmory | 1_557 | 688 |
+| Houndour | 1_558 | 689 |
+| Houndoom | 1_559 | 690 |
+| Kingdra | 1_560 | 691 |
+| Phanpy | 1_561 | 692 |
+| Donphan | 1_562 | 693 |
+| Porygon2 | 1_563 | 694 |
+| Stantler | 1_564 | 695 |
+| Smeargle | 1_565 | 696 |
+| Tyrogue | 1_566 | 697 |
+| Hitmontop | 1_567 | 698 |
+| Smoochum | 1_568 | 699 |
+| Elekid | 1_569 | 700 |
+| Magby | 1_570 | 701 |
+| Miltank | 1_571 | 702 (follower), 1035 (static) |
+| Blissey | 1_572 | 703 (follower), 1036 (static) |
+| Raikou | 1_573 | 704 (follower), 1037 (static) |
+| Entei | 1_574 | 705 (follower), 1038 (static) |
+| Suicune | 1_575 | 706 (follower), 1039 (static) |
+| Larvitar | 1_576 | 707 |
+| Pupitar | 1_577 | 708 |
+| Tyranitar | 1_578 | 709 |
+| Lugia | 1_579 | 710 |
+| Ho-Oh | 1_580 | 711 |
+| Celebi | 1_581 | 712 (follower), 1040 (static) |
+| Treecko | 1_582 | 713 |
+| Grovyle | 1_583 | 714 |
+| Sceptile | 1_584 | 715 |
+| Torchic | 1_585 | 716 |
+| Combusken | 1_586 | 717 |
+| Blaziken | 1_587 | 718 |
+| Mudkip | 1_588 | 719 |
+| Marshtomp | 1_589 | 720 |
+| Swampert | 1_590 | 721 |
+| Poochyena | 1_591 | 722 |
+| Mightyena | 1_592 | 723 |
+| Zigzagoon | 1_593 | 724 |
+| Linoone | 1_594 | 725 |
+| Wurmple | 1_595 | 726 |
+| Silcoon | 1_596 | 727 |
+| Beautifly | 1_597 | 728 |
+| Cascoon | 1_598 | 729 |
+| Dustox | 1_599 | 730 |
+| Lotad | 1_600 | 731 |
+| Lombre | 1_601 | 732 |
+| Ludicolo | 1_602 | 733 |
+| Seedot | 1_603 | 734 |
+| Nuzleaf | 1_604 | 735 |
+| Shiftry | 1_605 | 736 |
+| Taillow | 1_606 | 737 |
+| Swellow | 1_607 | 738 |
+| Wingull | 1_608 | 739 |
+| Pelipper | 1_609 | 740 |
+| Ralts | 1_610 | 741 |
+| Kirlia | 1_611 | 742 |
+| Gardevoir | 1_612 | 743 |
+| Surskit | 1_613 | 744 |
+| Masquerain | 1_614 | 745 |
+| Shroomish | 1_615 | 746 |
+| Breloom | 1_616 | 747 |
+| Slakoth | 1_617 | 748 |
+| Vigoroth | 1_618 | 749 |
+| Slaking | 1_619 | 750 |
+| Nincada | 1_620 | 751 |
+| Ninjask | 1_621 | 752 |
+| Shedinja | 1_622 | 753 |
+| Whismur | 1_623 | 754 |
+| Loudred | 1_624 | 755 |
+| Exploud | 1_625 | 756 |
+| Makuhita | 1_626 | 757 |
+| Hariyama | 1_627 | 758 |
+| Azurill | 1_628 | 759 |
+| Nosepass | 1_629 | 760 |
+| Skitty | 1_630 | 761 |
+| Delcatty | 1_631 | 762 |
+| Sableye | 1_632 | 763 |
+| Mawile | 1_633 | 764 |
+| Aron | 1_634 | 765 |
+| Lairon | 1_635 | 766 |
+| Aggron | 1_636 | 767 |
+| Meditite | 1_637 | 768 |
+| Medicham | 1_638 | 769 |
+| Electrike | 1_639 | 770 |
+| Manectric | 1_640 | 771 |
+| Plusle | 1_641 | 772 |
+| Minun | 1_642 | 773 |
+| Volbeat | 1_643 | 774 |
+| Illumise | 1_644 | 775 |
+| Roselia | 1_645 | 776 |
+| Gulpin | 1_646 | 777 |
+| Swalot | 1_647 | 778 |
+| Carvanha | 1_648 | 779 |
+| Sharpedo | 1_649 | 780 |
+| Wailmer | 1_650 | 781 |
+| Wailord | 1_651 | 782 |
+| Numel | 1_652 | 783 |
+| Camerupt | 1_653 | 784 |
+| Torkoal | 1_654 | 785 |
+| Spoink | 1_655 | 786 |
+| Grumpig | 1_656 | 787 |
+| Spinda | 1_657 | 788 |
+| Trapinch | 1_658 | 789 |
+| Vibrava | 1_659 | 790 |
+| Flygon | 1_660 | 791 |
+| Cacnea | 1_661 | 792 |
+| Cacturne | 1_662 | 793 |
+| Swablu | 1_663 | 794 |
+| Altaria | 1_664 | 795 |
+| Zangoose | 1_665 | 796 |
+| Seviper | 1_666 | 797 |
+| Lunatone | 1_667 | 798 |
+| Solrock | 1_668 | 799 |
+| Barboach | 1_669 | 800 |
+| Whiscash | 1_670 | 801 |
+| Corphish | 1_671 | 802 |
+| Crawdaunt | 1_672 | 803 |
+| Baltoy | 1_673 | 804 |
+| Claydol | 1_674 | 805 |
+| Lileep | 1_675 | 806 |
+| Cradily | 1_676 | 807 |
+| Anorith | 1_677 | 808 |
+| Armaldo | 1_678 | 809 |
+| Feebas | 1_679 | 810 |
+| Milotic | 1_680 | 811 |
+| Castform | 1_681 | 812 |
+| Kecleon | 1_682 | 813 |
+| Shuppet | 1_683 | 814 |
+| Banette | 1_684 | 815 |
+| Duskull | 1_685 | 816 |
+| Dusclops | 1_686 | 817 |
+| Tropius | 1_687 | 818 |
+| Chimecho | 1_688 | 819 |
+| Absol | 1_689 | 820 |
+| Wynaut | 1_690 | 821 |
+| Snorunt | 1_691 | 822 |
+| Glalie | 1_692 | 823 |
+| Spheal | 1_693 | 824 |
+| Sealeo | 1_694 | 825 |
+| Walrein | 1_695 | 826 |
+| Clamperl | 1_696 | 827 |
+| Huntail | 1_697 | 828 |
+| Gorebyss | 1_698 | 829 |
+| Relicanth | 1_699 | 830 |
+| Luvdisc | 1_700 | 831 |
+| Bagon | 1_701 | 832 |
+| Shelgon | 1_702 | 833 |
+| Salamence | 1_703 | 834 |
+| Beldum | 1_704 | 835 |
+| Metang | 1_705 | 836 |
+| Metagross | 1_706 | 837 |
+| Regirock | 1_707 | 838 |
+| Regice | 1_708 | 839 |
+| Registeel | 1_709 | 840 |
+| Latias | 1_710 | 841 (follower), 1041 (static) |
+| Latios | 1_711 | 842 (follower), 1042 (static) |
+| Kyogre | 1_712 | 843 (follower), 1043 (static) |
+| Groudon | 1_713 | 844 (follower), 1044 (static) |
+| Rayquaza | 1_714 | 845 (follower), 1045 (static) |
+| Jirachi | 1_715 | 846 |
+| Deoxys | 1_716 | 847 |
+| Deoxys (Atk) | 1_717 | 848 |
+| Deoxys (Def) | 1_718 | 849 |
+| Deoxys (Spd) | 1_719 | 850 |
+| Turtwig | 1_720 | 851 |
+| Grotle | 1_721 | 852 |
+| Torterra | 1_722 | 853 |
+| Chimchar | 1_723 | 854 |
+| Monferno | 1_724 | 855 |
+| Infernape | 1_725 | 856 |
+| Piplup | 1_726 | 857 |
+| Prinplup | 1_727 | 858 |
+| Empoleon | 1_728 | 859 |
+| Starly | 1_729 | 860 |
+| Staravia | 1_730 | 861 |
+| Staraptor | 1_731 | 862 |
+| Bidoof | 1_732 | 863 |
+| Bibarel | 1_733 | 864 |
+| Kricketot | 1_734 | 865 |
+| Kricketune | 1_735 | 866 |
+| Shinx | 1_736 | 867 |
+| Luxio | 1_737 | 868 |
+| Luxray | 1_738 | 869 |
+| Budew | 1_739 | 870 |
+| Roserade | 1_740 | 871 |
+| Cranidos | 1_741 | 872 |
+| Rampardos | 1_742 | 873 |
+| Shieldon | 1_743 | 874 |
+| Bastiodon | 1_744 | 875 |
+| Burmy | 1_745 | 876 |
+| Burmy (Sandy) | 1_746 | 877 |
+| Burmy (Trash) | 1_747 | 878 |
+| Wormadam | 1_748 | 879 |
+| Wormadam (Sandy) | 1_749 | 880 |
+| Wormadam (Trash) | 1_750 | 881 |
+| Mothim | 1_751 | 882 |
+| Combee | 1_752 | 883 |
+| Combee (female) | 1_753 | 884 |
+| Vespiquen | 1_754 | 885 |
+| Pachirisu | 1_755 | 886 |
+| Buizel | 1_756 | 887 |
+| Floatzel | 1_757 | 888 |
+| Cherubi | 1_758 | 889 |
+| Cherrim | 1_759 | 890 |
+| Shellos (West) | 1_760 | 891 |
+| Shellos (East) | 1_761 | 892 |
+| Gastrodon (West) | 1_762 | 893 |
+| Gastrodon (East) | 1_763 | 894 |
+| Ambipom | 1_764 | 895 |
+| Drifloon | 1_765 | 896 |
+| Drifblim | 1_766 | 897 |
+| Buneary | 1_767 | 898 |
+| Lopunny | 1_768 | 899 |
+| Mismagius | 1_769 | 900 |
+| Honchkrow | 1_770 | 901 |
+| Glameow | 1_771 | 902 |
+| Purugly | 1_772 | 903 |
+| Chingling | 1_773 | 904 |
+| Stunky | 1_774 | 905 |
+| Skuntank | 1_775 | 906 |
+| Bronzor | 1_776 | 907 |
+| Bronzong | 1_777 | 908 |
+| Bonsly | 1_778 | 909 |
+| Mime Jr. | 1_779 | 910 |
+| Happiny | 1_780 | 911 |
+| Chatot | 1_781 | 912 |
+| Spiritomb | 1_782 | 913 |
+| Gible | 1_783 | 914 |
+| Gible (female) | 1_784 | 915 |
+| Gabite | 1_785 | 916 |
+| Gabite (female) | 1_786 | 917 |
+| Garchomp | 1_787 | 918 |
+| Garchomp (female) | 1_788 | 919 |
+| Munchlax | 1_789 | 920 |
+| Riolu | 1_790 | 921 |
+| Lucario | 1_791 | 922 |
+| Hippopotas | 1_792 | 923 |
+| Hippopotas (female) | 1_793 | 924 |
+| Hippowdon | 1_794 | 925 |
+| Hippowdon (female) | 1_795 | 926 |
+| Skorupi | 1_796 | 927 |
+| Drapion | 1_797 | 928 |
+| Croagunk | 1_798 | 929 |
+| Toxicroak | 1_799 | 930 |
+| Carnivine | 1_800 | 931 |
+| Finneon | 1_801 | 932 |
+| Lumineon | 1_802 | 933 |
+| Mantyke | 1_803 | 934 |
+| Snover | 1_804 | 935 |
+| Abomasnow | 1_805 | 936 |
+| Weavile | 1_806 | 937 |
+| Magnezone | 1_807 | 938 |
+| Lickilicky | 1_808 | 939 |
+| Rhyperior | 1_809 | 940 |
+| Tangrowth | 1_810 | 941 |
+| Electivire | 1_811 | 942 |
+| Magmortar | 1_812 | 943 |
+| Togekiss | 1_813 | 944 |
+| Yanmega | 1_814 | 945 |
+| Leafeon | 1_815 | 946 |
+| Glaceon | 1_816 | 947 |
+| Gliscor | 1_817 | 948 |
+| Mamoswine | 1_818 | 949 |
+| Porygon-Z | 1_819 | 950 |
+| Gallade | 1_820 | 951 |
+| Probopass | 1_821 | 952 |
+| Dusknoir | 1_822 | 953 |
+| Froslass | 1_823 | 954 |
+| Rotom | 1_824 | 955 |
+| Rotom (Heat) | 1_825 | 956 |
+| Rotom (Wash) | 1_826 | 957 |
+| Rotom (Frost) | 1_827 | 958 |
+| Rotom (Fan) | 1_828 | 959 |
+| Rotom (Mow) | 1_829 | 960 |
+| Uxie | 1_830 | 961 |
+| Mesprit | 1_831 | 962 |
+| Azelf | 1_832 | 963 |
+| Dialga | 1_833 | 964 |
+| Palkia | 1_834 | 965 |
+| Heatran | 1_835 | 966 |
+| Regigigas | 1_836 | 967 |
+| Giratina | 1_837 | 968 |
+| Giratina (Origin) | 1_838 | 969 |
+| Cresselia | 1_839 | 970 |
+| Phione | 1_840 | 971 |
+| Manaphy | 1_841 | 972 |
+| Darkrai | 1_842 | 973 |
+| Shaymin | 1_843 | 974 |
+| Shaymin (Sky) | 1_844 | 975 |
+| Arceus (Normal) | 1_845 | 976 |
+| Arceus (Fighting) | 1_846 | 977 |
+| Arceus (Flying) | 1_847 | 978 |
+| Arceus (Poison) | 1_848 | 979 |
+| Arceus (Ground) | 1_849 | 980 |
+| Arceus (Rock) | 1_850 | 981 |
+| Arceus (Bug) | 1_851 | 982 |
+| Arceus (Ghost) | 1_852 | 983 |
+| Arceus (Steel) | 1_853 | 984 |
+| Arceus (Mystery) | 1_854 | 985 |
+| Arceus (Fire) | 1_855 | 986 |
+| Arceus (Water) | 1_856 | 987 |
+| Arceus (Grass) | 1_857 | 988 |
+| Arceus (Electric) | 1_858 | 989 |
+| Arceus (Psychic) | 1_859 | 990 |
+| Arceus (Ice) | 1_860 | 991 |
+| Arceus (Dragon) | 1_861 | 992 |
+| Arceus (Dark) | 1_862 | 993 |
 
 </FilterableSortableTable>
 
 </details>
 
-:::warning
-Event overworld IDs **101-117** are resolved dynamically and do not identify fixed files in this table.
+#### 3D overworld objects
+
+These event objects use their overworld ID to select an NSBMD directly from `/a/1/0/3`. Each model has embedded textures. Event scripts can move or hide the object using its local object ID.
+
+<details>
+<summary>Click to view details</summary>
+
+<FilterableSortableTable>
+
+| Object | Overworld ID | NSBMD member | Event files |
+| --- | --- | --- | --- |
+| Book | 183 | 84 | 81, 262, 318, 360, 450 |
+| Goldenrod Tunnel B2F gate (right half) | 251 | 110 | 194 |
+| Goldenrod Tunnel B2F gate (left half) | 252 | 111 | 194 |
+| Movable crate | 253 | 109 | 193 |
+| Goldenrod Tunnel B2F gate (top half) | 254 | 112 | 194 |
+| Goldenrod Tunnel B2F gate (bottom half) | 255 | 113 | 194 |
+| Shutter | 256 | 107 | 192, 211 |
+| Shutter | 257 | 108 | 180, 193, 234, 235 |
+| Mahogany souvenir shop cabinet | 288 | 114 | 113 |
+| Pokémon League room door | 289 | 117 | 272–276 |
+| Ruins of Alph hidden room door | 291 | 116 | 283, 285, 287, 289 |
+| Ruins of Alph puzzle room floor panel | 292 | 115 | 283, 285, 287, 289 |
+
+</FilterableSortableTable>
+
+</details>
+
+In the overlay 1 graphics table, these IDs share object callback index `15` and use renderer selector `63`. The separate model lookup is `ov01_02208E30`.
+
+:::info[Camera focus overworld]
+Overworld ID `8192` (`0x2000`) is an invisible camera anchor. `ScrCmd_102` creates it at the supplied tile and switches camera and map tracking to it. `ScrCmd_103` removes it and restores tracking to the player.
 :::
+
+#### Dynamic overworld IDs
+
+Event IDs **101-116** read scripting (graphics) variables **`0x4020`-`0x402F`** in order. The variable holds the overworld ID to look up in the tables above.  
+For example, player-gender checks in various scripts set `0x4020` to overworld ID **`0`** (Ethan, sprite `1_69`) or overworld ID **`97`** (Lyra, sprite `1_70`).
+
+The resolver also accepts **117**, but its index is outside the 16 graphics variable slots and triggers an assertion.
 
 <details>
 <summary>Click to view details (3D models)</summary>
 
 <FilterableSortableTable>
 
-| Resource (decomp name) | Model (NSBMD) |
+| Resource | Model (NSBMD) |
 | --- | --- |
 | `F_HERO` | 1_266 |
-| `ROCK_2` | 1_267 |
-| `BREAKROCK_2` | 1_268 |
+| Rock | 1_267 |
+| Breakable rock | 1_268 |
 | `SPPOKE4` | 1_269 |
 | `FISHINGHERO_2` | 1_270 |
 | `FISHINGHERO_3` | 1_271 |
@@ -1539,14 +1569,46 @@ Event overworld IDs **101-117** are resolved dynamically and do not identify fix
 | `TSURE_250_2` | 1_275 |
 | `F_HERO_2` | 1_276 |
 | `R09_O01` | 1_277 |
-| `BONGURI_2` | 1_278 |
+| Apricorn tree | 1_278 |
 | `LEAG_DOOR2_2` | 1_279 |
 
 </FilterableSortableTable>
 
 </details>
 
-The model members **266-279** and the other data members **280-296** are outside the ordinary actor-to-sprite-sheet mapping above.
+#### Overworld renderer data
+
+Members **280-296** contain binary data selected by the field renderer's resource slots. The entry count is the leading value in each file.
+
+
+<details>
+<summary>Click to view renderer data members</summary>
+
+<FilterableSortableTable>
+
+| File | Resource slot | Entry count |
+| --- | --- | --- |
+| 1_280 | 0 | 16 |
+| 1_281 | 1 | 32 |
+| 1_282 | 3 | 24 |
+| 1_283 | 4 | 4 |
+| 1_284 | 5 | 7 |
+| 1_285 | 6 | 4 |
+| 1_286 | 10 | 16 |
+| 1_287 | 23 | 8 |
+| 1_288 | 11 | 17 |
+| 1_289 | 13 | 12 |
+| 1_290 | 14 | 2 |
+| 1_291 | 15 | 12 |
+| 1_292 | 21, 22 | 9 |
+| 1_293 | 24 | 8 |
+| 1_294 | 26 | 16 |
+| 1_295 | 27 | 13 |
+| 1_296 | 28 | 13 |
+
+</FilterableSortableTable>
+
+</details>
 
 ### WiFi Overworld Sprites
 **Location**: `/a/2/1/3`
@@ -1560,16 +1622,16 @@ The model members **266-279** and the other data members **280-296** are outside
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Schoolkid | 3_0 | 3_1 | 3_2 | 3_3 | - | - | - |
 | Bug Catcher | 3_0 | 3_4 | 3_5 | 3_6 | - | - | - |
-| Cool Trainer (m) | 3_0 | 3_7 | 3_8 | 3_9 | - | - | - |
+| Cool Trainer (male) | 3_0 | 3_7 | 3_8 | 3_9 | - | - | - |
 | Biker | 3_0 | 3_10 | 3_11 | 3_12 | - | - | - |
 | Ruin Maniac | 3_0 | 3_13 | 3_14 | 3_15 | - | - | - |
 | Black Belt | 3_0 | 3_16 | 3_17 | 3_18 | - | - | - |
 | Rich Boy | 3_0 | 3_19 | 3_20 | 3_21 | - | - | - |
-| Psychic (m) | 3_0 | 3_22 | 3_23 | 3_24 | - | - | - |
-| Breeder (f) | 3_0 | 3_25 | 3_26 | 3_27 | - | - | - |
+| Psychic (male) | 3_0 | 3_22 | 3_23 | 3_24 | - | - | - |
+| Breeder (female) | 3_0 | 3_25 | 3_26 | 3_27 | - | - | - |
 | Battle Girl | 3_0 | 3_28 | 3_29 | 3_30 | - | - | - |
 | Beauty | 3_0 | 3_31 | 3_32 | 3_33 | - | - | - |
-| Cool Trainer (f) | 3_0 | 3_34 | 3_35 | 3_36 | - | - | - |
+| Cool Trainer (female) | 3_0 | 3_34 | 3_35 | 3_36 | - | - | - |
 | Idol | 3_0 | 3_37 | 3_38 | 3_39 | - | - | - |
 | Socialite | 3_0 | 3_40 | 3_41 | 3_42 | - | - | - |
 | Cowgirl | 3_0 | 3_43 | 3_44 | 3_45 | - | - | - |
