@@ -649,7 +649,29 @@ For **background IDs 0-5**, palette variant **0** is used in morning/day, **1** 
 ## Field Sprites
 
 ### Overworld Sprites
+
+An overworld ID identifies the graphics used by a map object (or "actor"). Look up the ID in the standard sprite or 3D object tables below. If the event uses a variable-driven ID (**101-116**), resolve it first.
+
+#### Dynamic overworld IDs
+
+Event IDs **101-116** read scripting (graphics) variables **`0x4020`-`0x402F`** in order. The variable holds the actual overworld ID. Look up that ID in the standard or 3D object table below. For a standard sprite, the resolved ID selects its texture, model, and animation timing.  
+For example, player-gender checks in various scripts set `0x4020` to overworld ID **`0`** (Ethan, sprite `1_69`) or overworld ID **`97`** (Lyra, sprite `1_70`).
+
+The resolver also accepts **117**, but it is unusable in the vanilla ROM.
+
+:::info[Camera focus overworld]
+Overworld ID `8192` (`0x2000`) is an invisible camera anchor. `ScrCmd_102` creates it at the supplied tile and switches camera and map tracking to it. `ScrCmd_103` removes it and restores tracking to the player.
+:::
+
+#### Standard overworld sprites
+
 **Location**: `/a/0/8/1`
+
+Standard overworld sprites use an NSBTX for textures and palettes, an NSBMD model to draw them on, and animation timing data to select frames.
+
+##### Sprite textures (NSBTX)
+
+For example, Cheryl's overworld ID `141` uses `1_62`, member `62` of `/a/0/8/1`.
 
 Each row lists one graphics file and the overworld IDs that use it. Trainer class IDs are listed separately for the Battle Frontier and eyes-met trainer objects in map event files.
 
@@ -1509,9 +1531,74 @@ Each row lists one graphics file and the overworld IDs that use it. Trainer clas
 
 </details>
 
+##### Shared sprite models (NSBMD)
+
+<details>
+<summary>Click to view details (3D models)</summary>
+
+<FilterableSortableTable>
+
+| Model (NSBMD) | Description |
+| --- | --- |
+| 1_266 | Default sprite plane for most player, NPC, and Pokémon overworlds. |
+| 1_267 | Small sprite plane shared by Strength boulders and item Poké Balls. |
+| 1_268 | Small sprite plane for Rock Smash rocks. |
+| 1_269 | Large sprite plane shared by large followers and fixed overworlds such as Snorlax, Bell Tower Ho-Oh, and Whirl Islands Lugia. |
+| 1_270 | Fishing pose plane shared by Ethan and Lyra. |
+| 1_271 | Ladder-climbing pose plane shared by Ethan and Lyra. |
+| 1_272 | Unused |
+| 1_273 | Unused |
+| 1_274 | Unused |
+| 1_275 | Unused |
+| 1_276 | Alternate 32×32 sprite plane assigned to the Medium variant (OW ID 250). This ID has no event placements. |
+| 1_277 | Unused |
+| 1_278 | Shared sprite plane for Apricorn trees and individual Apricorns. |
+| 1_279 | Pokémon League door model (OW ID 290), used in the Elite Four and Lance rooms. |
+
+</FilterableSortableTable>
+
+</details>
+
+##### Overworld animation timing
+
+The overworld graphics settings select an NSBMD model slot and an animation timing slot. The timing file determines which texture and palette from the overworld's NSBTX will display as the animation advances.
+
+Each timing file starts with a 32-bit entry count, followed by three arrays of that length: 16-bit frame thresholds, 8-bit texture indices, and 8-bit palette indices.
+
+<details>
+<summary>Click to view animation timing files</summary>
+
+<FilterableSortableTable>
+
+| File | Timing slot | Used by |
+| --- | --- | --- |
+| 1_280 | 0 | Default overworld animations for NPCs and objects |
+| 1_281 | 1 | Player walking and running, including Rocket disguise and Pokéathlon variants |
+| 1_282 | 3 | Player cycling |
+| 1_283 | 4 | Player HM-use pose |
+| 1_284 | 5 | Player watering pose |
+| 1_285 | 6 | Player surfing |
+| 1_286 | 10 | Player fishing |
+| 1_287 | 23 | Player climbing ladders |
+| 1_288 | 11 | Pokémon Center nurse |
+| 1_289 | 13 | Lucas and Dawn Pokétch poses |
+| 1_290 | 14 | Player save pose, including Rocket disguise |
+| 1_291 | 15 | Player healing pose, including Rocket disguise |
+| 1_292 | 21, 22 | Pokémon followers and individual Apricorn overworlds |
+| 1_293 | 24 | Apricorn trees |
+| 1_294 | 26 | Player shaking an Apricorn tree |
+| 1_295 | 27 | Ho-Oh encounter at Bell Tower |
+| 1_296 | 28 | Lugia encounter at Whirl Islands |
+
+</FilterableSortableTable>
+
+</details>
+
 #### 3D overworld objects
 
-These event objects use their overworld ID to select an NSBMD directly from `/a/1/0/3`. Each model has embedded textures. Event scripts can move or hide the object using its local object ID.
+**Location**: `/a/1/0/3`
+
+These event objects use their overworld ID to select an NSBMD directly from this archive. Each model has embedded textures. Event scripts can move or hide the object using its local object ID.
 
 <details>
 <summary>Click to view details</summary>
@@ -1538,77 +1625,6 @@ These event objects use their overworld ID to select an NSBMD directly from `/a/
 </details>
 
 In the overlay 1 graphics table, these IDs share object callback index `15` and use renderer selector `63`. The separate model lookup is `ov01_02208E30`.
-
-:::info[Camera focus overworld]
-Overworld ID `8192` (`0x2000`) is an invisible camera anchor. `ScrCmd_102` creates it at the supplied tile and switches camera and map tracking to it. `ScrCmd_103` removes it and restores tracking to the player.
-:::
-
-#### Dynamic overworld IDs
-
-Event IDs **101-116** read scripting (graphics) variables **`0x4020`-`0x402F`** in order. The variable holds the overworld ID to look up in the tables above.  
-For example, player-gender checks in various scripts set `0x4020` to overworld ID **`0`** (Ethan, sprite `1_69`) or overworld ID **`97`** (Lyra, sprite `1_70`).
-
-The resolver also accepts **117**, but its index is outside the 16 graphics variable slots and triggers an assertion.
-
-<details>
-<summary>Click to view details (3D models)</summary>
-
-<FilterableSortableTable>
-
-| Resource | Model (NSBMD) |
-| --- | --- |
-| `F_HERO` | 1_266 |
-| Rock | 1_267 |
-| Breakable rock | 1_268 |
-| `SPPOKE4` | 1_269 |
-| `FISHINGHERO_2` | 1_270 |
-| `FISHINGHERO_3` | 1_271 |
-| `GINGA_DOOR` | 1_272 |
-| `T5_O01_C` | 1_273 |
-| `TSURE_250` | 1_274 |
-| `TSURE_250_2` | 1_275 |
-| `F_HERO_2` | 1_276 |
-| `R09_O01` | 1_277 |
-| Apricorn tree | 1_278 |
-| `LEAG_DOOR2_2` | 1_279 |
-
-</FilterableSortableTable>
-
-</details>
-
-#### Overworld renderer data
-
-Members **280-296** contain binary data selected by the field renderer's resource slots. The entry count is the leading value in each file.
-
-
-<details>
-<summary>Click to view renderer data members</summary>
-
-<FilterableSortableTable>
-
-| File | Resource slot | Entry count |
-| --- | --- | --- |
-| 1_280 | 0 | 16 |
-| 1_281 | 1 | 32 |
-| 1_282 | 3 | 24 |
-| 1_283 | 4 | 4 |
-| 1_284 | 5 | 7 |
-| 1_285 | 6 | 4 |
-| 1_286 | 10 | 16 |
-| 1_287 | 23 | 8 |
-| 1_288 | 11 | 17 |
-| 1_289 | 13 | 12 |
-| 1_290 | 14 | 2 |
-| 1_291 | 15 | 12 |
-| 1_292 | 21, 22 | 9 |
-| 1_293 | 24 | 8 |
-| 1_294 | 26 | 16 |
-| 1_295 | 27 | 13 |
-| 1_296 | 28 | 13 |
-
-</FilterableSortableTable>
-
-</details>
 
 ### WiFi Overworld Sprites
 **Location**: `/a/2/1/3`
