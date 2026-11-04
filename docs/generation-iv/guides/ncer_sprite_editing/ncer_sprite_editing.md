@@ -84,7 +84,7 @@ Hello! You are seeing this as you’ve most likely seen my video on editing the 
 
 2. Browse the ROM files and expand the narc that holds the sprite you are looking for.
 
-	> 💡 If you want any help locating certain sprites in your nds pokemon ROM, check out this narc list we wrote [HERE](https://docs.google.com/document/d/1_nRfhDEoNFbvYP-yjx4oAWmgGXxvqFBvLwYANFehxUU). <!-- TODO add list of known sprite location ressource -->
+	> 💡 Use the [Sprite Locations reference](../../resources/sprite_locations/sprite_locations.md) to find the NARC archives and file members for known Generation IV sprites.
 
 	Anyway, for my example I am going to edit the male player’s ball throw sprite in platinum. Which is located at the file path `poketool / trga / trbgra`. Where I’ll click `trbgra.narc` and click **Unpack** to see its contents.
 

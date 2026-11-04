@@ -253,7 +253,7 @@ This can be done by exporting the front sprite palette and importing it over the
 </details>
 
 ### Hall of Fame
-**Location**: `poketool/trgra/trbgra`
+**Location**: `poketool/trgra/trfgra`
 
 <details>
 <summary>Click to view details</summary>
