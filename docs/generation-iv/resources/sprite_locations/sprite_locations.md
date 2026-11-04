@@ -17,6 +17,6 @@ Sprites and other graphics in Generation IV Pokémon games are spread across mul
 
 The reference tables in these pages, organised by game version, provide the archive locations and file mappings for known sprites, models and interface graphics, together with notes on shared resources and their use in game.
 
-- [Platinum Sprite Locations](pt-sprite_locations.mdx)
-- [Diamond/Pearl Sprite Locations](dp-sprite_locations.mdx)
-- [HeartGold/SoulSilver Sprite Locations](hgss-sprite_locations.mdx)
+- [Platinum Sprite Locations](pt-sprite_locations)
+- [Diamond/Pearl Sprite Locations](dp-sprite_locations)
+- [HeartGold/SoulSilver Sprite Locations](hgss-sprite_locations)

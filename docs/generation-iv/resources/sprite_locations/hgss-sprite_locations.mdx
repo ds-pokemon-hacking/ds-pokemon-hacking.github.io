@@ -5,13 +5,15 @@ tags:
   - Resource (SoulSilver)
 ---
 
-# Sprite Locations (HGSS)
-> Author(s): [0zone](https://github.com/0zone), [MrHam88](https://github.com/DevHam88) (reformatted for wiki)  
-> Research: [Turtleisaac](https://github.com/Turtleisaac), [0zone](https://github.com/0zone), BagBoy, HiroTDK, minato_gzenx, [MrHam88](https://github.com/DevHam88)
-
-This page provides the locations of various sprites and models in Pokémon HeartGold and SoulSilver.
-
 import FilterableSortableTable from '/src/components/FilterableSortableTable';
+
+# Sprite Locations (HGSS)
+> Author(s): [0zone](https://github.com/0zone) (rewritten community document), [MrHam88](https://github.com/DevHam88) (reformatted for wiki)  
+> Research: [Turtleisaac](https://github.com/Turtleisaac), [0zone](https://github.com/0zone), BagBoy (corrections and additions), HiroTDK, minato_gzenx, Tartar, Hibiki, [MrHam88](https://github.com/DevHam88)
+
+This page provides the locations of various sprites and models in Pokémon HeartGold and SoulSilver US release ROMs.
+
+---
 
 ## Game Start & End
 
@@ -96,7 +98,7 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 
 </details>
 
-### New Game Options (Intro)
+### New Game (Professor Intro)
 **Location**: `/a/1/2/0`
 
 <details>
@@ -269,7 +271,9 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 ### Trainer Back Sprites
 **Location**: `/a/0/0/6`
 
+:::warning
 Editing ciphered sprites (such as backsprites) can be done by following [this guide](/docs/generation-iv/guides/ncer_sprite_editing/).
+:::
 
 <details>
 <summary>Click to view details</summary>
@@ -532,39 +536,11 @@ Editing ciphered sprites (such as backsprites) can be done by following [this gu
 ### Pokémon Sprites
 **Location**: `/a/0/0/4`
 
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
-
 ### Pokémon Sprites (forms)
 **Location**: `/a/1/1/4`
 
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
-
 ### Battle Terrain Platforms
 **Location**: `/a/0/0/8`
-
-These are the platforms beneath the battling Pokémon. The terrain ID selects the two side images and their palette set; it is separate from the full-screen background ID.  
 
 <details>
 <summary>Click to view details</summary>
@@ -630,8 +606,6 @@ The battle background determines the time-of-day palette variant. For **backgrou
 
 ### Battle Backgrounds
 **Location**: `/a/0/0/7`
-
-These are the normal full-screen battle scenery graphics. 
 
 <details>
 <summary>Click to view details</summary>
@@ -1602,6 +1576,13 @@ The model members **266–279** and the other data members **280–296** are out
 
 </details>
 
+### Other Overworld Sprites
+**Location**: `/a/1/7/9`
+
+:::info
+The purpose/use of these graphics is undocumented.
+:::
+
 ### HM Cut-In Sprites
 **Location**: `/a/0/9/3`
 
@@ -1664,50 +1645,48 @@ The model members **266–279** and the other data members **280–296** are out
 
 </details>
 
-### Following Pokémon Emotes
+### Pokémon Emotes
 **Location**: `/a/1/0/3`
 
-These fourteen emotes are rendered above the following Pokémon using 3D model and texture resources. Their graphics and animation definitions are in this archive, rather than the follower movement archive `/a/2/2/2`.
+:::info
+Standard movement-action emotes use a separate renderer and resource set from the fourteen follower emotes.  
+Both routes load resources from this archive.
+:::
 
-The file references below use zero-based decimal NARC member indices: for example, `3_2` is member 2 of `/a/1/0/3`. Each emote pairs an NSBTX texture with a **20-byte custom animation definition**. These definitions are not RNAN/NANR sprite-animation files.
+#### Following Pokémon Emotes
 
 <details>
-<summary>Click to view follower emote graphics and animations</summary>
+<summary>Click to view details</summary>
 
 <FilterableSortableTable>
 
 | Emote | Internal effect ID | Follower interaction selector | Texture (NSBTX) | Shared model (NSBMD) | Animation (custom) |
 | --- | --- | --- | --- | --- | --- |
-| Red heart | 0 | 1 | 3_2 | 3_130 | 3_150 |
-| Joyful face | 1 | 2 | 3_3 | 3_130 | 3_151 |
-| Angry face | 2 | 3 | 3_4 | 3_130 | 3_152 |
-| Worried face | 3 | 4 | 3_5 | 3_130 | 3_153 |
-| Smiling face | 4 | 5 | 3_6 | 3_130 | 3_154 |
-| Concerned face | 5 | 6 | 3_7 | 3_130 | 3_155 |
-| Music note | 6 | 7 | 3_8 | 3_130 | 3_156 |
-| Question mark (?) | 7 | 8 | 3_9 | 3_130 | 3_157 |
-| Exclamation point (!) | 8 | 9 | 3_10 | 3_130 | 3_158 |
-| Blue water droplet | 9 | 10 | 3_11 | 3_130 | 3_159 |
-| Angry crying face | 10 | 11 | 3_12 | 3_130 | 3_160 |
-| Purple poison symbol | 11 | 12 | 3_13 | 3_130 | 3_161 |
-| Speechless (...) | 12 | 13 | 3_14 | 3_130 | 3_162 |
-| Sleeping (zzz) | 13 | 14 | 3_15 | 3_130 | 3_163 |
+| Red heart | 0 | 1 | 3_2 | 3_130* | 3_150 |
+| Joyful face | 1 | 2 | 3_3 | 3_130* | 3_151 |
+| Angry face | 2 | 3 | 3_4 | 3_130* | 3_152 |
+| Worried face | 3 | 4 | 3_5 | 3_130* | 3_153 |
+| Smiling face | 4 | 5 | 3_6 | 3_130* | 3_154 |
+| Concerned face | 5 | 6 | 3_7 | 3_130* | 3_155 |
+| Music note | 6 | 7 | 3_8 | 3_130* | 3_156 |
+| Question mark (?) | 7 | 8 | 3_9 | 3_130* | 3_157 |
+| Exclamation point (!) | 8 | 9 | 3_10 | 3_130* | 3_158 |
+| Blue water droplet | 9 | 10 | 3_11 | 3_130* | 3_159 |
+| Angry crying face | 10 | 11 | 3_12 | 3_130* | 3_160 |
+| Purple poison symbol | 11 | 12 | 3_13 | 3_130* | 3_161 |
+| Speechless (...) | 12 | 13 | 3_14 | 3_130* | 3_162 |
+| Sleeping (zzz) | 13 | 14 | 3_15 | 3_130* | 3_163 |
 
 </FilterableSortableTable>
 
+*The renderer also loads **shared animation `3_140`** and **shared texture `3_28`**, alongside model `3_130`.
+
 </details>
 
-The renderer also loads **shared animation `3_140`** and **shared texture `3_28`**, alongside model `3_130`. Preserve these shared resources when editing an individual emote.
-
-Follower interaction data in `/a/2/2/1` uses selectors **1–14**, corresponding to internal effect IDs **0–13**; selector **0 means no emote**. The native texture/animation pairs are selected by the overlay-1 table `ov01_02209544` (USA HeartGold RAM address `0x02209544`, decompressed overlay file offset `0x23C44`). The vanilla script command 597 displays the red heart using texture `3_2` and custom animation `3_150`.
-
-### Movement Emote Graphics
-**Location**: `/a/1/0/3`
-
-Standard movement-action emotes use a separate renderer and resource set from the fourteen follower emotes above. Both routes load resources from this archive.
+#### Movement Action Emotes
 
 <details>
-<summary>Click to view movement emote graphics and animations</summary>
+<summary>Click to view details</summary>
 
 <FilterableSortableTable>
 
@@ -1720,8 +1699,6 @@ Standard movement-action emotes use a separate renderer and resource set from th
 
 </details>
 
-The decompilation name and legacy editor description give conflicting visual labels for action 103. A movement action's length parameter repeats that action; it does not select one of the fourteen follower emotes.
-
 ---
 
 ## Menus and User Interface
@@ -1729,34 +1706,8 @@ The decompilation name and legacy editor description give conflicting visual lab
 ### Pokémon Icons
 **Location**: `/a/0/2/0`
 
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
-
 ### Item Icons
 **Location**: `/a/0/1/8`
-
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
 
 ### Pokegear UI Graphics
 **Location**: `/a/1/4/3`
@@ -1903,34 +1854,8 @@ The decompilation name and legacy editor description give conflicting visual lab
 ### Pokemon Box Storage System Wallpapers
 **Location**: `/a/0/1/9`
 
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
-
 ### Pokemon Box Storage System Graphics
 **Location**: `/a/1/9/1`
-
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
 
 ### Trainer Card & Badge Case
 **Location**: `/a/0/4/9`
@@ -2027,50 +1952,11 @@ The decompilation name and legacy editor description give conflicting visual lab
 ### Area Name Letterbox Graphics
 **Location**: `/a/0/3/6`
 
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
-
 ### Area Preview Splash Graphics
 **Location**: `/a/1/5/0`
 
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
-
 ### Textbox Borders
 **Location**: `/a/0/3/8`
-
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
 
 ### Photo Album Graphics
 **Location**: `/a/1/7/1`
@@ -2204,22 +2090,6 @@ The decompilation name and legacy editor description give conflicting visual lab
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Ethan / Male Protagonist | 7_16 | 7_17 | 7_18 (cell 0) | 7_19 | - | - | - |
 | Lyra / Female Protagonist | 7_16 | 7_17 | 7_18 (cell 1) | 7_19 | - | - | - |
-
-</FilterableSortableTable>
-
-</details>
-
-### More Overworlds???
-**Location**: `/a/1/7/9`
-
-<details>
-<summary>Click to view details (*currently no documented details*)</summary>
-
-<FilterableSortableTable>
-
-| Sprite | Palette (RLCN) | Image (RGCN) | Cell (RECN) | Animation (RNAN) | Ciphered Image (RGCN) | Screen (RCSN) | 3D Model (NSBMD) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
 
 </FilterableSortableTable>
 
