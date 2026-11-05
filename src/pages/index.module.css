@@ -7,7 +7,7 @@
   padding: 2rem 2rem;
   text-align: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @media screen and (max-width: 996px) {
@@ -45,4 +45,33 @@ h1, h2, h3, h4, h5, h6 {
 
 img {
   border-radius: 8px;
+}
+.homeSearch {
+  --search-local-modal-width: 100%;
+  --search-local-modal-width-sm: 100%;
+  max-width: 42rem;
+  margin: 1.5rem auto 0;
+  text-align: left;
+  color: var(--ifm-font-color-base);
+}
+
+.homeSearch :global(.navbar__search) {
+  width: 100%;
+  margin: 0;
+}
+
+.homeSearch :global(.navbar__search > span) {
+  display: block;
+  width: 100%;
+}
+
+.homeSearch :global(.navbar__search .navbar__search-input) {
+  width: 100%;
+  height: 3.5rem;
+  padding: 0 5rem 0 2.75rem;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 0.75rem;
+  background-position: 1rem center;
+  color: var(--ifm-font-color-base);
+  font-size: 1.125rem;
 }
