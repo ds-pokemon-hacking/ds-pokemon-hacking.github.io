@@ -89,6 +89,9 @@ const config: Config = {
   },
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {
+    colorMode: {
+      respectPrefersColorScheme: true,
+    },
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
       title: 'DS Pokémon Hacking',
