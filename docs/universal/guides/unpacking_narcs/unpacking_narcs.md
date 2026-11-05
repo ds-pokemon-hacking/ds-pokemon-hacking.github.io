@@ -21,6 +21,16 @@ This page includes tutorials on unpacking & packing NARCs (**N**itro **ARC**hive
 
 --- 
 
+## Before repacking {#backup-files}
+
+:::warning Keep backup files out of the folder being packed
+Hex editors such as HxD can create `.bak` files when you save changes. For example, editing `0009` may leave a backup named `0009.bak` alongside it.
+
+Before packing a NARC, move these backups and any other files that are not intended archive entries to a separate backup folder. Packing tools can include them as extra entries in the NARC, which can cause errors or crashes in game.
+
+Keep backups so you can revert your changes, but store them outside any folder that will be packed, including folders that DSPRE repacks when saving your ROM.
+:::
+
 ## Knarc
 This is a tutorial on how to use Knarc to pack/unpack NARC files.
 You can download the Knarc executable from [here](https://github.com/kr3nshaw/knarc/releases).
@@ -57,6 +67,8 @@ You should do this if you plan to add additional files to the NARC.
 ### Adding files and Packing the NARC
 If you're going to add a new file to the NARC, make sure the newly added file follows the same naming convention as the already existing files.
 
+Before repacking, [move backup files out of the folder](#backup-files).
+
 For repacking the narc, you can use: 
 ```Knarc -d folder -p file```
 
@@ -80,9 +92,5 @@ This command will allow the user to select a file to unpack.
 
 ### Build from Folder  
 This command will take all the files in given folder, and pack them up into a narc format (with the `.narc` file extension).
-- Any backup (e.g. `.bak` files) should be removed from the folder *before* using the `Build from Folder` option (see below for more detail).
+- Before using `Build from Folder`, [move backup files out of the folder](#backup-files).
 - The file extension should be altered to match the original NARC (remove the file extension entirely for an HGSS NARC).  
-
-> Generally when unpacking NARCs the intention will be to change an unpacked file, or to add/remove files. It is important to note that many Hex editing tools used to achieve this (such as HxD), will create backups of changed files.  
-> - While it is important to keep these backups for reversion purposes, they should be removed from the folder *before* using the `Build from Folder` option.  
-> - If they aren't removed, they will be assumed to be a valid file in the packed NARC, meaning that an extra file could be inadvertently added and cause issues.

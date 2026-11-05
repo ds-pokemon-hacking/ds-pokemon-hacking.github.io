@@ -81,6 +81,14 @@ The game expects an exact amount of data, generally expanding the size of the fi
 
 Don't forget to save the file after you're done hex editing!
 
+:::warning Check for automatically generated backup files
+HxD and other hex editors can create `.bak` files when saving. For example, saving changes to `0009` may create `0009.bak` in the same folder.
+
+Before repacking a NARC or saving a ROM in a tool that repacks folders automatically, move these backups to a separate folder outside the folders being packed. They can otherwise be included as extra archive entries and cause errors or crashes in game. Keep the backups so you can revert your edits.
+
+See [Before repacking](/docs/universal/guides/unpacking_narcs/#backup-files) for more detail.
+:::
+
 --- 
 
 ## Compressed files
