@@ -32,7 +32,7 @@ This **only works on the US Version of the game**. Attempting to replace the sam
 
 ## Hex Editing
 
-1. If you haven't already, you need to expand the ARM9 through DSPRE's Patch Toolbox. You can do so by clicking the Explorer Kit Icon in the top bar (*or Tools -> Patch Toolbox*) and applying the **ARM9 Expansion** patch.
+1. Open your ROM in DSPRE. If you haven't already expanded the ARM9, open DSPRE's Patch Toolbox by clicking the Explorer Kit Icon in the top bar (*or Tools -> Patch Toolbox*) and apply the **ARM9 Expansion** patch.
 2. In the folder where your ROM is located, DSPRE should have created a folder name `yourROMname_DSPRE_contents`. Navigate to `yourROMname_DSPRE_contents/arm9/`and inside that you'll find a file called `arm9.bin`, open it in your hex editor of choice.
 3. Go to the offset `0x4EAE8` and replace all the bytes from this offset with the following sequence:
 ```
@@ -46,12 +46,18 @@ Do **not** add new bytes. Different hex editors will have different methods of "
 :::
 
 4. Save the file.
-5. Now you can load DSPRE again and save the ROM. Remember to **not** re-extract the contents, otherwise your hex editing will be lost!
+5. Return to DSPRE and save the ROM to include your edited `arm9.bin`.
+
+:::warning Save your edits to the ROM before re-extracting
+Saving `arm9.bin` in your hex editor changes the extracted project file. You must also save the ROM in DSPRE to include that edit in the ROM (`.nds`) itself.
+
+Re-extracting from a ROM that does not contain the edit can overwrite your edited project files and lose the change. Once you have saved the edited ROM in DSPRE, extracting **that saved ROM (`.nds`)** will retain the hex edit.
+:::
 
 The custom command works by setting the repel counter at the byte written at `0x15FEE` in weather_sys_9.bin, so remember to don't write anything at this offset!
 
 ## DSPRE
-If you don't have one already, create a new project by loading your ROM in DSPRE.  
+Continue working with the same ROM project in DSPRE.
 
 ### ScrCmd Database
 In the latest stable version of DSPRE, the program enforces the number of parameters a script command requires using the ScrCmd Database. This is built for vanilla games, however if Script Commands are edited to use a different number of parameters, a customised version of the ScrCmd Database must be created for use with the ROM in DSPRE to allow the Script Editor to parse the scripts correctly, and to include the commands in scripts.
