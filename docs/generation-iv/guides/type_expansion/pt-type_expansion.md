@@ -84,6 +84,10 @@ Our table is now located at `0x1000` in the synthetic overlay, which is loaded a
 The game uses little-endian format, so we will need to write this pointer in reverse order. In hex, this is `00 90 3C 02`.
 Navigate to the offset `0x204F8` in the `ov016.bin` file. You should see `24 EE 26 02`. Select and replace these four bytes with `00 90 3C 02`. Don't forget to save the file after making this change.
 
+:::warning Move backup files before saving your ROM
+After saving your hex edits, check `platinum_DSPRE_contents/unpacked/synthOverlay/` for automatically generated backup files such as `0009.bak`. Move them to a separate backup folder outside the folders DSPRE repacks before saving your ROM. Repeat this check after further hex edits and before packing other NARCs in this guide. See [Before repacking](/docs/universal/guides/unpacking_narcs/#backup-files) for details.
+:::
+
 At this point I strongly advice you save your ROM in DSPRE and test it to make sure it actually still works. Get in a battle and use a move (preferably one that has an effect beyond just dealing damage) to make sure the game doesn't crash. If it does or you see weird graphical glitches, you probably made a mistake somewhere. If it doesn't, congratulations! You have successfully moved the move effect subscript table to a new location.
 
 ### Editing the type chart
