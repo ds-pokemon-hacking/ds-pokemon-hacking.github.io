@@ -1,28 +1,28 @@
 ---
-title: Common Scripts (HGSS)
+title: Global Scripts (HGSS)
 tags:
   - Guide (HeartGold)
   - Guide (SoulSilver)  
 ---
 
-# Common Scripts (HGSS)
+# Global Scripts (HeartGold/SoulSilver)
 > Author(s): [Mikelan](https://discord.com/channels/446824489045721090/490620027125628931/987457491300405289), [Eternity](https://discord.com/channels/446824489045721090/490620027125628931/1028104339602018364), [MrHam88](https://github.com/DevHam88) (*reformat for Wiki*)
 
 ---
 
 ## How to Use  
 
-Common scripts are used in Generation IV Pokemon games to repeatedly call scripted behaviour from "local" script files. Although they are referred to (using DSPRE's scripting nomenclature) using common script IDs, they are simple scripts within script files. One difficulty with working with them, is that these script files do not have a header to easily find the associated Text Archive.  
+Global Scripts are used in Generation IV Pokemon games to repeatedly call scripted behaviour from "local" script files. Although they are referred to (using DSPRE's scripting nomenclature) using Global Script IDs, they are scripts within various script files. One difficulty with working with them, is that these script files do not have a header to easily find the associated Text Archive.  
 
-This mapping table allows quick lookup of the Common Script ID, to find the script being used (in a given Script File), and the texts that may be invoked (from a given Text Archive).
+This mapping table allows quick lookup of the Global Script ID, to find the script being used (in a given Script File), and the texts that may be invoked (from a given Text Archive).
 
 --- 
 
-## Common Script Mapping
+## Global Script Mapping
 
 <table>
   <tr>
-    <th>Common Script ID Range</th>
+    <th>Global Script ID Range</th>
     <th>Script File</th>
     <th>Text Archive</th>
     <th>Notes</th>

@@ -3360,12 +3360,12 @@ This is achieved through a very specific command `CheckHeadbuttCompatibility` wh
 
 #### Creating New Move Tutors
 
-With the information documented above, it is possible to create new move tutors, by utilising unused Tutor IDs (for both Platinum & HGSS). In HGSS it is easily possible to define six more moves that can be tutored, using the available space in the existing table in `Overlay 1`. Existing commonscripts can be copied/replicated to create new tutors that use the same purchasing mechanisms (shards or BP). It is also easily possible to use the same move tutor data to develop tutors that have more unique/complex logic controlling availability/purchase of the tutorable moves with custom scripting.
+With the information documented above, it is possible to create new move tutors, by utilising unused Tutor IDs (for both Platinum & HGSS). In HGSS it is easily possible to define six more moves that can be tutored, using the available space in the existing table in `Overlay 1`. Existing Global Scripts can be copied/replicated to create new tutors that use the same purchasing mechanisms (shards or BP). It is also easily possible to use the same move tutor data to develop tutors that have more unique/complex logic controlling availability/purchase of the tutorable moves with custom scripting.
 
-In **HGSS**, the Event and Script data of the move tutors in the Frontier Access can be reviewed to find that a small series of commonscripts are used to drive their dialogue & options. Adding a new tutor that uses (for example Tutor ID `04`), can be achieved by following these steps:
+In **HGSS**, the Event and Script data of the move tutors in the Frontier Access can be reviewed to find that a small series of Global Scripts are used to drive their dialogue & options. Adding a new tutor that uses (for example Tutor ID `04`), can be achieved by following these steps:
 1. Update the Tutorable Moves data (`Overlay 1`) to include moves that are aligned to Tutor ID `04` *(Details [here](#type-2b-hgss-compatibility--special-currency-battle-points); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
 2. Update the Pokémon Compatibility data (`waza_oshie.bin`) to set the compatibility for the newly added moves *(Details [here](#type-2b-hgss-compatibility--special-currency-battle-points); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
-3. Locate the last move tutor commonscript (file 2, Script 3). Copy the script and paste it as Script 4, editing the `SetVar` commands for variables `32768` & `32775` to change the value the variable is set to (`2`) to `4`, for example:  
+3. Locate the last Move Tutor Global Script (Script File 2, Script 3). Copy the script and paste it as Script 4, editing the `SetVar` commands for variables `32768` & `32775` to change the set value from `2` to `4`, for example:  
 
 ```
 Script 4:  
@@ -3375,7 +3375,7 @@ Script 4:
 Jump Function#1
 ```
 
-4. Copy the script used by one of the move tutors from the house in the Frontier Access, alter the commonscript called to be the correct (Script 4 in file 2 is `10443`).
+4. Copy the script used by one of the move tutors from the house in the Frontier Access, then alter the called Global Script to use the new Global Script ID (Script 4 in Script File 2 would be `10443`).
 
 ```
 Script 999:
@@ -3387,13 +3387,13 @@ Script 999:
 End
 ```
 
-In **Platinum**, this is slightly more involved, as commonscripts aren't utilised, the functions are within the Script files of the tutors themselves. In these cases, copying the relevant scripts & functions of the tutor, and directly changing the Tutor ID parameters of the `CheckLearnableTutorMoves` and `ShowTutorMovesList` commands (command names are as of DSPRE Organisation SCRCMD, DSPRE v1.14.0).
+In **Platinum**, this is slightly more involved, as Global Scripts aren't utilised, the functions are within the script files of the tutors themselves. In these cases, copying the relevant scripts & functions of the tutor, and directly changing the Tutor ID parameters of the `CheckLearnableTutorMoves` and `ShowTutorMovesList` commands (command names are as of DSPRE Organisation SCRCMD, DSPRE v1.14.0).
 
 1. Update the Tutorable Moves data to include moves that are aligned to Tutor ID `04` *(Details [here](#type-2a-platinum-compatibility--special-currency-shards); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
 2. Update the Pokémon Compatibility data to set the compatibility for the newly added moves *(Details [here](#type-2a-platinum-compatibility--special-currency-shards); hex creator tool [here](#editing-compatibility--special-currency-move-tutors))*.
 3. Locate one of the vanilla move tutor scripts & functions. Copy the script and all functions to the required script file, editing the Tutor ID parameters of the `CheckLearnableTutorMoves` and `ShowTutorMovesList` commands to `4`.
 
-> Nb, if multiple tutors are being created in Platinum, setting up some commonscripts to function as per HGSS may be a sensible approach to make the process of calling them when required easier.
+> Nb, if multiple tutors are being created in Platinum, setting up some Global Scripts to function as per HGSS may be a sensible approach to make the process of calling them when required easier.
 
 ### Egg Moves
 > Source(s): [BluRose, Lhea, RefinedPlat (2023)](https://discord.com/channels/446824489045721090/920372513488404542/1104484275165868213)
