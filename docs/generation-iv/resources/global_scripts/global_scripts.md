@@ -17,6 +17,6 @@ Global Scripts are used in Generation IV Pokemon games to repeatedly call script
 
 The mapping tables in these pages (per game version) allow quick lookup of the Global Script ID, to find the script being used (in a given Script File), and the texts that may be invoked (from a given Text Archive).
 
-- [Platinum Global Scripts](pt-common_scripts.md)
-- [Diamond/Pearl Global Scripts](dp-common_scripts.md)
-- [HeartGold/SoulSilver Global Scripts](hgss-common_scripts.md)
+- [Platinum Global Scripts](pt-global_scripts.md)
+- [Diamond/Pearl Global Scripts](dp-global_scripts.md)
+- [HeartGold/SoulSilver Global Scripts](hgss-global_scripts.md)
