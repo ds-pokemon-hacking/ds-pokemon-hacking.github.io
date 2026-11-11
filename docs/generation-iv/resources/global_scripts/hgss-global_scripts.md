@@ -1,5 +1,5 @@
 ---
-title: Global Scripts (HGSS)
+title: Global Scripts (HeartGold/SoulSilver)
 tags:
   - Guide (HeartGold)
   - Guide (SoulSilver)  
