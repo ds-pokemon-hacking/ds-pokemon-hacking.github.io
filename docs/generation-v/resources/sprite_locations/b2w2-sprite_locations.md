@@ -7,7 +7,7 @@ tags:
 # Sprite Locations (Black 2 & White 2)
 
 > Author(s): [0zone](https://github.com/0zone) (rewritten community document), [MrHam88](https://github.com/DevHam88) (reformatted for wiki)    
-> Research: Tartar, Hibiki, BagBoy, Nayreel17 (corrections and additions), [File System](https://projectpokemon.org/docs/gen-5/b2w2-file-system-r8/), [General ROM Info](https://projectpokemon.org/home/forums/topic/22629-b2w2-general-rom-info/)
+> Research: Tartar, Hibiki, BagBoy, Nayreel17 (corrections and additions), Sunday_Do, [File System](https://projectpokemon.org/docs/gen-5/b2w2-file-system-r8/), [General ROM Info](https://projectpokemon.org/home/forums/topic/22629-b2w2-general-rom-info/)
 
 This page provides the locations of various sprites and models in Pokémon Black 2 & White 2 US release ROM.
 
@@ -97,7 +97,7 @@ Male Protagonist and Female Protagonist Selection / 8_22, 8_23
 
 </details>
 
-#### Player Characters
+#### Player Characters (Driftveil City Gym)
 **Location**: `a/1/3/8`
 
 <details>
@@ -116,6 +116,9 @@ Male Protagonist and Female Protagonist Selection / 8_22, 8_23
 
 - Male Protagonist / 8_239.bmd0
 - Female Protagonist / 8_240.bmd0
+- Royal Unova
+  - Male Protagonist / 8_59
+  - Female Protagonist / 8_62
 
 </details>
 
