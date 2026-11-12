@@ -56,6 +56,21 @@ const config: Config = {
         language: 'en',
       },
     ],
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            from: ['/getting-started/dp/', '/getting-started/pt/', '/getting-started/hgss/'],
+            to: '/docs/generation-iv/guides/getting_started/',
+          },
+          {
+            from: ['/getting-started/bw/', '/getting-started/b2w2/'],
+            to: '/docs/generation-v/guides/getting_started/',
+          },
+        ],
+      },
+    ],
   ],
   presets: [
     [
