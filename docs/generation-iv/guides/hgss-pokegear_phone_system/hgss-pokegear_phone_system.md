@@ -514,28 +514,7 @@ The conditions for special contacts are defined in the [phone scripts source dir
 
 Generic calls are **linear**. Once the game selects a call header, the greeting, main message, and any automatic effect happen without a Yes/No choice. The player may choose to place an outgoing call, but cannot choose its result after it starts. Some special contacts use interactive calls instead: Mom can ask about savings and Gym Leaders can ask whether to arrange a rematch. Not every special contact is interactive.
 
-```mermaid
-flowchart TD
-    A[Player selects registered contact] --> B{Current map allows outgoing calls?}
-    B -- No --> C[Call cannot start]
-    B -- Yes --> D[Selected contact and outgoing direction]
-    E[Timed incoming call] --> F[Selected contact and incoming direction]
-    G[Field script starts direct call] --> H[Caller, direction and call parameters]
-    D --> I{Generic contact?}
-    F --> I
-    H --> I
-    I -- No --> J[Special-contact logic interprets call mode<br/>and selects the conversation]
-    I -- Yes --> K{Incoming call?}
-    K -- Yes --> M[Use first eligible incoming call header]
-    K -- No --> L{Player on contact's map?}
-    L -- Yes --> N[Use local-call phone script]
-    L -- No --> O[Use first eligible outgoing call header]
-    M --> P[Selected phone script and display routine]
-    N --> P
-    O --> P
-    P --> R[Apply automatic effect, if any<br/>Display greeting if enabled, then main message]
-    J --> Q[Display selected phone script<br/>or specialised conversation]
-```
+![](resources/phone_conversations_flow.png)
 
 ### Phone conversations: the four parts
 
