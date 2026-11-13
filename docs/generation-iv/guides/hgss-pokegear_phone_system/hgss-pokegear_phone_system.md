@@ -8,7 +8,7 @@ tags:
 # Pokégear Phone System
 
 > Author(s): [MrHam88](https://github.com/DevHam88/).  
-> Research: [pret/pokeheartgold](https://github.com/pret/pokeheartgold), Eclipse (Luna), Senate, BlackShark, Mixone.  
+> Research: [pokeheartgold (decomp)](https://github.com/pret/pokeheartgold), [Eclipse (Luna)](https://discord.com/channels/446824489045721090/761649785920815114/1541642009457197117), [Senate](https://discord.com/channels/1221517397874446557/1221525392217735378/1539025825431814176), [BlackShark](https://projectpokemon.org/home/forums/topic/49014-hgss-pokegear-phone-numbers-memory-location/), [Mixone](https://github.com/Mixone-FinallyHere), [MrHam88](https://github.com/DevHam88/).  
 
 This guide explains how the Pokégear phone system works and how to edit its data in Pokémon HeartGold and SoulSilver.
 
@@ -25,9 +25,17 @@ The system is easiest to follow in the same order as a call moves through it:
 1. [**Phonebook data**](#phonebook-data) defines the contacts and their properties; [field scripts register their numbers](#registering-phone-numbers).
 2. [**Incoming and outgoing calls**](#incoming-and-outgoing-calls) explains how a call starts and, for a random incoming call, how the caller is chosen.
 3. [**Phone conversations**](#phone-conversations) explains what the chosen contact says and does. A generic contact (contact type `0`) uses call headers and phone scripts; a special contact uses its own selection logic.
-4. [**Trainer rematches**](#trainer-rematches) and [**Gifts after calls and rematches**](#gifts-after-calls-and-rematches) explain how battles are selected and items are awarded.
+4. [**Trainer rematches**](#trainer-rematches) and [**gifts after calls and rematches**](#gifts-after-calls-and-rematches) explain how battles are selected and items are awarded.
 
 Later sections describe [saved phone state](#saved-phone-state), connect these systems through [case studies](#case-studies), and cover [queued-event expansion](#expanding-queued-event-calls) and [contact expansion](#expanding-beyond-75-contacts).
+
+For concrete walkthroughs of these systems working together, start with the [case studies](#case-studies).
+
+### Field scripts and game code
+
+**Field scripts** control NPC dialogue, command arguments and branches; these can be edited in DSPRE. **Script commands** invoke compiled game code: their internal checks and side effects require a code patch when their arguments cannot express the desired change. The **phone system** also runs independently, using compiled code and editable tables to select callers and conversations.
+
+The guide's **phone scripts** are conversation records read by that system, not field scripts. Editing a record changes its messages and effect; changing how that effect works requires editing the code that reads it.
 
 ### Data structure
 The following table maps the phone data and code.
@@ -46,9 +54,13 @@ The following table maps the phone data and code.
 
 ## Phonebook data
 
-> Research: [PokeHeartGold: phonebook reader](https://github.com/pret/pokeheartgold/blob/master/src/phonebook_dat.c), [phone-contact structures](https://github.com/pret/pokeheartgold/blob/master/include/gear_phone.h), [weekday values](https://github.com/pret/pokeheartgold/blob/master/lib/include/nitro/rtc/ARM9/api.h), [time-of-day conversion](https://github.com/pret/pokeheartgold/blob/master/src/gf_rtc.c).
+> Research: [pokeheartgold: phonebook reader](https://github.com/pret/pokeheartgold/blob/master/src/phonebook_dat.c), [phone-contact structures](https://github.com/pret/pokeheartgold/blob/master/include/gear_phone.h), [weekday values](https://github.com/pret/pokeheartgold/blob/master/lib/include/nitro/rtc/ARM9/api.h), [time-of-day conversion](https://github.com/pret/pokeheartgold/blob/master/src/gf_rtc.c).
 
 The ROM file is a direct NitroFS file: `tel/pmtel_book.dat`. It is **not** a NARC member.  
+
+### Graphics
+
+See the sprite-location reference for [Pokégear UI graphics](/docs/generation-iv/resources/sprite_locations/hgss-sprite_locations#pokegear-ui-graphics) and [Pokégear phone graphics](/docs/generation-iv/resources/sprite_locations/hgss-sprite_locations#pokegear-phone-graphics).
 
 ### File layout
 
@@ -60,7 +72,7 @@ The first four bytes are a little-endian entry count (75). They are followed by 
 | `01` | 1 | `type` | Contact type. It chooses the contact's call-selection route: generic headers for type `0`, or specialised logic for the other values; see [Contact type values](#contact-type-values). |
 | `02` | 1 | `unk2` | Unknown. There is no *known* consumer of this byte. |
 | `03` | 1 | `trainerClass` | Title label shown in the Pokégear contact list. Standard trainer classes and special phone-contact labels use different text paths; see [Title](#title). |
-| `04` | 2 | `trainerId` | The contact's original trainer battle ID, or `TRAINER_NONE` (`0`) for a non-trainer. Ordinary trainer rematches use this to find an overlay 26 rematch lookup row. |
+| `04` | 2 | `trainerId` | The contact's original trainer battle ID, or `TRAINER_NONE` (`0`) for a non-trainer. See the [rematch battle table](#rematch-battle-table) for team selection and [gifts](#gifts-after-calls-and-rematches) for the separate item paths. |
 | `06` | 2 | `mapId` | The contact's **map-header ID**. It controls local-call behaviour, random-call filtering, location text, and the limited rematch/gift map marker; see [What `mapId` controls](#what-mapid-controls). |
 | `08` | 2 | `gift` | Rematch reward item. Awarded after the rematch battle by the shared NPC field-script path. |
 | `0A` | 2 | `phoneScriptIfLocal` | Generic contact's **local-call phone-script ID**: used for an outgoing call when the player is on this contact's `mapId`. |
@@ -166,7 +178,7 @@ Values from `tel/pmtel_book.dat`, in file order. Record offsets are hexadecimal;
 
 ### Contact type values
 
-> Research: [PokeHeartGold: contact-type call dispatcher](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c), [contact-type constants](https://github.com/pret/pokeheartgold/blob/master/include/application/pokegear/phone/phone_internal.h#L54).
+> Research: [pokeheartgold: contact-type call dispatcher](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c), [contact-type constants](https://github.com/pret/pokeheartgold/blob/master/include/application/pokegear/phone/phone_internal.h#L54).
 
 `type` is a numeric contact-type selector, not a trainer class and not a random-call frequency. It selects the contact's call-selection route; it does **not** directly identify one display routine. The vanilla values are:
 
@@ -198,7 +210,7 @@ Changing this byte changes which selection route reads the contact. For example,
 
 ### Title
 
-> Research: [PokeHeartGold: phone contact-list display](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c).
+> Research: [pokeheartgold: phone contact-list display](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c).
 
 The title label in the phone list comes from the normal `trainerClass` text archive, from archive `271`, or is empty.
 
@@ -218,7 +230,7 @@ The special values are:
 - 206 Poké Maniac (message 43)
 - 207 Safari Warden (message 44)
 
-Elm and Oak both display "Pokémon Professor", while Ethan/Lyra display "Childhood Friend", for example. The name itself still comes from message `0` of that contact's [own phone text archive](#dialogue-common-greeting-text-and-contact-specific-text).
+The contact name comes from message `0` of that contact's [own phone text archive](#dialogue-common-greeting-text-and-contact-specific-text).
 
 #### Compatibility with expanded trainer classes
 
@@ -242,15 +254,9 @@ The one-byte field cannot hold a value above `255`; exceeding that limit require
 
 </details>
 
-### Trainer IDs for trainers and non-trainers
-
-Non-trainer contacts use `TRAINER_NONE` (`0`) in the `trainerId` field.
-
-Trainer contacts store their original battle ID; see the [rematch battle table](#rematch-battle-table) for team selection and [gifts](#gifts-after-calls-and-rematches) for the separate item paths.
-
 ### What `mapId` controls
 
-> Research: [PokeHeartGold: generic call display and encounter selection](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c), [incoming-call filtering](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c).
+> Research: [pokeheartgold: generic call display and encounter selection](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c), [incoming-call filtering](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c).
 
 `mapId` has several proven uses:
 
@@ -263,7 +269,7 @@ Trainer contacts store their original battle ID; see the [rematch battle table](
 
 ### Sorting phone numbers
 
-> Research: [PokeHeartGold: phone-list sorting and saved order](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F0880.c).
+> Research: [pokeheartgold: phone-list sorting and saved order](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F0880.c).
 
 There are a number of ways of sorting phone numbers in the Pokégear. The first three use a stored one-byte rank in each contact record. The ordering is **not** derived or recalculated from displayed text or `mapId` at runtime, so changes to titles, names, and locations require changes to these sort parameters as well.
 
@@ -291,11 +297,11 @@ For example, record-relative offset `0xA` is the two-byte local-call phone-scrip
 
 ## Registering phone numbers
 
-> Research: [PokeHeartGold: phone-related field commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c). Command names are cross-referenced with the [DSPRE HGSS script-command reference](https://docs.google.com/spreadsheets/d/1WE6aCJeVbIMDfWYPykQEqLyBAZCDK8YlYFBD6hChiVA/edit?gid=1231989829#gid=1231989829).
+> Research: [pokeheartgold: phone-related field commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c), [DSPRE HGSS script-command reference](https://docs.google.com/spreadsheets/d/1WE6aCJeVbIMDfWYPykQEqLyBAZCDK8YlYFBD6hChiVA/edit?gid=1231989829#gid=1231989829).
 
 The static phonebook table does not immediately and fully populate contacts in the player's Pokégear. The player’s registered contact IDs are saved separately; see [Registered contacts](#registered-contacts).
 
-Normal field scripts use the following command IDs. The first name is the established scrcmd/DSPRE name; the second is the decomp name for the same command.
+Normal field scripts use the following command IDs. The first name is the established scrcmd/DSPRE name; the second is the current decomp name for the same command.
 
 | Opcode | scrcmd / editor name | Decomp name | Use |
 |---|---|---|---|
@@ -310,7 +316,7 @@ Unlike in the original Generation II games, the Pokégear phonebook can hold eve
 
 ## Incoming and outgoing calls
 
-> Research: [PokeHeartGold: phone ring manager and queued-event table](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [map-header phone permissions](https://github.com/pret/pokeheartgold/blob/master/include/map_header.h).
+> Research: [pokeheartgold: phone ring manager and queued-event table](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [map-header phone permissions](https://github.com/pret/pokeheartgold/blob/master/include/map_header.h).
 
 Incoming and outgoing calls use different map permissions and different dialogue selection paths.
 
@@ -325,11 +331,11 @@ The call-mode field (`isScriptedCall` in decomp) uses `0` for normal outgoing an
 
 ### Outgoing
 
-An outgoing call begins when the player selects a registered contact in the Pokégear. Outgoing calls must be enabled in the current map header. The selected contact's `type`, `mapId`, and, for contacts of type `0`, the generic outgoing call headers determine the conversation; this is distinct from the incoming random-call and queued-event paths below.
+An outgoing call begins when the player selects a registered contact in the Pokégear. Outgoing calls must be enabled in the current map header. The selected contact's `type`, `mapId`, and, for contacts of type `0`, the generic outgoing call headers determine the conversation.
 
 ### Incoming: time trigger
 
-> Research: [PokeHeartGold: incoming-call timer and trigger scheduler](https://github.com/pret/pokeheartgold/blob/master/src/unk_02092BE8.c).
+> Research: [pokeheartgold: incoming-call timer and trigger scheduler](https://github.com/pret/pokeheartgold/blob/master/src/unk_02092BE8.c).
 
 The game keeps a runtime counter of elapsed **real-time minutes** for incoming calls. This timing gate is shared by queued system-event calls and ordinary random calls. While the player is in the normal overworld and no field task is running, completed minutes are added to this counter. At `10` minutes, the next normal input update when the player is standing still or has finished a movement checks for a call. It is not based on steps, frames, or a random per-step chance.
 
@@ -344,7 +350,7 @@ Queued system-event calls are checked first. Their triggering code can set the c
 <details>
 <summary>Binary edits</summary>
 
-The vanilla ten-minute interval can be changed with two ARM9 immediate-byte edits. Both values must be changed to the same whole-minute value `N` (`1`-`255`).
+The vanilla ten-minute interval can be changed with two ARM9 binary edits. Both values must be changed to the same whole-minute value `N` (`1`-`255`).
 
 | ARM9 file offset | RAM address | Vanilla bytes | Meaning | Change for `N` minutes |
 |:---:|:---:|---|---|---|
@@ -357,14 +363,14 @@ For example, to use twenty minutes, change `0A 20` to `14 20` at `0x92DB2` and `
 
 #### Incoming: random frequency
 
-> Research: [PokeHeartGold: random-caller selection](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [recent-caller save helpers](https://github.com/pret/pokeheartgold/blob/master/src/save_misc.c).
+> Research: [pokeheartgold: random-caller selection](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [recent-caller save helpers](https://github.com/pret/pokeheartgold/blob/master/src/save_misc.c).
 
 The following behaviour applies only to the ordinary random-call branch:
 
 1. Makes a 51% roll (0-50 inclusive out of 0-99). A failed roll clears the elapsed-minute counter, so the next ordinary attempt is after another ten minutes.
 2. Chooses an `unkF` group: `0` (50%), `1` (30%), or `2` (20%).
 3. Keeps only registered contacts whose `type` is `0` (generic contact), `10` (Buena), `11` (Ethan/Lyra), `12` (Gym Leader), or `14` (Irwin). All other types are excluded from this ordinary random-caller pool, though they may still be called by the player, start an event call, or be started by a field script.
-4. Removes contacts on the player's current map, contacts already recorded in that group's call history, Buena in unsuitable conditions, and National Park contacts during the Bug-Catching Contest.
+4. Checks whether to clear the selected group’s [recent-caller history](#what-recently-called-means), then removes contacts on the player's current map, contacts already recorded in that group's call history, Buena in unsuitable conditions, and National Park contacts during the Bug-Catching Contest.
 5. Randomly chooses from the remaining contacts. If no candidate remains, it clears the elapsed-minute counter.
 
 :::info Disable random calls from one contact
@@ -393,7 +399,9 @@ These Thumb comparisons must be patched to allow another contact type.
 <details>
 <summary>Click for details...</summary>
 
-Each `unkF` group has its own recent-caller history. When selecting the contact, callers recorded in the selected group are excluded. If every otherwise eligible contact is already recorded, it clears that group's history so the pool cannot remain empty forever. When the player accepts an ordinary random incoming call, it adds that contact to the selected group' recent-caller history and discards the oldest entry when the group is full. Queued event and field-scripted calls do not use this history.
+Each `unkF` group remembers recent callers. Before applying map, recent-caller, Buena and Bug-Catching Contest exclusions, the game counts registered contacts in the selected group whose types are allowed. If this nonzero count equals the number of stored recent callers, it clears that group's history. An empty final candidate pool does not itself clear the history or restart selection.
+
+Only answering an ordinary random incoming call adds its caller to the history. Queued event and field-scripted calls do not use it.
 
 See [Random-caller history](#random-caller-history) for the saved layout.
 
@@ -403,9 +411,11 @@ See [Random-caller history](#random-caller-history) for the saved layout.
 
 #### Incoming: queued system-event trigger  
   
-> Research: [PokeHeartGold: queued-event table and ring manager](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [queued-trigger constants](https://github.com/pret/pokeheartgold/blob/master/include/constants/phone_constants.h).
+> Research: [pokeheartgold: queued-event table and ring manager](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [queued-trigger constants](https://github.com/pret/pokeheartgold/blob/master/include/constants/phone_constants.h).
 
-Queued event calls are not ordinary random calls and are not entries in the normal event-flag or variable systems. `PhoneCallPersistentState.callTriggerFlags[2]` is a separate two-byte packed bitfield in the phone-call persistent save data. Bits `0` through `12` are the 13 trigger IDs below.  
+A queued event records a call for the next permitted timed check. Each trigger selects a caller, conversation and pickup behaviour.
+
+The 13 trigger IDs (`0`-`12`) are bits in a separate two-byte saved field, `PhoneCallPersistentState.callTriggerFlags[2]`, rather than normal script flags or variables.
 
 In vanilla, native game code sets these bits when it detects its own condition, such as an Egg hatching, cycling 1,024 steps, or a full PC. Field scripts can also set one with command `ScrCmd_148` (`0x94`): it takes two bytes, `triggerId` (`0`-`12`) and `expedite` (`0` or nonzero). It sets that trigger bit; when `expedite` is nonzero, it advances the shared incoming-call timer to one minute before its threshold if necessary. Command `UnsetPhoneCallTrigger` (`0x95`) takes one `triggerId` byte and clears that bit.
 
@@ -431,6 +441,10 @@ callerId (u8), unknown (u8), phoneScriptId (u16 little-endian), forcePickUp (u8)
 | `11` | `0xE146` | `BAOBA_MEMORY_LOSS` | `24` Baoba | `146` | Inferred failsafe at the play-time limit: combined Object Arrangement/new-objects announcement. | Yes |
 | `12` | `0xE14C` | `MOM_BOUGHT_SOMETHING` | `0` Mom | `27` | Mom spends the player's saved money on an item. | No |
 
+:::info Phone-script selection
+The contact's code interprets the supplied phone-script ID. For triggers `4` and `5`, Oak and the Day-Care Man ignore it and select scripts from Pokédex progress or an Egg-call flag respectively. For trigger `6`, Baoba interprets `0` as his specialised Safari Zone conversation, which chooses dialogue from the saved list of changed areas. Changing this field therefore cannot universally force a particular phone script.
+:::
+
 When a set trigger is selected, the ring manager reads its matching table record, assigns the caller and `phoneScriptId`, and marks the call as an event call (`isScriptedCall = 3`). The `forcePickUp` byte decides what happens next:
 
 | `forcePickUp` | Result |
@@ -451,14 +465,14 @@ The bytes after the queued-event table are occupied. Adding a record requires ta
 <details>
 <summary>Click for details...</summary>
 
-> Research: [PokeHeartGold: trigger scheduling](https://github.com/pret/pokeheartgold/blob/master/src/unk_02092BE8.c), [queued-event definitions](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c).
+> Research: [pokeheartgold: trigger scheduling](https://github.com/pret/pokeheartgold/blob/master/src/unk_02092BE8.c), [queued-event definitions](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c).
 
 The event-record table above defines what each pending bit does. This table instead records every vanilla path which **sets** a bit. It is a source map for advanced edits: most paths call `sub_02092E14`, which sets the persistent bit and, when its final argument is true, advances the shared incoming-call timer. Bit `1` is set by a field script, and bit `6` writes the persistent bit directly.
 
 | Bit | Vanilla setter and condition | Expedites the incoming timer? |
 |:---:|---|:---:|
 | `0` | `sub_02093134` in `src/unk_02092BE8.c`, called by `src/hatch_egg_task.c` after an egg hatches. It sets the bit only when `MonIsFromTogepiEgg` identifies the special Elm Egg. | Yes |
-| `1` | New Bark's field script, `files/fielddata/script/scr_seq/scr_seq_0003.s`, uses `ScrCmd_148 CALL_TRIGGER_ELM_POKERUS, FALSE` after its Pokérus check. This is the vanilla example of a script setting a queued-call bit. | No |
+| `1` | The shared Nurse Joy field script, `files/fielddata/script/scr_seq/scr_seq_0003.s`, uses `ScrCmd_148 CALL_TRIGGER_ELM_POKERUS, FALSE` when it first detects Pokérus after healing. | No |
 | `2` | `FieldSystem_UpdateBikeShop` in `src/field/field_control.c`: the Bike Shop call has not already happened, bit `2` is not already pending, and `GAME_STAT_STEPS_BIKED` is at least `1024`. | Yes |
 | `3` | `sub_02093070` in `src/unk_02092BE8.c`: Bill is registered, the full-PC call flag is clear, and every PC storage slot is full. This helper is called after several battle and storage-related return paths. | Yes |
 | `4` | `sub_020930C4` in `src/unk_02092BE8.c`: Oak is registered, the National Dex owned count has reached a nonzero multiple of `50`, and the corresponding Oak acknowledgement flag is clear. | No |
@@ -485,7 +499,7 @@ Mom's queued call announces a purchase; see [Mom's purchases](#moms-purchases) f
 
 ### Incoming: field-script trigger
 
-> Research: [PokeHeartGold: `SetPhoneCall` and `RunPhoneCall`](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c).
+> Research: [pokeheartgold: `SetPhoneCall` and `RunPhoneCall`](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c).
 
 Not every incoming call uses the queued trigger-bit table. A normal field script can configure and immediately launch a phone call with these commands. Elm's stolen-Pokémon call is a vanilla direct field-scripted call: it selects `PHONE_SCRIPT_002` and does not set or consume any queued event-trigger bit.
 
@@ -494,31 +508,31 @@ Not every incoming call uses the queued trigger-bit table. A normal field script
 | `0x1AE` | `SetPhoneCall contact scriptedFlag predefinedScript` | `SetPhoneCall` | Configure a field-scripted phone call. |
 | `0x1AF` | `RunPhoneCall` | `RunPhoneCall` | Launch the configured phone call. |
 :::info
-`SetPhoneCall` can select any valid contact, but cannot universally force a particular phone script. The contact's selection logic interprets `scriptedFlag` and `predefinedScript`. With call mode `2`, Elm accepts indices `0`–`4` for scripts `2`–`6`; Mom starts her savings conversation, Oak selects script `82`, and Baoba selects script `141`. Generic contacts ignore the supplied script value and use their incoming call headers.
+`SetPhoneCall` can select any valid contact, but cannot universally force a particular phone script. The contact's selection logic interprets `scriptedFlag` (call mode) and `predefinedScript` (phone script ID). With call mode `2`, Elm accepts indices `0`-`4` for scripts `2`-`6`; Mom starts her savings conversation, Oak selects script `82`, and Baoba selects script `141`.  
+
+Generic contacts ignore the supplied script value and use their incoming call headers if `SetPhoneCall` *[contactId]* `2` `0`, followed by `RunPhoneCall` were used.
 :::
 
 ---
 
 ## Phone conversations
 
-> Research: [PokeHeartGold: phone-call dispatch and effects](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c).
+> Research: [pokeheartgold: phone-call dispatch and effects](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c).
 
-In this guide, a **phone script** is the compact Pokégear definition that supplies message IDs and an optional automatic effect. It is separate from a normal **field script**, which can register a number, queue a call, or launch a direct call. A **phone conversation** is the interaction shown to the player when the Pokégear displays a phone script or runs specialised call code.
+A **phone conversation** is the interaction shown to the player. Its messages and effects come from a **phone-script record** or specialised call code.
 
-There are two selection routes:
+- **Generic contacts** (type `0`; 45 of the 75 contacts) use call headers to select phone scripts. Their conversations are linear, with no Yes/No choices.
+- **Special contacts** (all other types) use their own selection code and may reuse phone scripts. Some conversations are interactive: Mom can ask about savings, and Gym Leaders can ask whether to arrange a rematch.
 
-- A **generic contact** is exactly a phonebook contact of type `0`. There are 45 of these 75 contacts. Generic contacts use Overlay 101 call headers and phone scripts, described below.
-- A **special contact** has any other contact type. Its own selection logic chooses what the call does; it may use a dedicated display routine or the basic generic display code. The generic call headers below do not control it.
-
-The conditions for special contacts are defined in the [phone scripts source directory](https://github.com/pret/pokeheartgold/tree/master/src/application/pokegear/phone/scripts). This guide details [Professor Elm's calls](#professor-elm-story-calls-and-status-calls) and the [Gym Leader call type](#gym-leader-conversations), which covers all 16 Gym Leader contacts.
-
-Generic calls are **linear**. Once the game selects a call header, the greeting, main message, and any automatic effect happen without a Yes/No choice. The player may choose to place an outgoing call, but cannot choose its result after it starts. Some special contacts use interactive calls instead: Mom can ask about savings and Gym Leaders can ask whether to arrange a rematch. Not every special contact is interactive.
+Special-contact conditions are defined in the [phone scripts source directory](https://github.com/pret/pokeheartgold/tree/master/src/application/pokegear/phone/scripts). The sections below cover [Professor Elm](#professor-elm-story-calls-and-status-calls) and [all 16 Gym Leaders](#gym-leader-conversations).
 
 ![](resources/phone_conversations_flow.png)
 
+Conversation selection and display run in the phone application’s compiled code. A field script can launch the call, but does not perform the call-header checks or apply the phone-script effect itself.
+
 ### Phone conversations: the four parts
 
-> Research: [PokeHeartGold: generic call headers and greetings](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [phone-script definitions](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_script_defs.c), [generic call selection](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c).
+> Research: [pokeheartgold: generic call headers and greetings](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [phone-script definitions](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_script_defs.c), [generic call selection](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c).
 
 The same four parts explain generic and special-contact conversations:
 
@@ -529,11 +543,11 @@ The same four parts explain generic and special-contact conversations:
 | [**Greeting selection (optional)**](#greeting-selection-selecting-an-opening-remark) | Selects a separate opening remark. | Calls using the shared greeting routine select from the greeting table. Other conversations can include their greeting in their own text. |
 | [**Dialogue text**](#dialogue-common-greeting-text-and-contact-specific-text) | Supplies the displayed words, including substitutions. | The contact's text archive supplies its messages; shared greetings use archive `0640`. |
 
-Special contacts can reuse phone-script records and display routines or supply their own conversation logic. [Elm](#professor-elm-story-calls-and-status-calls) reuses phone scripts; [Gym Leaders](#gym-leader-conversations) use their own interactive logic. For calls using the basic phone-script display routine, the automatic effect is applied first, followed by any shared greeting and the main message.
+For calls using the basic phone-script display routine, the automatic effect is applied first, followed by any shared greeting and the main message.
 
 ### Call headers: selecting a conversation
 
-> Research: [PokeHeartGold: generic call headers](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [generic header conditions and selection](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c).
+> Research: [pokeheartgold: generic call headers](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [generic header conditions and selection](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c).
 
 Every contact has 16 six-byte call-header slots: eight incoming and eight outgoing, regardless of contact type. The table occupies Overlay 101 offsets `0x11F4C`-`0x13B6B`. Only the generic contact route (type `0`) uses these headers to select a conversation; special-contact logic uses its own selection route.
 
@@ -544,7 +558,7 @@ Each slot has this layout:
 ```text
 byte 0: condition type
 byte 1: chance value
-bytes 2-3: `scriptType` — selects the code which displays the selected phone script
+bytes 2-3: `scriptType` - selects the code which displays the selected phone script
 bytes 4-5: little-endian phone-script ID
 ```
 
@@ -592,13 +606,13 @@ The field is a direct index into the game's table of call code. It is not anothe
 <details>
 <summary>Call-header binary reference</summary>
 
-The generic selector is `PhoneCall_GetScriptId_Generic`; its internal call-header walker is `PhoneScriptGeneric_GetScriptIdInternal`. The generic display-code pointers for `scriptType` `0`, `1`, and `2` are in the Overlay 101 dispatch table at file offset `0x10F3C`; they point to RAM addresses `0x21F2681`, `0x21F2F51`, and `0x21F2FFD` respectively.
+The generic selector is `PhoneCall_GetScriptId_Generic`. The generic display-code pointers for `scriptType` `0`, `1`, and `2` are in the Overlay 101 dispatch table at file offset `0x10F3C`; they point to RAM addresses `0x21F2681`, `0x21F2F51`, and `0x21F2FFD` respectively.
 
 </details>
 
 ### Phone scripts: message and automatic effect
 
-> Research: [PokeHeartGold: phone-script definitions](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_script_defs.c), [phone-script lookup and automatic effects](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c).
+> Research: [pokeheartgold: phone-script definitions](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_script_defs.c), [phone-script lookup and automatic effects](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c).
 
 A phone-script record is six bytes; the table occupies Overlay 101 offsets `0x1143C`-`0x11EEB`. Generic contacts and some special contacts use these records. The first two bytes select messages for male and female players in the caller's archive; the remaining bytes describe an optional automatic effect.
 
@@ -613,45 +627,36 @@ The packed word is `(parameter 0 × 16) + result`; parameter 0 therefore ranges 
 
 | Result / decomp name | Effect | Parameter 0 | Parameter 1 | Vanilla records |
 |---|---|---|---|---|
-| `0` / `NONE` | Dialogue only. | Ignored. | Ignored. | 382, including script `0`; both parameters are `0`. |
-| `1` / `UNK1` | Same flag operation as result `2`. | `0`: clear; nonzero: set. | Flag ID. | None; supported by code only. |
-| `2` / `FLAG` | Sets or clears a script flag. | `0`: clear; nonzero: set. | Flag ID. | 12; all use parameter 0 = `1` to set a flag. Clearing is supported by code but unused here. |
+| `0` / `NONE` | Dialogue only. | Ignored. | Ignored. | 382; both parameters are `0`. |
+| `1` / `UNK1` | Sets or clears a script flag. | `0`: clear; nonzero: set. | Flag ID. | None. |
+| `2` / `FLAG` | Sets or clears a script flag. | `0`: clear; nonzero: set. | Flag ID. | 12; only used to *set* flags. |
 | `3` / `REMATCH` | Sets the caller's pending-rematch state. | Ignored; it does not select a tier or enable/disable the effect. | Ignored. | 43; parameters are `1`, `0`. |
-| `4` / `ITEM` | Queues a phone-call gift. | Ignored. | Item ID; see the [gift special cases](#phone-call-gifts). Item `0` clears the queued gift. | 17; parameter 0 is always `1`, with nonzero item IDs. |
-| `5` / `WORD` | Chooses text from the caller's archive and inserts it into message buffer `4`. | Number of consecutive messages to choose from; must be greater than `0`. | First message ID in that range. | Two: script `59` uses `9`, `23` (messages 23-31); script `296` uses `6`, `16` (messages 16-21). |
+| `4` / `ITEM` | Queues a phone-call gift. | Ignored. | Item ID; see the [gift special cases](#phone-call-gifts). Item `0` clears the queued gift. | 17; parameter 0 is always `1`. |
+| `5` / `WORD` | Chooses text from the caller's archive and inserts it into message buffer `4`. | Number of consecutive messages to choose from; must be greater than `0`. | First message ID in that range. | Two: script `59` and `296`. |
 
 For `WORD`, the main dialogue must reference buffer `4` to show the chosen text, and every message in the selected range must exist. This selects a text substitution, not another phone-script record.
 
 For example, Gina's Leaf Stone script `257` at Overlay 101 offset `0x11A42` is `0D 0D 14 00 55 00`: message `13` for either player gender, result `4`, parameter 0 = `1`, and parameter 1 = `85` (`0x55`, Leaf Stone). The item ID occupies the last two bytes.
 
-<details>
-<summary>Phone-script binary reference</summary>
-
-The first phone scripts are `00 00 00 00 00 00` for ID `0`, `01 02 00 00 00 00` for `PHONE_SCRIPT_001`, and `21 22 00 00 00 00` for `PHONE_SCRIPT_002`. These first scripts are Elm messages; copying one to another caller can produce different wording because the caller's archive changes.
-
-`PhoneCall_GetScriptDefPtrByID` resolves a phone script, and `PhoneCall_ApplyGenericNPCcallSideEffect` interprets its `REMATCH`, `ITEM`, `UNK1`, `FLAG`, and `WORD` results.
-
-</details>
-
 #### Reusing existing phone-script records
 
 The table has 456 records (IDs `0`-`455`). Only script `0` is all zeroes; it is the shared `PHONE_SCRIPT_NONE` record, not a spare slot.
 
-The following 15 populated records have no identified vanilla selection path after checking call headers, phonebook local-call IDs, queued events, field-script calls and special-contact selectors, including calculated IDs. They are candidates for reuse without enlarging the table; this is a static reference audit, not an in-game verification.
+The following 15 populated records appear to have no vanilla selection path (call headers, phonebook local-call IDs, queued events, field-script calls and special-contact selectors), they are possible candidates for reuse without enlarging the table.
 
 <details>
 <summary>Unreferenced records and Overlay 101 offsets</summary>
 
-| Original contact | Phone-script ID → file offset |
+| Original contact | Phone-script ID (file offset) |
 |---|---|
-| Mom | `24` → `0x114CC`; `28` → `0x114E4` |
-| Liz | `54` → `0x11580`; `55` → `0x11586` |
-| Professor Oak | `78` → `0x11610`; `79` → `0x11616` |
-| Jack | `105` → `0x116B2`; `106` → `0x116B8`; `107` → `0x116BE` |
-| Chad | `113` → `0x116E2`; `114` → `0x116E8`; `115` → `0x116EE` |
-| Brent | `121` → `0x11712`; `122` → `0x11718`; `123` → `0x1171E` |
+| Mom | `24` (`0x114CC`); `28` (`0x114E4`) |
+| Liz | `54` (`0x11580`); `55` (`0x11586`) |
+| Professor Oak | `78` (`0x11610`); `79` (`0x11616`) |
+| Jack | `105` (`0x116B2`); `106` (`0x116B8`); `107` (`0x116BE`) |
+| Chad | `113` (`0x116E2`); `114` (`0x116E8`); `115` (`0x116EE`) |
+| Brent | `121` (`0x11712`); `122` (`0x11718`); `123` (`0x1171E`) |
 
-All contain message IDs with result `NONE` and both parameters `0`. Replacing a record does not require replacing its old text: those messages may still be used by other conversation code. Supply message IDs from the intended caller's archive and select the reused record through that caller's call headers or special-call logic.
+All contain message IDs with result `NONE` and both parameters `0`. Be aware that any existing contact archive's messages may still be used by other conversation code. Supply message IDs from the intended caller's archive and select the reused record through that caller's call headers or special-call logic.
 
 Elm's script `6` is a separate case: his direct-call table references it, but no vanilla field script selects that table entry. It is therefore not included in the unreferenced list.
 
@@ -659,7 +664,7 @@ Elm's script `6` is a separate case: his direct-call table references it, but no
 
 ### Greeting selection: selecting an opening remark
 
-> Research: [PokeHeartGold: greeting table](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [greeting display code](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c).
+> Research: [pokeheartgold: greeting table](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [greeting display code](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c).
 
 Calls using the shared greeting routine select an opening remark independently of the phone script. The Overlay 101 table occupies `0x11EEC`-`0x11F4B`: eight rows of 12 one-byte message IDs. The contact record's `unkC` byte selects the row; row `g` begins at `0x11EEC + (g × 0xC)`. `FF` suppresses this separate greeting.
 
@@ -678,29 +683,38 @@ The table contains only rows `0`-`7`. A generic contact can safely reuse one of 
 
 ### Dialogue: common greeting text and contact-specific text
 
-> Research: [PokeHeartGold: phone text-archive mapping](https://github.com/pret/pokeheartgold/blob/master/src/phonebook_dat.c#L60).
+> Research: [pokeheartgold: phone text-archive mapping](https://github.com/pret/pokeheartgold/blob/master/src/phonebook_dat.c#L60).
 
-The greeting table uses shared archive `0640`. For both generic and special contacts, an ARM9 lookup maps each contact ID to its caller-specific archive: 75 little-endian `u16` archive IDs at `0x10847C`-`0x108511` (RAM `0x210847C`-`0x2108511`, decomp's `sPhoneMessageGmm` table).
+The greeting table uses shared archive `0640`. For both generic and special contacts, an ARM9 lookup maps each contact ID to its caller-specific archive: 75 little-endian `u16` archive IDs at `0x10847C`-`0x108511` (RAM `0x210847C`-`0x2108511`, decomp's `sPhoneMessageGmm` table). The lookup has 75 entries and no count field; see [contact expansion](#expanding-beyond-75-contacts) for adding entries.
 
 The caller's contact ID indexes it directly: contact ID `c` reads the two-byte archive ID at `0x10847C + (c × 2)`. For example, contact ID `0` (Mom) contains `0x298`, selecting archive `664`; contact ID `1` (Elm) contains `0x2CC`, selecting archive `716`.
-
-Edit the existing archive to change a contact's name (message `0`) or dialogue. If a different archive is needed, change the lookup entry and retain all message IDs required by that contact's calls. The lookup has 75 entries and no count field; see [contact expansion](#expanding-beyond-75-contacts) for adding entries.
 
 A phone script supplies a main-message ID, but that ID is always read from the **current caller's** archive. The same phone script can therefore show different wording when used by another contact. Changing text changes wording only; it does not change the condition or automatic effect which selected it.
 
 #### Text substitutions
 
-> Research: [PokeHeartGold: generic call display and encounter selection](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c).
+> Research: [pokeheartgold: generic call display and encounter selection](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c).
 
-When a phone conversation is initialised, the location name of the header in `mapId` is stored in a message buffer (`3`), to be potentially used in conversations. The player's current location name is similarly stored in buffer `2`.
+Conversation code prepares names in message buffers for dialogue to reference:
 
-Generic calls whose call header selects display type `1` (`scriptType = 1`) prepare two Pokémon-name message buffers before displaying the selected archive message: buffer `10` receives a random member of the caller's `trainerId` battle party, and buffer `11` receives a species selected from the wild-encounter data for this `mapId`. For buffer `11`, a contact whose `trainerClass` byte is exactly `11` (`0xB`, Fisherman) selects one of the five Good Rod slots (with the night-fishing replacement at night); all other values select one of the twelve land slots for the current morning/day/night. A map with no wild encounters supplies Rattata instead. This is implemented by `GearPhoneCall_Generic` and `getRandomEncounterSlot` in Pokégear Overlay 101's generic phone-script code.
+| Buffer | Text supplied | When prepared |
+|---|---|---|
+| `2` | Player’s current location name. | Conversation initialisation. |
+| `3` | Contact’s location name, from `mapId`. | Conversation initialisation. |
+| `10` | A random Pokémon from the caller’s `trainerId` battle party. | Generic display type `1` (`scriptType = 1`). |
+| `11` | A wild Pokémon species from the contact’s `mapId`. | Generic display type `1`. |
+
+Buffer `11` uses these rules:
+
+- Phonebook `trainerClass = 11` (`0xB`, Fisherman): choose one of the five Good Rod slots, including the night-fishing replacement at night.
+- Other title values: choose one of the twelve land slots for the current morning/day/night.
+- No wild encounters on the map: use Rattata.
+
+The Pokémon selections are implemented by `GearPhoneCall_Generic` and `getRandomEncounterSlot` in Overlay 101.
 
 ### Professor Elm: story calls and status calls
 
-> Research: [PokeHeartGold: Professor Elm call logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_prof_elm.c), [Route 30's direct call](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0227_R30.s).
-
-Elm's selector, `PhoneCall_GetScriptId_ProfElm`, starts at Overlay 101 offset `0xB2E8` (RAM `0x21F2A28`).
+> Research: [pokeheartgold: Professor Elm call logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_prof_elm.c), [Route 30's direct call](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0227_R30.s).
 
 Elm is contact type `2`, so he does not use generic call headers. His selector has three routes:
 
@@ -710,7 +724,12 @@ Elm is contact type `2`, so he does not use generic call headers. His selector h
 | Queued incoming call | The queued-event record supplies the phone-script ID directly. This route includes the hatched-Egg call (`013`) and the Pokérus call (`007`). |
 | Player's outgoing call | The selector walks the priority list below and returns the first matching phone script. |
 
+Elm's selector, `PhoneCall_GetScriptId_ProfElm`, starts at Overlay 101 offset `0xB2E8` (RAM `0x21F2A28`).
+
 All three routes use display handler `0`, the ordinary phone-script display routine (`GearPhoneCall_Simple` at Overlay 101 offset `0xAF40`). The direct-call and queued-call routes therefore choose an existing phone script; they do not use generic call headers.
+
+<details>
+<summary>Outgoing calls: priority conditions and phone-script IDs</summary>
 
 For an outgoing call, the first matching condition wins:
 
@@ -732,9 +751,11 @@ For an outgoing call, the first matching condition wins:
 | `FLAG_WAS_TOLD_ABOUT_POKERUS` (`0x65`, `101`) is set | `020`-`022` | One of three random late-game conversations. |
 | Otherwise | `020` or `021` | One of two random late-game conversations. |
 
+</details>
+
 ### Gym Leader conversations
 
-> Research: [PokeHeartGold: Gym Leader call logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_gym_leader.c).
+> Research: [pokeheartgold: Gym Leader call logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_gym_leader.c).
 
 All sixteen Gym Leaders use contact type `12`. They do not use generic call headers or the ordinary Radio Tower availability condition. Their shared selector chooses display handler `13` for an outgoing call and `14` for an incoming call; these are handler indexes, not contact types or phone-script IDs.
 
@@ -761,7 +782,7 @@ An incoming Gym Leader call does not offer a rematch. It either acknowledges tha
 <details>
 <summary>The unused capacity limit</summary>
 
-The handler contains an apparent five-Leader capacity check, but its vanilla helper only inspects Falkner's pending state and can count at most one pending rematch. It therefore always accepts an otherwise valid offer; the handler's capacity-full message is not reached in unmodified gameplay.
+The handler contains a five-Leader capacity check on the Fighting Dojo, but its vanilla helper only inspects Falkner's pending state and can count at most one pending rematch. It therefore always accepts an otherwise valid offer; the handler's capacity-full message is not reached in unmodified gameplay.
 
 </details>
 
@@ -769,11 +790,11 @@ The handler contains an apparent five-Leader capacity check, but its vanilla hel
 
 ## Trainer rematches
 
-> Research: [PokeHeartGold: rematch-table selector](https://github.com/pret/pokeheartgold/blob/master/src/overlay_26_022598C0.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
+> Research: [pokeheartgold: rematch-table selector](https://github.com/pret/pokeheartgold/blob/master/src/overlay_26_022598C0.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
 
 ### Rematch availability conditions
 
-> Research: [PokeHeartGold: ordinary generic rematch conditions](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c).
+> Research: [pokeheartgold: ordinary generic rematch conditions](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c).
 
 Rematch availability conditions decide whether a phone call can set `PhoneRematch.seeking`. They are separate from tier unlocks, which decide which battle is selected after `seeking` is set.
 
@@ -784,7 +805,7 @@ Ordinary trainers use different conditions depending on who starts the call:
 | Player calls trainer | A scheduled offer | Radio Tower cleared; matching weekday and time of day; chance roll. |
 | Trainer calls player | A random offer | Radio Tower cleared; chance roll; no weekday or time check. |
 
-For a scheduled outgoing rematch offer, both weekday (`0`–`6`) and time (`0`–`2`) must be valid and match the current clock; weekday `7` or time `3` prevents the offer, even when the other field matches.
+For a scheduled outgoing rematch offer, both weekday (`0`-`6`) and time (`0`-`2`) must be valid and match the current clock; weekday `7` or time `3` prevents the offer, even when the other field matches.
 
 The player-call route applies when the trainer is on a different map. A call to a trainer on the current map uses that contact's local-call phone script instead. If a rematch is already pending, the ordinary-trainer phone scripts select an existing-rematch message rather than making another offer.
 
@@ -794,6 +815,9 @@ Weekday and time are therefore not universal rematch requirements: they apply to
 
 For ordinary generic contacts, flag `0xC6` (`198`, `FLAG_BEAT_RADIO_TOWER_ROCKETS`) controls rematch availability. It is separate from tier flag `0x97D`, which unlocks entry `2` in the battle table, although vanilla Radio Tower completion sets both.
 
+<details>
+<summary>Changing the availability flag: binary locations and alternative milestones</summary>
+
 The three [call-header conditions](#call-header-condition-types) below read this flag. File offsets are in Overlay 101, which loads at `0x21E7740`:
 
 | Header condition | What the condition adds | Function entry | `0xC6` load |
@@ -802,9 +826,9 @@ The three [call-header conditions](#call-header-condition-types) below read this
 | `FIGHTPOSTROCKETSNOTBUGCONTEST` | Requires Radio Tower, rejects National Park during an active Bug-Catching Contest, and requires an already-pending rematch. | `0xB608` (RAM `0x21F2D48`) | `0xB612` |
 | `POSTROCKETWEEKTIME` | Requires Radio Tower, then checks the contact's weekday and time-of-day bytes. | `0xB5D0` (RAM `0x21F2D10`) | `0xB5D8` |
 
-Overlay 101 calls these three conditions separately at `0xB4C4`, `0xB4CE`, and `0xB4E2`. Each condition loads `0xC6` with the Thumb instruction `MOVS R1, #0xC6`, so patch every condition whose availability rule should change. A replacement flag from `0x0` through `0xFF` can use the existing one-byte immediate; `0x100` or above, including `0x97C`, requires code that loads a full 16-bit flag ID. Do not move the normal setter for `0xC6`: the flag also controls unrelated game behaviour.
+Overlay 101 calls these three conditions separately at `0xB4C4`, `0xB4CE`, and `0xB4E2`. Each condition loads `0xC6` with the Thumb instruction `MOVS R1, #0xC6`, so patch every condition whose availability rule should change. A replacement flag from `0x0` through `0xFF` can use the existing one-byte immediate; `0x100` or above, including `0x97C`, requires code that loads a full 16-bit flag ID. Do not move the normal setter for `0xC6` without caution: the flag also controls unrelated game behaviour.
 
-The following existing low-byte milestone flags can be substituted as read-only availability conditions:
+The following existing low-byte milestone flags could be substituted for some other vanilla conditions:
 
 | Vanilla milestone flag | Immediate byte | Replacement availability condition first passes after |
 |---|:---:|---|
@@ -814,6 +838,8 @@ The following existing low-byte milestone flags can be substituted as read-only 
 | `FLAG_GOT_HM03` (`0xA2`, `162`) | `A2` | Receiving HM03 after the Kimono Girls, when Surf travel becomes available. |
 
 Use these existing flags as read-only conditions; changing their setters affects their original behaviour. Tier unlocks and the other call-header conditions still apply.
+
+</details>
 
 ### Rematch battle table
 
@@ -907,7 +933,7 @@ Rows `0`-`46` are ordinary trainers; rows `47`-`62` are Gym Leaders.
 
 ### Rematch flow
 
-After the phone call has set a pending rematch, the game selects the trainer battle as follows:
+After a phone call sets a pending rematch, the NPC field script calls `GetPhoneBookRematch`. The entry scan and tier selection below run in compiled game code invoked by that command. The field script then starts the returned battle and handles the result:
 
 ![](resources/trainer_rematch_flow.png)
 
@@ -917,13 +943,9 @@ Entry `0` is therefore a real fallback, not only the row's lookup ID. For exampl
 
 In vanilla, entry `1` duplicates the base battle and entry `5` is `TRAINER_NONE`. Once entry `4` has been beaten, the scan reaches entry `5`, selects entry `4`, and allows that final upgraded team to be fought repeatedly.
 
-:::caution
-`0xFFFF` is not a safe placeholder in a rematch row. The selector skips it only while searching for an unbeaten candidate or selecting an earlier entry after a failed tier-unlock check. It does not skip it when a later `TRAINER_NONE` (`0`) terminator selects the preceding entry, and it does not validate the resulting trainer ID. Do not use `0xFFFF` as a repeat marker or immediately before a `TRAINER_NONE` terminator.
-:::
-
 ### Field-script support for phone-trainer NPCs
 
-> Research: [PokeHeartGold: relevant script commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
+> Research: [pokeheartgold: relevant script commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
 
 Vanilla's shared phone-trainer field script uses these commands to turn the pending state into a battle or an item. They are useful when editing an existing trainer NPC script; they do not themselves offer or schedule a new rematch.
 
@@ -933,9 +955,9 @@ Vanilla's shared phone-trainer field script uses these commands to turn the pend
 | `0xD8` | `GetRematchMsgParams` | `introMsg, winMsg, loseMsg` | Writes the three standard rematch battle-message IDs for the active trainer script. It formats battle dialogue only; it does not read or change phone state. |
 | `0x1CC` | `LoadPhoneDat` | `trainerBattleId, result` | Finds the phonebook record whose `trainerId` matches, copies it into the current caller context, and writes its contact ID to `result`; writes `FF` if no matching record exists. Vanilla uses it before the shared trainer-NPC flow. |
 | `0x1CD` | `GetPhoneContactMsgIds` | `messageIndex, archive, message` | Writes the current caller's phone text-archive ID and one of the shared trainer-NPC message IDs. Vanilla uses indices `0`-`4` for registration, refusal, and item dialogue. |
-| `0x1CE` | `ScrCmd_462` *(unnamed)* | `contact` | Clears that contact's pending-rematch bit (`seeking`). It does not clear a phone-call gift. Vanilla calls it after a rematch battle. |
+| `0x1CE` | `ScrCmd_462` *(unnamed)* | `contact` | Clears that contact's pending-rematch bit (`seeking`). It does not clear a phone-call gift. Vanilla calls it after winning a rematch. |
 
-The usual vanilla sequence is: load the contact from the trainer battle ID; use `GetPhoneBookRematch`; if it returns a battle ID, start that battle and then clear `seeking`; otherwise check for a [phone-call gift](#phone-call-gifts) with `GetPhoneContactGiftItem`. This is why a pending rematch takes precedence over a phone-call gift when the player speaks to the NPC.
+The field script loads the contact from the trainer battle ID and calls `GetPhoneBookRematch`. A nonzero result leads to a battle; victory clears `seeking` and checks for a rematch reward. Defeat leaves the rematch pending. If no rematch is selected, the script instead retrieves and clears any [phone-call gift](#phone-call-gifts). This script ordering gives rematches priority over gifts.
 
 ### Gym Leader rematches
 
@@ -943,39 +965,29 @@ Accepting a rematch during an [outgoing Gym Leader call](#gym-leader-conversatio
 
 Editing a Gym Leader row can change or extend its battle tiers; it does not alter the 16-badge, schedule, and pending-state [requirements](#gym-leader-conversations).
 
-### Extending Rematch Tiers
-
-The rematch-table mechanics apply to ordinary phone trainers and Gym Leaders: once a rematch has been offered, the matching Overlay 26 row supplies its battle ID. These changes alter battle-team progression only; they do not alter the separate rematch availability conditions.
-
-#### Add a later tier: entry `5`
-
-Replace `TRAINER_NONE` in entry `5` with a new trainer battle ID, then set tier flag `0x980` from a field script at the desired later milestone (after defeating Trainer Red, for example). Once entry `4` has been beaten, the selector can use the new entry `5` team. This does not require a new table or a larger row.
-
-For an ordinary trainer row, vanilla already supplies entries `1`-`4`. For a Gym Leader row, vanilla entries `3`-`5` are `TRAINER_NONE`; populate every preceding entry that the selector must pass, because the first `TRAINER_NONE` ends its scan. The Gym Leader's separate offer requirements still apply.
-
-#### Add an earlier tier: entry `1`
-
-Replace the duplicate base battle ID in entry `1` with a new trainer battle ID, then set tier flag `0x97C` from a field script at the desired milestone. After the base battle has been beaten, the selector uses this new team when `0x97C` is set; before then, it falls back to entry `0`. This changes the rematch progression only. For Gym Leaders, it does not bypass their separate rematch availability conditions: 16 badges, schedule, and pending state.
+To add earlier or later rematch teams, see [Extending rematch tiers](#extending-rematch-tiers).
 
 ---
 
 ## Gifts after calls and rematches
 
-> Research: [PokeHeartGold: phone gift commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c), [phone-script item effects](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c), [Mom's purchases](https://github.com/pret/pokeheartgold/blob/master/src/mom_gift.c).
+> Research: [pokeheartgold: phone gift commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c), [phone-script item effects](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/overlay_101_021F1D74.c), [Mom's purchases](https://github.com/pret/pokeheartgold/blob/master/src/mom_gift.c).
 
 ### Rematch rewards
 
-A **rematch reward** remains the raw `PhoneBookEntry.gift` value until the shared NPC field script calls `GetPhoneContactRandomGiftBerry` (`0x265`) after the battle. That command is the only rematch-reward special case: it replaces Cheri Berry (`149`, `0x95`, `ITEM_CHERI_BERRY`) with a random one of the first ten berries. Every other item ID, including Poké Ball (`4`, `0x4`, `ITEM_POKE_BALL`), is returned unchanged.
+A **rematch reward** remains the raw `PhoneBookEntry.gift` value until the shared NPC field script calls `GetPhoneContactRandomGiftBerry` (`0x265`) after the battle. The command’s compiled code replaces Cheri Berry (`149`, `0x95`, `ITEM_CHERI_BERRY`) with a random one of the [first ten berries by item ID](https://bulbapedia.bulbagarden.net/wiki/List_of_items_by_index_number_in_Generation_IV). Every other item ID, including Poké Ball (`4`, `0x4`, `ITEM_POKE_BALL`), is returned unchanged.
 
 | Opcode | Command name | Arguments | Effect |
 |---|---|---|---|
 | `0x265` | `GetPhoneContactRandomGiftBerry` | `result` | Writes the current caller's rematch reward item, applying the berry special case described above. |
 
+The field script checks the returned item ID and Bag space, then awards the item.
+
 In vanilla, the nonzero rewards are Joey (HP Up), Kenji (PP Up), Huey (Protein), Vance (Carbos), Parry (Iron), Erin (Calcium), and Ian (a random berry through the Cheri special case).
 
 ### Phone-call gifts
 
-A **phone-call gift** is resolved earlier, by the Overlay 101 phone code when it applies a `PHONESCRIPTTYPE_ITEM` phone script. It uses its own RNG to convert either special-case item before saving the result in `PhoneRematch.giftItem`: Cheri Berry (`149`, `0x95`) becomes one of the first ten berries and Poké Ball (`4`, `0x4`) becomes an Ultra Ball, Great Ball, or Poké Ball. `GetPhoneContactGiftItem` (`0x266`) only retrieves that already selected item and clears it; it does not make another roll.
+A **phone-call gift** is resolved earlier, by the Overlay 101 phone code when it applies a `PHONESCRIPTTYPE_ITEM` phone script. It uses its own RNG to convert either special-case item before saving the result in `PhoneRematch.giftItem`: Cheri Berry (`149`, `0x95`) becomes one of the [first ten berries by item ID](https://bulbapedia.bulbagarden.net/wiki/List_of_items_by_index_number_in_Generation_IV) and Poké Ball (`4`, `0x4`) becomes an Ultra Ball, Great Ball, or Poké Ball. The field command below retrieves this already-selected item without another roll.
 
 | Opcode | Command name | Arguments | Effect |
 |---|---|---|---|
@@ -986,7 +998,7 @@ Consequently, a normal `PHONESCRIPTTYPE_ITEM` definition cannot award a fixed Ch
 The NPC field script checks for an available rematch before retrieving a phone-call gift, so the player collects a queued gift only when no rematch battle is selected.
 
 :::caution
-`GetPhoneContactGiftItem` clears a phone-call gift before the field script checks Bag space. If the Bag is full, the player receives the full-Bag message but the gift has already been lost.
+The field script checks Bag space after retrieving the gift. A full Bag therefore displays the full-Bag message but loses the gift.
 :::
 
 ### Mom's purchases
@@ -1005,54 +1017,46 @@ The queued call announces the purchase. The home field script checks Bag space, 
 
 ## Saved phone state
 
-> Research: [PokeHeartGold: Pokégear save data](https://github.com/pret/pokeheartgold/blob/master/src/save_pokegear.c). For earlier community save research, see [Project Pokémon's Pokégear contact notes](https://projectpokemon.org/home/forums/topic/49014-hgss-pokegear-phone-numbers-memory-location/).
+> Research: [pokeheartgold: Pokégear save data](https://github.com/pret/pokeheartgold/blob/master/src/save_pokegear.c), [recent-caller save helpers](https://github.com/pret/pokeheartgold/blob/master/src/save_misc.c), [BlackShark’s earlier contact-list research](https://projectpokemon.org/home/forums/topic/49014-hgss-pokegear-phone-numbers-memory-location/).
 
-The phonebook is ROM data; registered contacts and temporary phone state are saved separately.
+Offsets below are relative to the named save structure, not absolute save-file offsets. Multi-byte values are little-endian.
 
-### Registered contacts
+| Saved data | Location | Layout / purpose |
+|---|---|---|
+| <span id="registered-contacts">Registered contacts</span> | `SavePokegear + 0x60C` | 75 contact IDs; `FF` marks empty trailing slots. The app saves the resulting manual or [sorted order](#sorting-phone-numbers) when it closes; sort ranks remain ROM data. |
+| Recent callers | `SAVE_MISC_DATA + 0x280` | Eight contact IDs: four for group `0`, two each for groups `1` and `2`; `FF` marks empty slots. [History update rules](#random-caller-history). |
+| Rematches and phone-call gifts | `SavePokegear + 0x4B8` | 75 four-byte records, each holding pending-rematch and gift-present bits, followed by the gift item ID. [Record details](#per-contact-rematches-and-phone-call-gifts). |
+| <span id="queued-event-triggers">Queued event triggers</span> | `SavePokegear + 0x606` | Two bytes; vanilla uses bits `0`–`12` for the [event-call records](#incoming-queued-system-event-trigger). Trigger `n` uses bit `n % 8` of byte `n / 8` (integer division). |
+| <span id="moms-purchase-queue">Mom’s purchase queue</span> | `SavePokegear + 0x5E4` | Five four-byte records, each holding a `u16` item ID and `u16` quantity, collected in queue order. See [Mom’s purchases](#moms-purchases). |
 
-`SavePokegear.phoneContacts[]` is a 75-byte contact-ID list at structure-relative offset `0x60C`. Empty trailing slots are `FF`; the used entries are the player’s registered contacts.
+Unused bits and adjacent bytes are not automatically expansion space. Mom’s bank balance immediately follows her queue at `SavePokegear + 0x5F8`, leaving no sixth slot.
 
-Its order is also the saved manual order of the contact list. When the player moves contacts, or chooses title, alphabetical, or location sorting, the phone app writes its resulting order back to this same list when it closes. The title, alphabet, and location ranks themselves remain ROM data in `pmtel_book.dat`; see [Sorting phone numbers](#sorting-phone-numbers).
+<details id="random-caller-history">
+<summary>Recent-caller history: layout and updates</summary>
 
-See [Registering phone numbers](#registering-phone-numbers) for the field-script commands which add a contact.
+Within `SAVE_MISC_DATA.unk_0280`, bytes `0`–`3` hold group `0`, bytes `4`–`5` group `1`, and bytes `6`–`7` group `2`.
 
-### Random-caller history
+Answering an ordinary random call fills the first empty history slot. If full, the history normally discards its oldest entry. If the original candidate count is exactly one greater than the group’s capacity, it instead clears the history and stores only the new caller. See [caller selection](#what-recently-called-means) for the separate clearing check before exclusions.
 
-> Research: [PokeHeartGold: recent-caller save helpers](https://github.com/pret/pokeheartgold/blob/master/src/save_misc.c).
+The save helpers are `sub_0202AA44`, `sub_0202AA9C`, `sub_0202AAD4`, and `sub_0202AB18`.
 
-The recent-caller history is persistent save data, not a timer. It is stored separately from the Pokégear save block: the eight-byte `SAVE_MISC_DATA.unk_0280` field at structure offset `0x280`. `FF` marks an unused slot.
+</details>
 
-| `unkF` group | History bytes in `SAVE_MISC_DATA + 0x280` | Remembered contact IDs |
-|:---:|---|:---:|
-| `0` | `00`-`03` | `4` |
-| `1` | `04`-`05` | `2` |
-| `2` | `06`-`07` | `2` |
+<details id="per-contact-rematches-and-phone-call-gifts">
+<summary>Rematch and phone-call-gift records: layout and code locations</summary>
 
-The helpers are identified by the decomp as `sub_0202AA44`, `sub_0202AA9C`, `sub_0202AAD4`, and `sub_0202AB18`. The actual save-file location of `SAVE_MISC_DATA` is outside this guide's scope, so use the structure-relative offset rather than assuming a fixed offset in every save file.
+Contact `c` has one record at `SavePokegear + 0x4B8 + (c × 4)` in `PhoneCallPersistentState.rematches`, whether or not vanilla uses its rematch or gift state.
 
-### Per-contact rematches and phone-call gifts
-
-Pending rematches and phone-call gifts are stored together in the `PhoneCallPersistentState.rematches` array inside the Pokégear save block. The array has **75** four-byte records, one for every vanilla contact ID.
-
-For contact ID `c`, its record begins at `SavePokegear` structure-relative offset `0x4B8 + (c × 4)`. Its layout is:
-
-| Record-relative offset | Size | Meaning |
-|:---:|:---:|---|
+| Record offset | Size | Meaning |
+|---|---|---|
 | `00` | `u16` | Bit `0`: pending rematch (`seeking`). Bit `1`: phone-call gift present (`hasGift`). |
-| `02` | `u16` | The queued phone-call gift's item ID (`giftItem`). This is meaningful only while bit `1` is set. |
+| `02` | `u16` | Gift item ID (`giftItem`), meaningful while bit `1` is set. |
 
-The state helpers reject contact IDs `75` and higher. In ARM9 they are at `0x2F0C4` (set/clear `seeking`), `0x2F100` (set/clear `giftItem` and `hasGift`), and `0x2F128` (read `giftItem`). Each calculates the record address as `base + (contact ID × 4)` and checks `contact ID < 75`.
+ARM9 helpers at `0x2F0C4` (set/clear `seeking`), `0x2F100` (set/clear gift and `hasGift`) and `0x2F128` (read gift) reject contact IDs `75` and higher.
 
-This allows one pending rematch and one phone-call gift per contact. It does **not** provide extra slots merely because the bits are stored in a `u16`: the remaining bits have no documented, supported purpose, and bit `2` is initialised in vanilla. Do not treat them as free custom flags.
+Within `PhoneCallPersistentState`, Mom’s queue begins at `0x12C`, the following bank balance at `0x140`, and `callTriggerFlags[2]` at `0x14E`.
 
-### Queued event triggers
-
-`PhoneCallPersistentState.callTriggerFlags[2]` is a two-byte bitfield at structure-relative offset `0x14E`, or `SavePokegear` offset `0x606`. Trigger `n` uses bit `n % 8` of byte `n / 8` (integer division). Vanilla uses bits `0`-`12`; each indexes an [event-call record](#incoming-queued-system-event-trigger) in Overlay 2.
-
-### Mom's purchase queue
-
-Mom's purchases use a separate five-entry FIFO queue, not a per-contact phone-call-gift record. It begins at `PhoneCallPersistentState` offset `0x12C` (or `SavePokegear` offset `0x5E4`); each four-byte entry is a little-endian `u16` item ID followed by a `u16` quantity. The following bank-balance field begins at `PhoneCallPersistentState` offset `0x140`, so this queue also has no in-place sixth slot.
+</details>
 
 ---
 
@@ -1060,11 +1064,11 @@ Mom's purchases use a separate five-entry FIFO queue, not a per-contact phone-ca
 
 ### Picnicker Gina's Leaf Stone call
 
-> Research: [PokeHeartGold: generic call headers](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [phone-script definitions](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_script_defs.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
+> Research: [pokeheartgold: generic call headers](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [phone-script definitions](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_script_defs.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
 
 Gina's Leaf Stone call is an **incoming** generic call and a **phone-call gift**. It is not a rematch reward.
 
-First, the [incoming random-call selector](#incoming-random-frequency) must choose Gina: she must be registered, eligible for the chosen `unkF` group, and not excluded by the current map or her group's recent-caller history. The generic code then checks Gina's incoming call headers in priority order. Her seven candidate headers are followed by a terminating control row:
+First, the [incoming random-call selector](#incoming-random-frequency) must choose Gina: she must be registered, eligible for the chosen `unkF` group, and not excluded by the current map or her group's recent-caller history. The generic code then checks Gina's incoming [call headers](#call-headers-selecting-a-conversation) in priority order. Her seven candidate headers are followed by a terminating control row:
 
 | Priority | Condition | Chance value | Phone script | Purpose |
 |:---:|---|:---:|:---:|---|
@@ -1078,31 +1082,31 @@ First, the [incoming random-call selector](#incoming-random-frequency) must choo
 
 The first eligible row wins. The Rocket-takeover, pending-rematch and queued-gift rows take precedence when their conditions pass. If none apply, Gina's rematch row is tested before the Leaf Stone row. A chance value of `30` succeeds 31% of the time, and a value of `10` succeeds 11% of the time; the Leaf Stone row is reached when the preceding rematch row is ineligible or its chance roll fails.
 
-Phone script `257` selects Gina's archive message `13` and has the `ITEM` result with `ITEM_LEAF_STONE`. Its automatic effect queues one Leaf Stone before the text appears. Gina's contact record has greeting-set value `1`, so the game chooses the appropriate incoming greeting from shared archive `0640` before it prints message `13`. See [Call headers](#call-headers-selecting-a-conversation), [Phone scripts](#phone-scripts-message-and-automatic-effect), [Greeting selection](#greeting-selection-selecting-an-opening-remark), and [Dialogue text](#dialogue-common-greeting-text-and-contact-specific-text) for the individual data layouts.
+[Phone script](#phone-scripts-message-and-automatic-effect) `257` selects Gina's [archive message](#dialogue-common-greeting-text-and-contact-specific-text) `13` and has the `ITEM` result with `ITEM_LEAF_STONE`. Its automatic effect queues one Leaf Stone before the text appears. Gina's contact record has [greeting-set](#greeting-selection-selecting-an-opening-remark) value `1`, so the game chooses the appropriate incoming greeting from shared archive `0640` before it prints message `13`.
 
 The call does not give the item directly. When the player next talks to Gina, her shared NPC field script first checks that a rematch is not pending, then retrieves the queued phone-call gift. The Leaf Stone is awarded only if there is Bag space; a full Bag displays the full-Bag message but loses the queued gift. This behaviour is the shared gift path described in [Gifts after calls and rematches](#gifts-after-calls-and-rematches).
 
 ### Youngster Joey's rematch
 
-> Research: [PokeHeartGold: generic call headers](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [ordinary generic call logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c), [Overlay 26 rematch selector](https://github.com/pret/pokeheartgold/blob/master/src/overlay_26_022598C0.c).
+> Research: [pokeheartgold: generic call headers](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/phone_generic_headers.c), [ordinary generic call logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_generic.c), [Overlay 26 rematch selector](https://github.com/pret/pokeheartgold/blob/master/src/overlay_26_022598C0.c).
 
 Joey is a generic (type `0`) phone trainer on Route 30. His contact record supplies the original trainer battle, a Monday/day schedule, and a fixed HP Up rematch reward.
 
 If no rematch is already pending and the player calls from another map on Monday during the day, Joey's outgoing `POSTROCKETWEEKTIME` call header selects phone script `033`. It requires the Radio Tower flag `0xC6` and sets Joey's pending-rematch state. If Joey is chosen for an ordinary random incoming call, his separate incoming header can offer the same rematch without the weekday/time requirement. Either route leads to the same pending state; see [Rematch availability conditions](#rematch-availability-conditions).
 
-When the player next speaks to Joey, the shared trainer field script finds his Overlay 26 row from his trainer ID. After Joey's original battle has been beaten, the selector reaches entry `2` and uses its upgraded battle when tier flag `0x97D` is set. After the battle, the field script clears the pending rematch and gives Joey's fixed HP Up rematch reward. See [Rematch flow](#rematch-flow) and [Gifts after calls and rematches](#gifts-after-calls-and-rematches).
+When the player next speaks to Joey, the shared trainer field script finds his Overlay 26 row from his trainer ID. For his first upgraded team, two separate flags matter: `0xC6` (`198`) allows the phone call to offer a rematch; `0x97D` (`2429`) unlocks entry `2` when the battle is selected. Vanilla Radio Tower completion sets both. With only `0xC6` set and no tier flags unlocked, a rematch can be arranged but falls back to Joey's original team. After a victory, the field script clears the pending rematch and awards his HP Up reward if there is Bag space. See [Rematch flow](#rematch-flow) and [Gifts after calls and rematches](#gifts-after-calls-and-rematches).
 
 ### Professor Elm's stolen-Pokémon call
 
-> Research: [PokeHeartGold: Route 30 field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0227_R30.s), [Professor Elm's phone logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_prof_elm.c).
+> Research: [pokeheartgold: Route 30 field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0227_R30.s), [Professor Elm's phone logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_prof_elm.c).
 
 Elm's stolen-Pokémon call is a direct field-scripted call, not a random or queued incoming call. The Route 30 field script sets flag `0xEE` (`238`, decomp name: `FLAG_GOT_ELMS_PANIC_CALL`), then configures Elm with call mode `2` and predefined script index `0` before launching the call. Elm's special-contact logic maps that index to `PHONE_SCRIPT_002`.
 
-The call therefore does not wait for the ten-minute timer, use the random-caller pool, or consume a queued trigger bit. It demonstrates the separate field-script route: the map script supplies the caller and conversation, while Elm's specialised call code displays it. See [Incoming: field-script trigger](#incoming-field-script-trigger) and [Phone conversations](#phone-conversations).
+The call does not wait for the ten-minute timer, use the random-caller pool, or consume a queued trigger bit. The map script supplies the caller and conversation, while Elm's specialised call code displays it. See [Incoming: field-script trigger](#incoming-field-script-trigger) and [Phone conversations](#phone-conversations).
 
 ### Mom's purchase call
 
-> Research: [PokeHeartGold: Mom's purchases and trigger scheduling](https://github.com/pret/pokeheartgold/blob/master/src/mom_gift.c), [Mom's home field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0144.s).
+> Research: [pokeheartgold: Mom's purchases and trigger scheduling](https://github.com/pret/pokeheartgold/blob/master/src/mom_gift.c), [Mom's home field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0144.s).
 
 Mom's savings code first puts an item and quantity into her separate five-entry purchase queue. It then sets queued trigger bit `12`, `CALL_TRIGGER_MOM_BOUGHT_SOMETHING`. At the next permitted timed incoming-call check, the queued-call path takes priority over ordinary random callers. Overlay 2 record `12` selects Mom and `PHONE_SCRIPT_027`, which announces the purchase.
 
@@ -1110,7 +1114,7 @@ Answering clears trigger bit `12`, but leaves the purchase queued. At home, Mom'
 
 ### Falkner's Gym Leader rematch
 
-> Research: [PokeHeartGold: Gym Leader phone logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_gym_leader.c), [Overlay 26 rematch selector](https://github.com/pret/pokeheartgold/blob/master/src/overlay_26_022598C0.c).
+> Research: [pokeheartgold: Gym Leader phone logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_gym_leader.c), [Overlay 26 rematch selector](https://github.com/pret/pokeheartgold/blob/master/src/overlay_26_022598C0.c).
 
 Falkner is a special contact (type `12`), so his outgoing call does not use generic call headers or the ordinary Radio Tower availability condition. The player must call from another map, hold all 16 badges, have no rematch already pending, and call at Falkner's configured weekday and time. The call then asks whether to arrange the battle; accepting sets Falkner's pending-rematch state.
 
@@ -1128,6 +1132,37 @@ The Fighting Dojo field script uses the same shared lookup as an ordinary phone 
 - Reduce the frequency of ordinary random incoming calls.
 - Change a rematch reward.
 - Create a direct field-scripted call and queue a system-event call.
+
+### Planning notes: Gina's Leaf Stone
+
+Separate edits which increase Gina's call frequency from edits which increase the gift's chance within a call:
+
+| Possible edit | Effect / qualification |
+|---|---|
+| Change Gina's random-call group from `2` to `1` or `0`. | Those groups are selected more often, but Gina competes with their other eligible contacts and uses their recent-caller history. This is not a guaranteed improvement; it depends on the registered contacts. |
+| Move her gift-offer header above her rematch-offer header. | Tests the gift first. Pending-rematch and pending-gift restrictions still apply; moving the header above their reminder conversations does not bypass those restrictions. |
+| Increase the gift-offer header's chance value. | Improves the chance when that header is reached and eligible. Values `0`–`99` succeed `1%`–`100%` of the time; `100` also always succeeds. |
+| Reduce the preceding rematch-offer header's chance value. | Lets more calls reach the gift header. A value of `0` still has a 1% success chance. |
+| Launch a direct field-script call to Gina. | Chooses Gina on demand, bypassing timed caller selection; her incoming headers retain their normal conditions and chance rolls. Use `SetPhoneCall contact 2 0`, then `RunPhoneCall`. |
+| Shorten the shared incoming-call interval. | Creates more opportunities for all callers, not just Gina; it also affects queued-event timing. |
+
+Possible further examples: change the gift header's condition, or add a gift offer to Gina's outgoing headers. These change when the gift can be offered rather than simply increasing its existing chance.
+
+---
+
+## Extending rematch tiers
+
+The rematch-table mechanics apply to ordinary phone trainers and Gym Leaders: once a rematch has been offered, the matching Overlay 26 row supplies its battle ID. These changes alter battle-team progression only; they do not alter the separate rematch availability conditions.
+
+### Add a later tier: entry `5`
+
+Replace `TRAINER_NONE` in entry `5` with a new trainer battle ID, then set tier flag `0x980` from a field script at the desired later milestone (after defeating Trainer Red, for example). Once entry `4` has been beaten, the selector can use the new entry `5` team. This does not require a new table or a larger row.
+
+For an ordinary trainer row, vanilla already supplies entries `1`-`4`. For a Gym Leader row, vanilla entries `3`-`5` are `TRAINER_NONE`; populate every preceding entry that the selector must pass, because the first `TRAINER_NONE` ends its scan.
+
+### Add an earlier tier: entry `1`
+
+Replace the duplicate base battle ID in entry `1` with a new trainer battle ID, then set tier flag `0x97C` from a field script at the desired milestone. After the base battle has been beaten, the selector uses this new team when `0x97C` is set; before then, it falls back to entry `0`.
 
 ---
 
@@ -1172,7 +1207,7 @@ For a new table at RAM address `T`, replace these four little-endian 32-bit poin
 
 ### Accepting the additional trigger IDs
 
-> Research: [PokeHeartGold: queued-call state](https://github.com/pret/pokeheartgold/blob/master/src/save_pokegear.c), [queued-event selection](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c).
+> Research: [pokeheartgold: queued-call state](https://github.com/pret/pokeheartgold/blob/master/src/save_pokegear.c), [queued-event selection](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c).
 
 Set all six count bytes below to the chosen total: `0E`, `0F` or `10` for 14, 15 or 16 triggers respectively. In the replacement column, `NN` means that count byte. The count is one greater than the highest accepted trigger ID.
 
@@ -1185,13 +1220,11 @@ Set all six count bytes below to the chosen total: `0E`, `0F` or `10` for 14, 15
 | Overlay 2 | `0xC6AC` | `0D 22` | `NN 22` | Clear the full candidate buffer. |
 | Overlay 2 | `0xC6FA` | `0D 2C` | `NN 2C` | Scan the expanded ID range. |
 
-The ARM9 comparisons are the set, clear, and check helpers in `src/save_pokegear.c`; the Overlay 2 values are in `ov02_02252218` in `src/field/overlay_2_gear_phone.c`. The bit helpers use `triggerId / 8` to select the byte and `triggerId % 8` to select its bit. ID `15` fits in the second byte; ID `16` would require storage beyond this field.
+The ARM9 comparisons are in `src/save_pokegear.c`; the Overlay 2 values are in `ov02_02252218` in `src/field/overlay_2_gear_phone.c`. 
 
 ### Setting and checking new triggers
 
 Set the new trigger from a field script with command `0x94`, supplying its ID and expedite byte. To trigger it automatically from a gameplay event, add code that detects that event and sets the same trigger.
-
-Expansion to trigger `13` has been tested in-game with a relocated table. Expansion to triggers `14` and `15` is supported by the traced storage and selection logic but has not been tested in-game.
 
 ---
 
@@ -1199,11 +1232,11 @@ Expansion to trigger `13` has been tested in-game with a relocated table. Expans
 
 This is a binary-patching project, not a phonebook-file edit. A complete expansion needs to address all of the following:
 
-- the phonebook count and every contact-ID range check or fixed loop;
-- the saved registered-contact/order list and the per-contact rematch/phone-call-gift array, including the data which immediately follows them and the total save-block size;
-- contact-indexed UI data and sort ranks;
-- for each new generic contact: 16 call headers, a text-archive mapping and dialogue, and phone-script records for its conversations, including the local call. Repurpose suitable records or expand and repoint the phone-script table as needed; and
-- migration or deliberate invalidation of existing saves.
+- The phonebook count and every contact-ID range check or fixed loop;
+- The saved registered-contact/order list and the per-contact rematch/phone-call-gift array, including the data which immediately follows them and the total save-block size;
+- Contact-indexed UI data and sort ranks;
+- For each new generic contact: 16 call headers, a text-archive mapping and dialogue, and phone-script records for its conversations, including the local call. Repurpose suitable records or expand and repoint the phone-script table as needed; and
+- Migration or deliberate invalidation of existing saves.
 
 Greeting rows may be reused, as they are already shared in vanilla. The individual limits described elsewhere on this page are parts of this one expansion task, not separate data-only edits.
 
