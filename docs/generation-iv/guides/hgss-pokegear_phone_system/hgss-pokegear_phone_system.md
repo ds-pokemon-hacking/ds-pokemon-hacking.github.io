@@ -27,7 +27,7 @@ The system is easiest to follow in the same order as a call moves through it:
 3. [**Phone conversations**](#phone-conversations) explains what the chosen contact says and does. A generic contact (contact type `0`) uses call headers and phone scripts; a special contact uses its own selection logic.
 4. [**Trainer rematches**](#trainer-rematches) and [**gifts after calls and rematches**](#gifts-after-calls-and-rematches) explain how battles are selected and items are awarded.
 
-Later sections describe [saved phone state](#saved-phone-state), connect these systems through [case studies](#case-studies), and cover [queued-event expansion](#expanding-queued-event-calls) and [contact expansion](#expanding-beyond-75-contacts).
+Later sections describe [saved phone state](#saved-phone-state), illustrate the system through [case studies](#case-studies), and give [example edits](#example-edits). Expansion sections cover [rematch tiers](#extending-rematch-tiers), [queued event calls](#expanding-queued-event-calls), and [additional contacts](#expanding-beyond-75-contacts).
 
 For concrete walkthroughs of these systems working together, start with the [case studies](#case-studies).
 
@@ -54,7 +54,7 @@ The following table maps the phone data and code.
 
 ## Phonebook data
 
-> Research: [pokeheartgold: phonebook reader](https://github.com/pret/pokeheartgold/blob/master/src/phonebook_dat.c), [phone-contact structures](https://github.com/pret/pokeheartgold/blob/master/include/gear_phone.h), [weekday values](https://github.com/pret/pokeheartgold/blob/master/lib/include/nitro/rtc/ARM9/api.h), [time-of-day conversion](https://github.com/pret/pokeheartgold/blob/master/src/gf_rtc.c).
+> Research: [pokeheartgold: phonebook reader](https://github.com/pret/pokeheartgold/blob/master/src/phonebook_dat.c), [phone-contact structures](https://github.com/pret/pokeheartgold/blob/master/include/gear_phone.h), [time-of-day conversion](https://github.com/pret/pokeheartgold/blob/master/src/gf_rtc.c).
 
 The ROM file is a direct NitroFS file: `tel/pmtel_book.dat`. It is **not** a NARC member.  
 
@@ -384,7 +384,7 @@ The call starts with `isScriptedCall = 0`. A contact of type `0` uses the generi
 <details>
 <summary>Click for details...</summary>
 
-At Overlay 2 file offset `0xC45C` (RAM `0x2251FDC`), the random-candidate builder contains this literal chain of five comparisons:
+The five allowed-type comparisons begin at Overlay 2 file offset `0xC4F8` (RAM `0x2252078`):
 
 ```text
 type == 0 || type == 12 || type == 11 || type == 10 || type == 14
@@ -425,6 +425,8 @@ The caller, predefined phone script, and pickup behaviour come from a 13-record 
 callerId (u8), unknown (u8), phoneScriptId (u16 little-endian), forcePickUp (u8), unknown (u8)
 ```
 
+Although stored as two bytes, `phoneScriptId` is truncated to one byte when passed to the call manager: only values `0`-`255` survive unchanged. Higher IDs require widening that interface and its stored fields.
+
 | Bit | File offset | Trigger ID | Caller ID | Phone script ID | Condition that queues it | Forced Pickup |
 |:---:|:---:|---|:---:|:---:|---|:---:|
 | `0` | `0xE104` | `ELM_EGG_HATCHED` | `1` Elm | `13` | The gift Togepi Egg hatches. | No |
@@ -444,6 +446,8 @@ callerId (u8), unknown (u8), phoneScriptId (u16 little-endian), forcePickUp (u8)
 :::info Phone-script selection
 The contact's code interprets the supplied phone-script ID. For triggers `4` and `5`, Oak and the Day-Care Man ignore it and select scripts from Pokédex progress or an Egg-call flag respectively. For trigger `6`, Baoba interprets `0` as his specialised Safari Zone conversation, which chooses dialogue from the saved list of changed areas. Changing this field therefore cannot universally force a particular phone script.
 :::
+
+Pending events exclude callers on the player's map header, except the Day-Care Man, whose number must be registered instead. If several events remain eligible, one is chosen randomly.
 
 When a set trigger is selected, the ring manager reads its matching table record, assigns the caller and `phoneScriptId`, and marks the call as an event call (`isScriptedCall = 3`). The `forcePickUp` byte decides what happens next:
 
@@ -509,6 +513,8 @@ Not every incoming call uses the queued trigger-bit table. A normal field script
 | `0x1AF` | `RunPhoneCall` | `RunPhoneCall` | Launch the configured phone call. |
 :::info
 `SetPhoneCall` can select any valid contact, but cannot universally force a particular phone script. The contact's selection logic interprets `scriptedFlag` (call mode) and `predefinedScript` (phone script ID). With call mode `2`, Elm accepts indices `0`-`4` for scripts `2`-`6`; Mom starts her savings conversation, Oak selects script `82`, and Baoba selects script `141`.  
+
+`predefinedScript` is also limited to `0`-`255` by the call manager.
 
 Generic contacts ignore the supplied script value and use their incoming call headers if `SetPhoneCall` *[contactId]* `2` `0`, followed by `RunPhoneCall` were used.
 :::
@@ -584,7 +590,7 @@ The first byte of a call header determines whether its phone script is eligible.
 | `08` | `GIFTNOTBUGCONTEST` | A phone-call gift is already queued (`PhoneRematch.giftItem` is set); either the contact's `mapId` is not National Park or `FLAG_UNK_996` (`0x996`) is clear; then its chance roll succeeds. |
 | `FF` | `NONE` | Stops the current group of up to eight call headers. Vanilla uses `FF 00 00 00 00 00` for unused slots. |
 
-`NIL` and `NONE` are scan terminators; neither selects a phone script.
+`NIL` and `NONE` stop the scan. If no header passes, the selector uses the last tested header even though its condition failed; an initial terminator returns script `0`. Keep an unconditional final candidate when editing headers.
 
 </details>
 
@@ -835,7 +841,7 @@ The following existing low-byte milestone flags could be substituted for some ot
 | `FLAG_GOT_POKEGEAR` (`0x9C`, `156`) | `9C` | Receiving the Pokégear. |
 | `FLAG_GOT_EGG_FROM_ELMS_ASSISTANT` (`0x70`, `112`) | `70` | Receiving the Togepi Egg; Route 32 progression is blocked until this flag is set. |
 | `FLAG_GOT_TM30_FROM_MORTY` (`0xA6`, `166`) | `A6` | Beating Morty and receiving TM30. |
-| `FLAG_GOT_HM03` (`0xA2`, `162`) | `A2` | Receiving HM03 after the Kimono Girls, when Surf travel becomes available. |
+| `FLAG_GOT_HM03` (`0xA2`, `162`) | `A2` | Receiving HM03 at the Dance Theatre. |
 
 Use these existing flags as read-only conditions; changing their setters affects their original behaviour. Tier unlocks and the other call-header conditions still apply.
 
@@ -945,25 +951,27 @@ In vanilla, entry `1` duplicates the base battle and entry `5` is `TRAINER_NONE`
 
 ### Field-script support for phone-trainer NPCs
 
-> Research: [pokeheartgold: relevant script commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
+> Research: [pokeheartgold: relevant script commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c), [trainer-message commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_battle.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
 
 Vanilla's shared phone-trainer field script uses these commands to turn the pending state into a battle or an item. They are useful when editing an existing trainer NPC script; they do not themselves offer or schedule a new rematch.
 
 | Opcode | Command name | Arguments | Effect |
 |---|---|---|---|
 | `0x8E` | `GetPhoneBookRematch` | `contact, result` | Writes the selected rematch trainer battle ID to `result`, or `0` when that contact has no usable pending rematch. The field script passes the nonzero result to its trainer-battle path. |
-| `0xD8` | `GetRematchMsgParams` | `introMsg, winMsg, loseMsg` | Writes the three standard rematch battle-message IDs for the active trainer script. It formats battle dialogue only; it does not read or change phone state. |
+| `0xD8` | `GetRematchMsgParams` | `result0, result1, result2` | Writes three trainer-message type selectors for the active trainer script, including the rematch introduction. Does not read or change phone state. |
 | `0x1CC` | `LoadPhoneDat` | `trainerBattleId, result` | Finds the phonebook record whose `trainerId` matches, copies it into the current caller context, and writes its contact ID to `result`; writes `FF` if no matching record exists. Vanilla uses it before the shared trainer-NPC flow. |
 | `0x1CD` | `GetPhoneContactMsgIds` | `messageIndex, archive, message` | Writes the current caller's phone text-archive ID and one of the shared trainer-NPC message IDs. Vanilla uses indices `0`-`4` for registration, refusal, and item dialogue. |
 | `0x1CE` | `ScrCmd_462` *(unnamed)* | `contact` | Clears that contact's pending-rematch bit (`seeking`). It does not clear a phone-call gift. Vanilla calls it after winning a rematch. |
 
 The field script loads the contact from the trainer battle ID and calls `GetPhoneBookRematch`. A nonzero result leads to a battle; victory clears `seeking` and checks for a rematch reward. Defeat leaves the rematch pending. If no rematch is selected, the script instead retrieves and clears any [phone-call gift](#phone-call-gifts). This script ordering gives rematches priority over gifts.
 
+When assigning a generic contact to a different existing trainer, add rematch-introduction text to that trainer's messages: type `17` for a single trainer, or `18`/`19` for double trainers. Registration and gift dialogue remain in messages `1`-`5` of the contact's phone text archive; update their wording as needed. An NPC using the standard trainer script needs no common-script changes.
+
+Special contacts may have additional rematch rules: Kenji (type `6`, contact `16`) can only be rematched during daytime (10:00-19:59), enforced by [the rematch lookup](https://github.com/pret/pokeheartgold/blob/master/src/unk_020932A4.c).
+
 ### Gym Leader rematches
 
-Accepting a rematch during an [outgoing Gym Leader call](#gym-leader-conversations) sets the pending-rematch state. The Fighting Dojo field script uses the matching Gym Leader's Overlay 26 row and the shared [rematch flow](#rematch-flow). In vanilla, each Gym Leader row has the base battle in entries `0` and `1`, the first upgraded battle in entry `2`, and `TRAINER_NONE` in entries `3`-`5`.
-
-Editing a Gym Leader row can change or extend its battle tiers; it does not alter the 16-badge, schedule, and pending-state [requirements](#gym-leader-conversations).
+Accepting an [outgoing Gym Leader rematch](#gym-leader-conversations) sets its pending state. The Fighting Dojo script checks the Overlay 26 lookup result to decide whether the leader appears, but launches a fixed trainer battle ID. Changing or adding rematch tiers therefore also requires editing the [Dojo field script (`832`)](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0832_T11R0101.s) to battle the returned trainer ID. Editing the existing fixed trainer's team requires no script change.
 
 To add earlier or later rematch teams, see [Extending rematch tiers](#extending-rematch-tiers).
 
@@ -1003,7 +1011,7 @@ The field script checks Bag space after retrieving the gift. A full Bag therefor
 
 ### Mom's purchases
 
-Mom's purchases use their own five-entry queue rather than `PhoneRematch.giftItem`. The home scripts use these additional commands:
+Mom's purchases use their own five-entry queue rather than `PhoneRematch.giftItem`. The Poké Mart deliveryman's field script uses these commands:
 
 | Opcode | Command name | Arguments | Effect |
 |---|---|---|---|
@@ -1011,7 +1019,7 @@ Mom's purchases use their own five-entry queue rather than `PhoneRematch.giftIte
 | `0x32B` | `ScrCmd_811` *(unnamed)* | `item, quantity` | Reads the first queued Mom item and its quantity without removing it. |
 | `0x32C` | `ScrCmd_812` *(unnamed)* | None | Removes the first queued Mom item and shifts the remaining entries forwards. |
 
-The queued call announces the purchase. The home field script checks Bag space, then removes the queued item and clears `CALL_TRIGGER_MOM_BOUGHT_SOMETHING` only after a successful award. A full Bag leaves the purchase queued.
+The queued call announces the purchase. The deliveryman's field script checks Bag space, then removes the queued item and clears `CALL_TRIGGER_MOM_BOUGHT_SOMETHING` only after a successful award. A full Bag leaves the purchase queued.
 
 ---
 
@@ -1106,11 +1114,11 @@ The call does not wait for the ten-minute timer, use the random-caller pool, or 
 
 ### Mom's purchase call
 
-> Research: [pokeheartgold: Mom's purchases and trigger scheduling](https://github.com/pret/pokeheartgold/blob/master/src/mom_gift.c), [Mom's home field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0144.s).
+> Research: [pokeheartgold: Mom's purchases and trigger scheduling](https://github.com/pret/pokeheartgold/blob/master/src/mom_gift.c), [Poké Mart deliveryman field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0144.s).
 
 Mom's savings code first puts an item and quantity into her separate five-entry purchase queue. It then sets queued trigger bit `12`, `CALL_TRIGGER_MOM_BOUGHT_SOMETHING`. At the next permitted timed incoming-call check, the queued-call path takes priority over ordinary random callers. Overlay 2 record `12` selects Mom and `PHONE_SCRIPT_027`, which announces the purchase.
 
-Answering clears trigger bit `12`, but leaves the purchase queued. At home, Mom's field script checks Bag space and removes the first purchase only after awarding it; it also clears any still-pending purchase-call trigger. A full Bag preserves the purchase. See [Mom's purchase queue](#moms-purchase-queue) and [Mom's purchases](#moms-purchases).
+Answering clears trigger bit `12`, but leaves the purchase queued. At a Poké Mart, the deliveryman's field script checks Bag space and removes the first purchase only after awarding it; it also clears any still-pending purchase-call trigger. A full Bag preserves the purchase. See [Mom's purchase queue](#moms-purchase-queue) and [Mom's purchases](#moms-purchases).
 
 ### Falkner's Gym Leader rematch
 
@@ -1118,47 +1126,122 @@ Answering clears trigger bit `12`, but leaves the purchase queued. At home, Mom'
 
 Falkner is a special contact (type `12`), so his outgoing call does not use generic call headers or the ordinary Radio Tower availability condition. The player must call from another map, hold all 16 badges, have no rematch already pending, and call at Falkner's configured weekday and time. The call then asks whether to arrange the battle; accepting sets Falkner's pending-rematch state.
 
-The Fighting Dojo field script uses the same shared lookup as an ordinary phone trainer: Falkner's trainer ID finds Overlay 26 row `47`. The row contains his original battle in entries `0` and `1`, then his rematch in entry `2`; the standard tier selector chooses the appropriate battle. This shows that Gym Leaders have their own **offer** logic but share the ordinary trainer-table and field-script **battle** path. See [Gym Leader rematches](#gym-leader-rematches) and [Rematch flow](#rematch-flow).
+The Fighting Dojo script checks Falkner's Overlay 26 row `47` through `GetPhoneBookRematch`. A nonzero result makes him appear, but his interaction launches the fixed trainer battle ID `712`. Changing the row alone will not change his team; see [Gym Leader rematches](#gym-leader-rematches).
 
 ---
 
 ## Example edits
 
-*Planned section.* Each example will give one targeted edit, its expected in-game result, and an independent test procedure.
 
-- Increase the chance of receiving Picnicker Gina's Leaf Stone, including the different header-priority and chance changes which can affect it.
-- Enable ordinary trainer rematches earlier and add new entry-`1` rematch battles.
-- Add entry-`5` rematch battles unlocked after defeating Trainer Red.
-- Reduce the frequency of ordinary random incoming calls.
-- Change a rematch reward.
-- Create a direct field-scripted call and queue a system-event call.
+### Add a Lure Ball rematch reward for Fisherman Ralph
 
-### Planning notes: Gina's Leaf Stone
+1. Open `files/tel/pmtel_book.dat` from your DSPRE contents folder in a hex editor.
+2. Go to file offset `0xE8`: Ralph's record starts at `0xE0`, and its rematch reward is at `+0x08`. See [File layout](#file-layout).
+3. Replace `00 00` with `EE 01` (Lure Ball, item ID `494` or `0x1EE`, stored little-endian).
+4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM from that folder using DSPRE. Ralph will award one Lure Ball after a rematch victory, provided there is Bag space. See [Rematch rewards](#rematch-rewards).
 
-Separate edits which increase Gina's call frequency from edits which increase the gift's chance within a call:
+### Reduce the frequency of random incoming calls
 
-| Possible edit | Effect / qualification |
-|---|---|
-| Change Gina's random-call group from `2` to `1` or `0`. | Those groups are selected more often, but Gina competes with their other eligible contacts and uses their recent-caller history. This is not a guaranteed improvement; it depends on the registered contacts. |
-| Move her gift-offer header above her rematch-offer header. | Tests the gift first. Pending-rematch and pending-gift restrictions still apply; moving the header above their reminder conversations does not bypass those restrictions. |
-| Increase the gift-offer header's chance value. | Improves the chance when that header is reached and eligible. Values `0`–`99` succeed `1%`–`100%` of the time; `100` also always succeeds. |
-| Reduce the preceding rematch-offer header's chance value. | Lets more calls reach the gift header. A value of `0` still has a 1% success chance. |
-| Launch a direct field-script call to Gina. | Chooses Gina on demand, bypassing timed caller selection; her incoming headers retain their normal conditions and chance rolls. Use `SetPhoneCall contact 2 0`, then `RunPhoneCall`. |
-| Shorten the shared incoming-call interval. | Creates more opportunities for all callers, not just Gina; it also affects queued-event timing. |
+1. Open the decompressed `arm9/arm9.bin` from your DSPRE contents folder in a hex editor. See [Changing the shared incoming-call threshold](#changing-the-shared-incoming-call-threshold).
+2. At file offset `0x92DB2`, replace `0A 20` with `14 20`.
+3. At file offset `0x92E44`, replace `0A 29` with `14 29`. Together, these edits increase the incoming-call interval from 10 to 20 minutes. This also affects queued event calls.
+4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM from that folder using DSPRE.
 
-Possible further examples: change the gift header's condition, or add a gift offer to Gina's outgoing headers. These change when the gift can be offered rather than simply increasing its existing chance.
+### Create a direct field-scripted call from Professor Elm
+
+1. Identify an unused, persistent flag to record that the call has occurred.
+2. In DSPRE's text editor, append the desired dialogue to Elm's text archive `716`. Note its message ID, which must fit within `0`-`255`. See [Dialogue](#dialogue-common-greeting-text-and-contact-specific-text).
+3. Open decompressed `ov101.bin` from your DSPRE contents folder. At `0x11460`, replace the six bytes for phone script `6`, `29 2A 00 00 00 00`, with `WW XX 12 00 YY ZZ`: `WW` and `XX` are the male and female message IDs, and `YY ZZ` is your flag ID in little-endian order. Each placeholder represents one byte. Use the same message ID twice if both genders share the dialogue. `12 00` selects the flag-setting effect. See [Phone scripts](#phone-scripts-message-and-automatic-effect).
+4. In DSPRE, configure a map-entry level script that supports running an event on the desired map. Check your chosen flag and end immediately if it is already set.
+5. If the flag is clear, run the following sequence, then end the field script:
+   ```text
+   SetVar 0x8004 1
+   SetVar 0x8005 2
+   SetVar 0x8006 4
+   CallStd 2039
+   ```
+   This selects Elm, call mode `2`, and index `4` for phone script `6`. Standard script `2039` handles ringing and screen transitions. See [Professor Elm's calls](#professor-elm-story-calls-and-status-calls).
+6. Save the text, scripts and edited overlay, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
+
+### Enable early rematches and add tier 1 teams
+
+1. In DSPRE, open the Violet City Poké Mart script file `858`. Immediately after the assistant sets flag `0x70` (`112`) for giving the Togepi Egg, add `SetFlag 0x97C` (`2428`) to unlock tier `1`. The player must receive the Egg after applying this edit for the new flag to be set. See [Extending rematch tiers](#extending-rematch-tiers).
+2. Open decompressed `ov101.bin` from your DSPRE contents folder. At offsets `0xB5A4`, `0xB5D8` and `0xB612`, replace `C6 21` with `70 21`. Ordinary rematch availability now requires receiving the Egg instead of clearing Radio Tower. See [Radio Tower availability condition](#radio-tower-availability-condition-ordinary-contacts-only).
+3. In DSPRE's trainer editor, repurpose unused Mickey trainer slots `514` (Bug Catcher) and `524` (Hiker) as new teams for Wade and Anthony. Update their names and configure teams suitable for early rematches.
+4. Open decompressed `ov26.bin`. At `0x24A`, replace `04 00` with `02 02` to assign trainer `514` to Wade's entry `1`. At `0x29E`, replace `3D 00` with `0C 02` to assign trainer `524` to Anthony's entry `1`. See [Rematch battle table](#rematch-battle-table).
+5. Other ordinary trainers with rematch-offer conversations also gain earlier availability, but retain their original teams until later tiers unlock unless you edit entry `1` too.
+6. Save all changes, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
+
+### Reveal Joey as the real superboss
+
+1. In DSPRE's trainer editor, repurpose unused Youngster Mickey trainer `511` as Joey's new rematch team: six level-100 rodents with perfect IVs. Red was only the warm-up.
+2. Open decompressed `ov26.bin` from your DSPRE contents folder. At `0x25E`, replace `00 00` with `FF 01` to assign trainer `511` to Joey's entry `5`. See [Rematch battle table](#rematch-battle-table).
+3. In DSPRE, open Red's summit script file `107`. Add `SetFlag 0x980` (`2432`) to the first-victory branch that sets variable `0x4131` to `1`. This unlocks tier `5` after Red's first defeat, which must occur after applying this edit. See [Extending rematch tiers](#extending-rematch-tiers).
+4. Leave other trainers' entry `5` values unchanged. The unlock flag is shared, but only Joey receives a new team.
+5. Save all changes, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE. Joey's new team becomes available through the normal rematch flow after his preceding teams have been beaten.
+
+### Increase Gina's Leaf Stone gift opportunities
+
+These options can be used independently or combined to increase Gina's incoming gift opportunities or add a gift offer when the player calls her. For incoming calls, reducing her rematch-offer chance only improves the gift's chance while the rematch header remains first; skip that option if you move the gift header ahead of it.
+
+#### Increase Gina's gift-offer chance
+
+1. Open decompressed `ov101.bin` from your DSPRE contents folder. See [Call headers](#call-headers-selecting-a-conversation).
+2. At `0x131F5`, replace `0A` with `31`. This increases the gift-offer chance from 11% to 50% when its header is reached and eligible. If you have already swapped the gift and rematch headers, edit `0x131EF` instead.
+3. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
+
+#### Prioritise Gina's gift over a rematch
+
+1. Open decompressed `ov101.bin` from your DSPRE contents folder. See [Gina's Leaf Stone call](#picnicker-ginas-leaf-stone-call).
+2. Swap the complete six-byte records at `0x131EE` and `0x131F4`. In vanilla, these contain `02 1E 00 00 FE 00` and `02 0A 00 00 01 01`, respectively. Preserve any chance edits already made.
+3. Leave the preceding headers unchanged. The gift will be considered before a new rematch offer, while the story, pending-rematch and pending-gift restrictions remain.
+4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
+
+#### Reduce Gina's competing rematch offers
+
+1. Open decompressed `ov101.bin` from your DSPRE contents folder. See [Call-header condition types](#call-header-condition-types).
+2. At `0x131EF`, replace `1E` with `09`. This reduces the rematch-offer chance from 31% to 10%, allowing more calls to reach the gift header.
+3. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
+
+#### Change Gina's random-call group
+
+1. Open `files/tel/pmtel_book.dat` from your DSPRE contents folder in a hex editor. See [File layout](#file-layout).
+2. At `0x3E7`, replace `02` with `00` to move Gina from group `2` to group `0`.
+3. Group `0` is selected more frequently, but competing contacts and caller history mean Gina is not guaranteed to call more often. See [Incoming: random frequency](#incoming-random-frequency).
+4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
+
+#### Trigger an on-demand incoming call from Gina
+
+1. In DSPRE, create an NPC interaction or another field-script event from which to launch Gina's call. An NPC interaction can let the player trigger calls repeatedly. See [Incoming: field-script trigger](#incoming-field-script-trigger).
+2. Add this command sequence to the field script:
+   ```text
+   SetVar 0x8004 49
+   SetVar 0x8005 2
+   SetVar 0x8006 0
+   CallStd 2039
+   ```
+3. End the field script after the call returns. This bypasses timed caller selection and Gina's random-call group, but uses her incoming headers with their conditions, chance rolls and any edits above.
+4. Save the script and rebuild the ROM using DSPRE.
+
+#### Allow Gina to offer a Leaf Stone when called by the Player
+
+1. Open decompressed `ov101.bin` from your DSPRE contents folder. See [Call headers](#call-headers-selecting-a-conversation).
+2. Copy the six-byte fallback record `01 64 00 00 00 01` from `0x131C4` to `0x131CA`, replacing the unused record there.
+3. At `0x131C4`, write `02 05 00 00 01 01`. This adds a 6% chance of selecting Gina's existing Leaf Stone phone script `257` when earlier headers do not take precedence and no rematch or gift is pending.
+4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
+5. Call Gina from another map to use her outgoing headers. Calling from her own map uses her local conversation instead. See [Gina's Leaf Stone call](#picnicker-ginas-leaf-stone-call).
 
 ---
 
 ## Extending rematch tiers
 
-The rematch-table mechanics apply to ordinary phone trainers and Gym Leaders: once a rematch has been offered, the matching Overlay 26 row supplies its battle ID. These changes alter battle-team progression only; they do not alter the separate rematch availability conditions.
+For ordinary phone trainers, the selected Overlay 26 entry supplies the battle ID. The following edits change team progression without changing rematch availability conditions. Gym Leaders also require [Dojo field-script changes](#gym-leader-rematches) to use the selected team.
 
 ### Add a later tier: entry `5`
 
 Replace `TRAINER_NONE` in entry `5` with a new trainer battle ID, then set tier flag `0x980` from a field script at the desired later milestone (after defeating Trainer Red, for example). Once entry `4` has been beaten, the selector can use the new entry `5` team. This does not require a new table or a larger row.
 
-For an ordinary trainer row, vanilla already supplies entries `1`-`4`. For a Gym Leader row, vanilla entries `3`-`5` are `TRAINER_NONE`; populate every preceding entry that the selector must pass, because the first `TRAINER_NONE` ends its scan.
+Vanilla ordinary-trainer rows already populate entries `1`-`4`. Gym Leader rows end at entry `3`; when extending them, populate every preceding entry because the first `TRAINER_NONE` ends the scan.
 
 ### Add an earlier tier: entry `1`
 
@@ -1175,7 +1258,7 @@ The existing save field supports up to 16 triggers: vanilla uses IDs `0`-`12`, l
 3. Update the six count limits to include the new IDs.
 4. Set each new trigger from a field script or game code.
 
-New triggers can reuse existing contacts. See [Incoming: queued system-event trigger](#incoming-queued-system-event-trigger) for the record layout.
+New triggers can reuse existing contacts. See [Incoming: queued system-event trigger](#incoming-queued-system-event-trigger) for the record layout and its one-byte effective phone-script limit.
 
 <details>
 <summary>Why the table cannot grow in place</summary>
