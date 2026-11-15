@@ -335,7 +335,7 @@ An outgoing call begins when the player selects a registered contact in the Pok�
 
 ### Incoming: time trigger
 
-> Research: [pokeheartgold: incoming-call timer and trigger scheduler](https://github.com/pret/pokeheartgold/blob/master/src/unk_02092BE8.c).
+> Research: [pokeheartgold: incoming-call timer and trigger scheduler](https://github.com/pret/pokeheartgold/blob/master/src/unk_02092BE8.c), [pokeheartgold: random-caller selection](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [recent-caller save helpers](https://github.com/pret/pokeheartgold/blob/master/src/save_misc.c).
 
 The game keeps a runtime counter of elapsed **real-time minutes** for incoming calls. This timing gate is shared by queued system-event calls and ordinary random calls. While the player is in the normal overworld and no field task is running, completed minutes are added to this counter. At `10` minutes, the next normal input update when the player is standing still or has finished a movement checks for a call. It is not based on steps, frames, or a random per-step chance.
 
@@ -343,7 +343,39 @@ Queued system-event calls are checked first. Their triggering code can set the c
 
 ![](resources/incoming_time_trigger_flow.png)
 
----
+:::info Disable random calls from one contact
+Set the contact's `unkF` byte (record offset `0xF` in `pmtel_book.dat`) to `3`. Only groups `0`-`2` are selected, so this contact never enters the random-caller pool. Outgoing, queued-event and direct field-script calls are unaffected.
+:::
+
+The call starts with `isScriptedCall = 0`. A contact of type `0` uses the generic call-data route; contact types `10`, `11`, `12`, and `14` each use their own selection logic.
+
+#### Where the allowed-type list is defined
+
+<details>
+<summary>Click for details...</summary>
+
+The five allowed-type comparisons begin at Overlay 2 file offset `0xC4F8` (RAM `0x2252078`):
+
+```text
+type == 0 || type == 12 || type == 11 || type == 10 || type == 14
+```
+
+These Thumb comparisons must be patched to allow another contact type.
+
+</details>
+
+#### What "recently called" means
+
+<details>
+<summary>Click for details...</summary>
+
+Each `unkF` group remembers recent callers. Before applying map, recent-caller, Buena and Bug-Catching Contest exclusions, the game counts registered contacts in the selected group whose types are allowed. If this nonzero count equals the number of stored recent callers, it clears that group's history. An empty final candidate pool does not itself clear the history or restart selection.
+
+Only answering an ordinary random incoming call adds its caller to the history. Queued event and field-scripted calls do not use it.
+
+See [Random-caller history](#random-caller-history) for the saved layout.
+
+</details>
 
 #### Changing the shared incoming-call threshold
 
@@ -361,61 +393,15 @@ For example, to use twenty minutes, change `0A 20` to `14 20` at `0x92DB2` and `
 
 </details>
 
-#### Incoming: random frequency
-
-> Research: [pokeheartgold: random-caller selection](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [recent-caller save helpers](https://github.com/pret/pokeheartgold/blob/master/src/save_misc.c).
-
-The following behaviour applies only to the ordinary random-call branch:
-
-1. Makes a 51% roll (0-50 inclusive out of 0-99). A failed roll clears the elapsed-minute counter, so the next ordinary attempt is after another ten minutes.
-2. Chooses an `unkF` group: `0` (50%), `1` (30%), or `2` (20%).
-3. Keeps only registered contacts whose `type` is `0` (generic contact), `10` (Buena), `11` (Ethan/Lyra), `12` (Gym Leader), or `14` (Irwin). All other types are excluded from this ordinary random-caller pool, though they may still be called by the player, start an event call, or be started by a field script.
-4. Checks whether to clear the selected group’s [recent-caller history](#what-recently-called-means), then removes contacts on the player's current map, contacts already recorded in that group's call history, Buena in unsuitable conditions, and National Park contacts during the Bug-Catching Contest.
-5. Randomly chooses from the remaining contacts. If no candidate remains, it clears the elapsed-minute counter.
-
-:::info Disable random calls from one contact
-Set the contact's `unkF` byte (record offset `0xF` in `pmtel_book.dat`) to `3`. Only groups `0`-`2` are selected, so this contact never enters the random-caller pool. Outgoing, queued-event and direct field-script calls are unaffected.
-:::
-
-The call starts with `isScriptedCall = 0`. A contact of type `0` uses the generic call-data route; contact types `10`, `11`, `12`, and `14` each use their own selection logic.
-
-##### Where the allowed-type list is defined
-
-<details>
-<summary>Click for details...</summary>
-
-The five allowed-type comparisons begin at Overlay 2 file offset `0xC4F8` (RAM `0x2252078`):
-
-```text
-type == 0 || type == 12 || type == 11 || type == 10 || type == 14
-```
-
-These Thumb comparisons must be patched to allow another contact type.
-
-</details>
-
-##### What "recently called" means
-
-<details>
-<summary>Click for details...</summary>
-
-Each `unkF` group remembers recent callers. Before applying map, recent-caller, Buena and Bug-Catching Contest exclusions, the game counts registered contacts in the selected group whose types are allowed. If this nonzero count equals the number of stored recent callers, it clears that group's history. An empty final candidate pool does not itself clear the history or restart selection.
-
-Only answering an ordinary random incoming call adds its caller to the history. Queued event and field-scripted calls do not use it.
-
-See [Random-caller history](#random-caller-history) for the saved layout.
-
-</details>
-
 ---
 
-#### Incoming: queued system-event trigger  
+### Incoming: queued system-event trigger  
   
 > Research: [pokeheartgold: queued-event table and ring manager](https://github.com/pret/pokeheartgold/blob/master/src/field/overlay_2_gear_phone.c), [queued-trigger constants](https://github.com/pret/pokeheartgold/blob/master/include/constants/phone_constants.h).
 
 A queued event records a call for the next permitted timed check. Each trigger selects a caller, conversation and pickup behaviour.
 
-The 13 trigger IDs (`0`-`12`) are bits in a separate two-byte saved field, `PhoneCallPersistentState.callTriggerFlags[2]`, rather than normal script flags or variables.
+The 13 trigger IDs (`0`-`12`) are bits in a separate [two-byte saved field](#saved-phone-state), rather than normal script flags or variables.
 
 In vanilla, native game code sets these bits when it detects its own condition, such as an Egg hatching, cycling 1,024 steps, or a full PC. Field scripts can also set one with command `ScrCmd_148` (`0x94`): it takes two bytes, `triggerId` (`0`-`12`) and `expedite` (`0` or nonzero). It sets that trigger bit; when `expedite` is nonzero, it advances the shared incoming-call timer to one minute before its threshold if necessary. Command `UnsetPhoneCallTrigger` (`0x95`) takes one `triggerId` byte and clears that bit.
 
@@ -425,7 +411,16 @@ The caller, predefined phone script, and pickup behaviour come from a 13-record 
 callerId (u8), unknown (u8), phoneScriptId (u16 little-endian), forcePickUp (u8), unknown (u8)
 ```
 
+:::info Phone-script selection
+The contact's code interprets the supplied phone-script ID. For triggers `4` and `5`, Oak and the Day-Care Man ignore it and select scripts from Pokédex progress or an Egg-call flag respectively. For trigger `6`, Baoba interprets `0` as his specialised Safari Zone conversation, which chooses dialogue from the saved list of changed areas. Changing this field therefore cannot universally force a particular phone script.
+:::
+
+:::warning  
 Although stored as two bytes, `phoneScriptId` is truncated to one byte when passed to the call manager: only values `0`-`255` survive unchanged. Higher IDs require widening that interface and its stored fields.
+:::
+
+<details>
+<summary>Vanilla system-event triggers</summary>
 
 | Bit | File offset | Trigger ID | Caller ID | Phone script ID | Condition that queues it | Forced Pickup |
 |:---:|:---:|---|:---:|:---:|---|:---:|
@@ -443,9 +438,7 @@ Although stored as two bytes, `phoneScriptId` is truncated to one byte when pass
 | `11` | `0xE146` | `BAOBA_MEMORY_LOSS` | `24` Baoba | `146` | Inferred failsafe at the play-time limit: combined Object Arrangement/new-objects announcement. | Yes |
 | `12` | `0xE14C` | `MOM_BOUGHT_SOMETHING` | `0` Mom | `27` | Mom spends the player's saved money on an item. | No |
 
-:::info Phone-script selection
-The contact's code interprets the supplied phone-script ID. For triggers `4` and `5`, Oak and the Day-Care Man ignore it and select scripts from Pokédex progress or an Egg-call flag respectively. For trigger `6`, Baoba interprets `0` as his specialised Safari Zone conversation, which chooses dialogue from the saved list of changed areas. Changing this field therefore cannot universally force a particular phone script.
-:::
+</details>  
 
 Pending events exclude callers on the player's map header, except the Day-Care Man, whose number must be registered instead. If several events remain eligible, one is chosen randomly.
 
@@ -461,7 +454,7 @@ Both unknown bytes are `00` in every record; their purpose is not known.
 An unanswered ring times out after about 30 seconds. Battles, map transitions and most menu actions cancel it; opening the Start menu or selecting Save or Pokégear does not. Cancellation resets the timer but preserves the trigger bit, allowing a later call unless another script or game condition clears it. Answering clears the bit when the phone application opens.
 
 :::caution
-The bytes after the queued-event table are occupied. Adding a record requires table relocation and code changes; see [Expanding queued event calls](#expanding-queued-event-calls).
+The bytes after the queued-event table **are occupied**. Adding a record would require table relocation and code changes; see [Expanding queued event calls](#expanding-queued-event-calls).
 :::
 
 ##### Vanilla trigger setters (decomp references)
@@ -487,7 +480,7 @@ The event-record table above defines what each pending bit does. This table inst
 | `9` | `sub_02092E54`: the same post-National-Dex three-hour branch, with object-unlock level `1` or `2`. | Yes |
 | `10` | `sub_02092E54`: the same branch, with object-unlock level `3`; also selected at that level by the play-time-limit condition below. | Yes |
 | `11` | `sub_02092E54`: Safari progress is at least `6`, the National Dex is obtained, object-unlock level is below `3`, and `sub_0202F798` returns `2`: play time is at least 59,999 minutes (999:59), but fewer than three hours have elapsed since the stored Safari timestamp. No Baoba trigger `7`-`11` may already be pending. | Yes |
-| `12` | `src/battle/battle_setup.c` calls `MomGift_TryEnqueueGiftOnBalanceChange` after Mom's savings balance changes. If that helper successfully queues a purchase, it sets bit `12`. The purchase and its quantity are stored in Mom's separate gift queue. | Yes |
+| `12` | `src/battle/battle_setup.c` calls `MomGift_TryEnqueueGiftOnBalanceChange` after Mom's savings balance changes. If that helper successfully queues a purchase, it sets bit `12`. The purchase and its quantity are stored in Mom's separate gift queue; see [Mom's purchases](#moms-purchases) for item collection.| Yes |
 
 `VAR_UNK_4057` is a normal script variable, separate from the queued-call bits. Baoba's outgoing dialogue associates value `3` with waiting for the second challenge, `5` with catching Sandshrew, and `6` with waiting for a new activity. These story labels are supported by archive 667's dialogue and [community progression descriptions](https://bulbapedia.bulbagarden.net/wiki/Johto_Safari_Zone), but aren't directly traced from game code.
 
@@ -496,8 +489,6 @@ Baoba's [call logic](https://github.com/pret/pokeheartgold/blob/master/src/appli
 The [Safari timer](https://github.com/pret/pokeheartgold/blob/master/src/safari_zone.c) checks the normal three-hour interval before the play-time limit. Trigger `11` advances object-unlock level to `4`: an **inferred failsafe** against stalled unlocks at the [play-time cap](https://github.com/pret/pokeheartgold/blob/master/src/igt.c), not verified in-game.
 
 </details>
-
-Mom's queued call announces a purchase; see [Mom's purchases](#moms-purchases) for collection.
 
 ---
 
@@ -718,9 +709,16 @@ Buffer `11` uses these rules:
 
 The Pokémon selections are implemented by `GearPhoneCall_Generic` and `getRandomEncounterSlot` in Overlay 101.
 
-### Professor Elm: story calls and status calls
+### Special contacts
+
+This section includes some details on some of the special call logic (that doesn't use the generic flow). It isn't exhaustiive, but intends to provide an example of what that logic can look like.
+
+#### Professor Elm: story calls and status calls
 
 > Research: [pokeheartgold: Professor Elm call logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_prof_elm.c), [Route 30's direct call](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0227_R30.s).
+
+<details>
+<summary>Click for details...</summary>
 
 Elm is contact type `2`, so he does not use generic call headers. His selector has three routes:
 
@@ -759,9 +757,14 @@ For an outgoing call, the first matching condition wins:
 
 </details>
 
-### Gym Leader conversations
+</details>
+
+#### Gym Leader conversations
 
 > Research: [pokeheartgold: Gym Leader call logic](https://github.com/pret/pokeheartgold/blob/master/src/application/pokegear/phone/scripts/phone_scripts_gym_leader.c).
+
+<details>
+<summary>Click for details...</summary>
 
 All sixteen Gym Leaders use contact type `12`. They do not use generic call headers or the ordinary Radio Tower availability condition. Their shared selector chooses display handler `13` for an outgoing call and `14` for an incoming call; these are handler indexes, not contact types or phone-script IDs.
 
@@ -789,6 +792,8 @@ An incoming Gym Leader call does not offer a rematch. It either acknowledges tha
 <summary>The unused capacity limit</summary>
 
 The handler contains a five-Leader capacity check on the Fighting Dojo, but its vanilla helper only inspects Falkner's pending state and can count at most one pending rematch. It therefore always accepts an otherwise valid offer; the handler's capacity-full message is not reached in unmodified gameplay.
+
+</details>
 
 </details>
 
@@ -953,7 +958,7 @@ In vanilla, entry `1` duplicates the base battle and entry `5` is `TRAINER_NONE`
 
 > Research: [pokeheartgold: relevant script commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_c.c), [trainer-message commands](https://github.com/pret/pokeheartgold/blob/master/src/scrcmd_battle.c), [shared phone-trainer field script](https://github.com/pret/pokeheartgold/blob/master/files/fielddata/script/scr_seq/scr_seq_0953.s).
 
-Vanilla's shared phone-trainer field script uses these commands to turn the pending state into a battle or an item. They are useful when editing an existing trainer NPC script; they do not themselves offer or schedule a new rematch.
+Vanilla's shared phone-trainer field script uses these commands to turn the pending state into a battle or an item. 
 
 | Opcode | Command name | Arguments | Effect |
 |---|---|---|---|
@@ -1076,7 +1081,7 @@ Within `PhoneCallPersistentState`, Mom’s queue begins at `0x12C`, the followin
 
 Gina's Leaf Stone call is an **incoming** generic call and a **phone-call gift**. It is not a rematch reward.
 
-First, the [incoming random-call selector](#incoming-random-frequency) must choose Gina: she must be registered, eligible for the chosen `unkF` group, and not excluded by the current map or her group's recent-caller history. The generic code then checks Gina's incoming [call headers](#call-headers-selecting-a-conversation) in priority order. Her seven candidate headers are followed by a terminating control row:
+First, the [incoming random-call selector](#incoming-time-trigger) must choose Gina: she must be registered, eligible for the chosen `unkF` group, and not excluded by the current map or her group's recent-caller history. The generic code then checks Gina's incoming [call headers](#call-headers-selecting-a-conversation) in priority order. Her seven candidate headers are followed by a terminating control row:
 
 | Priority | Condition | Chance value | Phone script | Purpose |
 |:---:|---|:---:|:---:|---|
@@ -1133,19 +1138,19 @@ The Fighting Dojo script checks Falkner's Overlay 26 row `47` through `GetPhoneB
 ## Example edits
 
 
-### Add a Lure Ball rematch reward for Fisherman Ralph
-
-1. Open `files/tel/pmtel_book.dat` from your DSPRE contents folder in a hex editor.
-2. Go to file offset `0xE8`: Ralph's record starts at `0xE0`, and its rematch reward is at `+0x08`. See [File layout](#file-layout).
-3. Replace `00 00` with `EE 01` (Lure Ball, item ID `494` or `0x1EE`, stored little-endian).
-4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM from that folder using DSPRE. Ralph will award one Lure Ball after a rematch victory, provided there is Bag space. See [Rematch rewards](#rematch-rewards).
-
 ### Reduce the frequency of random incoming calls
 
 1. Open the decompressed `arm9/arm9.bin` from your DSPRE contents folder in a hex editor. See [Changing the shared incoming-call threshold](#changing-the-shared-incoming-call-threshold).
 2. At file offset `0x92DB2`, replace `0A 20` with `14 20`.
 3. At file offset `0x92E44`, replace `0A 29` with `14 29`. Together, these edits increase the incoming-call interval from 10 to 20 minutes. This also affects queued event calls.
 4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM from that folder using DSPRE.
+
+### Add a Lure Ball rematch reward for Fisherman Ralph
+
+1. Open `files/tel/pmtel_book.dat` from your DSPRE contents folder in a hex editor.
+2. Go to file offset `0xE8`: Ralph's record starts at `0xE0`, and its rematch reward is at `+0x08`. See [File layout](#file-layout).
+3. Replace `00 00` with `EE 01` (Lure Ball, item ID `494` or `0x1EE`, stored little-endian).
+4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM from that folder using DSPRE. Ralph will award one Lure Ball after a rematch victory, provided there is Bag space. See [Rematch rewards](#rematch-rewards).
 
 ### Create a direct field-scripted call from Professor Elm
 
@@ -1167,14 +1172,14 @@ The Fighting Dojo script checks Falkner's Overlay 26 row `47` through `GetPhoneB
 
 1. In DSPRE, open the Violet City Poké Mart script file `858`. Immediately after the assistant sets flag `0x70` (`112`) for giving the Togepi Egg, add `SetFlag 0x97C` (`2428`) to unlock tier `1`. The player must receive the Egg after applying this edit for the new flag to be set. See [Extending rematch tiers](#extending-rematch-tiers).
 2. Open decompressed `ov101.bin` from your DSPRE contents folder. At offsets `0xB5A4`, `0xB5D8` and `0xB612`, replace `C6 21` with `70 21`. Ordinary rematch availability now requires receiving the Egg instead of clearing Radio Tower. See [Radio Tower availability condition](#radio-tower-availability-condition-ordinary-contacts-only).
-3. In DSPRE's trainer editor, repurpose unused Mickey trainer slots `514` (Bug Catcher) and `524` (Hiker) as new teams for Wade and Anthony. Update their names and configure teams suitable for early rematches.
+3. In DSPRE's trainer editor, repurpose some unused Mickey trainer slots (e.g. `514` and `524`) as new teams for Wade and Anthony. Update their names, classes, settings and configure teams suitable for early rematches.
 4. Open decompressed `ov26.bin`. At `0x24A`, replace `04 00` with `02 02` to assign trainer `514` to Wade's entry `1`. At `0x29E`, replace `3D 00` with `0C 02` to assign trainer `524` to Anthony's entry `1`. See [Rematch battle table](#rematch-battle-table).
 5. Other ordinary trainers with rematch-offer conversations also gain earlier availability, but retain their original teams until later tiers unlock unless you edit entry `1` too.
 6. Save all changes, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
 
-### Reveal Joey as the real superboss
+### Reveal Joey as the real superboss (add tier 5 rematches)
 
-1. In DSPRE's trainer editor, repurpose unused Youngster Mickey trainer `511` as Joey's new rematch team: six level-100 rodents with perfect IVs. Red was only the warm-up.
+1. In DSPRE's trainer editor, repurpose unused Youngster Mickey trainer (e.g. `511`) as Joey's new rematch team: six level-100 rodents with perfect IVs. Red was only the warm-up.
 2. Open decompressed `ov26.bin` from your DSPRE contents folder. At `0x25E`, replace `00 00` with `FF 01` to assign trainer `511` to Joey's entry `5`. See [Rematch battle table](#rematch-battle-table).
 3. In DSPRE, open Red's summit script file `107`. Add `SetFlag 0x980` (`2432`) to the first-victory branch that sets variable `0x4131` to `1`. This unlocks tier `5` after Red's first defeat, which must occur after applying this edit. See [Extending rematch tiers](#extending-rematch-tiers).
 4. Leave other trainers' entry `5` values unchanged. The unlock flag is shared, but only Joey receives a new team.
@@ -1207,7 +1212,7 @@ These options can be used independently or combined to increase Gina's incoming 
 
 1. Open `files/tel/pmtel_book.dat` from your DSPRE contents folder in a hex editor. See [File layout](#file-layout).
 2. At `0x3E7`, replace `02` with `00` to move Gina from group `2` to group `0`.
-3. Group `0` is selected more frequently, but competing contacts and caller history mean Gina is not guaranteed to call more often. See [Incoming: random frequency](#incoming-random-frequency).
+3. Group `0` is selected more frequently, but competing contacts and caller history mean Gina is not guaranteed to call more often. See [Incoming: time trigger](#incoming-time-trigger).
 4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
 
 #### Trigger an on-demand incoming call from Gina
@@ -1313,7 +1318,7 @@ Set the new trigger from a field script with command `0x94`, supplying its ID an
 
 ## Expanding beyond 75 contacts
 
-This is a binary-patching project, not a phonebook-file edit. A complete expansion needs to address all of the following:
+Adding additional contacts would be an involved piece of work, this guide does not claim to have identified every required edit, but a complete expansion needs to address *at least* all of the following:
 
 - The phonebook count and every contact-ID range check or fixed loop;
 - The saved registered-contact/order list and the per-contact rematch/phone-call-gift array, including the data which immediately follows them and the total save-block size;
@@ -1322,5 +1327,7 @@ This is a binary-patching project, not a phonebook-file edit. A complete expansi
 - Migration or deliberate invalidation of existing saves.
 
 Greeting rows may be reused, as they are already shared in vanilla. The individual limits described elsewhere on this page are parts of this one expansion task, not separate data-only edits.
+
+It is also uncertain how the Pokégear UI would behave with more than 75 contacts.
 
 ---
