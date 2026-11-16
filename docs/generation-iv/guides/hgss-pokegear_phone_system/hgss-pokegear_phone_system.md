@@ -510,6 +510,14 @@ Not every incoming call uses the queued trigger-bit table. A normal field script
 Generic contacts ignore the supplied script value and use their incoming call headers if `SetPhoneCall` *[contactId]* `2` `0`, followed by `RunPhoneCall` were used.
 :::
 
+#### Starting a call on map entry
+
+Use a **Variable/Value level-script trigger** for the call. Map-initialisation scripts cannot run the waiting commands and common-script sequence required.
+
+The trigger can check a story variable, or an unused map-cleared temporary variable (`0x4000`-`0x401F`) against `0`. Change that variable in the event script so the trigger stops matching. A persistent flag can prevent the call on later visits; the `0x8000` script variables are not suitable for this level-trigger condition.
+
+Use **`MecScript` (`0x261`, decomp `ScrCmd_609`)** to reset the following Pokémon's movement before the phone call commands. Set `0x8004` to the contact, `0x8005` to the call mode and `0x8006` to the predefined script, then use `CommonScript 2039` for ringing, fades and the call. See the [Elm example](#create-a-direct-field-scripted-call-from-professor-elm).
+
 ---
 
 ## Phone conversations
@@ -994,7 +1002,7 @@ A **rematch reward** remains the raw `PhoneBookEntry.gift` value until the share
 |---|---|---|---|
 | `0x265` | `GetPhoneContactRandomGiftBerry` | `result` | Writes the current caller's rematch reward item, applying the berry special case described above. |
 
-The field script checks the returned item ID and Bag space, then awards the item.
+For a nonzero reward, the shared field script always displays message `5` from the contact's phone text archive, then checks Bag space and awards the item. When adding a reward, supply suitable dialogue there; if a phone script already uses that message, move its dialogue and update its message IDs. See the [Ralph example](#add-a-lure-ball-rematch-reward-for-fisherman-ralph).
 
 In vanilla, the nonzero rewards are Joey (HP Up), Kenji (PP Up), Huey (Protein), Vance (Carbos), Parry (Iron), Erin (Calcium), and Ian (a random berry through the Cheri special case).
 
@@ -1150,23 +1158,31 @@ The Fighting Dojo script checks Falkner's Overlay 26 row `47` through `GetPhoneB
 1. Open `files/tel/pmtel_book.dat` from your DSPRE contents folder in a hex editor.
 2. Go to file offset `0xE8`: Ralph's record starts at `0xE0`, and its rematch reward is at `+0x08`. See [File layout](#file-layout).
 3. Replace `00 00` with `EE 01` (Lure Ball, item ID `494` or `0x1EE`, stored little-endian).
-4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM from that folder using DSPRE. Ralph will award one Lure Ball after a rematch victory, provided there is Bag space. See [Rematch rewards](#rematch-rewards).
+4. In DSPRE's text editor, copy message `5` from Ralph's text archive `712` into a new message at the end of that archive. Note the new message ID (`12` in vanilla), which must fit within `0`-`255`.
+5. Open decompressed `ov101.bin` from your DSPRE contents folder. At `0x11550`, replace `05 05`, the male and female message IDs for local-call phone script `46`, with the new message ID twice (`0C 0C` for message `12`). Leave the remaining four bytes unchanged. See [Phone scripts](#phone-scripts-message-and-automatic-effect).
+6. Replace archive `712`, message `5`, with suitable reward dialogue. The shared field script uses this message before giving the item; the local call now uses the copied message. See [Rematch rewards](#rematch-rewards).
+7. Save all changes, move any automatically generated backup files outside the contents folder, then rebuild the ROM from that folder using DSPRE. Ralph will award one Lure Ball after a rematch victory, provided there is Bag space.
 
 ### Create a direct field-scripted call from Professor Elm
 
 1. Identify an unused, persistent flag to record that the call has occurred.
 2. In DSPRE's text editor, append the desired dialogue to Elm's text archive `716`. Note its message ID, which must fit within `0`-`255`. See [Dialogue](#dialogue-common-greeting-text-and-contact-specific-text).
 3. Open decompressed `ov101.bin` from your DSPRE contents folder. At `0x11460`, replace the six bytes for phone script `6`, `29 2A 00 00 00 00`, with `WW XX 12 00 YY ZZ`: `WW` and `XX` are the male and female message IDs, and `YY ZZ` is your flag ID in little-endian order. Each placeholder represents one byte. Use the same message ID twice if both genders share the dialogue. `12 00` selects the flag-setting effect. See [Phone scripts](#phone-scripts-message-and-automatic-effect).
-4. In DSPRE, configure a map-entry level script that supports running an event on the desired map. Check your chosen flag and end immediately if it is already set.
-5. If the flag is clear, run the following sequence, then end the field script:
+4. In DSPRE, add a **Variable/Value level-script trigger** for the desired map, pointing to a new script. Use a designated story variable or an unused map-cleared variable, such as `0x4000`, with comparison value `0`. See [Starting a call on map entry](#starting-a-call-on-map-entry).
+5. Start the new script with `SetVar 0x4000 9` to disable the trigger for this visit. Check your chosen persistent flag and end if it is already set (`CheckFlag`, then `JumpIf EQUAL` to an `End`). Use your selected temporary variable throughout if different from `0x4000`.
+6. If the flag is clear, continue with:
    ```text
+   MecScript
+   LockAll
    SetVar 0x8004 1
    SetVar 0x8005 2
    SetVar 0x8006 4
-   CallStd 2039
+   CommonScript 2039
+   ReleaseAll
+   End
    ```
-   This selects Elm, call mode `2`, and index `4` for phone script `6`. Standard script `2039` handles ringing and screen transitions. See [Professor Elm's calls](#professor-elm-story-calls-and-status-calls).
-6. Save the text, scripts and edited overlay, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
+   `MecScript` prepares the following Pokémon before locking. The call selects Elm's phone script `6`, which sets the persistent flag configured in step 3. See [Professor Elm's calls](#professor-elm-story-calls-and-status-calls).
+7. Save the text, scripts, level trigger and edited overlay, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE. Fully reopen the rebuilt ROM in the emulator.
 
 ### Enable early rematches and add tier 1 teams
 
