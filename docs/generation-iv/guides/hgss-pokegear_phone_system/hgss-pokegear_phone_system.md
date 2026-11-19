@@ -5,6 +5,8 @@ tags:
   - Guide (SoulSilver)
 ---
 
+import FilterableSortableTable from '/src/components/FilterableSortableTable';
+
 # Pokégear Phone System
 
 > Author(s): [MrHam88](https://github.com/DevHam88/).  
@@ -15,6 +17,7 @@ This guide explains how the Pokégear phone system works and how to edit its dat
 :::info
 Unless stated otherwise, offsets and byte values are for US HeartGold; overlay offsets refer to decompressed files.
 :::
+
 
 ---
 
@@ -94,83 +97,87 @@ The entry count controls only how many 20-byte records the file loader reads. Ra
 
 Values from `tel/pmtel_book.dat`, in file order. Record offsets are hexadecimal; other numbers are decimal. Weekdays and times use the labels above; “Unused” denotes weekday `7` or time `3`. Names are reader labels, not stored in this file. The omitted `unk2` and padding bytes are `0` in all 75 records.
 
-| Contact ID | Name | Record offset | Type | Title | Trainer battle ID | Map-header ID | Rematch reward | Local phone script | Greeting set | Weekday | Time of day | Random-call group |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 0 | Mother | `0x4` | 1 | 200 | 0 | 63 | 0 | 23 | 255 | Wednesday | Unused | 0 |
-| 1 | Prof. Elm | `0x18` | 2 | 201 | 0 | 61 | 0 | 1 | 255 | Unused | Unused | 0 |
-| 2 | Prof. Oak | `0x2C` | 3 | 201 | 0 | 505 | 0 | 68 | 255 | Unused | Unused | 1 |
-| 3 | Ethan | `0x40` | 11 | 202 | 0 | 384 | 0 | 101 | 255 | Unused | Unused | 0 |
-| 4 | Lyra | `0x54` | 11 | 202 | 0 | 384 | 0 | 102 | 255 | Unused | Unused | 0 |
-| 5 | Kurt | `0x68` | 4 | 203 | 0 | 164 | 0 | 83 | 255 | Unused | Unused | 1 |
-| 6 | Day-Care Man | `0x7C` | 8 | 204 | 0 | 331 | 0 | 94 | 255 | Unused | Unused | 0 |
-| 7 | Day-Care Lady | `0x90` | 9 | 204 | 0 | 331 | 0 | 97 | 255 | Unused | Unused | 0 |
-| 8 | Buena | `0xA4` | 10 | 205 | 0 | 186 | 0 | 98 | 255 | Unused | Unused | 1 |
-| 9 | Bill | `0xB8` | 7 | 206 | 0 | 203 | 0 | 92 | 2 | Unused | Unused | 2 |
-| 10 | Joey | `0xCC` | 0 | 2 | 8 | 34 | 45 (HP Up) | 29 | 0 | Monday | Daytime | 1 |
-| 11 | Ralph | `0xE0` | 0 | 11 | 57 | 36 | 0 | 46 | 4 | Wednesday | Morning | 0 |
-| 12 | Liz | `0xF4` | 0 | 5 | 27 | 36 | 0 | 53 | 7 | Thursday | Daytime | 0 |
-| 13 | Wade | `0x108` | 0 | 6 | 4 | 35 | 0 | 36 | 0 | Tuesday | Night | 2 |
-| 14 | Anthony | `0x11C` | 0 | 9 | 61 | 37 | 0 | 61 | 4 | Friday | Night | 0 |
-| 15 | Bike Shop | `0x130` | 5 | 205 | 0 | 182 | 0 | 84 | 255 | Unused | Unused | 1 |
-| 16 | Kenji | `0x144` | 6 | 14 | 17 | 47 | 51 (PP Up) | 86 | 3 | Unused | Daytime | 0 |
-| 17 | Whitney | `0x158` | 12 | 70 | 30 | 398 | 0 | 175 | 255 | Saturday | Daytime | 2 |
-| 18 | Falkner | `0x16C` | 12 | 66 | 20 | 398 | 0 | 103 | 255 | Saturday | Morning | 2 |
-| 19 | Jack | `0x180` | 0 | 60 | 178 | 96 | 0 | 104 | 0 | Monday | Morning | 0 |
-| 20 | Chad | `0x194` | 0 | 60 | 397 | 42 | 0 | 112 | 0 | Friday | Morning | 0 |
-| 21 | Brent | `0x1A8` | 0 | 68 | 131 | 45 | 0 | 120 | 4 | Monday | Morning | 0 |
-| 22 | Todd | `0x1BC` | 0 | 4 | 66 | 38 | 0 | 128 | 0 | Saturday | Morning | 0 |
-| 23 | Arnie | `0x1D0` | 0 | 6 | 78 | 39 | 0 | 134 | 0 | Tuesday | Morning | 0 |
-| 24 | Baoba | `0x1E4` | 13 | 207 | 0 | 173 | 0 | 140 | 255 | Unused | Unused | 1 |
-| 25 | Irwin | `0x1F8` | 14 | 31 | 7 | 39 | 0 | 155 | 255 | Unused | Unused | 0 |
-| 26 | Janine | `0x20C` | 12 | 106 | 257 | 398 | 0 | 176 | 255 | Monday | Daytime | 2 |
-| 27 | Clair | `0x220` | 12 | 76 | 35 | 398 | 0 | 177 | 255 | Friday | Night | 2 |
-| 28 | Erika | `0x234` | 12 | 105 | 256 | 398 | 0 | 178 | 255 | Sunday | Morning | 2 |
-| 29 | Misty | `0x248` | 12 | 103 | 254 | 398 | 0 | 179 | 255 | Wednesday | Morning | 2 |
-| 30 | Blaine | `0x25C` | 12 | 108 | 259 | 398 | 0 | 180 | 255 | Tuesday | Daytime | 2 |
-| 31 | Blue | `0x270` | 12 | 110 | 261 | 398 | 0 | 181 | 255 | Sunday | Night | 2 |
-| 32 | Chuck | `0x284` | 12 | 75 | 34 | 398 | 0 | 182 | 255 | Wednesday | Night | 2 |
-| 33 | Brock | `0x298` | 12 | 98 | 253 | 398 | 0 | 183 | 255 | Saturday | Night | 2 |
-| 34 | Bugsy | `0x2AC` | 12 | 67 | 21 | 398 | 0 | 184 | 255 | Thursday | Daytime | 2 |
-| 35 | Sabrina | `0x2C0` | 12 | 107 | 258 | 398 | 0 | 185 | 255 | Sunday | Daytime | 2 |
-| 36 | Lt. Surge | `0x2D4` | 12 | 104 | 255 | 398 | 0 | 186 | 255 | Friday | Morning | 2 |
-| 37 | Morty | `0x2E8` | 12 | 72 | 31 | 398 | 0 | 187 | 255 | Tuesday | Night | 2 |
-| 38 | Jasmine | `0x2FC` | 12 | 74 | 33 | 398 | 0 | 188 | 255 | Wednesday | Daytime | 2 |
-| 39 | Pryce | `0x310` | 12 | 73 | 32 | 398 | 0 | 189 | 255 | Monday | Morning | 2 |
-| 40 | Huey | `0x324` | 0 | 46 | 211 | 220 | 46 (Protein) | 190 | 4 | Wednesday | Night | 1 |
-| 41 | Gaven | `0x338` | 0 | 24 | 102 | 30 | 0 | 196 | 0 | Thursday | Morning | 1 |
-| 42 | Jamie | `0x34C` | 0 | 25 | 113 | 30 | 0 | 203 | 5 | Friday | Daytime | 1 |
-| 43 | Reena | `0x360` | 0 | 25 | 114 | 31 | 0 | 210 | 1 | Sunday | Morning | 1 |
-| 44 | Vance | `0x374` | 0 | 69 | 137 | 46 | 48 (Carbos) | 217 | 0 | Wednesday | Night | 1 |
-| 45 | Parry | `0x388` | 0 | 9 | 145 | 47 | 47 (Iron) | 223 | 4 | Friday | Daytime | 1 |
-| 46 | Erin | `0x39C` | 0 | 5 | 151 | 48 | 49 (Calcium) | 229 | 5 | Saturday | Night | 1 |
-| 47 | Beverly | `0x3B0` | 0 | 21 | 182 | 96 | 0 | 236 | 5 | Unused | Unused | 2 |
-| 48 | Jose | `0x3C4` | 0 | 69 | 414 | 31 | 0 | 242 | 4 | Saturday | Night | 2 |
-| 49 | Gina | `0x3D8` | 0 | 5 | 65 | 38 | 0 | 251 | 1 | Sunday | Daytime | 2 |
-| 50 | Alan | `0x3EC` | 0 | 60 | 24 | 40 | 0 | 260 | 0 | Wednesday | Daytime | 2 |
-| 51 | Dana | `0x400` | 0 | 3 | 400 | 42 | 0 | 268 | 7 | Thursday | Night | 2 |
-| 52 | Derek | `0x414` | 0 | 20 | 44 | 43 | 0 | 276 | 0 | Unused | Unused | 2 |
-| 53 | Tully | `0x428` | 0 | 11 | 123 | 44 | 0 | 283 | 4 | Sunday | Daytime | 2 |
-| 54 | Tiffany | `0x43C` | 0 | 5 | 402 | 45 | 0 | 291 | 7 | Tuesday | Daytime | 2 |
-| 55 | Wilton | `0x450` | 0 | 11 | 124 | 46 | 0 | 300 | 4 | Thursday | Morning | 2 |
-| 56 | Krise | `0x464` | 0 | 3 | 184 | 96 | 0 | 308 | 1 | Sunday | Morning | 1 |
-| 57 | Ian | `0x478` | 0 | 2 | 64 | 38 | 149 (Cheri Berry)\* | 315 | 0 | Saturday | Morning | 0 |
-| 58 | Walt | `0x48C` | 0 | 64 | 388 | 39 | 0 | 322 | 4 | Monday | Daytime | 2 |
-| 59 | Alfred | `0x4A0` | 0 | 34 | 401 | 220 | 0 | 330 | 6 | Tuesday | Daytime | 2 |
-| 60 | Doug | `0x4B4` | 0 | 6 | 140 | 10 | 0 | 337 | 0 | Wednesday | Morning | 1 |
-| 61 | Rob | `0x4C8` | 0 | 6 | 48 | 10 | 0 | 346 | 0 | Friday | Morning | 1 |
-| 62 | Kyle | `0x4DC` | 0 | 11 | 59 | 20 | 0 | 355 | 0 | Wednesday | Daytime | 2 |
-| 63 | Kyler | `0x4F0` | 0 | 11 | 558 | 20 | 0 | 362 | 0 | Thursday | Daytime | 2 |
-| 64 | Tim & Sue | `0x504` | 0 | 122 | 559 | 21 | 0 | 369 | 5 | Friday | Daytime | 2 |
-| 65 | Kenny | `0x518` | 0 | 9 | 358 | 21 | 0 | 376 | 4 | Saturday | Daytime | 2 |
-| 66 | Tanner | `0x52C` | 0 | 4 | 561 | 21 | 0 | 383 | 0 | Monday | Night | 2 |
-| 67 | Josh | `0x540` | 0 | 69 | 565 | 22 | 0 | 392 | 0 | Tuesday | Night | 2 |
-| 68 | Torin | `0x554` | 0 | 60 | 567 | 22 | 0 | 401 | 0 | Wednesday | Night | 1 |
-| 69 | Hillary | `0x568` | 0 | 77 | 382 | 23 | 0 | 408 | 7 | Thursday | Night | 0 |
-| 70 | Billy | `0x57C` | 0 | 60 | 331 | 23 | 0 | 416 | 0 | Friday | Night | 0 |
-| 71 | Kay & Tia | `0x590` | 0 | 8 | 569 | 23 | 0 | 421 | 7 | Saturday | Night | 2 |
-| 72 | Reese | `0x5A4` | 0 | 65 | 313 | 25 | 0 | 430 | 4 | Sunday | Night | 2 |
-| 73 | Aiden | `0x5B8` | 0 | 65 | 574 | 25 | 0 | 439 | 4 | Monday | Morning | 2 |
-| 74 | Ernest | `0x5CC` | 0 | 65 | 579 | 25 | 0 | 448 | 4 | Sunday | Daytime | 1 |
+<FilterableSortableTable defaultSort={{ column: 1, direction: 'desc' }} types={['string','number']}>
+
+| Contact ID | Name | Record offset | Type | Title | Trainer battle ID | Map-header ID | Rematch reward | Local phone script | Greeting set | Rematch schedule | Random-call group |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0 | Mother | `0x4` | 1 | 200 | - | 63 | - | 23 | 255 | Unused | `0` (50%) |
+| 1 | Prof. Elm | `0x18` | 2 | 201 | - | 61 | - | 1 | 255 | Unused | `0` (50%) |
+| 2 | Prof. Oak | `0x2C` | 3 | 201 | - | 505 | - | 68 | 255 | Unused | `1` (30%) |
+| 3 | Ethan | `0x40` | 11 | 202 | - | 384 | - | 101 | 255 | Unused | `0` (50%) |
+| 4 | Lyra | `0x54` | 11 | 202 | - | 384 | - | 102 | 255 | Unused | `0` (50%) |
+| 5 | Kurt | `0x68` | 4 | 203 | - | 164 | - | 83 | 255 | Unused | `1` (30%) |
+| 6 | Day-Care Man | `0x7C` | 8 | 204 | - | 331 | - | 94 | 255 | Unused | `0` (50%) |
+| 7 | Day-Care Lady | `0x90` | 9 | 204 | - | 331 | - | 97 | 255 | Unused | `0` (50%) |
+| 8 | Buena | `0xA4` | 10 | 205 | - | 186 | - | 98 | 255 | Unused | `1` (30%) |
+| 9 | Bill | `0xB8` | 7 | 206 | - | 203 | - | 92 | 2 | Unused | `2` (20%) |
+| 10 | Joey | `0xCC` | 0 | 2 | 8 | 34 | HP Up | 29 | 0 | Monday Day | `1` (30%) |
+| 11 | Ralph | `0xE0` | 0 | 11 | 57 | 36 | - | 46 | 4 | Wednesday Morning | `0` (50%) |
+| 12 | Liz | `0xF4` | 0 | 5 | 27 | 36 | - | 53 | 7 | Thursday Day | `0` (50%) |
+| 13 | Wade | `0x108` | 0 | 6 | 4 | 35 | - | 36 | 0 | Tuesday Night | `2` (20%) |
+| 14 | Anthony | `0x11C` | 0 | 9 | 61 | 37 | - | 61 | 4 | Friday Night | `0` (50%) |
+| 15 | Bike Shop | `0x130` | 5 | 205 | - | 182 | - | 84 | 255 | Unused | `1` (30%) |
+| 16 | Kenji | `0x144` | 6 | 14 | 17 | 47 | PP Up | 86 | 3 | Unused | `0` (50%) |
+| 17 | Whitney | `0x158` | 12 | 70 | 30 | 398 | - | 175 | 255 | Saturday Day | `2` (20%) |
+| 18 | Falkner | `0x16C` | 12 | 66 | 20 | 398 | - | 103 | 255 | Saturday Morning | `2` (20%) |
+| 19 | Jack | `0x180` | 0 | 60 | 178 | 96 | - | 104 | 0 | Monday Morning | `0` (50%) |
+| 20 | Chad | `0x194` | 0 | 60 | 397 | 42 | - | 112 | 0 | Friday Morning | `0` (50%) |
+| 21 | Brent | `0x1A8` | 0 | 68 | 131 | 45 | - | 120 | 4 | Monday Morning | `0` (50%) |
+| 22 | Todd | `0x1BC` | 0 | 4 | 66 | 38 | - | 128 | 0 | Saturday Morning | `0` (50%) |
+| 23 | Arnie | `0x1D0` | 0 | 6 | 78 | 39 | - | 134 | 0 | Tuesday Morning | `0` (50%) |
+| 24 | Baoba | `0x1E4` | 13 | 207 | - | 173 | - | 140 | 255 | Unused | `1` (30%) |
+| 25 | Irwin | `0x1F8` | 14 | 31 | 7 | 39 | - | 155 | 255 | Unused | `0` (50%) |
+| 26 | Janine | `0x20C` | 12 | 106 | 257 | 398 | - | 176 | 255 | Monday Day | `2` (20%) |
+| 27 | Clair | `0x220` | 12 | 76 | 35 | 398 | - | 177 | 255 | Friday Night | `2` (20%) |
+| 28 | Erika | `0x234` | 12 | 105 | 256 | 398 | - | 178 | 255 | Sunday Morning | `2` (20%) |
+| 29 | Misty | `0x248` | 12 | 103 | 254 | 398 | - | 179 | 255 | Wednesday Morning | `2` (20%) |
+| 30 | Blaine | `0x25C` | 12 | 108 | 259 | 398 | -| 180 | 255 | Tuesday Day | `2` (20%) |
+| 31 | Blue | `0x270` | 12 | 110 | 261 | 398 | - | 181 | 255 | Sunday Night | `2` (20%) |
+| 32 | Chuck | `0x284` | 12 | 75 | 34 | 398 | - | 182 | 255 | Wednesday Night | `2` (20%) |
+| 33 | Brock | `0x298` | 12 | 98 | 253 | 398 | - | 183 | 255 | Saturday Night | `2` (20%) |
+| 34 | Bugsy | `0x2AC` | 12 | 67 | 21 | 398 | - | 184 | 255 | Thursday Day | `2` (20%) |
+| 35 | Sabrina | `0x2C0` | 12 | 107 | 258 | 398 | - | 185 | 255 | Sunday Day | `2` (20%) |
+| 36 | Lt. Surge | `0x2D4` | 12 | 104 | 255 | 398 | - | 186 | 255 | Friday Morning | `2` (20%) |
+| 37 | Morty | `0x2E8` | 12 | 72 | 31 | 398 | - | 187 | 255 | Tuesday Night | `2` (20%) |
+| 38 | Jasmine | `0x2FC` | 12 | 74 | 33 | 398 | - | 188 | 255 | Wednesday Day | `2` (20%) |
+| 39 | Pryce | `0x310` | 12 | 73 | 32 | 398 | - | 189 | 255 | Monday Morning | `2` (20%) |
+| 40 | Huey | `0x324` | 0 | 46 | 211 | 220 | Protein | 190 | 4 | Wednesday Night | `1` (30%) |
+| 41 | Gaven | `0x338` | 0 | 24 | 102 | 30 | - | 196 | 0 | Thursday Morning | `1` (30%) |
+| 42 | Jamie | `0x34C` | 0 | 25 | 113 | 30 | - | 203 | 5 | Friday Day | `1` (30%) |
+| 43 | Reena | `0x360` | 0 | 25 | 114 | 31 | - | 210 | 1 | Sunday Morning | `1` (30%) |
+| 44 | Vance | `0x374` | 0 | 69 | 137 | 46 | Carbos | 217 | 0 | Wednesday Night | `1` (30%) |
+| 45 | Parry | `0x388` | 0 | 9 | 145 | 47 | Iron | 223 | 4 | Friday Day | `1` (30%) |
+| 46 | Erin | `0x39C` | 0 | 5 | 151 | 48 | Calcium | 229 | 5 | Saturday Night | `1` (30%) |
+| 47 | Beverly | `0x3B0` | 0 | 21 | 182 | 96 | - | 236 | 5 | Unused | `2` (20%) |
+| 48 | Jose | `0x3C4` | 0 | 69 | 414 | 31 | - | 242 | 4 | Saturday Night | `2` (20%) |
+| 49 | Gina | `0x3D8` | 0 | 5 | 65 | 38 | - | 251 | 1 | Sunday Day | `2` (20%) |
+| 50 | Alan | `0x3EC` | 0 | 60 | 24 | 40 | - | 260 | 0 | Wednesday Day | `2` (20%) |
+| 51 | Dana | `0x400` | 0 | 3 | 400 | 42 | - | 268 | 7 | Thursday Night | `2` (20%) |
+| 52 | Derek | `0x414` | 0 | 20 | 44 | 43 | - | 276 | 0 | Unused | `2` (20%) |
+| 53 | Tully | `0x428` | 0 | 11 | 123 | 44 | - | 283 | 4 | Sunday Day | `2` (20%) |
+| 54 | Tiffany | `0x43C` | 0 | 5 | 402 | 45 | - | 291 | 7 | Tuesday Day | `2` (20%) |
+| 55 | Wilton | `0x450` | 0 | 11 | 124 | 46 | - | 300 | 4 | Thursday Morning | `2` (20%) |
+| 56 | Krise | `0x464` | 0 | 3 | 184 | 96 | - | 308 | 1 | Sunday Morning | `1` (30%) |
+| 57 | Ian | `0x478` | 0 | 2 | 64 | 38 | Cheri Berry\* | 315 | 0 | Saturday Morning | `0` (50%) |
+| 58 | Walt | `0x48C` | 0 | 64 | 388 | 39 | - | 322 | 4 | Monday Day | `2` (20%) |
+| 59 | Alfred | `0x4A0` | 0 | 34 | 401 | 220 | - | 330 | 6 | Tuesday Day | `2` (20%) |
+| 60 | Doug | `0x4B4` | 0 | 6 | 140 | 10 | - | 337 | 0 | Wednesday Morning | `1` (30%) |
+| 61 | Rob | `0x4C8` | 0 | 6 | 48 | 10 | - | 346 | 0 | Friday Morning | `1` (30%) |
+| 62 | Kyle | `0x4DC` | 0 | 11 | 59 | 20 | - | 355 | 0 | Wednesday Day | `2` (20%) |
+| 63 | Kyler | `0x4F0` | 0 | 11 | 558 | 20 | - | 362 | 0 | Thursday Day | `2` (20%) |
+| 64 | Tim & Sue | `0x504` | 0 | 122 | 559 | 21 | - | 369 | 5 | Friday Day | `2` (20%) |
+| 65 | Kenny | `0x518` | 0 | 9 | 358 | 21 | - | 376 | 4 | Saturday Day | `2` (20%) |
+| 66 | Tanner | `0x52C` | 0 | 4 | 561 | 21 |- | 383 | 0 | Monday Night | `2` (20%) |
+| 67 | Josh | `0x540` | 0 | 69 | 565 | 22 | - | 392 | 0 | Tuesday Night | `2` (20%) |
+| 68 | Torin | `0x554` | 0 | 60 | 567 | 22 | - | 401 | 0 | Wednesday Night | `1` (30%) |
+| 69 | Hillary | `0x568` | 0 | 77 | 382 | 23 | - | 408 | 7 | Thursday Night | `0` (50%) |
+| 70 | Billy | `0x57C` | 0 | 60 | 331 | 23 | - | 416 | 0 | Friday Night | `0` (50%) |
+| 71 | Kay & Tia | `0x590` | 0 | 8 | 569 | 23 | - | 421 | 7 | Saturday Night | `2` (20%) |
+| 72 | Reese | `0x5A4` | 0 | 65 | 313 | 25 | - | 430 | 4 | Sunday Night | `2` (20%) |
+| 73 | Aiden | `0x5B8` | 0 | 65 | 574 | 25 | - | 439 | 4 | Monday Morning | `2` (20%) |
+| 74 | Ernest | `0x5CC` | 0 | 65 | 579 | 25 | - | 448 | 4 | Sunday Day | `1` (30%) |
+
+</FilterableSortableTable>
 
 \* Ian receives a random berry; see the [rematch-reward berry special case](#rematch-rewards).
 
