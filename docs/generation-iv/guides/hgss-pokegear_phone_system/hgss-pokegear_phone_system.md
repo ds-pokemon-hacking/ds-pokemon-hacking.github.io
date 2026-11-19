@@ -10,7 +10,7 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 # Pokégear Phone System
 
 > Author(s): [MrHam88](https://github.com/DevHam88/).  
-> Research: [pokeheartgold (decomp)](https://github.com/pret/pokeheartgold), [Eclipse (Luna)](https://discord.com/channels/446824489045721090/761649785920815114/1541642009457197117), [Senate](https://discord.com/channels/1221517397874446557/1221525392217735378/1539025825431814176), [BlackShark](https://projectpokemon.org/home/forums/topic/49014-hgss-pokegear-phone-numbers-memory-location/), [Mixone](https://github.com/Mixone-FinallyHere), [MrHam88](https://github.com/DevHam88/).  
+> Research: [pokeheartgold (decomp)](https://github.com/pret/pokeheartgold), [Eclipse (Luna)](https://discord.com/channels/446824489045721090/761649785920815114/1541642009457197117), [Senate](https://discord.com/channels/1221517397874446557/1221525392217735378/1539025825431814176), [BlackShark](https://projectpokemon.org/home/forums/topic/49014-hgss-pokegear-phone-numbers-memory-location/), [Mixone](https://github.com/Mixone-FinallyHere) (guide feedback), [MrHam88](https://github.com/DevHam88/).  
 
 This guide explains how the Pokégear phone system works and how to edit its data in Pokémon HeartGold and SoulSilver.
 
@@ -209,7 +209,7 @@ Values from `tel/pmtel_book.dat`, in file order. Record offsets are hexadecimal;
 | `12` | `GYMLEADER` | Fighting Dojo/Gym Leader rematch logic. |
 | `13` | `BAOBA` | Safari Zone Warden call logic. |
 | `14` | `IRWIN` | Juggler Irwin call logic. |
-| `15` | `UNK15` | Unnamed/unknown call logic. |
+| `15` | `UNK15` | Unused in vanilla; defaults to display type `0` and phone script `0`. |
 
 </details>
 
@@ -316,7 +316,7 @@ Normal field scripts use the following command IDs. The first name is the establ
 | `0x93` | `CheckPokegearNumberRegistered contact result` | `CheckRegisteredPhoneNumber contact result` | Write 0 or 1 depending on registration state. |
 
 :::info
-Unlike in the original Generation II games, the Pokégear phonebook can hold every available contact. This means there is no vanilla field-script command or game code to de-register a phone contact.
+The phonebook can hold every available contact. There is no dedicated vanilla field-script command to de-register a contact.
 :::
 
 ---
@@ -361,6 +361,14 @@ Set the contact's `unkF` byte (record offset `0xF` in `pmtel_book.dat`) to `3`. 
 :::
 
 The call starts with `isScriptedCall = 0`. A contact of type `0` uses the generic call-data route; contact types `10`, `11`, `12`, and `14` each use their own selection logic.
+
+#### Changing the random-call chance
+
+In `arm9/arm9.bin`, replace `32 20` at **both** `0x92DBA` (initialisation) and `0x92F9A` (reset) with `NN 20`, where `NN` is the desired percentage minus one, expressed in hexadecimal.
+
+For example, `18 20` gives 25%, `31 20` gives 50%, and `63 20` gives 100%. `00 20` still gives 1%, so this edit cannot disable random calls entirely.
+
+This changes the chance of proceeding to random caller selection at each eligible timed opportunity. Queued event calls are unaffected.
 
 #### Where the allowed-type list is defined
 
@@ -485,7 +493,7 @@ The event-record table above defines what each pending bit does. This table inst
 | `1` | The shared Nurse Joy field script, `files/fielddata/script/scr_seq/scr_seq_0003.s`, uses `ScrCmd_148 CALL_TRIGGER_ELM_POKERUS, FALSE` when it first detects Pokérus after healing. | No |
 | `2` | `FieldSystem_UpdateBikeShop` in `src/field/field_control.c`: the Bike Shop call has not already happened, bit `2` is not already pending, and `GAME_STAT_STEPS_BIKED` is at least `1024`. | Yes |
 | `3` | `sub_02093070` in `src/unk_02092BE8.c`: Bill is registered, the full-PC call flag is clear, and every PC storage slot is full. This helper is called after several battle and storage-related return paths. | Yes |
-| `4` | `sub_020930C4` in `src/unk_02092BE8.c`: Oak is registered, the National Dex owned count has reached a nonzero multiple of `50`, and the corresponding Oak acknowledgement flag is clear. | No |
+| `4` | `sub_020930C4` in `src/unk_02092BE8.c`: Oak is registered, at least 50 Pokémon are owned in the National Dex, and the acknowledgement flag for the highest reached 50-Pokémon milestone (capped at 450) is clear. | No |
 | `5` | `sub_0209316C` in `src/unk_02092BE8.c`, called when the Day-Care generates an Egg in `src/get_egg.c`: the Day-Care Man is registered, and the script-flag guard permits the Egg call. | Yes |
 | `6` | `SaveData_SafariZone_CheckAreasWithUpdatedEncounters` in `src/unk_02097268.c`: after at least one day has passed outside an active Safari session, it compares the Safari Zone's encounter lists before and after the daily object-level update. It sets bit `6` if an area now has changed encounters, and clears it when none do. | No |
 | `7` | `sub_02092E54` in `src/unk_02092BE8.c`: no Baoba bits `7`-`11` are already pending, Safari progress variable `0x4057` (`16471`, decomp name: `VAR_UNK_4057`) is `3`, and the Safari Zone's three-hour timer has elapsed. | Yes |
@@ -529,7 +537,7 @@ Use a **Variable/Value level-script trigger** for the call. Map-initialisation s
 
 The trigger can check a story variable, or an unused map-cleared temporary variable (`0x4000`-`0x401F`) against `0`. Change that variable in the event script so the trigger stops matching. A persistent flag can prevent the call on later visits; the `0x8000` script variables are not suitable for this level-trigger condition.
 
-Use **`MecScript` (`0x261`, decomp `ScrCmd_609`)** to reset the following Pokémon's movement before the phone call commands. Set `0x8004` to the contact, `0x8005` to the call mode and `0x8006` to the predefined script, then use `CommonScript 2039` for ringing, fades and the call. See the [Elm example](#create-a-direct-field-scripted-call-from-professor-elm).
+Use **`ScrCmd_609` (`0x261`, legacy name `MecScript`)** to reset the following Pokémon's movement before the phone call commands. Set `0x8004` to the contact, `0x8005` to the call mode and `0x8006` to the predefined script, then use `CallStd 2039` for ringing, fades and the call. See the [Elm example](#create-a-direct-field-scripted-call-from-professor-elm).
 
 ---
 
@@ -1178,23 +1186,25 @@ The Fighting Dojo script checks Falkner's Overlay 26 row `47` through `GetPhoneB
 
 ### Create a direct field-scripted call from Professor Elm
 
+Command names follow Rotom nomenclature.
+
 1. Identify an unused, persistent flag to record that the call has occurred.
 2. In DSPRE's text editor, append the desired dialogue to Elm's text archive `716`. Note its message ID, which must fit within `0`-`255`. See [Dialogue](#dialogue-common-greeting-text-and-contact-specific-text).
 3. Open decompressed `ov101.bin` from your DSPRE contents folder. At `0x11460`, replace the six bytes for phone script `6`, `29 2A 00 00 00 00`, with `WW XX 12 00 YY ZZ`: `WW` and `XX` are the male and female message IDs, and `YY ZZ` is your flag ID in little-endian order. Each placeholder represents one byte. Use the same message ID twice if both genders share the dialogue. `12 00` selects the flag-setting effect. See [Phone scripts](#phone-scripts-message-and-automatic-effect).
 4. In DSPRE, add a **Variable/Value level-script trigger** for the desired map, pointing to a new script. Use a designated story variable or an unused map-cleared variable, such as `0x4000`, with comparison value `0`. See [Starting a call on map entry](#starting-a-call-on-map-entry).
-5. Start the new script with `SetVar 0x4000 9` to disable the trigger for this visit. Check your chosen persistent flag and end if it is already set (`CheckFlag`, then `JumpIf EQUAL` to an `End`). Use your selected temporary variable throughout if different from `0x4000`.
+5. Start the new script with `SetVar 0x4000 9` to disable the trigger for this visit. Check your chosen persistent flag and end if it is already set (`CheckFlag`, then `GoToIf EQUAL` to an `End`). Use your selected temporary variable throughout if different from `0x4000`.
 6. If the flag is clear, continue with:
    ```text
-   MecScript
+   ScrCmd_609
    LockAll
    SetVar 0x8004 1
    SetVar 0x8005 2
    SetVar 0x8006 4
-   CommonScript 2039
+   CallStd 2039
    ReleaseAll
    End
    ```
-   `MecScript` prepares the following Pokémon before locking. The call selects Elm's phone script `6`, which sets the persistent flag configured in step 3. See [Professor Elm's calls](#professor-elm-story-calls-and-status-calls).
+   `ScrCmd_609` prepares the following Pokémon before locking. The call selects Elm's phone script `6`, which sets the persistent flag configured in step 3. See [Professor Elm's calls](#professor-elm-story-calls-and-status-calls).
 7. Save the text, scripts, level trigger and edited overlay, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE. Fully reopen the rebuilt ROM in the emulator.
 
 ### Enable early rematches and add tier 1 teams
@@ -1245,6 +1255,8 @@ These options can be used independently or combined to increase Gina's incoming 
 4. Save the file, move any automatically generated backup files outside the contents folder, then rebuild the ROM using DSPRE.
 
 #### Trigger an on-demand incoming call from Gina
+
+Command names follow Rotom nomenclature.
 
 1. In DSPRE, create an NPC interaction or another field-script event from which to launch Gina's call. An NPC interaction can let the player trigger calls repeatedly. See [Incoming: field-script trigger](#incoming-field-script-trigger).
 2. Add this command sequence to the field script:
