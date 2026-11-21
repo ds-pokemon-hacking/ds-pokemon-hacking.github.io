@@ -52,7 +52,7 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 | Encounter Data |  | /a/1/3/6 |  | SoulSilver Field Encounters |
 | Encounter Data |  |  | /fielddata/encountdata/pl_enc_data.narc | Platinum Field Encounters |
 | Encounter Data | Special Encounters | /a/2/5/2 |  | HG/SS Headbutt Encounters |
-| Encounter Data | Special Encounters | /a/2/5/3 |  | HG/SS Rock Smash Item Rates & Header to Item Table Map |
+| Field Data | Rock Smash Items | /a/2/5/3 |  | HG/SS Rock Smash Item Rates & Header to Item Table Map |
 | Encounter Data | Special Encounters | /a/2/3/0 |  | HG/SS Safari Zone Encounters (sz_enc_data.narc) |
 | Encounter Data | Special Encounters | /data/mushi/mushi_encount.bin |  | HG/SS Bug Catching Contest Pokemon |
 | Encounter Data | Special Encounters | /data/mushi/mushi_trainer.bin |  | HG/SS Bug Catching Contest Trainers |
@@ -200,7 +200,7 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 | Sequences |  | /a/0/5/4 | /graphic/opening.narc | Additional Intro Sequence Controls Tutorial Graphics (unused?) |
 | Pokemon Starter Selection |  | /a/0/8/2 | /graphic/ev_pokeselect.narc | Starter Selection Graphics and Models (HG/SS Machine, D/P/Pt Briefcase) |
 | Underground | Mining Mini-Game Graphics | /a/0/6/2 | /data/ug_anim.narc | Underground Mining Mini-Game Graphics (Wall Integrity, Hammer/Pick Cursor, Hit/Reveal Graphics) |
-| Underground | Mining Mini-Game Graphics | /a/0/5/0 | /data/ug_fossil.narc | Underground Mining Mini-Game GUI Graphics |
+| Underground | Mining Mini-Game Graphics | /a/0/5/0 | /data/ug_fossil.narc | Underground Mining Mini-Game GUI Graphics. DSPRE patch: Repurposed for HGSS Dynamic Headers |
 | Underground | Mining Mini-Game Graphics | /a/0/5/3 | /data/ug_parts.narc | Underground Mining Mini-Game Wall Item Graphics |
 | Underground | Graphics |  | /data/ugeffect_obj_graphic.narc | Underground Player Sprite and Transition Hole Graphics | 
 | Underground | Graphics |  | /data/ug_boygirl.NCGR | Underground Female Player Sprite Image Tile (Unused?) |
@@ -211,7 +211,7 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 | Underground | Graphics |  | /data/ug_hole.NCER | Underground Transition Hole Cells (Unused?) |
 | Underground | Graphics |  | /data/ug_hole.NCGR | Underground Transition Hole Image Tile (Unused?) |
 | Underground | Graphics |  | /data/ug_radar.narc | Underground Map HUD Graphics (Special View?) |
-| Underground | Graphics | /a/0/2/8 | /data/underg_radar.narc | Underground Upper Screen Map HUD Graphics |
+| Underground | Graphics | /a/0/2/8 | /data/underg_radar.narc | Underground Upper Screen Map HUD Graphics. DSPRE patch: Repurposed for HGSS Synthetic Overlay (ARM9 Expansion) |
 | Underground | Graphics |  | /data/ug_trap.narc | Underground Trap Triggered Graphics |
 | Underground | Graphics |  | /data/ug_base_cur.nsbmd |  |
 | Underground |  |  | /data/ugroundeffect.naix | "Archive file index definition" |
@@ -288,7 +288,7 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 | GUI Graphics |  | /a/0/7/6 | /graphic/pmsi.narc | Word Choice Graphics |
 | GUI Graphics |  | /a/0/8/0 |  | Mail Graphics | ? look more like D/P/Pt Journal Graphics (unused/early development?)
 | GUI Graphics |  | /a/0/8/3 | /graphic/fld_comact.narc | An Arrow |
-| GUI Graphics |  | /a/1/5/1 |  | Pokewalker Pokemon Selection Graphics |
+| GUI Graphics | Pokewalker | /a/1/5/1 |  | Pokewalker Pokemon Selection Graphics |
 | GUI Graphics |  | /a/1/6/4 |  | Pointing Hand Graphics |
 | GUI Graphics |  | /a/1/6/6 |  | Safari Zone Map Graphics |
 | GUI Graphics |  | /a/1/7/1 |  | Photo Album Graphics |
@@ -302,33 +302,33 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 | Unsorted Files |  | /a/0/4/8 |  | Rock/Fire Graphics |
 | Unsorted Files |  | /a/0/9/4 | /data/demo_climax.narc | D/P/Pt (Spear Pillar?) Effect Models |
 | Unsorted Files |  | /a/1/2/5 | /arc/ppark.narc | Pal Park Catching Show Data |
-| Unsorted Files |  | /a/1/9/1 | /resource/eng/batt_rec/batt_rec_gra.narc | VS. Recorder Graphics (also contains PC Box Screen Graphics) |
+| GUI Graphics |  | /a/1/9/1 | /resource/eng/batt_rec/batt_rec_gra.narc | VS. Recorder Graphics (also contains PC Box Screen Graphics) |
 | Unsorted Files |  | /a/1/7/4 |  | Miscellaneous Ruins Of Alph Graphics |
 | Unsorted Files |  | /a/1/7/6 |  | Jigglypuff Graphics |
 | Unsorted Files |  | /a/1/4/9 |  | Rapidash / Lugia Sprites, No Palettes |
-| Unsorted Files |  | /a/2/2/3 |  | Miscellaneous Button Graphics |
-| Unsorted Files |  | /a/2/3/6 |  | Touchscreen Number Graphics |
-| Unsorted Files |  | /a/2/3/7 |  | Touchscreen Confirmation Menu Graphics |
+| GUI Graphics |  | /a/2/2/3 |  | Miscellaneous Button Graphics |
+| GUI Graphics |  | /a/2/3/6 |  | Touchscreen Number Graphics |
+| GUI Graphics |  | /a/2/3/7 |  | Touchscreen Confirmation Menu Graphics |
 | Unsorted Files |  | /a/2/3/9 |  | Unown Report Graphics |
 | Unsorted Files |  | /a/2/4/2 |  | Apriblender Graphics |
 | Unsorted Files |  | /a/2/4/3 |  | Ho-Oh Model |
 | Unsorted Files |  | /a/2/4/4 |  | Lugia & Waterfall Models |
 | Unsorted Files |  | /a/2/4/5 |  | Arceus Event Images (Also A Lugia) |
-| Unsorted Files |  | /a/2/4/7 |  | Pokewalker Graphics |
+| GUI Graphics | Pokewalker | /a/2/4/7 |  | Pokewalker Graphics |
 | Unsorted Files |  | /a/2/4/9 |  | Graphics, Munchlax, Lugia, Protagonist |
 | Unsorted Files |  | /a/2/5/0 |  | Mailbox Graphics |
 | Unsorted Files |  | /a/2/5/1 |  | Dowsing Machine Graphics |
 | Unsorted Files |  | /a/2/5/5 |  | Viridian Gym Arrow Models |
 | Unsorted Files |  | /a/2/5/9 |  | Miscellaneous Button Graphics |
 | Unsorted Files |  | /a/2/6/0 |  | Miscellaneous Button Graphics |
-| Unsorted Files |  | /a/2/6/1 |  | Photo Crosshair Graphic |
+| GUI Graphics | Photographs | /a/2/6/1 |  | Photo Crosshair Graphic |
 | Unsorted Files |  | /a/2/6/4 |  | Voltorb Flip |
 | Unsorted Files |  | /a/1/5/7 |  | Unfinished Artwork |
 | Unsorted Files |  | /a/1/5/8 |  | Unfinished Artwork |
 | Unsorted Files |  | /a/1/5/9 |  | Unfinished Artwork |
-| Unsorted Files |  | /a/2/4/8 |  | Pokewalker mini pokemon icons |
-| Unsorted Files |  | /a/2/5/4 |  | Photograph location configuration |
-| Unidentified Files |  | /a/0/0/9 |  | 16 Palatte Files &  16 Unknown Files (384 Bytes) |
+| GUI Graphics | Pokewalker | /a/2/4/8 |  | Pokewalker mini pokemon icons |
+| GUI Graphics | Photographs | /a/2/5/4 |  | Photograph location configuration |
+| Unidentified Files |  | /a/0/0/9 |  | 16 Palette Files &  16 Unknown Files (384 Bytes) |
 | Unidentified Files |  | /a/0/3/5 | /graphic/fontoam.narc | 12 NCER Files |
 | Unidentified Files |  | /a/0/5/9 |  | 5 APS Files |
 | Unidentified Files |  | /a/0/6/7 |  | Untranslated Graphics |
@@ -341,7 +341,7 @@ import FilterableSortableTable from '/src/components/FilterableSortableTable';
 | Unidentified Files |  | /a/1/2/1 | /arc/tv.narc | 3 Bin Files |
 Maps | Moving Models | /a/1/4/0 |  | [Global Texture Animation](/docs/generation-iv/guides/mapping/animations#texture-scale-rotate-translate-srt) Files |
 | Unidentified Files |  | /a/1/4/1 |  | 566 Bin Files |
-| Unidentified Files |  | /a/1/5/5 |  | 1 Bin File, 1 Byte, 0x0 |
+| Unidentified Files |  | /a/1/5/5 |  | Unused: 1 Bin File, 1 Byte, 0x0 |
 | Unidentified Files |  | /a/1/6/5 |  | Graphic |
 | Unidentified Files |  | /a/1/6/9 |  | 554 Bin Files |
 | Unidentified Files |  | /a/1/7/0 |  | 20 Bin Files |
@@ -354,13 +354,13 @@ Maps | Moving Models | /a/1/4/0 |  | [Global Texture Animation](/docs/generation
 | Unidentified Files |  | /a/2/1/0 | /application/bucket/ballslow_data.narc | Probably Swalot Pop related |
 | Unidentified Files |  | /a/2/1/1 | /particledata/pl_etc/pl_etc_particle.narc | 2 APS Files |
 | Unidentified Files |  | /a/2/1/2 | /resource/eng/pms_aikotoba.narc | 1 Bin File |
-| Unidentified Files |  | /a/2/2/0 |  | 236 Bin Files |
-| Unidentified Files |  | /a/2/2/1 |  | 1023 Bin Files |
-| Unidentified Files |  | /a/2/2/2 |  | 108 Bin Files |
+| Following Pokemon |  | /a/2/2/0 |  | Following Pokemon species interaction conditions |
+| Following Pokemon |  | /a/2/2/1 |  | Following Pokemon species interaction definitions |
+| Following Pokemon |  | /a/2/2/2 |  | Following Pokemon species movement definitions |
 | Unidentified Files |  | /a/2/2/5 |  | 20 Bin Files |
 | Unidentified Files |  | /a/2/2/6 |  | 3 Bin Files |
 | Unidentified Files |  | /a/2/2/7 |  | 10 Bin Files |
-| Unidentified Files |  | /a/2/3/1 |  | 1 Bin File |
+| Following Pokemon |  | /a/2/3/1 |  | Following Pokemon species interaction categories |
 | Unidentified Files |  | /a/2/4/6 |  | Tetris Block Models |
 | Unidentified Files |  | /a/2/5/6 |  | 664 Compressed Bin Files |
 | Unidentified Files |  | /a/2/5/8 |  | 100 Bin Files |

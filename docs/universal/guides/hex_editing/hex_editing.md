@@ -66,6 +66,26 @@ Also, in HxD you can see the decimal value of the bytes you currently have selec
 
 --- 
 
+### Bits and bitmasks
+
+A byte contains eight bits. Each bit is either 0 or 1, and bits are numbered 0 to 7 from right to left. A hex digit represents four bits, so a byte is written as two hex digits.
+
+A file format can pack several values into one byte. A **bitmask** marks the bits that belong to a particular field. For example, `0x0F` is `0000 1111` in binary and covers the right-hand hex digit. `0xF0` is `1111 0000` and covers the left-hand digit. In byte `95`, the right-hand field is **5** and the left-hand field is **9**.
+
+For a field that crosses hex digits, use a calculator with binary and bitwise operations. To read the field, use **AND** with its mask, then shift right until the field starts at bit 0. To edit it, clear just the bits covered by the mask, shift your new value into those positions, and combine it with the remaining bits using **OR**. Check the field’s allowed values in the relevant guide before overwriting the byte.
+
+### Signed and unsigned bytes
+
+The file format tells you how to interpret a byte. An **unsigned** byte holds a value from **0 to 255**. A **signed** byte using two’s complement holds a value from **−128 to +127**. Both use the same eight bits.
+
+- Bytes `00` to `7F` represent the same value either way. For example, `3C` represents **60**.
+- For signed bytes `80` to `FF`, read the byte as unsigned and subtract **256**. For example, `EC` is 236 unsigned and **−20** signed.
+- To write a negative value to a signed byte, add **256**, then convert to hex. To store **−20**, write **`EC`**.
+
+A particular field may use a smaller range than the byte can represent. Check the guide for that field before editing.
+
+---
+
 ## Pasting Bytes
 
 Once you are at the right offset you can simply type the bytes you want to replace and save the file, or use the **Ctrl+B** shortcut, which will overwrite the amount of bytes you have currently copied at the offset location. In HxD the bytes you edited before saving the file will be displayed in red.
