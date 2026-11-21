@@ -1,28 +1,28 @@
 ---
-title: Common Scripts (Diamond/Pearl)
+title: Global Scripts (Diamond/Pearl)
 tags:
   - Guide (Diamond)
   - Guide (Pearl)
 ---
 
-# Common Scripts (Diamond/Pearl)
+# Global Scripts (Diamond/Pearl)
 > Author(s): Lmaokai
 
 ---
 
 ## How to Use
 
-Common scripts are used in Generation IV Pokemon games to repeatedly call scripted behaviour from "local" script files. Although they are referred to (using DSPRE's scripting nomenclature) using common script IDs, they are simple scripts within script files. One difficulty with working with them, is that these script files do not have a header to easily find the associated Text Archive.  
+Global Scripts are used in Generation IV Pokemon games to repeatedly call scripted behaviour from "local" script files. Although they are referred to (using DSPRE's scripting nomenclature) using Global Script IDs, they are scripts within various script files. One difficulty with working with them, is that these script files do not have a header to easily find the associated Text Archive.  
 
-This mapping table allows quick lookup of the Common Script ID, to find the script being used (in a given Script File), and the texts that may be invoked (from a given Text Archive).
+This mapping table allows quick lookup of the Global Script ID, to find the script being used (in a given Script File), and the texts that may be invoked (from a given Text Archive).
 
 --- 
 
-## Common Script Mapping
+## Global Script Mapping
 
 <table>
   <tr>
-    <th>Common Script ID Range</th>
+    <th>Global Script ID Range</th>
     <th>Script File</th>
     <th>Text Archive</th>
     <th>Notes</th>
@@ -108,7 +108,7 @@ This mapping table allows quick lookup of the Common Script ID, to find the scri
   <tr>
     <td>`9300` - `9399`</td>
     <td>372</td>
-    <td>3</td>
+    <td>329</td>
     <td>Groups</td>
   </tr>
   <tr>
